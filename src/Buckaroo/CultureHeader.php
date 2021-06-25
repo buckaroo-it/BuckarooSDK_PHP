@@ -12,7 +12,7 @@ class CultureHeader
         return "Culture: " . self::getTranslatedLocale($locale);
     }
 
-    public static function getTranslatedLocale($locale = false) : string
+    public static function getTranslatedLocale($locale = false): string
     {
         switch ($locale) {
             case 'nl':

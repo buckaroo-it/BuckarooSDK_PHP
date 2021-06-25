@@ -1,4 +1,5 @@
-<?php declare (strict_types = 1);
+<?php
+
 /**
  * NOTICE OF LICENSE
  *
@@ -17,6 +18,9 @@
  * @copyright Copyright (c) Buckaroo B.V.
  * @license   https://tldrlegal.com/license/mit-license
  */
+
+declare(strict_types=1);
+
 namespace Buckaroo\SDK\Transfer;
 
 use Exception;
@@ -24,8 +28,8 @@ use Psr\Log\LoggerInterface;
 
 class TransferCurlClient implements TransferClientInterface
 {
-    const METHOD_GET  = 'GET';
-    const METHOD_POST = 'POST';
+    private const METHOD_GET  = 'GET';
+    private const METHOD_POST = 'POST';
 
     protected $validMethods = [
         self::METHOD_GET,
@@ -120,8 +124,7 @@ class TransferCurlClient implements TransferClientInterface
             $length = strlen($header);
             $header = explode(':', $header, 2);
 
-            if (count($header) < 2) // ignore invalid headers
-            {
+            if (count($header) < 2) { // ignore invalid headers
                 return $length;
             }
 
@@ -136,6 +139,4 @@ class TransferCurlClient implements TransferClientInterface
             return $length;
         });
     }
-
-    
 }

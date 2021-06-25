@@ -1,4 +1,5 @@
-<?php declare (strict_types = 1);
+<?php
+
 /**
  * NOTICE OF LICENSE
  *
@@ -17,6 +18,9 @@
  * @copyright Copyright (c) Buckaroo B.V.
  * @license   https://tldrlegal.com/license/mit-license
  */
+
+declare(strict_types=1);
+
 namespace Buckaroo\SDK;
 
 use Buckaroo\SDK\Buckaroo\CultureHeader;
@@ -31,18 +35,16 @@ use Psr\Log\LoggerInterface;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
-
 class Client
 {
-    const SDK_VERSION   = "0.0.1";
-    const MODE_LIVE = 'live';
-    const MODE_TEST = 'test';
+    public const MODE_LIVE = 'live';
+    public const MODE_TEST = 'test';
 
-    const ENDPOINT_LIVE = "https://checkout.buckaroo.nl";
-    const ENDPOINT_TEST = "https://testcheckout.buckaroo.nl";
+    private const ENDPOINT_LIVE = "https://checkout.buckaroo.nl";
+    private const ENDPOINT_TEST = "https://testcheckout.buckaroo.nl";
 
-    const METHOD_GET  = 'GET';
-    const METHOD_POST = 'POST';
+    private const METHOD_GET  = 'GET';
+    private const METHOD_POST = 'POST';
 
     protected $validMethods = [
         self::METHOD_GET,
@@ -74,8 +76,11 @@ class Client
      */
     protected $transferClient;
 
-    public function __construct($params = null, TransferClientInterface $transferClient = null, LoggerInterface $logger = null)
-    {
+    public function __construct(
+        $params = null,
+        TransferClientInterface $transferClient = null,
+        LoggerInterface $logger = null
+    ) {
         $this->config   = new Config($params);
         $this->hmac     = new HmacHeader($this->config);
         $this->software = new SoftwareHeader($this);
@@ -107,7 +112,10 @@ class Client
     public function getTransactionUrl()
     {
         $mode = $this->config->get('mode');
-        return ($mode == self::MODE_LIVE ? self::ENDPOINT_LIVE : self::ENDPOINT_TEST) . '/' . ltrim('json/Transaction', '/');
+        return ($mode == self::MODE_LIVE ?
+                self::ENDPOINT_LIVE :
+                self::ENDPOINT_TEST) . '/' . ltrim('json/Transaction', '/')
+        ;
     }
 
     protected function getHeaders($url, $data, $method)
@@ -131,10 +139,14 @@ class Client
         return $this->call($url, self::METHOD_POST, $data, $responseClass);
     }
 
-    protected function call($url, $method = self::METHOD_GET, Request $data = null, $responseClass = 'Buckaroo\SDK\Buckaroo\Payload\Response')
-    {
+    protected function call(
+        $url,
+        $method = self::METHOD_GET,
+        Request $data = null,
+        $responseClass = 'Buckaroo\SDK\Buckaroo\Payload\Response'
+    ) {
         if (!$data) {
-            $data = new Request;
+            $data = new Request();
         }
 
         $json = json_encode($data, JSON_PRETTY_PRINT);
@@ -143,7 +155,8 @@ class Client
         $headers = $this->getHeaders($url, $json, $method);
         $headers = array_merge($headers, $data->getHeaders());
 
-        list($decodedResult, $curlInfo, $responseHeaders) = $this->transferClient->call($url, $headers, $method, $json, $responseClass);
+        list($decodedResult, $curlInfo, $responseHeaders) =
+            $this->transferClient->call($url, $headers, $method, $json, $responseClass);
 
         $response = new $responseClass($decodedResult, $curlInfo, $responseHeaders);
 
@@ -157,5 +170,4 @@ class Client
 
         return $logger;
     }
-
 }

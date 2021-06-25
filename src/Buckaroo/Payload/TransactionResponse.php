@@ -1,4 +1,6 @@
-<?php declare (strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Buckaroo\SDK\Buckaroo\Payload;
 
@@ -21,7 +23,8 @@ class TransactionResponse extends Response
      */
     public function isCanceled()
     {
-        return $this->getStatusCode() == ResponseStatus::BUCKAROO_STATUSCODE_CANCELLED_BY_USER || $this->getStatusCode() == ResponseStatus::BUCKAROO_STATUSCODE_CANCELLED_BY_MERCHANT;
+        return $this->getStatusCode() == ResponseStatus::BUCKAROO_STATUSCODE_CANCELLED_BY_USER
+            || $this->getStatusCode() == ResponseStatus::BUCKAROO_STATUSCODE_CANCELLED_BY_MERCHANT;
     }
 
     /**
@@ -50,7 +53,8 @@ class TransactionResponse extends Response
      */
     public function hasRedirect()
     {
-        return !empty($this->data['RequiredAction']['RedirectURL']) && $this->data['RequiredAction']['Name'] == 'Redirect';
+        return !empty($this->data['RequiredAction']['RedirectURL'])
+            && $this->data['RequiredAction']['Name'] == 'Redirect';
     }
 
     /**
@@ -357,7 +361,8 @@ class TransactionResponse extends Response
      */
     public function hasSubCodeMessage()
     {
-        return !empty($this->data['Status']['SubCode']['Description']) && Helpers::stringContains($this->data['Status']['SubCode']['Description'], ':');
+        return !empty($this->data['Status']['SubCode']['Description'])
+            && Helpers::stringContains($this->data['Status']['SubCode']['Description'], ':');
     }
 
     /**
@@ -385,5 +390,4 @@ class TransactionResponse extends Response
     {
         return $this->data['CustomerName'];
     }
-
 }

@@ -1,4 +1,6 @@
-<?php declare (strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Buckaroo\SDK\Buckaroo\Payload;
 
@@ -15,7 +17,6 @@ class TransactionRequest extends Request
         $this->setClientIP();
         $this->setClientUserAgent();
         $this->createDefaultService();
-
     }
 
     /**
@@ -61,13 +62,17 @@ class TransactionRequest extends Request
         }
 
         if (!isset($this->data['Services']['ServiceList'][0])) {
-            $this->data['Services']['ServiceList'][0] = ['Action' => 'Pay', 'Version' => 1, 'Name' => '', 'Parameters' => []];
+            $this->data['Services']['ServiceList'][0] = [
+                'Action' => 'Pay',
+                'Version' => 1,
+                'Name' => '',
+                'Parameters' => []
+            ];
         }
 
         if (!isset($this->data['Services']['ServiceList'][0]['Parameters'])) {
             $this->data['Services']['ServiceList'][0]['Parameters'] = [];
         }
-
     }
 
     /**
@@ -436,5 +441,4 @@ class TransactionRequest extends Request
     {
         return $this->data['CustomerCardName'];
     }
-
 }

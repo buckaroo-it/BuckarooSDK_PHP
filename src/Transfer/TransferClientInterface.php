@@ -1,4 +1,5 @@
-<?php declare (strict_types = 1);
+<?php
+
 /**
  * NOTICE OF LICENSE
  *
@@ -17,6 +18,9 @@
  * @copyright Copyright (c) Buckaroo B.V.
  * @license   https://tldrlegal.com/license/mit-license
  */
+
+declare(strict_types=1);
+
 namespace Buckaroo\SDK\Transfer;
 
 interface TransferClientInterface

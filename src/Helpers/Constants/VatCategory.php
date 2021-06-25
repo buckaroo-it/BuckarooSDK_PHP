@@ -1,14 +1,16 @@
-<?php declare (strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Buckaroo\SDK\Helpers\Constants;
 
 class VatCategory
 {
-    const HIGH_RATE   = 1;
-    const LOW_RATE    = 2;
-    const ZERO_RATE   = 3;
-    const NULL_RATE   = 4;
-    const MIDDLE_RATE = 5;
+    public const HIGH_RATE   = 1;
+    public const LOW_RATE    = 2;
+    public const ZERO_RATE   = 3;
+    public const NULL_RATE   = 4;
+    public const MIDDLE_RATE = 5;
 
     /**
      * Really simple and crude way to get the VatCategory

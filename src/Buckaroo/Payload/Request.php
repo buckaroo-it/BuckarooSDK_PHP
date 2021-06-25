@@ -1,4 +1,6 @@
-<?php declare (strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Buckaroo\SDK\Buckaroo\Payload;
 
@@ -76,7 +78,7 @@ class Request implements JsonSerializable, ArrayAccess, Arrayable
 
         if ($prefix === 'set') {
             return $this->offsetSet($param, $arg);
-        } else if ($prefix === 'get') {
+        } elseif ($prefix === 'get') {
             return $this->offsetGet($param);
         }
 

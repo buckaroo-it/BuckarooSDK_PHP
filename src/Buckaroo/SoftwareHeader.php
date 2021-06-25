@@ -1,10 +1,13 @@
-<?php declare (strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Buckaroo\SDK\Buckaroo;
 
 class SoftwareHeader
 {
-    public function __construct() {
+    public function __construct()
+    {
     }
 
     public function getHeader()

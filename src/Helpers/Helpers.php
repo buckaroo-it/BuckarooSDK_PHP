@@ -1,4 +1,6 @@
-<?php declare (strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace Buckaroo\SDK\Helpers;
 
@@ -384,7 +386,10 @@ class Helpers
          */
         if (!empty($headers['X-Forwarded-For']) && filter_var($headers['X-Forwarded-For'], FILTER_VALIDATE_IP)) {
             return $headers['X-Forwarded-For'];
-        } elseif (!empty($headers['HTTP_X_FORWARDED_FOR']) && filter_var($headers['HTTP_X_FORWARDED_FOR'], FILTER_VALIDATE_IP)) {
+        } elseif (
+            !empty($headers['HTTP_X_FORWARDED_FOR'])
+            && filter_var($headers['HTTP_X_FORWARDED_FOR'], FILTER_VALIDATE_IP)
+        ) {
             return $headers['HTTP_X_FORWARDED_FOR'];
         }
 
@@ -489,7 +494,7 @@ class Helpers
     private function decodePushValue($brq_key, $brq_value)
     {
         switch ($brq_key) {
-            case 'brq_SERVICE_payconiq_PayconiqAndroidUrl' :
+            case 'brq_SERVICE_payconiq_PayconiqAndroidUrl':
             case 'brq_SERVICE_payconiq_PayconiqIosUrl':
             case 'brq_SERVICE_payconiq_PayconiqUrl':
             case 'brq_SERVICE_payconiq_QrUrl':

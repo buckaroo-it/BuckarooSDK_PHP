@@ -1,4 +1,5 @@
-<?php declare (strict_types = 1);
+<?php
+
 /**
  * NOTICE OF LICENSE
  *
@@ -17,6 +18,9 @@
  * @copyright Copyright (c) Buckaroo B.V.
  * @license   https://tldrlegal.com/license/mit-license
  */
+
+declare(strict_types=1);
+
 namespace Buckaroo\SDK;
 
 use Buckaroo\SDK\Client;
@@ -74,16 +78,20 @@ class Transaction
         }
 
         try {
-            return $buckarooClient->post($buckarooClient->getTransactionUrl(), $request, 'Buckaroo\SDK\Buckaroo\Payload\TransactionResponse');
+            return $buckarooClient->post(
+                $buckarooClient->getTransactionUrl(),
+                $request,
+                'Buckaroo\SDK\Buckaroo\Payload\TransactionResponse'
+            );
         } catch (Exception $e) {
-            return ['error'=>$e->getMessage()];
+            return ['error' => $e->getMessage()];
         }
     }
 
     public static function push($options = array())
     {
         if (isset($options['secretKey']) && isset($options['post'])) {
-            if(Helpers::validateSignature($options['post'], $options['secretKey'])){
+            if (Helpers::validateSignature($options['post'], $options['secretKey'])) {
                 return $options['post'];
             }
         }
