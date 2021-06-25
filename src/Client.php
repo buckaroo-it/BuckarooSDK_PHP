@@ -33,7 +33,7 @@ use Buckaroo\SDK\Transfer\TransferCurlClient;
 use Exception;
 use Psr\Log\LoggerInterface;
 use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
+use Monolog\Handler\NullHandler;
 
 class Client
 {
@@ -45,11 +45,6 @@ class Client
 
     private const METHOD_GET  = 'GET';
     private const METHOD_POST = 'POST';
-
-    protected $validMethods = [
-        self::METHOD_GET,
-        self::METHOD_POST,
-    ];
 
     /**
      * @var Buckaroo\SDK\Buckaroo\HmacHeader
@@ -83,8 +78,8 @@ class Client
     ) {
         $this->config   = new Config($params);
         $this->hmac     = new HmacHeader($this->config);
-        $this->software = new SoftwareHeader($this);
-        $this->culture  = new CultureHeader($this);
+        $this->software = new SoftwareHeader();
+        $this->culture  = new CultureHeader();
         $this->logger   = $logger ?? $this->createDefaultLogger();
         $this->transferClient = $transferClient ?? new TransferCurlClient($this->logger);
     }
@@ -102,11 +97,6 @@ class Client
     public function setMode($mode)
     {
         $this->config->set('mode', $mode);
-    }
-
-    public function setGuid($guid)
-    {
-        $this->config->set('guid', $guid);
     }
 
     public function getTransactionUrl()
@@ -155,8 +145,12 @@ class Client
         $headers = $this->getHeaders($url, $json, $method);
         $headers = array_merge($headers, $data->getHeaders());
 
-        list($decodedResult, $curlInfo, $responseHeaders) =
-            $this->transferClient->call($url, $headers, $method, $json, $responseClass);
+        try {
+            list($decodedResult, $curlInfo, $responseHeaders) =
+                $this->transferClient->call($url, $headers, $method, $json, $responseClass);
+        } catch (Exception $e) {
+            return ['error' => $e->getMessage()];
+        }
 
         $response = new $responseClass($decodedResult, $curlInfo, $responseHeaders);
 
@@ -166,7 +160,7 @@ class Client
     protected function createDefaultLogger()
     {
         $logger = new Logger('buckaroo-sdk');
-        $logger->pushHandler(new \Monolog\Handler\NullHandler());
+        $logger->pushHandler(new NullHandler());
 
         return $logger;
     }

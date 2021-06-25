@@ -1,9 +1,11 @@
 <?php 
 require_once (__DIR__ . "/init.php");
 
+use \Buckaroo\SDK\Transaction;
+
 $orderId = 's_' . date("Ymd H:i:s");
 
-$response = \Buckaroo\SDK\Transaction::create(
+$response = Transaction::create(
     $client,
     [
         "serviceName" => 'ideal',

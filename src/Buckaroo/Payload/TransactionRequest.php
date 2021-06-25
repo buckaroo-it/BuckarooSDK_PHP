@@ -314,14 +314,6 @@ class TransactionRequest extends Request
     }
 
     /**
-     * @param string $signature
-     */
-    public function setSignature($signature)
-    {
-        return $this->setAdditionalParameter('signature', $signature);
-    }
-
-    /**
      * @param string $token
      */
     public function setToken($token)

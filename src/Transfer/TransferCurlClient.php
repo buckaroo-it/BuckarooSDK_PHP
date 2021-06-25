@@ -74,8 +74,8 @@ class TransferCurlClient implements TransferClientInterface
 
         // check for curl errors
         if ($result === false) {
-            $this->logger->error(__METHOD__ . '|5|', [curl_error($curl)]);
-            throw new Exception('Buckaroo API curl error: ' . curl_error($curl));
+            $this->logger->error(__METHOD__ . '|5|', [curl_error($curl), $curlInfo]);
+            throw new Exception('Buckaroo API call error');
         }
 
         $this->logger->info(__METHOD__ . '|10|');

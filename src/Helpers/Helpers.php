@@ -418,7 +418,7 @@ class Helpers
             return false;
         }
 
-        $signature = $this->calculateSignature($postData, $secretKey);
+        $signature = self::calculateSignature($postData, $secretKey);
 
         if ($signature !== $postData['brq_signature']) {
             return false;
@@ -434,17 +434,17 @@ class Helpers
      *
      * @return string
      */
-    protected function calculateSignature($postData, $secretKey)
+    protected static function calculateSignature($postData, $secretKey)
     {
         $copyData = $postData;
         unset($copyData['brq_signature']);
 
-        $sortableArray = $this->buckarooArraySort($copyData);
+        $sortableArray = self::buckarooArraySort($copyData);
 
         $signatureString = '';
 
         foreach ($sortableArray as $brq_key => $value) {
-            $value = $this->decodePushValue($brq_key, $value);
+            $value = self::decodePushValue($brq_key, $value);
 
             $signatureString .= $brq_key . '=' . $value;
         }
@@ -463,7 +463,7 @@ class Helpers
      *
      * @return array $sortableArray
      */
-    protected function buckarooArraySort($arrayToUse)
+    protected static function buckarooArraySort($arrayToUse)
     {
         $arrayToSort   = [];
         $originalArray = [];
@@ -491,7 +491,7 @@ class Helpers
      *
      * @return string
      */
-    private function decodePushValue($brq_key, $brq_value)
+    private static function decodePushValue($brq_key, $brq_value)
     {
         switch ($brq_key) {
             case 'brq_SERVICE_payconiq_PayconiqAndroidUrl':
