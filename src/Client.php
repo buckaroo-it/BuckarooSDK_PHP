@@ -32,9 +32,12 @@ use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 
 
-class BuckarooClient
+class Client
 {
     const SDK_VERSION   = "0.0.1";
+    const MODE_LIVE = 'live';
+    const MODE_TEST = 'test';
+
     const ENDPOINT_LIVE = "https://checkout.buckaroo.nl";
     const ENDPOINT_TEST = "https://testcheckout.buckaroo.nl";
 
@@ -91,14 +94,20 @@ class BuckarooClient
         $this->config->set('secretKey', $secretKey);
     }
 
+    public function setMode($mode)
+    {
+        $this->config->set('mode', $mode);
+    }
+
     public function setGuid($guid)
     {
         $this->config->set('guid', $guid);
     }
 
-    public function getTransactionUrl($mode = 'live')
+    public function getTransactionUrl()
     {
-        return ($mode == 'live' ? self::ENDPOINT_LIVE : self::ENDPOINT_TEST) . '/' . ltrim('json/Transaction', '/');
+        $mode = $this->config->get('mode');
+        return ($mode == self::MODE_LIVE ? self::ENDPOINT_LIVE : self::ENDPOINT_TEST) . '/' . ltrim('json/Transaction', '/');
     }
 
     protected function getHeaders($url, $data, $method)
@@ -144,7 +153,7 @@ class BuckarooClient
     protected function createDefaultLogger()
     {
         $logger = new Logger('buckaroo-sdk');
-        $logger->pushHandler(new StreamHandler('php://stdout', Logger::DEBUG));
+        $logger->pushHandler(new \Monolog\Handler\NullHandler());
 
         return $logger;
     }

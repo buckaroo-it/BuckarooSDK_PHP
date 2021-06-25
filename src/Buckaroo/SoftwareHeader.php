@@ -2,11 +2,6 @@
 
 namespace Buckaroo\SDK\Buckaroo;
 
-use Buckaroo\SDK\Helpers\PluginInfo;
-use Shopware;
-use Shopware\Core\Framework\Plugin\PluginService;
-use Shopware\Core\Framework\Context;
-
 class SoftwareHeader
 {
     public function __construct() {

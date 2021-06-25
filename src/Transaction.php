@@ -19,24 +19,15 @@
  */
 namespace Buckaroo\SDK;
 
-use Buckaroo\SDK\BuckarooClient;
+use Buckaroo\SDK\Client;
 use Buckaroo\SDK\Buckaroo\Payload\TransactionRequest;
 use Buckaroo\SDK\Helpers\Helpers;
 
 class Transaction
 {
-    public static function create($options = array())
+    public static function create(Client $buckarooClient, $options = array())
     {
-        $buckarooClient = new BuckarooClient();
-        $request        = new TransactionRequest();
-
-        if (isset($options['websiteKey'])) {
-            $buckarooClient->setWebsiteKey($options['websiteKey']);
-        }
-
-        if (isset($options['secretKey'])) {
-            $buckarooClient->setSecretKey($options['secretKey']);
-        }
+        $request = new TransactionRequest();
 
         if (isset($options['serviceName'])) {
             $request->setServiceName($options['serviceName']);
@@ -82,10 +73,8 @@ class Transaction
             $request->setServiceParameter('issuer', $options['issuer']);
         }
 
-        $mode = isset($options['mode']) && $options['mode'] == 'test' ? 'test' : 'live';
-
         try {
-            return $buckarooClient->post($buckarooClient->getTransactionUrl($mode), $request, 'Buckaroo\SDK\Buckaroo\Payload\TransactionResponse');
+            return $buckarooClient->post($buckarooClient->getTransactionUrl(), $request, 'Buckaroo\SDK\Buckaroo\Payload\TransactionResponse');
         } catch (Exception $e) {
             return ['error'=>$e->getMessage()];
         }

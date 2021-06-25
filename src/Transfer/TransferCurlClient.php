@@ -110,8 +110,8 @@ class TransferCurlClient implements TransferClientInterface
         curl_setopt($curl, CURLOPT_TIMEOUT, 60);
 
         //ZAK
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+        //curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+        //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
     }
 
     protected function getCurlHeaders($curl, &$headers)
