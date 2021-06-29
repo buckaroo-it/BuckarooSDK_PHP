@@ -30,9 +30,11 @@ class TransactionRequest extends Request
     /**
      * Set the remote IP of the customer
      */
-    public function setClientIP()
+    public function setClientIP($remoteIp = null)
     {
-        $remoteIp = Helpers::getRemoteIp();
+        if (!$remoteIp) {
+            $remoteIp = Helpers::getRemoteIp();
+        }
 
         $this->data['ClientIP'] = [
             'Type'    => IPProtocolVersion::getVersion($remoteIp),
@@ -60,16 +62,16 @@ class TransactionRequest extends Request
         if (!isset($this->data['Services']['ServiceList'])) {
             $this->data['Services']['ServiceList'] = [];
         }
-
+/*
         if (!isset($this->data['Services']['ServiceList'][0])) {
             $this->data['Services']['ServiceList'][0] = [
-                'Action' => 'Pay',
+                'Action' => 'Pay!!!', //ZAK
                 'Version' => 1,
                 'Name' => '',
                 'Parameters' => []
             ];
         }
-
+*/
         if (!isset($this->data['Services']['ServiceList'][0]['Parameters'])) {
             $this->data['Services']['ServiceList'][0]['Parameters'] = [];
         }

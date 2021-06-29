@@ -3,8 +3,6 @@ require_once (__DIR__ . "/init.php");
 
 use \Buckaroo\SDK\Transaction;
 
-$orderId = 's_' . date("Ymd H:i:s");
-
 ?>
 <!doctype html>
 <html lang="en">
@@ -17,11 +15,11 @@ $orderId = 's_' . date("Ymd H:i:s");
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <title>SDK</title>
   </head>
-  <body>
+  <body style="padding:10px;">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-    <div class="row d-flex justify-content-center">
-        <a href="/"><h1>SDK test</h1></a>
-        <div class="d-flex justify-content-center">
+    <div class="row d-flex">
+        <a href="<?php echo $baseUrl; ?>"><h1>SDK test</h1></a>
+        <div class="d-flex">
             <form action="" method="post">
                 <div class="form-group">
                     <label for="orderId">order Id</label>
@@ -43,13 +41,13 @@ if(isset($_GET['status'])){
                 "post" => $_POST,
                 "secretKey" => $secretKey,
             ]);
-            echo 'push'; die();
+            echo '<br><br>push'; die();
             break;
         case 'return':
-            echo 'return'; die();
+            echo '<br><br>return'; var_dump($_POST);die();
             break;
         case 'returnCancel':
-            echo 'returnCancel'; die();
+            echo '<br><br>returnCancel'; die();
             break;
     }
 }
@@ -75,58 +73,17 @@ if(isset($_POST['orderId'])){
 
     if ($response->hasRedirect()) {
         if($response->isAwaitingConsumer() || $response->isPendingProcessing() || $response->isWaitingOnUserInput()){
-            echo 'pendingPaymentStatus';
+            echo 'Status: pendingPaymentStatus';
         }
         // header("Location: " . $response->getRedirectUrl(), true, 303);
-        echo '<a href="'.$response->getRedirectUrl().'" target="_blank">Redirect</a>'; die();
+        echo '<br><br><a href="'.$response->getRedirectUrl().'" target="_blank">Proceed with redirect</a>'; die();
     } elseif ($response->isSuccess() || $response->isAwaitingConsumer() || $response->isPendingProcessing() || $response->isWaitingOnUserInput()) {
         if(!$response->isSuccess()){
-            echo 'pendingPaymentStatus';
+            echo '<br><br>Status: pendingPaymentStatus';
         }
-        echo 'checkout.finish.page'; die();
+        echo '<br><br>checkout.finish.page'; die();
     } elseif ($response->isCanceled()) {
         die('CustomerCanceledAsyncPaymentException');
     }
 }
 
-/*$buckarooClient = new \Buckaroo\SDK\BuckarooClient();
-$buckarooClient->setWebsiteKey($websiteKey);
-$buckarooClient->setSecretKey($secretKey);
-
-$request = new \Buckaroo\SDK\Buckaroo\Payload\TransactionRequest();
-$request->setServiceName('ideal');
-$request->setServiceVersion('2');
-$request->setAmountCredit(0);
-$request->setAmountDebit('10.10');
-$request->setInvoice($orderId);
-$request->setOrder($orderId);
-$request->setCurrency($currencyCode);
-$request->setServiceParameter('issuer', 'ABNANL2A');
-
-$url = $buckarooClient->getTransactionUrl('test');
-try {
-    $response = $buckarooClient->post($url, $request, 'Buckaroo\SDK\Buckaroo\Payload\TransactionResponse');
-
-    if ($response->hasRedirect()) {
-        if($response->isAwaitingConsumer() || $response->isPendingProcessing() || $response->isWaitingOnUserInput()){
-            echo 'pendingPaymentStatus';
-        }
-        echo '<a href="'.$response->getRedirectUrl().'" target="_blank">Redirect</a>'; die();
-    } elseif ($response->isSuccess() || $response->isAwaitingConsumer() || $response->isPendingProcessing() || $response->isWaitingOnUserInput()) {
-        if(!$response->isSuccess()){
-            echo 'pendingPaymentStatus';
-        }
-        echo 'checkout.finish.page'; die();
-    } elseif ($response->isCanceled()) {
-        die('CustomerCanceledAsyncPaymentException');
-    }
-    echo 'other end';
-
-} catch (Exception $e) {
-    echo "<pre style='color:#ff0000'>";
-    print_r($e->getMessage());
-    echo "</pre>";die;
-}
-
-echo 'end';
-*/

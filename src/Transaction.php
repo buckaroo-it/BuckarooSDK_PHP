@@ -77,6 +77,17 @@ class Transaction
             $request->setServiceParameter('issuer', $options['issuer']);
         }
 
+        if (isset($options['serviceParameters'])) {
+            foreach ($options['serviceParameters'] as $item) {
+                $request->setServiceParameter(
+                    $item['name'],
+                    $item['value'],
+                    $item['groupType'] ?? null,
+                    $item['groupId'] ?? null
+                );
+            }
+        }
+
         try {
             return $buckarooClient->post(
                 $buckarooClient->getTransactionUrl(),
