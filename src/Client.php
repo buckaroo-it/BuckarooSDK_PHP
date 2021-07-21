@@ -72,11 +72,10 @@ class Client
     protected $transferClient;
 
     public function __construct(
-        $params = null,
-        TransferClientInterface $transferClient = null,
-        LoggerInterface $logger = null
+        LoggerInterface $logger = null,
+        TransferClientInterface $transferClient = null
     ) {
-        $this->config   = new Config($params);
+        $this->config   = new Config();
         $this->hmac     = new HmacHeader($this->config);
         $this->software = new SoftwareHeader();
         $this->culture  = new CultureHeader();
@@ -145,12 +144,8 @@ class Client
         $headers = $this->getHeaders($url, $json, $method);
         $headers = array_merge($headers, $data->getHeaders());
 
-        try {
-            list($decodedResult, $curlInfo, $responseHeaders) =
-                $this->transferClient->call($url, $headers, $method, $json, $responseClass);
-        } catch (Exception $e) {
-            return ['error' => $e->getMessage()];
-        }
+        list($decodedResult, $curlInfo, $responseHeaders) =
+            $this->transferClient->call($url, $headers, $method, $json, $responseClass);
 
         $response = new $responseClass($decodedResult, $curlInfo, $responseHeaders);
 

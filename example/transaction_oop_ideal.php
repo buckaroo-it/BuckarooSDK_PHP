@@ -22,8 +22,7 @@ try {
         $request,
         'Buckaroo\SDK\Payload\TransactionResponse'
     );
-} catch (Exception $e) {
-    return ['error' => $e->getMessage()];
+    handleResponse($response);
+} catch (\Exception $e) {
+    handleException($e);
 }
-
-var_dump($response);die();

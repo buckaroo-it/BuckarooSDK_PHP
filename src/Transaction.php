@@ -92,15 +92,11 @@ class Transaction
             }
         }
 
-        try {
-            return $buckarooClient->post(
-                $buckarooClient->getTransactionUrl(),
-                $request,
-                'Buckaroo\SDK\Payload\TransactionResponse'
-            );
-        } catch (Exception $e) {
-            return ['error' => $e->getMessage()];
-        }
+        return $buckarooClient->post(
+            $buckarooClient->getTransactionUrl(),
+            $request,
+            'Buckaroo\SDK\Payload\TransactionResponse'
+        );
     }
 
     public static function push($options = array())
