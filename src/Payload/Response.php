@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Buckaroo\SDK\Buckaroo\Payload;
+namespace Buckaroo\SDK\Payload;
 
 use ArrayAccess;
 use Buckaroo\SDK\Helpers\Arrayable;

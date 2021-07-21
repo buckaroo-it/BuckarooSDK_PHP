@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Buckaroo\SDK\Buckaroo;
+namespace Buckaroo\SDK\Helpers;
 
 use Buckaroo\SDK\Helpers\Config;
-use Buckaroo\SDK\Helpers\Helpers;
+use Buckaroo\SDK\Helpers\Base;
 
 /**
  * Class to create the security header for Buckaroo
@@ -63,7 +63,7 @@ class HmacHeader
     protected function getNonce()
     {
         $length = 16;
-        return Helpers::stringRandom($length);
+        return Base::stringRandom($length);
     }
 
     protected function getTimeStamp()
@@ -95,8 +95,8 @@ class HmacHeader
 
     protected function escapeRequestUri($requestUri)
     {
-        $requestUri = Helpers::stringRemoveStart($requestUri, 'http://');
-        $requestUri = Helpers::stringRemoveStart($requestUri, 'https://');
+        $requestUri = Base::stringRemoveStart($requestUri, 'http://');
+        $requestUri = Base::stringRemoveStart($requestUri, 'https://');
 
         return strtolower(rawurlencode($requestUri));
     }

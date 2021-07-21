@@ -23,10 +23,10 @@ declare(strict_types=1);
 
 namespace Buckaroo\SDK;
 
-use Buckaroo\SDK\Buckaroo\CultureHeader;
-use Buckaroo\SDK\Buckaroo\HmacHeader;
-use Buckaroo\SDK\Buckaroo\Payload\Request;
-use Buckaroo\SDK\Buckaroo\SoftwareHeader;
+use Buckaroo\SDK\Helpers\CultureHeader;
+use Buckaroo\SDK\Helpers\HmacHeader;
+use Buckaroo\SDK\Payload\Request;
+use Buckaroo\SDK\Helpers\SoftwareHeader;
 use Buckaroo\SDK\Helpers\Config;
 use Buckaroo\SDK\Transfer\TransferClientInterface;
 use Buckaroo\SDK\Transfer\TransferCurlClient;
@@ -47,17 +47,17 @@ class Client
     private const METHOD_POST = 'POST';
 
     /**
-     * @var Buckaroo\SDK\Buckaroo\HmacHeader
+     * @var Buckaroo\SDK\Helpers\HmacHeader
      */
     protected $hmac;
 
     /**
-     * @var Buckaroo\SDK\Buckaroo\SoftwareHeader
+     * @var Buckaroo\SDK\Helpers\SoftwareHeader
      */
     protected $software;
 
     /**
-     * @var Buckaroo\SDK\Buckaroo\CultureHeader
+     * @var Buckaroo\SDK\Helpers\CultureHeader
      */
     protected $culture;
 
@@ -119,12 +119,12 @@ class Client
         ];
     }
 
-    public function get($url, $responseClass = 'Buckaroo\SDK\Buckaroo\Payload\Response')
+    public function get($url, $responseClass = 'Buckaroo\SDK\Payload\Response')
     {
         return $this->call($url, self::METHOD_GET, null, $responseClass);
     }
 
-    public function post($url, Request $data = null, $responseClass = 'Buckaroo\SDK\Buckaroo\Payload\Response')
+    public function post($url, Request $data = null, $responseClass = 'Buckaroo\SDK\Payload\Response')
     {
         return $this->call($url, self::METHOD_POST, $data, $responseClass);
     }
@@ -133,7 +133,7 @@ class Client
         $url,
         $method = self::METHOD_GET,
         Request $data = null,
-        $responseClass = 'Buckaroo\SDK\Buckaroo\Payload\Response'
+        $responseClass = 'Buckaroo\SDK\Payload\Response'
     ) {
         if (!$data) {
             $data = new Request();

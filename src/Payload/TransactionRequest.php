@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Buckaroo\SDK\Buckaroo\Payload;
+namespace Buckaroo\SDK\Payload;
 
 use Exception;
-use Buckaroo\SDK\Buckaroo\Payload\Request;
+use Buckaroo\SDK\Payload\Request;
 use Buckaroo\SDK\Helpers\Constants\IPProtocolVersion;
-use Buckaroo\SDK\Helpers\Helpers;
+use Buckaroo\SDK\Helpers\Base;
 
 class TransactionRequest extends Request
 {
@@ -33,7 +33,7 @@ class TransactionRequest extends Request
     public function setClientIP($remoteIp = null)
     {
         if (!$remoteIp) {
-            $remoteIp = Helpers::getRemoteIp();
+            $remoteIp = Base::getRemoteIp();
         }
 
         $this->data['ClientIP'] = [
@@ -47,7 +47,7 @@ class TransactionRequest extends Request
      */
     public function setClientUserAgent()
     {
-        $this->data['ClientUserAgent'] = Helpers::getRemoteUserAgent();
+        $this->data['ClientUserAgent'] = Base::getRemoteUserAgent();
     }
 
     /**

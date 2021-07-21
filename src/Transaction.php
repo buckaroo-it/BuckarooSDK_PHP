@@ -24,8 +24,8 @@ declare(strict_types=1);
 namespace Buckaroo\SDK;
 
 use Buckaroo\SDK\Client;
-use Buckaroo\SDK\Buckaroo\Payload\TransactionRequest;
-use Buckaroo\SDK\Helpers\Helpers;
+use Buckaroo\SDK\Payload\TransactionRequest;
+use Buckaroo\SDK\Helpers\Base;
 
 class Transaction
 {
@@ -96,7 +96,7 @@ class Transaction
             return $buckarooClient->post(
                 $buckarooClient->getTransactionUrl(),
                 $request,
-                'Buckaroo\SDK\Buckaroo\Payload\TransactionResponse'
+                'Buckaroo\SDK\Payload\TransactionResponse'
             );
         } catch (Exception $e) {
             return ['error' => $e->getMessage()];
@@ -106,7 +106,7 @@ class Transaction
     public static function push($options = array())
     {
         if (isset($options['secretKey']) && isset($options['post'])) {
-            if (Helpers::validateSignature($options['post'], $options['secretKey'])) {
+            if (Base::validateSignature($options['post'], $options['secretKey'])) {
                 return $options['post'];
             }
         }

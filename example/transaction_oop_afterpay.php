@@ -1,7 +1,7 @@
 <?php 
 require_once (__DIR__ . '/init.php');
 
-use Buckaroo\SDK\Buckaroo\Payload\TransactionRequest;
+use Buckaroo\SDK\Payload\TransactionRequest;
 
 $request = new TransactionRequest();
 $request->setServiceName('afterpay');
@@ -53,7 +53,7 @@ try {
     $response = $client->post(
         $client->getTransactionUrl(),
         $request,
-        'Buckaroo\SDK\Buckaroo\Payload\TransactionResponse'
+        'Buckaroo\SDK\Payload\TransactionResponse'
     );
 } catch (Exception $e) {
     return ['error' => $e->getMessage()];

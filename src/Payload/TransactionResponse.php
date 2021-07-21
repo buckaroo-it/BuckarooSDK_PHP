@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Buckaroo\SDK\Buckaroo\Payload;
+namespace Buckaroo\SDK\Payload;
 
-use Buckaroo\SDK\Buckaroo\Payload\Response;
+use Buckaroo\SDK\Payload\Response;
 use Buckaroo\SDK\Helpers\Constants\ResponseStatus;
-use Buckaroo\SDK\Helpers\Helpers;
+use Buckaroo\SDK\Helpers\Base;
 
 class TransactionResponse extends Response
 {
@@ -362,7 +362,7 @@ class TransactionResponse extends Response
     public function hasSubCodeMessage()
     {
         return !empty($this->data['Status']['SubCode']['Description'])
-            && Helpers::stringContains($this->data['Status']['SubCode']['Description'], ':');
+            && Base::stringContains($this->data['Status']['SubCode']['Description'], ':');
     }
 
     /**

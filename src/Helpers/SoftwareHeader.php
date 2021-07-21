@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Buckaroo\SDK\Buckaroo;
+namespace Buckaroo\SDK\Helpers;
 
 class SoftwareHeader
 {

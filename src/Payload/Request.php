@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Buckaroo\SDK\Buckaroo\Payload;
+namespace Buckaroo\SDK\Payload;
 
 use Exception;
 use ArrayAccess;
 use Buckaroo\SDK\Helpers\Arrayable;
-use Buckaroo\SDK\Helpers\Helpers;
+use Buckaroo\SDK\Helpers\Base;
 use JsonSerializable;
 
 class Request implements JsonSerializable, ArrayAccess, Arrayable
@@ -118,7 +118,7 @@ class Request implements JsonSerializable, ArrayAccess, Arrayable
      */
     public function getHeaders()
     {
-        return Helpers::arrayMap($this->headers, function ($value, $key) {
+        return Base::arrayMap($this->headers, function ($value, $key) {
             return $key . ': ' . $value;
         });
     }

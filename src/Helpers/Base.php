@@ -8,7 +8,7 @@ use Closure;
 use Countable;
 use InvalidArgumentException;
 
-class Helpers
+class Base
 {
     /**
      * Determine if the given value is "blank".
