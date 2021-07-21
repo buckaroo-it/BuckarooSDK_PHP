@@ -1,8 +1,9 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace Buckaroo\SDK\Helpers;
+
 use Buckaroo\SDK\Client;
 
 class Validate
@@ -19,6 +20,6 @@ class Validate
 
     public static function isMode($value)
     {
-        return in_array($value,[Client::MODE_LIVE,Client::MODE_TEST]);
+        return in_array($value, [Client::MODE_LIVE, Client::MODE_TEST]);
     }
 }

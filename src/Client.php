@@ -35,6 +35,7 @@ use Psr\Log\LoggerInterface;
 use Monolog\Logger;
 use Monolog\Handler\NullHandler;
 use Buckaroo\SDK\Helpers\Validate;
+use Buckaroo\SDK\Exceptions\SdkException;
 
 class Client
 {
@@ -87,7 +88,7 @@ class Client
     public function setWebsiteKey($websiteKey)
     {
         if(!Validate::isWebsiteKey($websiteKey)){
-            throw new Exception("Invalid Website Key: '{$websiteKey}'. ");
+            throw new SdkException($this->logger, __METHOD__ . '|1|', "Invalid Website Key: '{$websiteKey}'. ");
         }
         $this->config->set('websiteKey', $websiteKey);
     }
@@ -95,7 +96,7 @@ class Client
     public function setSecretKey($secretKey)
     {
         if(!Validate::isSecretKey($secretKey)){
-            throw new Exception("Invalid Secret Key: '{$secretKey}'. ");
+            throw new SdkException($this->logger, __METHOD__ . '|2|', "Invalid Secret Key: '{$secretKey}'. ");
         }
         $this->config->set('secretKey', $secretKey);
     }
@@ -103,7 +104,7 @@ class Client
     public function setMode($mode)
     {
         if(!Validate::isMode($mode)){
-            throw new Exception("Invalid Mode: '{$mode}'. ");
+            throw new SdkException($this->logger, __METHOD__ . '|3|', "Invalid Mode: '{$mode}'. ");
         }
         $this->config->set('mode', $mode);
     }
