@@ -23,11 +23,26 @@ declare(strict_types=1);
 
 namespace Buckaroo\SDK\Example;
 
+use Buckaroo\SDK\Payload\PaymentResult;
 use Buckaroo\SDK\Payload\TransactionResponse;
+use Psr\Log\LoggerInterface;
 
 class App
 {
-    public static function handleResponse(TransactionResponse $response)
+    protected $logger;
+
+    public function __construct(LoggerInterface $logger = null)
+    {
+        $this->logger = $logger;
+    }
+
+    public function handlePush($data)
+    {
+        $result = new PaymentResult($data);
+        $this->logger->info(__METHOD__ . '|1|', [$result->getData()]);
+    }
+
+    public function handleResponse(TransactionResponse $response)
     {
         if ($response) {
             if ($response->hasRedirect() && $response->getRedirectUrl()) {
@@ -45,20 +60,19 @@ class App
         } else {
             self::log('FAILED!');
         }
-
     }
 
-    public static function handleException(\Exception $e)
+    public function handleException(\Exception $e)
     {
         self::log('ERROR: ' . $e->getMessage());
     }
 
-    private static function isCli()
+    private function isCli()
     {
         return (php_sapi_name() == 'cli');
     }
 
-    private static function log($message)
+    private function log($message)
     {
         echo "\n" . $message;
     }

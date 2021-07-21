@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Buckaroo\JsonApi\Payload;
+namespace Buckaroo\SDK\Payload;
 
 use App\Buckaroo\Base\Helper;
 use Illuminate\Support\Facades\Log;

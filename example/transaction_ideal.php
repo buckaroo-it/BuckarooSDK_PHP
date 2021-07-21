@@ -2,7 +2,6 @@
 require_once (__DIR__ . '/init.php');
 
 use Buckaroo\SDK\Transaction;
-use Buckaroo\SDK\Example\App;
 
 try {
     $response = Transaction::create(
@@ -21,7 +20,7 @@ try {
             'pushURL' => $pushURL,
         ]
     );
-    App::handleResponse($response);
+    $app->handleResponse($response);
 } catch (\Exception $e) {
-    App::handleException($e);
+    $app->handleException($e);
 }
