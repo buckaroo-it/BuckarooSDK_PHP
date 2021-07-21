@@ -3,7 +3,7 @@ error_reporting(E_ALL);
 ini_set("display_errors", 1);
 
 require(__DIR__ . '/../vendor/autoload.php');
-require(__DIR__ . '/common.php');
+require(__DIR__ . '/App.php');
 
 use Buckaroo\SDK\Client;
 use Monolog\Logger;
@@ -15,9 +15,9 @@ $secretKey = "PUT_YOUR_SECRET_KEY_HERE";
 $orderId = 'sdk_' . date('ymdHis') . rand(1, 99);
 $currencyCode = 'EUR';
 $baseUrl = 'https://sdk.buckaroo.vlad.hysdev.com/example/';
-$returnURL = $baseUrl . 'index.php?status=return';
-$returnURLCancel = $baseUrl . 'index.php?status=returnCancel';
-$pushURL =  $baseUrl . 'index.php?status=push';
+$returnURL = $baseUrl . 'return.php';
+$returnURLCancel = $baseUrl . 'return.php';
+$pushURL =  $baseUrl . 'push.php';
 $ip = '45.14.110.5';
 
 $logger = new Logger('buckaroo-sdk');

@@ -10,26 +10,11 @@ use Exception;
 
 class Response implements ArrayAccess, Arrayable
 {
-    /**
-     * @var array
-     */
     protected $data = [];
 
-    /**
-     * @var array
-     */
-    protected $curlInfo = [];
-
-    /**
-     * @var array
-     */
-    protected $headers = [];
-
-    public function __construct($data, $curlInfo = [], $headers = [])
+    public function __construct($data)
     {
         $this->data     = $data;
-        $this->curlInfo = $curlInfo;
-        $this->headers  = $headers;
     }
 
     /** Implement ArrayAccess */
@@ -76,22 +61,6 @@ class Response implements ArrayAccess, Arrayable
         }
 
         throw new Exception("Call to undefined method " . __CLASS__ . '::' . $method);
-    }
-
-    /**
-     * @return int
-     */
-    public function getHttpCode()
-    {
-        return $this->curlInfo['http_code'];
-    }
-
-    /**
-     * @return string
-     */
-    public function getUrl()
-    {
-        return $this->curlInfo['url'];
     }
 
     /** Implement Arrayable */

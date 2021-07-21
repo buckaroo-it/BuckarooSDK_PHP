@@ -1,7 +1,7 @@
 <?php
 require_once (__DIR__ . "/init.php");
 
-use \Buckaroo\SDK\Transaction;
+use Buckaroo\SDK\Transaction;
 
 ?>
 <!doctype html>

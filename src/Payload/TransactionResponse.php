@@ -361,8 +361,7 @@ class TransactionResponse extends Response
      */
     public function hasSubCodeMessage()
     {
-        return !empty($this->data['Status']['SubCode']['Description'])
-            && Base::stringContains($this->data['Status']['SubCode']['Description'], ':');
+        return !empty($this->data['Status']['SubCode']['Description']);
     }
 
     /**
@@ -371,16 +370,10 @@ class TransactionResponse extends Response
     public function getSubCodeMessage()
     {
         if ($this->hasSubCodeMessage()) {
-            $parts = explode(':', $this->data['Status']['SubCode']['Description']);
-            return trim(array_pop($parts));
+            return $this->data['Status']['SubCode']['Description'];
         }
 
         return '';
-    }
-
-    public function getSubCodeMessageFull()
-    {
-        return $this->data['Status']['SubCode']['Description'];
     }
 
     /**

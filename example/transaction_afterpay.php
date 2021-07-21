@@ -1,7 +1,8 @@
 <?php 
 require_once (__DIR__ . '/init.php');
 
-use \Buckaroo\SDK\Transaction;
+use Buckaroo\SDK\Transaction;
+use Buckaroo\SDK\Example\App;
 
 try {
     $response = Transaction::create(
@@ -53,9 +54,9 @@ try {
             ]
         ]
     );
-    handleResponse($response);
+    App::handleResponse($response);
 } catch (\Exception $e) {
-    handleException($e);
+    App::handleException($e);
 }
 
 

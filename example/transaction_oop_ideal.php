@@ -2,6 +2,7 @@
 require_once (__DIR__ . '/init.php');
 
 use Buckaroo\SDK\Payload\TransactionRequest;
+use Buckaroo\SDK\Example\App;
 
 $request = new TransactionRequest();
 $request->setServiceName('ideal');
@@ -22,7 +23,7 @@ try {
         $request,
         'Buckaroo\SDK\Payload\TransactionResponse'
     );
-    handleResponse($response);
+    App::handleResponse($response);
 } catch (\Exception $e) {
-    handleException($e);
+    App::handleException($e);
 }
