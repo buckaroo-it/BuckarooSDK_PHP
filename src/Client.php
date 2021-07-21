@@ -34,6 +34,7 @@ use Exception;
 use Psr\Log\LoggerInterface;
 use Monolog\Logger;
 use Monolog\Handler\NullHandler;
+use Buckaroo\SDK\Helpers\Validate;
 
 class Client
 {
@@ -85,16 +86,25 @@ class Client
 
     public function setWebsiteKey($websiteKey)
     {
+        if(!Validate::isWebsiteKey($websiteKey)){
+            throw new Exception("Invalid Website Key: '{$websiteKey}'. ");
+        }
         $this->config->set('websiteKey', $websiteKey);
     }
 
     public function setSecretKey($secretKey)
     {
+        if(!Validate::isSecretKey($secretKey)){
+            throw new Exception("Invalid Secret Key: '{$secretKey}'. ");
+        }
         $this->config->set('secretKey', $secretKey);
     }
 
     public function setMode($mode)
     {
+        if(!Validate::isMode($mode)){
+            throw new Exception("Invalid Mode: '{$mode}'. ");
+        }
         $this->config->set('mode', $mode);
     }
 
