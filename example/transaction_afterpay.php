@@ -16,6 +16,7 @@ $response = Transaction::create(
         'returnURL' => $returnURL,
         'returnURLCancel' => $returnURLCancel,
         'pushURL' => $pushURL,
+        'clientIP' => $ip,
         'serviceParameters' => [
             [ 'name' => 'Description', 'value' => 'Blue Toy Car', 'groupType' => 'Article', 'groupId' => 1 ],
             [ 'name' => 'GrossUnitPrice', 'value' => 10.10, 'groupType' => 'Article', 'groupId' => 1 ],
@@ -23,67 +24,33 @@ $response = Transaction::create(
             [ 'name' => 'Quantity', 'value' => 1, 'groupType' => 'Article', 'groupId' => 1 ],
             [ 'name' => 'Identifier', 'value' => 'Articlenumber12345', 'groupType' => 'Article', 'groupId' => 1 ],
 
-            [ 'name' => 'Identifier', 'value' => 'Articlenumber12345', 'groupType' => 'Article', 'groupId' => 1 ],
-            //FINISH THIS!!!!!!!!!
+            [ 'name' => 'Category', 'value' => 'Person', 'groupType' => 'BillingCustomer' ],
+            [ 'name' => 'FirstName', 'value' => 'Test', 'groupType' => 'BillingCustomer' ],
+            [ 'name' => 'LastName', 'value' => 'Acceptatie', 'groupType' => 'BillingCustomer' ],
+            [ 'name' => 'Street', 'value' => 'Hoofdstraat', 'groupType' => 'BillingCustomer' ],
+            [ 'name' => 'StreetNumber', 'value' => '90', 'groupType' => 'BillingCustomer' ],
+            [ 'name' => 'StreetNumberAdditional', 'value' => 'A', 'groupType' => 'BillingCustomer' ],
+            [ 'name' => 'PostalCode', 'value' => '8441EE', 'groupType' => 'BillingCustomer' ],
+            [ 'name' => 'City', 'value' => 'Heerenveen', 'groupType' => 'BillingCustomer' ],
+            [ 'name' => 'PostalCode', 'value' => '8441EE', 'groupType' => 'BillingCustomer' ],
+            [ 'name' => 'Country', 'value' => 'NL', 'groupType' => 'BillingCustomer' ],
+            [ 'name' => 'Email', 'value' => 'billingcustomer@buckaroo.nl', 'groupType' => 'BillingCustomer' ],
+            [ 'name' => 'Phone', 'value' => '0109876543', 'groupType' => 'BillingCustomer' ],
+
+            [ 'name' => 'Salutation', 'value' => 'Mr', 'groupType' => 'BillingCustomer' ],
+            [ 'name' => 'BirthDate', 'value' => '01-01-1990', 'groupType' => 'BillingCustomer' ],
+
+            [ 'name' => 'FirstName', 'value' => 'Test', 'groupType' => 'ShippingCustomer' ],
+            [ 'name' => 'LastName', 'value' => 'Aflever', 'groupType' => 'ShippingCustomer' ],
+            [ 'name' => 'Street', 'value' => 'Afleverstraat', 'groupType' => 'ShippingCustomer' ],
+            [ 'name' => 'StreetNumber', 'value' => '80', 'groupType' => 'ShippingCustomer' ],
+            [ 'name' => 'StreetNumberAdditional', 'value' => 'B', 'groupType' => 'ShippingCustomer' ],
+            [ 'name' => 'PostalCode', 'value' => '7881ER', 'groupType' => 'ShippingCustomer' ],
+            [ 'name' => 'City', 'value' => 'Leeuwarden', 'groupType' => 'ShippingCustomer' ],
+            [ 'name' => 'Country', 'value' => 'NL', 'groupType' => 'ShippingCustomer' ],
+            [ 'name' => 'Email', 'value' => 'shippingcustomer@buckaroo.nl', 'groupType' => 'ShippingCustomer' ],
         ]
     ]
 );
-
-$request = new TransactionRequest();
-$request->setServiceName('afterpay');
-$request->setServiceVersion(1);
-$request->setServiceAction('Pay');
-$request->setAmountDebit(10.10);
-$request->setInvoice($orderId);
-$request->setOrder($orderId);
-$request->setCurrency($currencyCode);
-$request->setReturnURL($returnURL);
-$request->setReturnURLCancel($returnURLCancel);
-$request->setPushURL($pushURL);
-
-$request->setServiceParameter('Description', 'Blue Toy Car', 'Article', 1);
-$request->setServiceParameter('GrossUnitPrice', 10.10, 'Article', 1);
-$request->setServiceParameter('VatPercentage', 21, 'Article', 1);
-$request->setServiceParameter('Quantity', 1, 'Article', 1);
-$request->setServiceParameter('Identifier', 'Articlenumber12345', 'Article', 1);
-
-$request->setServiceParameter('Category', 'Person', 'BillingCustomer');
-$request->setServiceParameter('FirstName', 'Test', 'BillingCustomer');
-$request->setServiceParameter('LastName', 'Acceptatie', 'BillingCustomer');
-$request->setServiceParameter('Street', 'Hoofdstraat', 'BillingCustomer');
-$request->setServiceParameter('StreetNumber', '90', 'BillingCustomer');
-$request->setServiceParameter('StreetNumberAdditional', 'A', 'BillingCustomer');
-$request->setServiceParameter('PostalCode', '8441EE', 'BillingCustomer');
-$request->setServiceParameter('City', 'Heerenveen', 'BillingCustomer');
-$request->setServiceParameter('Country', 'NL', 'BillingCustomer');
-$request->setServiceParameter('Email', 'billingcustomer@buckaroo.nl', 'BillingCustomer');
-
-$request->setServiceParameter('Salutation', 'Mr', 'BillingCustomer');
-$request->setServiceParameter('BirthDate', '01-01-1990', 'BillingCustomer');
-$request->setServiceParameter('Phone', '0109876543', 'BillingCustomer');
-
-$request->setServiceParameter('FirstName', 'Test', 'ShippingCustomer');
-$request->setServiceParameter('LastName', 'Aflever', 'ShippingCustomer');
-$request->setServiceParameter('Street', 'Afleverstraat', 'ShippingCustomer');
-$request->setServiceParameter('StreetNumber', '80', 'ShippingCustomer');
-$request->setServiceParameter('StreetNumberAdditional', 'B', 'ShippingCustomer');
-$request->setServiceParameter('PostalCode', '7881ER', 'ShippingCustomer');
-$request->setServiceParameter('City', 'Leeuwarden', 'ShippingCustomer');
-$request->setServiceParameter('Country', 'NL', 'ShippingCustomer');
-$request->setServiceParameter('Email', 'shippingcustomer@buckaroo.nl', 'ShippingCustomer');
-
-$request->setServiceParameter('Phone', '0109876543', 'ShippingCustomer');
-
-$request->setClientIP('45.14.110.5');
-
-try {
-    $response = $client->post(
-        $client->getTransactionUrl(),
-        $request,
-        'Buckaroo\SDK\Buckaroo\Payload\TransactionResponse'
-    );
-} catch (Exception $e) {
-    return ['error' => $e->getMessage()];
-}
 
 var_dump($response);die();

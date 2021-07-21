@@ -11,12 +11,13 @@ use Monolog\Handler\StreamHandler;
 $websiteKey = "PUT_YOUR_WEBSITE_KEY_HERE";
 $secretKey = "PUT_YOUR_SECRET_KEY_HERE";
 
-$orderId = 'sdk_' . date('YmdHis');
+$orderId = 'sdk_' . date('ymdHis') . rand(1, 99);
 $currencyCode = 'EUR';
 $baseUrl = 'https://sdk.buckaroo.vlad.hysdev.com/example/';
 $returnURL = $baseUrl . 'index.php?status=return';
 $returnURLCancel = $baseUrl . 'index.php?status=returnCancel';
 $pushURL =  $baseUrl . 'index.php?status=push';
+$ip = '45.14.110.5';
 
 $logger = new Logger('buckaroo-sdk');
 $logger->pushHandler(new StreamHandler('php://stdout', Logger::DEBUG));

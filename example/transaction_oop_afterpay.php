@@ -31,10 +31,10 @@ $request->setServiceParameter('PostalCode', '8441EE', 'BillingCustomer');
 $request->setServiceParameter('City', 'Heerenveen', 'BillingCustomer');
 $request->setServiceParameter('Country', 'NL', 'BillingCustomer');
 $request->setServiceParameter('Email', 'billingcustomer@buckaroo.nl', 'BillingCustomer');
+$request->setServiceParameter('Phone', '0109876543', 'BillingCustomer');
 
 $request->setServiceParameter('Salutation', 'Mr', 'BillingCustomer');
 $request->setServiceParameter('BirthDate', '01-01-1990', 'BillingCustomer');
-$request->setServiceParameter('Phone', '0109876543', 'BillingCustomer');
 
 $request->setServiceParameter('FirstName', 'Test', 'ShippingCustomer');
 $request->setServiceParameter('LastName', 'Aflever', 'ShippingCustomer');
@@ -45,10 +45,9 @@ $request->setServiceParameter('PostalCode', '7881ER', 'ShippingCustomer');
 $request->setServiceParameter('City', 'Leeuwarden', 'ShippingCustomer');
 $request->setServiceParameter('Country', 'NL', 'ShippingCustomer');
 $request->setServiceParameter('Email', 'shippingcustomer@buckaroo.nl', 'ShippingCustomer');
-
 $request->setServiceParameter('Phone', '0109876543', 'ShippingCustomer');
 
-$request->setClientIP('45.14.110.5');
+$request->setClientIP($ip);
 
 try {
     $response = $client->post(

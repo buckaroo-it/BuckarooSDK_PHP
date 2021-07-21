@@ -73,6 +73,10 @@ class Transaction
             $request->setPushURL($options['pushURL']);
         }
 
+        if (isset($options['clientIP'])) {
+            $request->setClientIP($options['clientIP']);
+        }
+
         if (isset($options['issuer'])) {
             $request->setServiceParameter('issuer', $options['issuer']);
         }
