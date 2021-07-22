@@ -7,11 +7,16 @@ use Buckaroo\SDK\Client;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\NullHandler;
+use Monolog\Handler\BrowserConsoleHandler;
 use Buckaroo\SDK\Example\App;
 
 $logger = new Logger('buckaroo-sdk');
 if ($debug) {
-    $logger->pushHandler(new StreamHandler('php://stdout', Logger::DEBUG));
+    if (php_sapi_name() == 'cli') {
+        $logger->pushHandler(new StreamHandler('php://stdout', Logger::DEBUG));
+    } else {
+        $logger->pushHandler(new BrowserConsoleHandler());
+    }
 } else {
     $logger->pushHandler(new NullHandler());
 }

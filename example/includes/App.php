@@ -44,7 +44,8 @@ class App
             $this->logger->debug(
                 __METHOD__ . '|5|',
                 [
-                    $result->getTransactionMethod(),
+                    $result->getServiceName(),
+                    $result->getStatusCode(),
                     $result->getOrder(),
                     $result->getTransactionKey()
                 ]
@@ -64,6 +65,15 @@ class App
         } else {
             $this->logger->debug(__METHOD__ . '|35|');
         }
+        return $result;
+    }
+
+    public function handleReturn($data, $secretKey)
+    {
+        $result = $this->handlePush($data, $secretKey);
+        $this->print('Response status: '. $result->getStatusCode());
+        $this->print('Description: '. $result->getSubCodeMessage());
+        //$this->print('Raw response: '. var_export($result->getData(),true));
     }
 
     public function handleResponse(TransactionResponse $response)
@@ -78,7 +88,7 @@ class App
             } else {
                 $this->print('Response status: '. $response->getStatusCode());
                 if ($response->hasSomeError()) {
-                    $this->print('API description: '. $response->getSomeError());
+                    $this->print('Description: '. $response->getSomeError());
                 }
             }
         } else {
@@ -93,6 +103,6 @@ class App
 
     private function print($message)
     {
-        echo "\n" . $message;
+        echo $message . ((php_sapi_name() == 'cli') ? "\n" : "<br>");
     }
 }

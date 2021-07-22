@@ -11,6 +11,8 @@ Check demo config and run samples in "example" dir
         $ cd vendor/buckaroo/sdk/example
         $ cat config.php
         $ php transactions/ideal.php
+        $ or 
+        $ point your browser to $baseUrl
 
 Support:
 

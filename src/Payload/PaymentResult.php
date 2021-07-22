@@ -318,7 +318,7 @@ class PaymentResult
      */
     public function getServiceName()
     {
-        return $this->getData('BRQ_TRANSACTION_METHOD');
+        return $this->getData('BRQ_TRANSACTION_METHOD') ?? $this->getData('BRQ_PAYMENT_METHOD');
     }
 
     /**
@@ -386,14 +386,6 @@ class PaymentResult
     public function getIsTest()
     {
         return $this->data['BRQ_TEST'];
-    }
-
-    /**
-     * @return string
-     */
-    public function getTransactionMethod()
-    {
-        return $this->getServiceName();
     }
 
     /**
