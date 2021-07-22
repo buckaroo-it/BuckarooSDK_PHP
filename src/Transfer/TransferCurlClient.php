@@ -45,7 +45,7 @@ class TransferCurlClient implements TransferClientInterface
 
     public function call(string $url, array $headers, string $method, string $data = null)
     {
-        $this->logger->info(__METHOD__ . '|1|', [$url, $headers, $method, !empty($data) ? json_decode($data) : '']);
+        $this->logger->debug(__METHOD__ . '|1|', [$url, $headers, $method, !empty($data) ? json_decode($data) : '']);
 
         if (!in_array($method, $this->validMethods)) {
             throw new TransferException(
@@ -93,7 +93,7 @@ class TransferCurlClient implements TransferClientInterface
             );
         }
 
-        $this->logger->info(__METHOD__ . '|15|');
+        $this->logger->debug(__METHOD__ . '|15|');
 
         $decodedResult = json_decode($result, true);
 
@@ -119,7 +119,7 @@ class TransferCurlClient implements TransferClientInterface
 
         curl_close($curl);
 
-        $this->logger->info(__METHOD__ . '|20|', [$decodedResult, $curlInfo, $responseHeaders]);
+        $this->logger->debug(__METHOD__ . '|20|', [$decodedResult, $curlInfo, $responseHeaders]);
 
         return [$decodedResult, $curlInfo, $responseHeaders];
     }

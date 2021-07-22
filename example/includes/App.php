@@ -39,9 +39,9 @@ class App
     public function handlePush($data, $secretKey)
     {
         $result = new PaymentResult($data);
-        $this->logger->info(__METHOD__ . '|1|', [$result->getData()]);
+        $this->logger->debug(__METHOD__ . '|1|', [$result->getData()]);
         if ($result->isValid($secretKey)) {
-            $this->logger->info(
+            $this->logger->debug(
                 __METHOD__ . '|5|',
                 [
                     $result->getTransactionMethod(),
@@ -51,18 +51,18 @@ class App
             );
 
             if ($result->isSuccess()) {
-                $this->logger->info(__METHOD__ . '|10|');
+                $this->logger->debug(__METHOD__ . '|10|');
             } elseif ($result->isCanceled()) {
-                $this->logger->info(__METHOD__ . '|15|');
+                $this->logger->debug(__METHOD__ . '|15|');
             } elseif ($result->isAwaitingConsumer()) {
-                $this->logger->info(__METHOD__ . '|20|');
+                $this->logger->debug(__METHOD__ . '|20|');
             } elseif ($result->isPendingProcessing()) {
-                $this->logger->info(__METHOD__ . '|25|');
+                $this->logger->debug(__METHOD__ . '|25|');
             } elseif ($result->isWaitingOnUserInput()) {
-                $this->logger->info(__METHOD__ . '|30|');
+                $this->logger->debug(__METHOD__ . '|30|');
             }
         } else {
-            $this->logger->info(__METHOD__ . '|35|');
+            $this->logger->debug(__METHOD__ . '|35|');
         }
     }
 
@@ -70,33 +70,28 @@ class App
     {
         if ($response) {
             if ($response->hasRedirect() && $response->getRedirectUrl()) {
-                if (self::isCli()) {
-                    self::log('Redirect to '. $response->getRedirectUrl());
+                if (php_sapi_name() == 'cli') {
+                    $this->print('Redirect to '. $response->getRedirectUrl());
                 } else {
                     header('Location: ' . $response->getRedirectUrl(), true, 302);
                 }
             } else {
-                self::log('Response status: '. $response->getStatusCode());
+                $this->print('Response status: '. $response->getStatusCode());
                 if ($response->hasSomeError()) {
-                    self::log('API description: '. $response->getSomeError());
+                    $this->print('API description: '. $response->getSomeError());
                 }
             }
         } else {
-            self::log('FAILED!');
+            $this->print('FAILED!');
         }
     }
 
     public function handleException(\Exception $e)
     {
-        self::log('ERROR: ' . $e->getMessage());
+        $this->print('ERROR: ' . $e->getMessage());
     }
 
-    private function isCli()
-    {
-        return (php_sapi_name() == 'cli');
-    }
-
-    private function log($message)
+    private function print($message)
     {
         echo "\n" . $message;
     }
