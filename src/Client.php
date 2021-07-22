@@ -87,7 +87,7 @@ class Client
 
     public function setWebsiteKey($websiteKey)
     {
-        if(!Validate::isWebsiteKey($websiteKey)){
+        if (!Validate::isWebsiteKey($websiteKey)) {
             throw new SdkException($this->logger, __METHOD__ . '|1|', "Invalid Website Key: '{$websiteKey}'. ");
         }
         $this->config->set('websiteKey', $websiteKey);
@@ -95,7 +95,7 @@ class Client
 
     public function setSecretKey($secretKey)
     {
-        if(!Validate::isSecretKey($secretKey)){
+        if (!Validate::isSecretKey($secretKey)) {
             throw new SdkException($this->logger, __METHOD__ . '|2|', "Invalid Secret Key: '{$secretKey}'. ");
         }
         $this->config->set('secretKey', $secretKey);
@@ -103,7 +103,7 @@ class Client
 
     public function setMode($mode)
     {
-        if(!Validate::isMode($mode)){
+        if (!Validate::isMode($mode)) {
             throw new SdkException($this->logger, __METHOD__ . '|3|', "Invalid Mode: '{$mode}'. ");
         }
         $this->config->set('mode', $mode);

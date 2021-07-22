@@ -11,4 +11,4 @@ $logger = new Logger('buckaroo-sdk');
 $logger->pushHandler(new StreamHandler('logs/push.txt', Logger::DEBUG));
 
 $app = new App($logger);
-$app->handlePush($_POST);
+$app->handlePush($_POST, $secretKey);

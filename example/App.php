@@ -36,10 +36,34 @@ class App
         $this->logger = $logger;
     }
 
-    public function handlePush($data)
+    public function handlePush($data, $secretKey)
     {
         $result = new PaymentResult($data);
         $this->logger->info(__METHOD__ . '|1|', [$result->getData()]);
+        if ($result->isValid($secretKey)) {
+            $this->logger->info(
+                __METHOD__ . '|5|',
+                [
+                    $result->getTransactionMethod(),
+                    $result->getOrder(),
+                    $result->getTransactionKey()
+                ]
+            );
+
+            if ($result->isSuccess()) {
+                $this->logger->info(__METHOD__ . '|10|');
+            } elseif ($result->isCanceled()) {
+                $this->logger->info(__METHOD__ . '|15|');
+            } elseif ($result->isAwaitingConsumer()) {
+                $this->logger->info(__METHOD__ . '|20|');
+            } elseif ($result->isPendingProcessing()) {
+                $this->logger->info(__METHOD__ . '|25|');
+            } elseif ($result->isWaitingOnUserInput()) {
+                $this->logger->info(__METHOD__ . '|30|');
+            }
+        } else {
+            $this->logger->info(__METHOD__ . '|35|');
+        }
     }
 
     public function handleResponse(TransactionResponse $response)
