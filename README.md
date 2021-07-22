@@ -9,8 +9,8 @@ To install PHP sdk
 Check demo config and run samples in "example" dir
 
         $ cd vendor/buckaroo/sdk/example
-        $ cat init.php
-        $ php transaction_ideal.php
+        $ cat config.php
+        $ php transactions/ideal.php
 
 Support:
 
