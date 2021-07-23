@@ -5,14 +5,15 @@
 To install PHP sdk
 
         $ composer require buckaroo/sdk
+        $ composer update
 
 Check demo config and run samples in "example" dir
 
         $ cd vendor/buckaroo/sdk/example
-        $ cat config.php
+        $ mcedit config.php
         $ php transactions/ideal.php
         $ or 
-        $ point your browser to $baseUrl
+        $ point your browser to $baseUrl specified in config.php 
 
 Support:
 

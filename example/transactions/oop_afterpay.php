@@ -1,5 +1,6 @@
 <?php 
 require_once (__DIR__ . '/../includes/init.php');
+require_once (__DIR__ . '/../html/header.php');
 
 use Buckaroo\SDK\Payload\TransactionRequest;
 
@@ -59,3 +60,5 @@ try {
 } catch (\Exception $e) {
     $app->handleException($e);
 }
+
+require_once (__DIR__ . '/../html/footer.php');

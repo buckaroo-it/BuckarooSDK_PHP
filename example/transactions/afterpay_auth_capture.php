@@ -10,7 +10,7 @@ try {
         [
             'serviceName' => 'afterpay',
             'serviceVersion' => 1,
-            'serviceAction' => 'Pay',
+            'serviceAction' => 'Authorize',
             'amountDebit' => 10.10,
             'invoice' => $orderId,
             'order' => $orderId,
