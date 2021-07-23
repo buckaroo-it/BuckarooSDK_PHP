@@ -37,8 +37,16 @@ class Transaction
             $request->setServiceName($options['serviceName']);
         }
 
+        if (isset($options['serviceAction'])) {
+            $request->setServiceAction($options['serviceAction']);
+        }
+
         if (isset($options['serviceVersion'])) {
             $request->setServiceVersion($options['serviceVersion']);
+        }
+        
+        if (isset($options['originalTransactionKey'])) {
+            $request->setOriginalTransactionKey($options['originalTransactionKey']);
         }
 
         if (isset($options['amountCredit'])) {
