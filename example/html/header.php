@@ -19,6 +19,9 @@
                             <a href="<?php echo $baseUrl; ?>transactions/ideal.php">ideal</a>
                         </li>
                         <li>
+                            <a href="<?php echo $baseUrl; ?>transactions/ideal_refund.php">ideal (refund)</a>
+                        </li>
+                        <li>
                             <a href="<?php echo $baseUrl; ?>transactions/afterpay.php">afterpay (pay)</a>
                         </li>
                         <li>
