@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Buckaroo\SDK\Payload;
+namespace Buckaroo\Payload;
 
 use ArrayAccess;
-use Buckaroo\SDK\Helpers\Arrayable;
+use Buckaroo\Helpers\Arrayable;
 use Exception;
 
 class Response implements ArrayAccess, Arrayable

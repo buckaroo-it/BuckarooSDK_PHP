@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Buckaroo\SDK\Payload;
+namespace Buckaroo\Payload;
 
-use Buckaroo\SDK\Payload\TransactionRequest;
+use Buckaroo\Payload\TransactionRequest;
 
 /**
  * DataRequest inherits from TransactionRequest

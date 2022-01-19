@@ -1,6 +1,6 @@
 <?php
 
-namespace Buckaroo\SDK\Helpers;
+namespace Buckaroo\Helpers;
 
 class CultureHeader
 {

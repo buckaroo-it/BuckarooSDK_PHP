@@ -1,7 +1,7 @@
 <?php 
 require_once (__DIR__ . '/../includes/init.php');
 
-use Buckaroo\SDK\Transaction;
+use Buckaroo\Transaction;
 
 try {
     $response = Transaction::create(

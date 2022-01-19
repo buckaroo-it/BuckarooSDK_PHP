@@ -3,13 +3,13 @@ require(__DIR__ . '/../../vendor/autoload.php');
 require(__DIR__ . '/../config.php');
 require(__DIR__ . '/../includes/App.php');
 
-use Buckaroo\SDK\Client;
-use Buckaroo\SDK\HttpClient\HttpClientGuzzle;
+use Buckaroo\Client;
+use Buckaroo\HttpClient\HttpClientGuzzle;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\BrowserConsoleHandler;
-use Buckaroo\SDK\Example\App;
+use Buckaroo\Example\App;
 
 $logger = new Logger('buckaroo-sdk');
 if ($debug) {

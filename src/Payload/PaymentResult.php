@@ -1,9 +1,9 @@
 <?php
 
-namespace Buckaroo\SDK\Payload;
+namespace Buckaroo\Payload;
 
-use Buckaroo\SDK\Helpers\Base;
-use Buckaroo\SDK\Helpers\Constants\ResponseStatus;
+use Buckaroo\Helpers\Base;
+use Buckaroo\Helpers\Constants\ResponseStatus;
 
 class PaymentResult
 {

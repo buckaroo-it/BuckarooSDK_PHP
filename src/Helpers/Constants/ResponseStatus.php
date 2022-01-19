@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Buckaroo\SDK\Helpers\Constants;
+namespace Buckaroo\Helpers\Constants;
 
 class ResponseStatus
 {

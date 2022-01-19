@@ -21,11 +21,11 @@
 
 declare(strict_types=1);
 
-namespace Buckaroo\SDK;
+namespace Buckaroo;
 
-use Buckaroo\SDK\Client;
-use Buckaroo\SDK\Payload\TransactionRequest;
-use Buckaroo\SDK\Helpers\Base;
+use Buckaroo\Client;
+use Buckaroo\Payload\TransactionRequest;
+use Buckaroo\Helpers\Base;
 
 class Transaction
 {
@@ -103,7 +103,7 @@ class Transaction
         return $buckarooClient->post(
             $buckarooClient->getTransactionUrl(),
             $request,
-            'Buckaroo\SDK\Payload\TransactionResponse'
+            'Buckaroo\Payload\TransactionResponse'
         );
     }
 

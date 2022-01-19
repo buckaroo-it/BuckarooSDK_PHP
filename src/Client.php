@@ -21,21 +21,21 @@
 
 declare(strict_types=1);
 
-namespace Buckaroo\SDK;
+namespace Buckaroo;
 
-use Buckaroo\SDK\Helpers\CultureHeader;
-use Buckaroo\SDK\Helpers\HmacHeader;
-use Buckaroo\SDK\Payload\Request;
-use Buckaroo\SDK\Helpers\SoftwareHeader;
-use Buckaroo\SDK\Helpers\Config;
-use Buckaroo\SDK\HttpClient\HttpClientInterface;
-use Buckaroo\SDK\HttpClient\HttpClientCurl;
-use Buckaroo\SDK\HttpClient\HttpClientGuzzle;
+use Buckaroo\Helpers\CultureHeader;
+use Buckaroo\Helpers\HmacHeader;
+use Buckaroo\Payload\Request;
+use Buckaroo\Helpers\SoftwareHeader;
+use Buckaroo\Helpers\Config;
+use Buckaroo\HttpClient\HttpClientInterface;
+use Buckaroo\HttpClient\HttpClientCurl;
+use Buckaroo\HttpClient\HttpClientGuzzle;
 use Psr\Log\LoggerInterface;
 use Monolog\Logger;
 use Monolog\Handler\NullHandler;
-use Buckaroo\SDK\Helpers\Validate;
-use Buckaroo\SDK\Exceptions\SdkException;
+use Buckaroo\Helpers\Validate;
+use Buckaroo\Exceptions\SdkException;
 
 class Client
 {
@@ -49,17 +49,17 @@ class Client
     private const METHOD_POST = 'POST';
 
     /**
-     * @var Buckaroo\SDK\Helpers\HmacHeader
+     * @var Buckaroo\Helpers\HmacHeader
      */
     protected $hmac;
 
     /**
-     * @var Buckaroo\SDK\Helpers\SoftwareHeader
+     * @var Buckaroo\Helpers\SoftwareHeader
      */
     protected $software;
 
     /**
-     * @var Buckaroo\SDK\Helpers\CultureHeader
+     * @var Buckaroo\Helpers\CultureHeader
      */
     protected $culture;
 
@@ -69,7 +69,7 @@ class Client
     protected $logger;
 
     /**
-     * @var Buckaroo\SDK\Transfer\HttpClientInterface
+     * @var Buckaroo\Transfer\HttpClientInterface
      */
     protected $httpClient;
 
@@ -129,12 +129,12 @@ class Client
         ];
     }
 
-    public function get($url, $responseClass = 'Buckaroo\SDK\Payload\Response')
+    public function get($url, $responseClass = 'Buckaroo\Payload\Response')
     {
         return $this->call($url, self::METHOD_GET, null, $responseClass);
     }
 
-    public function post($url, Request $data = null, $responseClass = 'Buckaroo\SDK\Payload\Response')
+    public function post($url, Request $data = null, $responseClass = 'Buckaroo\Payload\Response')
     {
         return $this->call($url, self::METHOD_POST, $data, $responseClass);
     }
@@ -143,7 +143,7 @@ class Client
         $url,
         $method = self::METHOD_GET,
         Request $data = null,
-        $responseClass = 'Buckaroo\SDK\Payload\Response'
+        $responseClass = 'Buckaroo\Payload\Response'
     ) {
         if (!$data) {
             $data = new Request();

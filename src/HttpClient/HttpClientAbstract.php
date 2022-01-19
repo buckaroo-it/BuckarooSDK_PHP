@@ -21,10 +21,10 @@
 
 declare(strict_types=1);
 
-namespace Buckaroo\SDK\HttpClient;
+namespace Buckaroo\HttpClient;
 
 use Psr\Log\LoggerInterface;
-use Buckaroo\SDK\Exceptions\TransferException;
+use Buckaroo\Exceptions\TransferException;
 
 abstract class HttpClientAbstract implements HttpClientInterface
 {

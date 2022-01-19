@@ -21,7 +21,7 @@
 
 declare(strict_types=1);
 
-namespace Buckaroo\SDK\Exceptions;
+namespace Buckaroo\Exceptions;
 
 use Psr\Log\LoggerInterface;
 

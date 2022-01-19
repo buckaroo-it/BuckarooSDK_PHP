@@ -21,10 +21,10 @@
 
 declare(strict_types=1);
 
-namespace Buckaroo\SDK\Example;
+namespace Buckaroo\Example;
 
-use Buckaroo\SDK\Payload\PaymentResult;
-use Buckaroo\SDK\Payload\TransactionResponse;
+use Buckaroo\Payload\PaymentResult;
+use Buckaroo\Payload\TransactionResponse;
 use Psr\Log\LoggerInterface;
 
 class App

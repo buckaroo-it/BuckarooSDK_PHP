@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Buckaroo\SDK\Payload;
+namespace Buckaroo\Payload;
 
 use Exception;
 use ArrayAccess;
-use Buckaroo\SDK\Helpers\Arrayable;
-use Buckaroo\SDK\Helpers\Base;
+use Buckaroo\Helpers\Arrayable;
+use Buckaroo\Helpers\Base;
 use JsonSerializable;
 
 class Request implements JsonSerializable, ArrayAccess, Arrayable

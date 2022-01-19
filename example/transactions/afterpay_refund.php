@@ -2,7 +2,7 @@
 require_once (__DIR__ . '/../includes/init.php');
 require_once (__DIR__ . '/../html/header.php');
 
-use Buckaroo\SDK\Transaction;
+use Buckaroo\Transaction;
 
 try {
     $response = Transaction::create(

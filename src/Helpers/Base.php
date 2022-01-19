@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Buckaroo\SDK\Helpers;
+namespace Buckaroo\Helpers;
 
 use Closure;
 use Countable;

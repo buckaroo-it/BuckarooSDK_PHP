@@ -21,9 +21,9 @@
 
 declare(strict_types=1);
 
-namespace Buckaroo\SDK\HttpClient;
+namespace Buckaroo\HttpClient;
 
-use Buckaroo\SDK\Exceptions\TransferException;
+use Buckaroo\Exceptions\TransferException;
 use Composer\CaBundle\CaBundle;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Buckaroo\SDK\Helpers;
+namespace Buckaroo\Helpers;
 
-use Buckaroo\SDK\Client;
+use Buckaroo\Client;
 
 class Validate
 {

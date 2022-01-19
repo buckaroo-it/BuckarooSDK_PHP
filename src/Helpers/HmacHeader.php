@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Buckaroo\SDK\Helpers;
+namespace Buckaroo\Helpers;
 
-use Buckaroo\SDK\Helpers\Config;
-use Buckaroo\SDK\Helpers\Base;
+use Buckaroo\Helpers\Config;
+use Buckaroo\Helpers\Base;
 
 /**
  * Class to create the security header for Buckaroo
@@ -14,7 +14,7 @@ use Buckaroo\SDK\Helpers\Base;
 class HmacHeader
 {
     /**
-     * @var Buckaroo\SDK\Helper\Config
+     * @var Buckaroo\Helper\Config
      */
     protected $config;
 

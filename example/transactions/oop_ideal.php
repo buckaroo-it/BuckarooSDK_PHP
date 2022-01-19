@@ -1,7 +1,7 @@
 <?php 
 require_once (__DIR__ . '/../includes/init.php');
 
-use Buckaroo\SDK\Payload\TransactionRequest;
+use Buckaroo\Payload\TransactionRequest;
 
 $request = new TransactionRequest();
 $request->setServiceName('ideal');
@@ -20,7 +20,7 @@ try {
     $response = $client->post(
         $client->getTransactionUrl(),
         $request,
-        'Buckaroo\SDK\Payload\TransactionResponse'
+        'Buckaroo\Payload\TransactionResponse'
     );
     $app->handleResponse($response);
 } catch (\Exception $e) {

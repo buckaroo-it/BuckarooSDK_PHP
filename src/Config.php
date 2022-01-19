@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Buckaroo\SDK;
+namespace Buckaroo;
 
 class Config
 {

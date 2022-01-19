@@ -6,7 +6,7 @@ require(__DIR__ . '/includes/App.php');
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\NullHandler;
-use Buckaroo\SDK\Example\App;
+use Buckaroo\Example\App;
 
 $logger = new Logger('buckaroo-sdk');
 if ($debug) {

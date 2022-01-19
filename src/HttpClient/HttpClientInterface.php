@@ -21,7 +21,7 @@
 
 declare(strict_types=1);
 
-namespace Buckaroo\SDK\HttpClient;
+namespace Buckaroo\HttpClient;
 
 interface HttpClientInterface
 {

@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Buckaroo\SDK\Payload;
+namespace Buckaroo\Payload;
 
 use Exception;
-use Buckaroo\SDK\Payload\Request;
-use Buckaroo\SDK\Helpers\Constants\IPProtocolVersion;
-use Buckaroo\SDK\Helpers\Base;
+use Buckaroo\Payload\Request;
+use Buckaroo\Helpers\Constants\IPProtocolVersion;
+use Buckaroo\Helpers\Base;
 
 class TransactionRequest extends Request
 {
