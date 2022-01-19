@@ -28,9 +28,9 @@ use Buckaroo\SDK\Helpers\HmacHeader;
 use Buckaroo\SDK\Payload\Request;
 use Buckaroo\SDK\Helpers\SoftwareHeader;
 use Buckaroo\SDK\Helpers\Config;
-use Buckaroo\SDK\Transfer\TransferClientInterface;
-use Buckaroo\SDK\Transfer\TransferCurlClient;
-use Exception;
+use Buckaroo\SDK\HttpClient\HttpClientInterface;
+use Buckaroo\SDK\HttpClient\HttpClientCurl;
+use Buckaroo\SDK\HttpClient\HttpClientGuzzle;
 use Psr\Log\LoggerInterface;
 use Monolog\Logger;
 use Monolog\Handler\NullHandler;
@@ -69,20 +69,20 @@ class Client
     protected $logger;
 
     /**
-     * @var Buckaroo\SDK\Transfer\TransferClientInterface
+     * @var Buckaroo\SDK\Transfer\HttpClientInterface
      */
-    protected $transferClient;
+    protected $httpClient;
 
     public function __construct(
         LoggerInterface $logger = null,
-        TransferClientInterface $transferClient = null
+        HttpClientInterface $httpClient = null
     ) {
         $this->config   = new Config();
         $this->hmac     = new HmacHeader($this->config);
         $this->software = new SoftwareHeader();
         $this->culture  = new CultureHeader();
         $this->logger   = $logger ?? $this->createDefaultLogger();
-        $this->transferClient = $transferClient ?? new TransferCurlClient($this->logger);
+        $this->httpClient = $httpClient ?? $this->createDefaultHttpClient();
     }
 
     public function setWebsiteKey($websiteKey)
@@ -155,10 +155,9 @@ class Client
         $headers = $this->getHeaders($url, $json, $method);
         $headers = array_merge($headers, $data->getHeaders());
 
-        list($decodedResult, $curlInfo, $responseHeaders) =
-            $this->transferClient->call($url, $headers, $method, $json, $responseClass);
+        $decodedResult = $this->httpClient->call($url, $headers, $method, $json, $responseClass);
 
-        $response = new $responseClass($decodedResult, $curlInfo, $responseHeaders);
+        $response = new $responseClass($decodedResult);
 
         return $response;
     }
@@ -169,5 +168,10 @@ class Client
         $logger->pushHandler(new NullHandler());
 
         return $logger;
+    }
+
+    protected function createDefaultHttpClient()
+    {
+        return new HttpClientGuzzle($this->logger);
     }
 }

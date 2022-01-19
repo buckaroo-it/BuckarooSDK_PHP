@@ -21,9 +21,9 @@
 
 declare(strict_types=1);
 
-namespace Buckaroo\SDK\Transfer;
+namespace Buckaroo\SDK\HttpClient;
 
-interface TransferClientInterface
+interface HttpClientInterface
 {
     public function call(string $url, array $headers, string $method, string $data = null);
 }

@@ -44,7 +44,7 @@ class Transaction
         if (isset($options['serviceVersion'])) {
             $request->setServiceVersion($options['serviceVersion']);
         }
-        
+
         if (isset($options['originalTransactionKey'])) {
             $request->setOriginalTransactionKey($options['originalTransactionKey']);
         }

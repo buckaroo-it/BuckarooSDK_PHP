@@ -1,16 +1,17 @@
 {
     "name": "buckaroo/sdk",
     "description": "Buckaroo payment SDK",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "type": "library",
     "require": {
-        "php": ">=7.3",
-        "ext-curl": "*",
+        "php": ">=7.4",
         "ext-json": "*",
         "ext-pcre": "*",
         "ext-fileinfo": "*",
         "psr/log": "^1.1",
-        "monolog/monolog": "^2.2"
+        "monolog/monolog": "^2.2",
+        "guzzlehttp/guzzle": "^7.0",
+        "composer/ca-bundle": "^1.1"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "3.*"

@@ -4,6 +4,7 @@ require(__DIR__ . '/../config.php');
 require(__DIR__ . '/../includes/App.php');
 
 use Buckaroo\SDK\Client;
+use Buckaroo\SDK\HttpClient\HttpClientGuzzle;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\NullHandler;
@@ -21,7 +22,7 @@ if ($debug) {
     $logger->pushHandler(new NullHandler());
 }
 
-$client = new Client($logger);
+$client = new Client($logger, new HttpClientGuzzle($logger));
 $client->setWebsiteKey($websiteKey);
 $client->setSecretKey($secretKey);
 $client->setMode(Client::MODE_TEST);
