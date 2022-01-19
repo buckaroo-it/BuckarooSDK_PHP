@@ -1,30 +1,23 @@
 <?php
 require(__DIR__ . '/../../vendor/autoload.php');
-require(__DIR__ . '/../config.php');
 require(__DIR__ . '/../includes/App.php');
 
-use Buckaroo\Client;
-use Buckaroo\HttpClient\HttpClientGuzzle;
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
-use Monolog\Handler\NullHandler;
-use Monolog\Handler\BrowserConsoleHandler;
-use Buckaroo\Example\App;
+\Dotenv\Dotenv::createImmutable(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..')->safeLoad();
 
-$logger = new Logger('buckaroo-sdk');
-if ($debug) {
+$logger = new \Monolog\Logger('buckaroo-sdk');
+if (!empty($_ENV['BPE_DEBUG'])) {
     if (php_sapi_name() == 'cli') {
-        $logger->pushHandler(new StreamHandler('php://stdout', Logger::DEBUG));
+        $logger->pushHandler(new \Monolog\Handler\StreamHandler('php://stdout', \Monolog\Logger::DEBUG));
     } else {
-        $logger->pushHandler(new BrowserConsoleHandler());
+        $logger->pushHandler(new \Monolog\Handler\BrowserConsoleHandler());
     }
 } else {
-    $logger->pushHandler(new NullHandler());
+    $logger->pushHandler(new \Monolog\Handler\NullHandler());
 }
 
-$client = new Client($logger, new HttpClientGuzzle($logger));
-$client->setWebsiteKey($websiteKey);
-$client->setSecretKey($secretKey);
-$client->setMode(Client::MODE_TEST);
+$client = new \Buckaroo\Client($logger, new \Buckaroo\HttpClient\HttpClientGuzzle($logger));
+$client->setWebsiteKey($_ENV['BPE_WEBSITE_KEY']);
+$client->setSecretKey($_ENV['BPE_SECRET_KEY']);
+$client->setMode($_ENV['BPE_MODE']);
 
-$app = new App($logger);
+$app = new \Buckaroo\Example\App($logger);

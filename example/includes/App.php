@@ -105,4 +105,10 @@ class App
     {
         echo $message . ((php_sapi_name() == 'cli') ? "\n" : "<br>");
     }
+
+    public static function getOrderId()
+    {
+        return 'sdk_' . date('ymdHis') . rand(1, 99);
+    }
+
 }

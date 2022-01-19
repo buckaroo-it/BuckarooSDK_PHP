@@ -8,12 +8,12 @@ $request->setServiceName('ideal');
 $request->setServiceVersion(2);
 $request->setServiceAction('Pay');
 $request->setAmountDebit(10.10);
-$request->setInvoice($orderId);
-$request->setOrder($orderId);
-$request->setCurrency($currencyCode);
-$request->setReturnURL($returnURL);
-$request->setReturnURLCancel($returnURLCancel);
-$request->setPushURL($pushURL);
+$request->setInvoice(\Buckaroo\Example\App::getOrderId());
+$request->setOrder(\Buckaroo\Example\App::getOrderId());
+$request->setCurrency($_ENV['BPE_EXAMPLE_CURRENCY_CODE']);
+$request->setReturnURL($_ENV['BPE_EXAMPLE_RETURN_URL']);
+$request->setReturnURLCancel($_ENV['BPE_EXAMPLE_RETURN_URL']);
+$request->setPushURL($_ENV['BPE_EXAMPLE_RETURN_URL']);
 $request->setServiceParameter('issuer', 'ABNANL2A');
 
 try {

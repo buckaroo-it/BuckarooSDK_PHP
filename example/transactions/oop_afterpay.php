@@ -9,12 +9,12 @@ $request->setServiceName('afterpay');
 $request->setServiceVersion(1);
 $request->setServiceAction('Pay');
 $request->setAmountDebit(10.10);
-$request->setInvoice($orderId);
-$request->setOrder($orderId);
-$request->setCurrency($currencyCode);
-$request->setReturnURL($returnURL);
-$request->setReturnURLCancel($returnURLCancel);
-$request->setPushURL($pushURL);
+$request->setInvoice(\Buckaroo\Example\App::getOrderId());
+$request->setOrder(\Buckaroo\Example\App::getOrderId());
+$request->setCurrency($_ENV['BPE_EXAMPLE_CURRENCY_CODE']);
+$request->setReturnURL($_ENV['BPE_EXAMPLE_RETURN_URL']);
+$request->setReturnURLCancel($_ENV['BPE_EXAMPLE_RETURN_URL']);
+$request->setPushURL($_ENV['BPE_EXAMPLE_RETURN_URL']);
 
 $request->setServiceParameter('Description', 'Blue Toy Car', 'Article', 1);
 $request->setServiceParameter('GrossUnitPrice', 10.10, 'Article', 1);
@@ -48,7 +48,7 @@ $request->setServiceParameter('Country', 'NL', 'ShippingCustomer');
 $request->setServiceParameter('Email', 'shippingcustomer@buckaroo.nl', 'ShippingCustomer');
 $request->setServiceParameter('Phone', '0109876543', 'ShippingCustomer');
 
-$request->setClientIP($ip);
+$request->setClientIP($_ENV['BPE_EXAMPLE_IP']);
 
 try {
     $response = $client->post(

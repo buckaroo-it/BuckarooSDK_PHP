@@ -3,3 +3,4 @@ vendor/
 composer.lock
 phpcs.txt
 example/logs
+.env

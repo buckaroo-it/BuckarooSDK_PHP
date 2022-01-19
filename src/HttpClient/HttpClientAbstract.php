@@ -68,9 +68,9 @@ abstract class HttpClientAbstract implements HttpClientInterface
         }
     }
 
-    protected function checkStatusCode($result, bool $isSuccessFull)
+    protected function checkStatusCode($result, bool $isError)
     {
-        if (!$isSuccessFull) {
+        if ($isError) {
             throw new TransferException(
                 $this->logger,
                 __METHOD__ . '|10|',

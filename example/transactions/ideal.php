@@ -11,13 +11,13 @@ try {
             'serviceVersion' => 2,
             'serviceAction' => 'Pay',
             'amountDebit' => 10.10,
-            'invoice' => $orderId,
-            'order' => $orderId,
-            'currency' => $currencyCode,
+            'invoice' => \Buckaroo\Example\App::getOrderId(),
+            'order' => \Buckaroo\Example\App::getOrderId(),
+            'currency' => $_ENV['BPE_EXAMPLE_CURRENCY_CODE'],
             'issuer' => 'ABNANL2A',
-            'returnURL' => $returnURL,
-            'returnURLCancel' => $returnURLCancel,
-            'pushURL' => $pushURL,
+            'returnURL' => $_ENV['BPE_EXAMPLE_RETURN_URL'],
+            'returnURLCancel' => $_ENV['BPE_EXAMPLE_RETURN_URL'],
+            'pushURL' => $_ENV['BPE_EXAMPLE_RETURN_URL'],
         ]
     );
     $app->handleResponse($response);

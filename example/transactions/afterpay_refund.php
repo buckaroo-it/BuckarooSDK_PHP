@@ -12,11 +12,11 @@ try {
             'serviceName' => 'afterpay',
             'serviceAction' => 'Refund',
             'amountCredit' => 10.10,
-            'invoice' => $orderId,
-            'currency' => $currencyCode,
-            'returnURL' => $returnURL,
-            'returnURLCancel' => $returnURLCancel,
-            'pushURL' => $pushURL
+            'invoice' => \Buckaroo\Example\App::getOrderId(),
+            'currency' => $_ENV['BPE_EXAMPLE_CURRENCY_CODE'],
+            'returnURL' => $_ENV['BPE_EXAMPLE_RETURN_URL'],
+            'returnURLCancel' => $_ENV['BPE_EXAMPLE_RETURN_URL'],
+            'pushURL' => $_ENV['BPE_EXAMPLE_RETURN_URL']
         ]
     );
     $app->handleResponse($response);
