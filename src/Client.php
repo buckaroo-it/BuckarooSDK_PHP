@@ -27,15 +27,11 @@ use Buckaroo\Helpers\CultureHeader;
 use Buckaroo\Helpers\HmacHeader;
 use Buckaroo\Payload\Request;
 use Buckaroo\Helpers\SoftwareHeader;
-use Buckaroo\Helpers\Config;
 use Buckaroo\HttpClient\HttpClientInterface;
-use Buckaroo\HttpClient\HttpClientCurl;
 use Buckaroo\HttpClient\HttpClientGuzzle;
 use Psr\Log\LoggerInterface;
 use Monolog\Logger;
 use Monolog\Handler\NullHandler;
-use Buckaroo\Helpers\Validate;
-use Buckaroo\Exceptions\SdkException;
 
 class Client
 {
@@ -85,34 +81,24 @@ class Client
         $this->httpClient = $httpClient ?? $this->createDefaultHttpClient();
     }
 
-    public function setWebsiteKey($websiteKey)
+    public function setWebsiteKey(string $websiteKey): void
     {
-        if (!Validate::isWebsiteKey($websiteKey)) {
-            throw new SdkException($this->logger, __METHOD__ . '|1|', "Invalid Website Key: '{$websiteKey}'. ");
-        }
-        $this->config->set('websiteKey', $websiteKey);
+        $this->config->setWebsiteKey($websiteKey);
     }
 
-    public function setSecretKey($secretKey)
+    public function setSecretKey(string $secretKey): void
     {
-        if (!Validate::isSecretKey($secretKey)) {
-            throw new SdkException($this->logger, __METHOD__ . '|2|', "Invalid Secret Key: '{$secretKey}'. ");
-        }
-        $this->config->set('secretKey', $secretKey);
+        $this->config->setSecretKey($secretKey);
     }
 
-    public function setMode($mode)
+    public function setMode(string $mode): void
     {
-        if (!Validate::isMode($mode)) {
-            throw new SdkException($this->logger, __METHOD__ . '|3|', "Invalid Mode: '{$mode}'. ");
-        }
-        $this->config->set('mode', $mode);
+        $this->config->setMode($mode);
     }
 
     public function getTransactionUrl()
     {
-        $mode = $this->config->get('mode');
-        return ($mode == self::MODE_LIVE ?
+        return ($this->config->getMode() == self::MODE_LIVE ?
                 self::ENDPOINT_LIVE :
                 self::ENDPOINT_TEST) . '/' . ltrim('json/Transaction', '/')
         ;

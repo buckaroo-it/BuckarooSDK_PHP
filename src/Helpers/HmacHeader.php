@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Buckaroo\Helpers;
 
-use Buckaroo\Helpers\Config;
-use Buckaroo\Helpers\Base;
+use Buckaroo\Config;
 
 /**
  * Class to create the security header for Buckaroo
@@ -51,7 +50,7 @@ class HmacHeader
         $requestUri = $this->escapeRequestUri($requestUri);
 
         $hmac = "Authorization: hmac " . implode(':', [
-            $this->config->get('websiteKey'),
+            $this->config->getWebsiteKey(),
             $this->getHash($requestUri, $httpMethod, $encodedContent, $nonce, $timeStamp),
             $nonce,
             $timeStamp,
@@ -73,10 +72,8 @@ class HmacHeader
 
     protected function getHash($requestUri, $httpMethod, $encodedContent, $nonce, $timeStamp)
     {
-        $rawData = $this->config->get('websiteKey') . $httpMethod . $requestUri . $timeStamp . $nonce . $encodedContent;
-
-        $hash = hash_hmac('sha256', $rawData, $this->config->get('secretKey'), true);
-
+        $rawData = $this->config->getWebsiteKey() . $httpMethod . $requestUri . $timeStamp . $nonce . $encodedContent;
+        $hash = hash_hmac('sha256', $rawData, $this->config->getSecretKey(), true);
         $base64 = base64_encode($hash);
 
         return $base64;
