@@ -44,10 +44,6 @@ class HttpClientCurl extends HttpClientAbstract
 
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 
-        // get response headers
-        $responseHeaders = [];
-        $this->getCurlHeaders($curl, $responseHeaders);
-
         // GET/POST
         $result = curl_exec($curl);
         $curlInfo = curl_getinfo($curl);
@@ -70,32 +66,9 @@ class HttpClientCurl extends HttpClientAbstract
         curl_setopt($curl, CURLOPT_FOLLOWLOCATION, false);
         curl_setopt($curl, CURLOPT_USERAGENT, 'Buckaroo SDK');
 
-        curl_setopt($curl, CURLOPT_TIMEOUT, 60);
+        curl_setopt($curl, CURLOPT_TIMEOUT, self::TIMEOUT);
 
-        //ZAK
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-    }
-
-    protected function getCurlHeaders($curl, &$headers)
-    {
-        curl_setopt($curl, CURLOPT_HEADERFUNCTION, function ($curl, $header) use (&$headers) {
-            $length = strlen($header);
-            $header = explode(':', $header, 2);
-
-            if (count($header) < 2) { // ignore invalid headers
-                return $length;
-            }
-
-            $name = strtolower(trim($header[0]));
-
-            if (!array_key_exists($name, $headers)) {
-                $headers[$name] = [trim($header[1])];
-            } else {
-                $headers[$name][] = trim($header[1]);
-            }
-
-            return $length;
-        });
+        //curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+        //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
     }
 }

@@ -36,6 +36,9 @@ abstract class HttpClientAbstract implements HttpClientInterface
         self::METHOD_POST,
     ];
 
+    protected const TIMEOUT = 30;
+    protected const CONNECT_TIMEOUT = 5;
+
     protected $logger;
 
     public function __construct(LoggerInterface $logger = null)

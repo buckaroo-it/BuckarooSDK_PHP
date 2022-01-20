@@ -33,9 +33,6 @@ use Psr\Log\LoggerInterface;
 
 class HttpClientGuzzle extends HttpClientAbstract
 {
-    private const TIMEOUT = 30;
-    private const CONNECT_TIMEOUT = 5;
-
     public function __construct(LoggerInterface $logger = null)
     {
         parent::__construct($logger);
