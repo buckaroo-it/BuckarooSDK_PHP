@@ -38,47 +38,40 @@ class Client
     public const MODE_LIVE = 'live';
     public const MODE_TEST = 'test';
 
-    private const ENDPOINT_LIVE = "https://checkout.buckaroo.nl";
-    private const ENDPOINT_TEST = "https://testcheckout.buckaroo.nl";
+    private const ENDPOINT_LIVE = 'https://checkout.buckaroo.nl';
+    private const ENDPOINT_TEST = 'https://testcheckout.buckaroo.nl';
 
     private const METHOD_GET  = 'GET';
     private const METHOD_POST = 'POST';
 
-    /**
-     * @var Buckaroo\Helpers\HmacHeader
-     */
-    protected $hmac;
-
-    /**
-     * @var Buckaroo\Helpers\SoftwareHeader
-     */
-    protected $software;
-
-    /**
-     * @var Buckaroo\Helpers\CultureHeader
-     */
-    protected $culture;
-
-    /**
-     * @var Psr\Log\LoggerInterface
-     */
-    protected $logger;
-
-    /**
-     * @var Buckaroo\Transfer\HttpClientInterface
-     */
-    protected $httpClient;
+    protected HmacHeader $hmac;
+    protected SoftwareHeader $software;
+    protected CultureHeader $culture;
+    protected LoggerInterface $logger;
+    protected HttpClientInterface $httpClient;
 
     public function __construct(
+        ?string $websiteKey = '',
+        ?string $secretKey = '',
         LoggerInterface $logger = null,
         HttpClientInterface $httpClient = null
     ) {
-        $this->config   = new Config();
+        $this->logger   = $logger ?? $this->createDefaultLogger();
+        $this->httpClient = $httpClient ?? $this->createDefaultHttpClient();
+        $this->config   = new Config($this->logger);
         $this->hmac     = new HmacHeader($this->config);
         $this->software = new SoftwareHeader();
         $this->culture  = new CultureHeader();
-        $this->logger   = $logger ?? $this->createDefaultLogger();
-        $this->httpClient = $httpClient ?? $this->createDefaultHttpClient();
+
+        if ($websiteKey) {
+            $this->setWebsiteKey($websiteKey);
+        }
+
+        if ($secretKey) {
+            $this->setSecretKey($secretKey);
+        }
+
+        $this->config->setMode(self::MODE_TEST);
     }
 
     public function setWebsiteKey(string $websiteKey): void
@@ -96,9 +89,14 @@ class Client
         $this->config->setMode($mode);
     }
 
+    public function getMode(): string
+    {
+        return $this->config->getMode();
+    }
+
     public function getTransactionUrl()
     {
-        return ($this->config->getMode() == self::MODE_LIVE ?
+        return ($this->getMode() == self::MODE_LIVE ?
                 self::ENDPOINT_LIVE :
                 self::ENDPOINT_TEST) . '/' . ltrim('json/Transaction', '/')
         ;
@@ -115,24 +113,28 @@ class Client
         ];
     }
 
-    public function get($url, $responseClass = 'Buckaroo\Payload\Response')
+    public function get($responseClass = 'Buckaroo\Payload\Response')
     {
-        return $this->call($url, self::METHOD_GET, null, $responseClass);
+        return $this->call(self::METHOD_GET, null, $responseClass);
     }
 
-    public function post($url, Request $data = null, $responseClass = 'Buckaroo\Payload\Response')
+    public function post(Request $data = null, $responseClass = 'Buckaroo\Payload\TransactionResponse')
     {
-        return $this->call($url, self::METHOD_POST, $data, $responseClass);
+        return $this->call(self::METHOD_POST, $data, $responseClass);
     }
 
     protected function call(
-        $url,
         $method = self::METHOD_GET,
         Request $data = null,
-        $responseClass = 'Buckaroo\Payload\Response'
+        $responseClass = 'Buckaroo\Payload\Response',
+        $url = ''
     ) {
         if (!$data) {
             $data = new Request();
+        }
+
+        if (empty($url)) {
+            $url = $this->getTransactionUrl();
         }
 
         $json = json_encode($data, JSON_PRETTY_PRINT);

@@ -18,7 +18,6 @@ $request->setServiceParameter('issuer', 'ABNANL2A');
 
 try {
     $response = $client->post(
-        $client->getTransactionUrl(),
         $request,
         'Buckaroo\Payload\TransactionResponse'
     );

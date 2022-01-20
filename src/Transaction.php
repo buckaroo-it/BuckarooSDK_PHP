@@ -101,7 +101,6 @@ class Transaction
         }
 
         return $buckarooClient->post(
-            $buckarooClient->getTransactionUrl(),
             $request,
             'Buckaroo\Payload\TransactionResponse'
         );

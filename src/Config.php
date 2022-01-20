@@ -6,10 +6,17 @@ namespace Buckaroo;
 
 use Buckaroo\Exceptions\SdkException;
 use Buckaroo\Helpers\Validate;
+use Psr\Log\LoggerInterface;
 
 class Config
 {
     protected array $data = [];
+
+    public function __construct(
+        LoggerInterface $logger
+    ) {
+        $this->logger = $logger;
+    }
 
     public function setWebsiteKey(string $websiteKey): void
     {

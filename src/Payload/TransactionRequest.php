@@ -66,6 +66,10 @@ class TransactionRequest extends Request
         if (!isset($this->data['Services']['ServiceList'][0]['Parameters'])) {
             $this->data['Services']['ServiceList'][0]['Parameters'] = [];
         }
+
+        if (!isset($this->data['Currency'])) {
+            $this->data['Currency'] = 'EUR';
+        }
     }
 
     /**

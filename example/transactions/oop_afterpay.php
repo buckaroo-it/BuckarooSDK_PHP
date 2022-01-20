@@ -52,7 +52,6 @@ $request->setClientIP($_ENV['BPE_EXAMPLE_IP']);
 
 try {
     $response = $client->post(
-        $client->getTransactionUrl(),
         $request,
         'Buckaroo\Payload\TransactionResponse'
     );
