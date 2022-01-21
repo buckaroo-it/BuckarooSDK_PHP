@@ -39,10 +39,10 @@ class App
     public function handlePush($data, $secretKey)
     {
         $result = new PaymentResult($data);
-        $this->logger->debug(__METHOD__ . '|1|', [$result->getData()]);
+        $this->logger->debug(__METHOD__ . '| start |', [$result->getData()]);
         if ($result->isValid($secretKey)) {
             $this->logger->debug(
-                __METHOD__ . '|5|',
+                __METHOD__ . '| params |',
                 [
                     $result->getServiceName(),
                     $result->getStatusCode(),
@@ -52,18 +52,18 @@ class App
             );
 
             if ($result->isSuccess()) {
-                $this->logger->debug(__METHOD__ . '|10|');
+                $this->logger->debug(__METHOD__ . '| success|');
             } elseif ($result->isCanceled()) {
-                $this->logger->debug(__METHOD__ . '|15|');
+                $this->logger->debug(__METHOD__ . '| cancelled |');
             } elseif ($result->isAwaitingConsumer()) {
-                $this->logger->debug(__METHOD__ . '|20|');
+                $this->logger->debug(__METHOD__ . '| awaiting consumer |');
             } elseif ($result->isPendingProcessing()) {
-                $this->logger->debug(__METHOD__ . '|25|');
+                $this->logger->debug(__METHOD__ . '| pending processing|');
             } elseif ($result->isWaitingOnUserInput()) {
-                $this->logger->debug(__METHOD__ . '|30|');
+                $this->logger->debug(__METHOD__ . '| waiting on user input |');
             }
         } else {
-            $this->logger->debug(__METHOD__ . '|35|');
+            $this->logger->debug(__METHOD__ . '| result is invalid |');
         }
         return $result;
     }

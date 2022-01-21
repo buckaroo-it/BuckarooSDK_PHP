@@ -29,7 +29,7 @@ class HttpClientCurl extends HttpClientAbstract
 
     public function call(string $url, array $headers, string $method, string $data = null)
     {
-        $this->logger->debug(__METHOD__ . '|1|', [$url, $headers, $method, !empty($data) ? json_decode($data) : '']);
+        $this->logger->debug(__METHOD__, [$url, $headers, $method, !empty($data) ? json_decode($data) : '']);
 
         $this->checkMethod($method);
 

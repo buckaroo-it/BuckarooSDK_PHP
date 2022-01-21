@@ -84,7 +84,7 @@ abstract class HttpClientAbstract implements HttpClientInterface
 
     protected function getDecodedResult($result): array
     {
-        $this->logger->debug(__METHOD__ . '|1|');
+        $this->logger->debug(__METHOD__ . '| start |');
 
         $decodedResult = json_decode($result, true);
 
@@ -103,12 +103,12 @@ abstract class HttpClientAbstract implements HttpClientInterface
 
             throw new TransferException(
                 $this->logger,
-                __METHOD__ . '|5|',
+                __METHOD__,
                 $decodingError
             );
         }
 
-        $this->logger->debug(__METHOD__ . '|10|', $decodedResult);
+        $this->logger->debug(__METHOD__ . '| end |', $decodedResult);
 
         return $decodedResult;
     }
