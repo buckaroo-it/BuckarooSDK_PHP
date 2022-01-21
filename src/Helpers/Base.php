@@ -10,6 +10,35 @@ use InvalidArgumentException;
 
 class Base
 {
+    public static $methods = [
+        ['value' => 'amex',                   'label' => 'American Express'],
+        ['value' => 'bancontactmrcash',       'label' => 'Bancontact / Mr Cash'],
+        ['value' => 'transfer',               'label' => 'Bank Transfer'],
+        ['value' => 'cartebancaire',          'label' => 'Carte Bancaire'],
+        ['value' => 'cartebleuevisa',         'label' => 'Carte Bleue'],
+        ['value' => 'dankort',                'label' => 'Dankort'],
+        ['value' => 'eps',                    'label' => 'EPS'],
+        ['value' => 'giftcard',               'label' => 'Giftcards'],
+        ['value' => 'giropay',                'label' => 'Giropay'],
+        ['value' => 'ideal',                  'label' => 'iDEAL'],
+        ['value' => 'idealprocessing',        'label' => 'iDEAL Processing'],
+        ['value' => 'maestro',                'label' => 'Maestro'],
+        ['value' => 'mastercard',             'label' => 'Mastercard'],
+        ['value' => 'paypal',                 'label' => 'PayPal'],
+        ['value' => 'sepadirectdebit',        'label' => 'SEPA Direct Debit'],
+        ['value' => 'sofortueberweisung',     'label' => 'Sofort Banking'],
+        ['value' => 'belfius',                'label' => 'Belfius'],
+        ['value' => 'visa',                   'label' => 'Visa'],
+        ['value' => 'visaelectron',           'label' => 'Visa Electron'],
+        ['value' => 'vpay',                   'label' => 'V PAY'],
+        ['value' => 'alipay',                 'label' => 'Alipay'],
+        ['value' => 'wechatpay',              'label' => 'WeChatPay'],
+        ['value' => 'p24',                    'label' => 'P24'],
+        ['value' => 'trustly',                'label' => 'Trustly'],
+        ['value' => 'rtp',                    'label' => 'Request To Pay'],
+        ['value' => 'tinka',                  'label' => 'Tinka'],
+    ];
+
     /**
      * Determine if the given value is "blank".
      *
@@ -372,12 +401,7 @@ class Base
         return $diff;
     }
 
-    /**
-     * Get IP of the connected client
-     *
-     * @return string ClientIP
-     */
-    public static function getRemoteIp()
+    public static function getRemoteIp(): string
     {
         $headers = function_exists('apache_request_headers') ? apache_request_headers() : $_SERVER;
 
@@ -396,15 +420,11 @@ class Base
         if (!empty($_SERVER['REMOTE_ADDR'])) {
             return filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP);
         }
-        return false;
+
+        return '127.0.0.1';
     }
 
-    /**
-     * Get user agent
-     *
-     * @return string
-     */
-    public static function getRemoteUserAgent()
+    public static function getRemoteUserAgent(): string
     {
         if (!empty($_SERVER['HTTP_USER_AGENT'])) {
             return $_SERVER['HTTP_USER_AGENT'];

@@ -25,13 +25,12 @@ namespace Buckaroo;
 
 use Buckaroo\Helpers\CultureHeader;
 use Buckaroo\Helpers\HmacHeader;
-use Buckaroo\Payload\Request;
 use Buckaroo\Helpers\SoftwareHeader;
+use Buckaroo\Helpers\DefaultFactory;
+use Buckaroo\Payload\Request;
 use Buckaroo\HttpClient\HttpClientInterface;
 use Buckaroo\HttpClient\HttpClientGuzzle;
 use Psr\Log\LoggerInterface;
-use Monolog\Logger;
-use Monolog\Handler\NullHandler;
 
 class Client
 {
@@ -56,8 +55,8 @@ class Client
         LoggerInterface $logger = null,
         HttpClientInterface $httpClient = null
     ) {
-        $this->logger   = $logger ?? $this->createDefaultLogger();
-        $this->httpClient = $httpClient ?? $this->createDefaultHttpClient();
+        $this->logger   = $logger ?? DefaultFactory::getDefaultLogger();
+        $this->httpClient = $httpClient ?? DefaultFactory::getDefaultHttpClient($this->logger);
         $this->config   = new Config($this->logger);
         $this->hmac     = new HmacHeader($this->config);
         $this->software = new SoftwareHeader();
@@ -148,18 +147,5 @@ class Client
         $response = new $responseClass($decodedResult);
 
         return $response;
-    }
-
-    protected function createDefaultLogger()
-    {
-        $logger = new Logger('buckaroo-sdk');
-        $logger->pushHandler(new NullHandler());
-
-        return $logger;
-    }
-
-    protected function createDefaultHttpClient()
-    {
-        return new HttpClientGuzzle($this->logger);
     }
 }

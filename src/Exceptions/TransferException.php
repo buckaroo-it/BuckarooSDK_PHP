@@ -27,7 +27,7 @@ use Psr\Log\LoggerInterface;
 
 class TransferException extends \Exception
 {
-    protected $logger;
+    protected LoggerInterface $logger;
 
     public function __construct(
         LoggerInterface $logger,

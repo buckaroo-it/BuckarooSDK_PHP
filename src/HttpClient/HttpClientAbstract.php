@@ -41,8 +41,9 @@ abstract class HttpClientAbstract implements HttpClientInterface
 
     protected $logger;
 
-    public function __construct(LoggerInterface $logger = null)
-    {
+    public function __construct(
+        ?LoggerInterface $logger = null
+    ) {
         $this->logger = $logger;
     }
 

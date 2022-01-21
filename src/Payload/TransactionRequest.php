@@ -4,50 +4,56 @@ declare(strict_types=1);
 
 namespace Buckaroo\Payload;
 
+use Buckaroo\Exceptions\SdkException;
+use Buckaroo\Helpers\Validate;
 use Exception;
 use Buckaroo\Payload\Request;
 use Buckaroo\Helpers\Constants\IPProtocolVersion;
 use Buckaroo\Helpers\Base;
+use Psr\Log\LoggerInterface;
 
 class TransactionRequest extends Request
 {
-    public function __construct($data = [])
-    {
-        parent::__construct($data);
+    public function __construct(
+        ?LoggerInterface $logger = null
+    ) {
+        parent::__construct($logger);
         $this->setClientIP();
         $this->setClientUserAgent();
         $this->createDefaultService();
     }
 
-    /**
-     * @param string $currency
-     */
-    public function setCurrency($currency)
+    public function setCurrency(string $currency): void
     {
+        if (!Validate::isCurrency($currency)) {
+            throw new SdkException($this->logger, __METHOD__, "Invalid currency: '{$currency}'. ");
+        }
         $this->data['Currency'] = $currency;
     }
 
-    /**
-     * Set the remote IP of the customer
-     */
-    public function setClientIP($remoteIp = null)
+    public function setClientIP(?string $ip = null): void
     {
-        if (!$remoteIp) {
-            $remoteIp = Base::getRemoteIp();
+        if (!$ip) {
+            $ip = Base::getRemoteIp();
+        }
+
+        if (!Validate::isIp($ip)) {
+            throw new SdkException($this->logger, __METHOD__, "Invalid IP: '{$ip}'. ");
         }
 
         $this->data['ClientIP'] = [
-            'Type'    => IPProtocolVersion::getVersion($remoteIp),
-            'Address' => $remoteIp,
+            'Type'    => IPProtocolVersion::getVersion($ip),
+            'Address' => $ip,
         ];
     }
 
-    /**
-     * Set the user agent of the request
-     */
-    public function setClientUserAgent()
+    public function setClientUserAgent(?string $userAgent = null): void
     {
-        $this->data['ClientUserAgent'] = Base::getRemoteUserAgent();
+        if (!$userAgent) {
+            $userAgent = Base::getRemoteUserAgent();
+        }
+
+        $this->data['ClientUserAgent'] = $userAgent;
     }
 
     /**
@@ -72,12 +78,13 @@ class TransactionRequest extends Request
         }
     }
 
-    /**
-     * @param string $name
-     */
-    public function setServiceName($name)
+    public function setServiceName(string $service): void
     {
-        $this->data['Services']['ServiceList'][0]['Name'] = $name;
+        //if (!Validate::isServiceName($service)) {
+        //    throw new SdkException($this->logger, __METHOD__, "Invalid service: '{$service}'. ");
+        //}
+
+        $this->data['Services']['ServiceList'][0]['Name'] = $service;
     }
 
     /**

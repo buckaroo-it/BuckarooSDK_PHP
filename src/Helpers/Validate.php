@@ -8,18 +8,37 @@ use Buckaroo\Client;
 
 class Validate
 {
-    public static function isWebsiteKey($value)
+    public static function isWebsiteKey(string $websiteKey): bool
     {
-        return mb_strlen($value) == 10;
+        return mb_strlen($websiteKey) == 10;
     }
 
-    public static function isSecretKey($value)
+    public static function isSecretKey(string $secretKey): bool
     {
-        return mb_strlen($value) >= 5 && mb_strlen($value) <= 50;
+        return mb_strlen($secretKey) >= 5 && mb_strlen($secretKey) <= 50;
     }
 
-    public static function isMode($value)
+    public static function isMode(string $mode): bool
     {
-        return in_array($value, [Client::MODE_LIVE, Client::MODE_TEST]);
+        return in_array($mode, [Client::MODE_LIVE, Client::MODE_TEST]);
+    }
+
+    public static function isCurrency(string $currency): bool
+    {
+        return ($currency && (strlen($currency) == 3));
+    }
+
+    public static function isIp(string $ip): bool
+    {
+        return
+            (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) !== false)
+            || (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) !== false);
+    }
+
+    public static function isServiceName(string $service): bool
+    {
+        return
+            (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) !== false)
+            || (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) !== false);
     }
 }

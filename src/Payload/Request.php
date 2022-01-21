@@ -4,27 +4,24 @@ declare(strict_types=1);
 
 namespace Buckaroo\Payload;
 
+use Buckaroo\Helpers\DefaultFactory;
 use Exception;
 use ArrayAccess;
 use Buckaroo\Helpers\Arrayable;
 use Buckaroo\Helpers\Base;
 use JsonSerializable;
+use Psr\Log\LoggerInterface;
 
 class Request implements JsonSerializable, ArrayAccess, Arrayable
 {
-    /**
-     * @var array
-     */
-    protected $data = [];
+    protected array $data = [];
+    protected array $headers = [];
+    protected LoggerInterface $logger;
 
-    /**
-     * @var array
-     */
-    protected $headers = [];
-
-    public function __construct($data = [])
-    {
-        $this->data = $data;
+    public function __construct(
+        ?LoggerInterface $logger = null
+    ) {
+        $this->logger = $logger ?? DefaultFactory::getDefaultLogger();
     }
 
     /** Implement ArrayAccess */
