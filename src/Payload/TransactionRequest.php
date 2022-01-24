@@ -7,7 +7,6 @@ namespace Buckaroo\Payload;
 use Buckaroo\Exceptions\SdkException;
 use Buckaroo\Helpers\Validate;
 use Exception;
-use Buckaroo\Payload\Request;
 use Buckaroo\Helpers\Constants\IPProtocolVersion;
 use Buckaroo\Helpers\Base;
 use Psr\Log\LoggerInterface;
@@ -23,43 +22,7 @@ class TransactionRequest extends Request
         $this->createDefaultService();
     }
 
-    public function setCurrency(string $currency): void
-    {
-        if (!Validate::isCurrency($currency)) {
-            throw new SdkException($this->logger, __METHOD__, "Invalid currency: '{$currency}'. ");
-        }
-        $this->data['Currency'] = $currency;
-    }
-
-    public function setClientIP(?string $ip = null): void
-    {
-        if (!$ip) {
-            $ip = Base::getRemoteIp();
-        }
-
-        if (!Validate::isIp($ip)) {
-            throw new SdkException($this->logger, __METHOD__, "Invalid IP: '{$ip}'. ");
-        }
-
-        $this->data['ClientIP'] = [
-            'Type'    => IPProtocolVersion::getVersion($ip),
-            'Address' => $ip,
-        ];
-    }
-
-    public function setClientUserAgent(?string $userAgent = null): void
-    {
-        if (!$userAgent) {
-            $userAgent = Base::getRemoteUserAgent();
-        }
-
-        $this->data['ClientUserAgent'] = $userAgent;
-    }
-
-    /**
-     * Create a service skeleton in the data
-     */
-    protected function createDefaultService()
+    protected function createDefaultService(): void
     {
         if (!isset($this->data['Services'])) {
             $this->data['Services'] = [];
@@ -78,64 +41,92 @@ class TransactionRequest extends Request
         }
     }
 
+    public function setCurrency(string $currency): void
+    {
+        if (!Validate::isCurrency($currency)) {
+            $this->throwError(__METHOD__, "Invalid currency", $currency);
+        }
+        $this->data['Currency'] = $currency;
+    }
+
+    public function setClientIP(?string $ip = null): void
+    {
+        if (!$ip) {
+            $ip = Base::getRemoteIp();
+        }
+
+        if (!Validate::isIp($ip)) {
+            $this->throwError(__METHOD__, "Invalid IP", $ip);
+        }
+
+        $this->data['ClientIP'] = [
+            'Type'    => IPProtocolVersion::getVersion($ip),
+            'Address' => $ip,
+        ];
+    }
+
+    public function setClientUserAgent(?string $userAgent = null): void
+    {
+        if (!$userAgent) {
+            $userAgent = Base::getRemoteUserAgent();
+        }
+
+        $this->data['ClientUserAgent'] = $userAgent;
+    }
+
     public function setServiceName(string $service): void
     {
-        //if (!Validate::isServiceName($service)) {
-        //    throw new SdkException($this->logger, __METHOD__, "Invalid service: '{$service}'. ");
-        //}
+        if (!Validate::isServiceName($service)) {
+            $this->throwError(__METHOD__, "Invalid service name", $service);
+        }
 
         $this->data['Services']['ServiceList'][0]['Name'] = $service;
     }
 
-    /**
-     * @return string
-     */
-    public function getServiceName()
+    public function getServiceName(): string
     {
         return $this->data['Services']['ServiceList'][0]['Name'];
     }
 
-    /**
-     * @param string $action
-     */
-    public function setServiceAction($action)
+    public function setServiceAction(string $action): void
     {
+        if (!Validate::isServiceAction($action)) {
+            $this->throwError(__METHOD__, "Invalid service action", $action);
+        }
+
         $this->data['Services']['ServiceList'][0]['Action'] = $action;
     }
 
-    /**
-     * @return string
-     */
-    public function getServiceAction()
+    public function getServiceAction(): string
     {
         return $this->data['Services']['ServiceList'][0]['Action'];
     }
 
-    /**
-     * @param string $version
-     */
-    public function setServiceVersion($version)
+    public function setServiceVersion(int $version)
     {
+        if (!Validate::isServiceVersion($version)) {
+            $this->throwError(__METHOD__, "Invalid service version", $version);
+        }
+
         $this->data['Services']['ServiceList'][0]['Version'] = $version;
     }
 
-    /**
-     * @return string
-     */
-    public function getServiceVersion()
+    public function getServiceVersion(): int
     {
         return $this->data['Services']['ServiceList'][0]['Version'];
     }
 
-    /**
-     * @param string $key
-     * @param string $value
-     * @param string|null $groupType
-     * @param string|null $groupId
-     * @return string $value
-     */
-    public function setServiceParameter($name, $value, $groupType = null, $groupId = null)
+    private function throwError(string $method, $message, $value)
     {
+        throw new SdkException($this->logger, $method, "$message: '{$value}'");
+    }
+
+    public function setServiceParameter(
+        string $name,
+        string $value,
+        ?string $groupType = null,
+        ?string $groupId = null
+    ): array {
         $newParam = [
             'Name'  => $name,
             'Value' => $value,
@@ -165,12 +156,7 @@ class TransactionRequest extends Request
         return $newParam;
     }
 
-    /**
-     * @param string $key
-     * @param string $value
-     * @return string $value
-     */
-    public function setCustomParameter($key, $value)
+    public function setCustomParameter(string $key, string $value): string
     {
         if (!isset($this->data['CustomParameters'])) {
             $this->data['CustomParameters'] = [];
@@ -197,15 +183,7 @@ class TransactionRequest extends Request
         return $value;
     }
 
-    /**
-     * Set an additional parameter
-     * Structure is AdditionalParameters -> AdditionalParameter
-     *
-     * @param string $key
-     * @param string $value
-     * @return string $value
-     */
-    public function setAdditionalParameter($key, $value)
+    public function setAdditionalParameter(string $key, string $value): string
     {
         if (!isset($this->data['AdditionalParameters'])) {
             $this->data['AdditionalParameters'] = [];
@@ -232,36 +210,17 @@ class TransactionRequest extends Request
         return $value;
     }
 
-    /**
-     * Pay parameters
-     */
-
-    /**
-     * @param string $services
-     *
-     * Giftcard specific
-     */
-    public function setServicesSelectableByClient($services)
+    public function setServicesSelectableByClient(string $services): void
     {
         $this->data['ServicesSelectableByClient'] = $services;
     }
 
-    /**
-     * @param string $value
-     *
-     * Giftcard specific
-     */
-    public function setContinueOnIncomplete($value)
+    public function setContinueOnIncomplete(string $value): void
     {
         $this->data['ContinueOnIncomplete'] = $value;
     }
 
-    /*
-     * Remove data Services.
-     *
-     * Giftcard specific
-     */
-    public function removeServices()
+    public function removeServices(): void
     {
         unset($this->data['Services']);
         unset($this->data['Services']['ServiceList']);
@@ -269,86 +228,47 @@ class TransactionRequest extends Request
         unset($this->data['Services']['ServiceList'][0]['Parameters']);
     }
 
-    /**
-     * @param string $url
-     */
-    public function setReturnURL($url)
+    public function setReturnURL(string $url): void
     {
         $this->data['ReturnURL'] = $url;
     }
 
-    /**
-     * @param string $url
-     */
-    public function setReturnURLCancel($url)
+    public function setReturnURLCancel(string $url): void
     {
         $this->data['ReturnURLCancel'] = $url;
     }
 
-    /**
-     * @param string $url
-     */
-    public function setReturnURLError($url)
+    public function setReturnURLError(string $url): void
     {
         $this->data['ReturnURLError'] = $url;
     }
 
-    /**
-     * @param string $url
-     */
-    public function setReturnURLReject($url)
+    public function setReturnURLReject(string $url): void
     {
         $this->data['ReturnURLReject'] = $url;
     }
 
-    /**
-     * @param string $url
-     */
-    public function setPushURL($url)
+    public function setPushURL(string $url): void
     {
         $this->data['PushURL'] = $url;
     }
 
-    /**
-     * @param string $url
-     */
-    public function setPushURLFailure($url)
+    public function setPushURLFailure(string $url): void
     {
         $this->data['PushURLFailure'] = $url;
     }
 
-    /**
-     * @param string $token
-     */
-    public function setToken($token)
-    {
-        return $this->setAdditionalParameter('token', $token);
-    }
-
-    /**
-     * Refund parameters
-     */
-
-    /**
-     * @param float $amount
-     */
-    public function setAmountCredit($amount)
+    public function setAmountCredit(float $amount): void
     {
         $this->data['AmountCredit'] = $amount;
     }
 
-    /**
-     * @return float
-     */
-    public function getAmountCredit()
+    public function getAmountCredit(): float
     {
         return $this->data['AmountCredit'];
     }
 
-    /**
-     * @param string $transactionKey
-     */
-    public function setOriginalTransactionKey($transactionKey)
+    public function setOriginalTransactionKey(string $transactionKey): void
     {
         $this->data['OriginalTransactionKey'] = $transactionKey;
     }

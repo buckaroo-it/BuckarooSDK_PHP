@@ -10,34 +10,39 @@ use InvalidArgumentException;
 
 class Base
 {
-    public static $methods = [
-        ['value' => 'amex',                   'label' => 'American Express'],
-        ['value' => 'bancontactmrcash',       'label' => 'Bancontact / Mr Cash'],
-        ['value' => 'transfer',               'label' => 'Bank Transfer'],
-        ['value' => 'cartebancaire',          'label' => 'Carte Bancaire'],
-        ['value' => 'cartebleuevisa',         'label' => 'Carte Bleue'],
-        ['value' => 'dankort',                'label' => 'Dankort'],
-        ['value' => 'eps',                    'label' => 'EPS'],
-        ['value' => 'giftcard',               'label' => 'Giftcards'],
-        ['value' => 'giropay',                'label' => 'Giropay'],
-        ['value' => 'ideal',                  'label' => 'iDEAL'],
-        ['value' => 'idealprocessing',        'label' => 'iDEAL Processing'],
-        ['value' => 'maestro',                'label' => 'Maestro'],
-        ['value' => 'mastercard',             'label' => 'Mastercard'],
-        ['value' => 'paypal',                 'label' => 'PayPal'],
-        ['value' => 'sepadirectdebit',        'label' => 'SEPA Direct Debit'],
-        ['value' => 'sofortueberweisung',     'label' => 'Sofort Banking'],
-        ['value' => 'belfius',                'label' => 'Belfius'],
-        ['value' => 'visa',                   'label' => 'Visa'],
-        ['value' => 'visaelectron',           'label' => 'Visa Electron'],
-        ['value' => 'vpay',                   'label' => 'V PAY'],
-        ['value' => 'alipay',                 'label' => 'Alipay'],
-        ['value' => 'wechatpay',              'label' => 'WeChatPay'],
-        ['value' => 'p24',                    'label' => 'P24'],
-        ['value' => 'trustly',                'label' => 'Trustly'],
-        ['value' => 'rtp',                    'label' => 'Request To Pay'],
-        ['value' => 'tinka',                  'label' => 'Tinka'],
+    private static $methods = [
+        'amex'                    => 'American Express',
+        'bancontactmrcash'        => 'Bancontact / Mr Cash',
+        'transfer'                => 'Bank Transfer',
+        'cartebancaire'           => 'Carte Bancaire',
+        'cartebleuevisa'          => 'Carte Bleue',
+        'dankort'                 => 'Dankort',
+        'eps'                     => 'EPS',
+        'giftcard'                => 'Giftcards',
+        'giropay'                 => 'Giropay',
+        'ideal'                   => 'iDEAL',
+        'idealprocessing'         => 'iDEAL Processing',
+        'maestro'                 => 'Maestro',
+        'mastercard'              => 'Mastercard',
+        'paypal'                  => 'PayPal',
+        'sepadirectdebit'         => 'SEPA Direct Debit',
+        'sofortueberweisung'      => 'Sofort Banking',
+        'belfius'                 => 'Belfius',
+        'visa'                    => 'Visa',
+        'visaelectron'            => 'Visa Electron',
+        'vpay'                    => 'V PAY',
+        'alipay'                  => 'Alipay',
+        'wechatpay'               => 'WeChatPay',
+        'p24'                     => 'P24',
+        'trustly'                 => 'Trustly',
+        'rtp'                     => 'Request To Pay',
+        'tinka'                   => 'Tinka',
     ];
+
+    public static function getMethods()
+    {
+        return self::$methods;
+    }
 
     /**
      * Determine if the given value is "blank".

@@ -37,8 +37,16 @@ class Validate
 
     public static function isServiceName(string $service): bool
     {
-        return
-            (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) !== false)
-            || (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) !== false);
+        return (!empty($service) && Base::getMethods()[$service]);
+    }
+
+    public static function isServiceAction(string $action): bool
+    {
+        return !empty($action);
+    }
+
+    public static function isServiceVersion(int $version): bool
+    {
+        return in_array($version, [0,1,2,3]);
     }
 }
