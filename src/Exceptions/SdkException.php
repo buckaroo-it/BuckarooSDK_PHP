@@ -31,16 +31,21 @@ class SdkException extends \Exception
 
     public function __construct(
         LoggerInterface $logger,
-        $breakpoint,
-        $message = "",
-        $code = 0,
+        string $breakpoint,
+        string $message = "",
+        int $code = 0,
         \Throwable $previous = null
     ) {
         $this->logger = $logger;
 
         $message = 'Buckaroo SDK error: ' . $message;
-        $this->logger->error($breakpoint, [$message]);
+        $this->logger->error($breakpoint, [$this->getMsg($message)]);
 
         parent::__construct($message, $code, $previous);
+    }
+
+    protected function getMsg(string $message): string
+    {
+        return 'Buckaroo SDK error: ' . $message;
     }
 }

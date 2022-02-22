@@ -4,15 +4,12 @@ namespace Buckaroo\Helpers;
 
 class CultureHeader
 {
-    /**
-     * @return string
-     */
-    public function getHeader($locale = false)
+    public function getHeader(string $locale = ''): string
     {
         return "Culture: " . self::getTranslatedLocale($locale);
     }
 
-    public static function getTranslatedLocale($locale = false): string
+    public static function getTranslatedLocale(string $locale = ''): string
     {
         switch ($locale) {
             case 'nl':

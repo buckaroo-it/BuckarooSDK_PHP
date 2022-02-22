@@ -10,7 +10,7 @@ use InvalidArgumentException;
 
 class Base
 {
-    private static $methods = [
+    private static array $methods = [
         'amex'                    => 'American Express',
         'bancontactmrcash'        => 'Bancontact / Mr Cash',
         'transfer'                => 'Bank Transfer',
@@ -39,18 +39,12 @@ class Base
         'tinka'                   => 'Tinka',
     ];
 
-    public static function getMethods()
+    public static function getMethods(): array
     {
         return self::$methods;
     }
 
-    /**
-     * Determine if the given value is "blank".
-     *
-     * @param  mixed   $value
-     * @return boolean
-     */
-    public static function blank($value)
+    public static function blank($value): bool
     {
         if (is_null($value)) {
             return true;
@@ -71,29 +65,7 @@ class Base
         return empty($value);
     }
 
-    /**
-     * Return a default value if value not set
-     *
-     * @param  mixed $value
-     * @param  mixed $default
-     * @return mixed
-     */
-    public static function def($value, $default = null)
-    {
-        if (static::blank($value)) {
-            return $default;
-        }
-
-        return $value;
-    }
-
-    /**
-     * Generate a random string
-     *
-     * @param  integer $length Length of the random string
-     * @return string          Random string
-     */
-    public static function stringRandom($length = 16)
+    public static function stringRandom(int $length = 16): string
     {
         $chars = str_split('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789');
         $str   = "";
@@ -106,14 +78,7 @@ class Base
         return $str;
     }
 
-    /**
-     * Remove substring from the start of a string if found
-     *
-     * @param  string $haystack String to find substring in
-     * @param  string $needle   Substring to find
-     * @return string           String without the substring if found at the start
-     */
-    public static function stringRemoveStart($haystack, $needle)
+    public static function stringRemoveStart(string $haystack, string $needle): string
     {
         if (static::stringStartsWith($haystack, $needle)) {
             return mb_substr($haystack, mb_strlen($needle));
@@ -122,83 +87,39 @@ class Base
         return $haystack;
     }
 
-    /**
-     * Check if a string contains a substring
-     *
-     * @param  string $haystack String to find substring in
-     * @param  string $needle   Substring to find
-     * @return string
-     */
-    public static function stringContains($haystack, $needle)
+    public static function stringContains(string $haystack, string $needle): bool
     {
         return mb_stripos($haystack, $needle) !== false;
     }
 
-    /**
-     * Check if a string contains digits
-     *
-     * @param  string $haystack String to find digits in
-     * @return boolean
-     */
-    public static function stringContainsDigits($haystack)
+    public static function stringContainsDigits(string $haystack): bool
     {
         return !!preg_match('/\\d/', $haystack);
     }
 
-    /**
-     * Check if a string contains alpha characters
-     *
-     * @param  string $haystack String to find digits in
-     * @return boolean
-     */
-    public static function stringContainsAlpha($haystack)
+    public static function stringContainsAlpha(string $haystack): bool
     {
         return !!preg_match('/[a-zA-Z]/', $haystack);
     }
 
-    /**
-     * Check if a string begins with a substring
-     *
-     * @param  string $haystack String to find substring in
-     * @param  string $needle   Substring to find
-     * @return string
-     */
-    public static function stringStartsWith($haystack, $needle)
+    public static function stringStartsWith(string $haystack, string $needle): bool
     {
         return mb_substr($haystack, 0, mb_strlen($needle)) == $needle;
     }
 
-    /**
-     * Get all digits from a string
-     *
-     * @param  string $haystack
-     * @return array [ int, int ]
-     */
-    public static function stringGetDigits($haystack)
+    public static function stringGetDigits(string $haystack): array
     {
         preg_match_all('!\d+!', $haystack, $matches);
         return static::arrayFlatten($matches);
     }
 
-    /**
-     * Get all alpha-characters from a string
-     *
-     * @param  string $haystack
-     * @return array [ string, string ]
-     */
-    public static function stringGetAlpha($haystack)
+    public static function stringGetAlpha(string $haystack): array
     {
         preg_match_all('![a-zA-Z]+!', $haystack, $matches);
         return static::arrayFlatten($matches);
     }
 
-    /**
-     * Converts underscore separated string into a camelCase separated string
-     *
-     * @param string $str
-     * @return string
-     */
-    public static function stringUnderscoreToCamelCase($str)
+    public static function stringUnderscoreToCamelCase(string $str): string
     {
         $func = function ($c) {
             return strtoupper($c[1]);
@@ -207,54 +128,23 @@ class Base
         return preg_replace_callback('/_([a-zA-Z])/', $func, $str);
     }
 
-    /**
-     * Convert a camelcase string to underscore
-     *
-     * @param  string $str
-     * @return string
-     */
-    public static function stringCamelCaseToUnderscore($str)
+    public static function stringCamelCaseToUnderscore(string $str): string
     {
         return ltrim(strtolower(preg_replace('/[A-Z]/', '_$0', $str)), '_');
     }
 
-    /**
-     * Format the phone number for Klarna
-     *
-     * @param  string $phone
-     * @return string
-     */
-    public static function stringFormatPhone($phone)
+    public static function stringFormatPhone(string $phone): string
     {
-
-        // get all digits as string
         $digits = implode('', static::stringGetDigits($phone));
-
-        // pad to at least 10 characters
-        // $digits = str_pad($digits, 10, '0', STR_PAD_LEFT);
-
         return $digits;
     }
 
-    /**
-     * Return float from price string
-     *
-     * @param  string $price
-     * @return float
-     */
-    public static function priceToFloat($price)
+    public static function priceToFloat(string $price): float
     {
         return floatval(str_replace(',', '.', $price));
     }
 
-    /**
-     * Return price string from float
-     *
-     * @param  float $number
-     * @param  string $decimal (. or ,)
-     * @return string
-     */
-    public static function floatToPrice($number, $decimal = ',')
+    public static function floatToPrice(float $number, string $decimal = ','): string
     {
         if (!in_array($decimal, ['.', ','])) {
             throw new InvalidArgumentException('floatToPrice should have a dot or comma as decimal point');
@@ -285,13 +175,7 @@ class Base
         return $number . '0';
     }
 
-    /**
-     * Convert special character to normal variant
-     *
-     * @param  string $str
-     * @return string
-     */
-    public static function stringTransliteration($str)
+    public static function stringTransliteration(string $str): string
     {
         $oldLocale = setlocale(LC_CTYPE, 0);
         setlocale(LC_CTYPE, 'en_US.UTF8');
@@ -304,24 +188,6 @@ class Base
     }
 
     /**
-     * Find first matching value in array
-     *
-     * @param  array  $array
-     * @param  Closure $callback function($value, $key)
-     * @return mixed
-     */
-    public static function arrayFind($array, Closure $callback)
-    {
-        foreach ($array as $key => $value) {
-            if (call_user_func($callback, $value, $key)) {
-                return $value;
-            }
-        }
-
-        return null;
-    }
-
-    /**
      * Map over an array
      * (But with logical argument order and expose key in callback)
      *
@@ -329,7 +195,7 @@ class Base
      * @param  Closure $callback function($value, $key)
      * @return mixed
      */
-    public static function arrayMap($array, Closure $callback)
+    public static function arrayMap(array $array, Closure $callback)
     {
         $newAttributes = [];
 
@@ -340,13 +206,7 @@ class Base
         return $newAttributes;
     }
 
-    /**
-     * Flatten an array to create a one-dimensional array
-     *
-     * @param  array $arr multi-dimenional array
-     * @return array      flat array
-     */
-    public static function arrayFlatten(array $arr)
+    public static function arrayFlatten(array $arr): array
     {
         return array_reduce($arr, function ($a, $item) {
             if (is_array($item)) {
@@ -355,55 +215,6 @@ class Base
 
             return array_merge($a, (array) $item);
         }, []);
-    }
-
-    /**
-     * Find differences between two arrays recursively
-     *
-     * @param  array  $array1
-     * @param  array  $array2
-     * @param  bool   $traverseObjects  Boolean to indicate whether to also diff objects
-     * @return array
-     */
-    public static function arrayDiffDeep(array $array1, array $array2, $traverseObjects = false)
-    {
-        $diff    = [];
-        $objects = [];
-
-        foreach ($array1 as $key => $value) {
-            if (array_key_exists($key, $array2)) {
-                $className = '';
-                $isObject  = is_object($value);
-
-                if ($traverseObjects && $isObject && !isset($objects[spl_object_hash($value)])) {
-                    // prevent infinite loops, by checking if object has already been traversed
-                    $objects[spl_object_hash($value)] = $value;
-
-                    $className = get_class($value);
-                    $value     = (array) $value;
-                }
-
-                if (is_array($value)) {
-                    $deepDiff = static::arrayDiffDeep($value, $array2[$key]);
-
-                    if (count($deepDiff)) {
-                        $diff[$key] = $deepDiff;
-                    }
-                } else {
-                    if ($value != $array2[$key]) {
-                        $diff[$key] = $value;
-                    }
-                }
-
-                if ($isObject && array_key_exists($key, $diff)) {
-                    $diff[$key]['___object_classname___'] = $className;
-                }
-            } else {
-                $diff[$key] = $value;
-            }
-        }
-
-        return $diff;
     }
 
     public static function getRemoteIp(): string
@@ -437,7 +248,7 @@ class Base
         return '';
     }
 
-    public static function validateSignature($postData, $secretKey)
+    public static function validateSignature(array $postData, string $secretKey): bool
     {
         if (!isset($postData['brq_signature'])) {
             return false;
@@ -452,14 +263,7 @@ class Base
         return true;
     }
 
-    /**
-     * Determines the signature using array sorting and the SHA1 hash algorithm
-     *
-     * @param $postData
-     *
-     * @return string
-     */
-    protected static function calculateSignature($postData, $secretKey)
+    protected static function calculateSignature(array $postData, string $secretKey): string
     {
         $copyData = $postData;
         unset($copyData['brq_signature']);
@@ -481,14 +285,7 @@ class Base
         return $signature;
     }
 
-    /**
-     * Sort the array so that the signature can be calculated identical to the way buckaroo does.
-     *
-     * @param $arrayToUse
-     *
-     * @return array $sortableArray
-     */
-    protected static function buckarooArraySort($arrayToUse)
+    protected static function buckarooArraySort(array $arrayToUse): array
     {
         $arrayToSort   = [];
         $originalArray = [];
@@ -510,13 +307,7 @@ class Base
         return $sortableArray;
     }
 
-    /**
-     * @param string $brq_key
-     * @param string $brq_value
-     *
-     * @return string
-     */
-    private static function decodePushValue($brq_key, $brq_value)
+    private static function decodePushValue(string $brq_key, string $brq_value): string
     {
         switch ($brq_key) {
             case 'brq_SERVICE_payconiq_PayconiqAndroidUrl':

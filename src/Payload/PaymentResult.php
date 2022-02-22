@@ -7,14 +7,14 @@ use Buckaroo\Helpers\Constants\ResponseStatus;
 
 class PaymentResult
 {
-    protected $data = [];
+    protected array $data = [];
 
     public function __construct($data)
     {
         $this->_pushData = $data;
     }
 
-    public function getData($key = null)
+    public function getData(?string $key = null)
     {
         if (empty($this->data)) {
             $data = $this->_pushData;
@@ -59,18 +59,13 @@ class PaymentResult
         return isset($this->data[$offset]) ? $this->data[$offset] : null;
     }
 
-    public function isTest()
+    public function isTest(): bool
     {
         $getBrqTest = $this->getData('BRQ_TEST');
         return !empty($getBrqTest);
     }
 
-    /**
-     * Check the signature of the message is correct
-     *
-     * @return boolean
-     */
-    public function isValid($secretKey)
+    public function isValid(string $secretKey): bool
     {
         $validateData = [];
 
@@ -186,147 +181,82 @@ class PaymentResult
         return hash_equals(sha1($dataString), trim($this->getData('BRQ_SIGNATURE')));
     }
 
-    /**
-     * @return string
-     */
-    public function getTransactionKey()
+    public function getTransactionKey(): ?string
     {
         return trim($this->getData('BRQ_TRANSACTIONS'));
     }
 
-    /**
-     * @return string
-     */
-    public function getWebsiteKey()
+    public function getWebsiteKey(): ?string
     {
         return trim($this->getData('BRQ_WEBSITEKEY'));
     }
 
-    /**
-     * @return string
-     */
-    public function getToken()
+    public function getToken(): ?string
     {
         return trim($this->getData('ADD_TOKEN'));
     }
 
-    /**
-     * @return string
-     */
-    public function getSignature()
+    public function getSignature(): ?string
     {
         return trim($this->getData('ADD_SIGNATURE'));
     }
 
-    /**
-     * @return float
-     */
-    public function getAmount()
+    public function getAmount(): ?string
     {
         return $this->getData('BRQ_AMOUNT');
     }
 
-    /**
-     * @return float
-     */
-    public function getAmountCredit()
+    public function getAmountCredit(): ?string
     {
         return $this->getData('BRQ_AMOUNT_CREDIT');
     }
 
-    /**
-     * @return string
-     */
-    public function getCurrency()
+    public function getCurrency(): ?string
     {
         return $this->getData('BRQ_CURRENCY');
     }
 
-    /**
-     * @return string
-     */
-    public function getInvoice()
+    public function getInvoice(): ?string
     {
         return $this->getData('BRQ_INVOICENUMBER');
     }
 
-    /**
-     * Get the ordernumber of the Buckaroo response
-     *
-     * @return string Buckaroo Response status
-     */
-    public function getOrder()
+    public function getOrder(): ?string
     {
         return $this->getData('BRQ_ORDERNUMBER');
     }
 
-    /**
-     * Get the Mutation Type of the Buckaroo response
-     *
-     * @return string Buckaroo Response status
-     */
-    public function getMutationType()
+    public function getMutationType(): ?string
     {
         return $this->getData('BRQ_MUTATIONTYPE');
     }
 
-
-    /**
-     * Get the transaction Type of the Buckaroo response
-     *
-     * @return string Buckaroo Response status
-     */
-    public function getTransactionType()
+    public function getTransactionType(): ?string
     {
         return $this->getData('BRQ_TRANSACTION_TYPE');
     }
 
-    /**
-     * Get the status code of the Buckaroo response
-     *
-     * @return int Buckaroo Response status
-     */
-    public function getStatusCode()
+    public function getStatusCode(): ?string
     {
         return $this->getData('BRQ_STATUSCODE');
     }
 
-    /**
-     * Get the status subcode of the Buckaroo response
-     *
-     * @return string Buckaroo status subcode
-     */
-    public function getSubStatusCode()
+    public function getSubStatusCode(): ?string
     {
         return $this->getData('BRQ_STATUSCODE_DETAIL');
     }
 
-    /**
-     * Get the status subcode message of the Buckaroo response
-     *
-     * @return string Buckaroo status subcode
-     */
-    public function getSubCodeMessage()
+    public function getSubCodeMessage(): ?string
     {
         return $this->getData('BRQ_STATUSMESSAGE');
     }
 
-    /**
-     * Get the Buckaroo key for the paymentmethod
-     *
-     * @return string
-     */
-    public function getServiceName()
+    public function getServiceName(): ?string
     {
         return $this->getData('BRQ_TRANSACTION_METHOD') ?? $this->getData('BRQ_PAYMENT_METHOD');
     }
 
-    /**
-     * Get the returned service parameters
-     *
-     * @return array [ key => value ]
-     */
-    public function getServiceParameters()
+    public function getServiceParameters(): array
     {
         $params = [];
 
@@ -343,85 +273,58 @@ class PaymentResult
         return $params;
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return $this->getData();
     }
 
-    /**
-     * @return string
-     */
-    public function getDataRequest()
+    public function getDataRequest(): ?string
     {
         return trim($this->getData('BRQ_DATAREQUEST'));
     }
 
-    /**
-     * @return string
-     */
-    public function getPrimaryService()
+    public function getPrimaryService(): ?string
     {
         return trim($this->getData('BRQ_PRIMARY_SERVICE'));
     }
 
-    /**
-     * @return string
-     */
-    public function getKlarnaReservationNumber()
+    public function getKlarnaReservationNumber(): ?string
     {
         return trim($this->getData('BRQ_SERVICE_KLARNAKP_RESERVATIONNUMBER'));
     }
 
-    /**
-     * @return  string
-     */
-    public function getCustomerName()
+    public function getCustomerName(): ?string
     {
         return "";
     }
 
-    /**
-     * @return string
-     */
-    public function getIsTest()
+    public function getIsTest(): ?string
     {
         return $this->data['BRQ_TEST'];
     }
 
-    /**
-     * @return boolean
-     */
-    public function isSuccess()
+    public function isSuccess(): bool
     {
         return $this->getStatusCode() == ResponseStatus::BUCKAROO_STATUSCODE_SUCCESS;
     }
 
-    /**
-     * @return boolean
-     */
-    public function isCanceled()
+    public function isCanceled(): bool
     {
         return $this->getStatusCode() == ResponseStatus::BUCKAROO_STATUSCODE_CANCELLED_BY_USER
             || $this->getStatusCode() == ResponseStatus::BUCKAROO_STATUSCODE_CANCELLED_BY_MERCHANT;
     }
 
-    /**
-     * @return boolean
-     */
-    public function isAwaitingConsumer()
+    public function isAwaitingConsumer(): bool
     {
         return $this->getStatusCode() == ResponseStatus::BUCKAROO_STATUSCODE_WAITING_ON_CONSUMER;
     }
 
-    /**
-     * @return boolean
-     */
-    public function isPendingProcessing()
+    public function isPendingProcessing(): bool
     {
         return $this->getStatusCode() == ResponseStatus::BUCKAROO_STATUSCODE_PENDING_PROCESSING;
     }
 
-    public function isWaitingOnUserInput()
+    public function isWaitingOnUserInput(): bool
     {
         return $this->getStatusCode() == ResponseStatus::BUCKAROO_STATUSCODE_WAITING_ON_USER_INPUT;
     }

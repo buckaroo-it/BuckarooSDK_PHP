@@ -83,7 +83,7 @@ class Request implements JsonSerializable, ArrayAccess, Arrayable
     }
 
     /** Implement Arrayable */
-    public function toArray()
+    public function toArray(): array
     {
         return $this->data;
     }

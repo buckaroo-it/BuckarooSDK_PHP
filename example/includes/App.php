@@ -37,7 +37,7 @@ class App
         $this->logger = $logger;
     }
 
-    public function handlePush($data, $secretKey)
+    public function handlePush(array $data, string $secretKey): PaymentResult
     {
         $result = new PaymentResult($data);
         $this->logger->debug(__METHOD__ . '| start |', [$result->getData()]);
@@ -69,7 +69,7 @@ class App
         return $result;
     }
 
-    public function handleReturn($data, $secretKey)
+    public function handleReturn(array $data, string $secretKey)
     {
         $result = $this->handlePush($data, $secretKey);
         $this->logger->debug(__METHOD__ . ' | Response status: '. $result->getStatusCode());
@@ -78,6 +78,7 @@ class App
 
     public function handleResponse(TransactionResponse $response)
     {
+        //$response = '';
         if ($response) {
             if ($response->hasRedirect() && $response->getRedirectUrl()) {
                 if (php_sapi_name() == 'cli') {
@@ -105,7 +106,7 @@ class App
         throw new SdkException($this->logger, __METHOD__, $e->getMessage());
     }
 
-    public static function getOrderId()
+    public static function getOrderId(): string
     {
         return 'sdk_' . date('ymdHis') . rand(1, 99);
     }

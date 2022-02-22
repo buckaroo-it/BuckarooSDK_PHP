@@ -4,21 +4,13 @@ declare(strict_types=1);
 
 namespace Buckaroo\Payload;
 
-use Buckaroo\Payload\TransactionResponse;
-
 /**
  * DataResponse inherits from TransactionResponse
  * All differences between the two are fixed here
  */
 class DataResponse extends TransactionResponse
 {
-    /**
-     * Set an additional parameter
-     * Structure is AdditionalParameters -> List
-     *
-     * @return array [ name => value ]
-     */
-    public function getAdditionalParameters()
+    public function getAdditionalParameters(): array
     {
         if (!empty($this->data['AdditionalParameters']['List'])) {
             $parameters = $this->data['AdditionalParameters']['List'];

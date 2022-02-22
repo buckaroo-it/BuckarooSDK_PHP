@@ -115,7 +115,7 @@ class TransactionRequest extends Request
         return $this->data['Services']['ServiceList'][0]['Version'];
     }
 
-    private function throwError(string $method, $message, $value)
+    private function throwError(string $method, $message, $value): void
     {
         throw new SdkException($this->logger, $method, "Invalid $message: '{$value}'");
     }

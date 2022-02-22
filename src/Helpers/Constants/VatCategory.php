@@ -18,10 +18,10 @@ class VatCategory
      * https://en.wikipedia.org/wiki/Tax_rates_in_Europe
      *
      * @param  float|null $percentage
-     * @param  string     $countryIso
+     * @param  string     $countryIso ISO 3166-1 alpha-2
      * @return int
      */
-    public static function getByPercentage($percentage = null, $countryIso = null)
+    public static function getByPercentage(?float $percentage = null, ?string $countryIso = null): int
     {
         if (!is_numeric($percentage)) {
             return static::NULL_RATE;

@@ -6,11 +6,7 @@ namespace Buckaroo\Helpers;
 
 class SoftwareHeader
 {
-    public function __construct()
-    {
-    }
-
-    public function getHeader()
+    public function getHeader(): string
     {
         return "Software: " . json_encode([
             "PlatformName"    => "SDK",

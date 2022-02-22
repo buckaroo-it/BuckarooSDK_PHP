@@ -39,7 +39,7 @@ abstract class HttpClientAbstract implements HttpClientInterface
     protected const TIMEOUT = 30;
     protected const CONNECT_TIMEOUT = 5;
 
-    protected $logger;
+    protected LoggerInterface $logger;
 
     public function __construct(
         ?LoggerInterface $logger = null
@@ -49,7 +49,7 @@ abstract class HttpClientAbstract implements HttpClientInterface
 
     abstract public function call(string $url, array $headers, string $method, string $data = null);
 
-    protected function checkMethod($method)
+    protected function checkMethod(string $method)
     {
         if (!in_array($method, self::VALID_METHODS)) {
             throw new TransferException(

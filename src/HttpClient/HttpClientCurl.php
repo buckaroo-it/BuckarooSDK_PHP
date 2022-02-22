@@ -25,8 +25,6 @@ namespace Buckaroo\HttpClient;
 
 class HttpClientCurl extends HttpClientAbstract
 {
-    protected $logger;
-
     public function call(string $url, array $headers, string $method, string $data = null)
     {
         $this->logger->debug(__METHOD__, [$url, $headers, $method, !empty($data) ? json_decode($data) : '']);

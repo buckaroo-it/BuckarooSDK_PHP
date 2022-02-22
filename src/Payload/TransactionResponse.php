@@ -10,57 +10,39 @@ use Buckaroo\Helpers\Base;
 
 class TransactionResponse extends Response
 {
-    /**
-     * @return boolean
-     */
-    public function isSuccess()
+    public function isSuccess(): bool
     {
         return $this->getStatusCode() == ResponseStatus::BUCKAROO_STATUSCODE_SUCCESS;
     }
 
-    /**
-     * @return boolean
-     */
-    public function isCanceled()
+    public function isCanceled(): bool
     {
         return $this->getStatusCode() == ResponseStatus::BUCKAROO_STATUSCODE_CANCELLED_BY_USER
             || $this->getStatusCode() == ResponseStatus::BUCKAROO_STATUSCODE_CANCELLED_BY_MERCHANT;
     }
 
-    /**
-     * @return boolean
-     */
-    public function isAwaitingConsumer()
+    public function isAwaitingConsumer(): bool
     {
         return $this->getStatusCode() == ResponseStatus::BUCKAROO_STATUSCODE_WAITING_ON_CONSUMER;
     }
 
-    /**
-     * @return boolean
-     */
-    public function isPendingProcessing()
+    public function isPendingProcessing(): bool
     {
         return $this->getStatusCode() == ResponseStatus::BUCKAROO_STATUSCODE_PENDING_PROCESSING;
     }
 
-    public function isWaitingOnUserInput()
+    public function isWaitingOnUserInput(): bool
     {
         return $this->getStatusCode() == ResponseStatus::BUCKAROO_STATUSCODE_WAITING_ON_USER_INPUT;
     }
 
-    /**
-     * @return boolean
-     */
-    public function hasRedirect()
+    public function hasRedirect(): bool
     {
         return !empty($this->data['RequiredAction']['RedirectURL'])
             && $this->data['RequiredAction']['Name'] == 'Redirect';
     }
 
-    /**
-     * @return string
-     */
-    public function getRedirectUrl()
+    public function getRedirectUrl(): string
     {
         if ($this->hasRedirect()) {
             return $this->data['RequiredAction']['RedirectURL'];
@@ -72,7 +54,7 @@ class TransactionResponse extends Response
     /**
      * @return string
      */
-    public function getServiceName()
+    public function getServiceName(): string
     {
         return $this->data['Services'][0]['Name'];
     }
@@ -80,7 +62,7 @@ class TransactionResponse extends Response
     /**
      * @return string
      */
-    public function getServiceAction()
+    public function getServiceAction(): string
     {
         return $this->data['Services'][0]['Action'];
     }
@@ -108,10 +90,7 @@ class TransactionResponse extends Response
         return [];
     }
 
-    /**
-     * @return array [ name => value ]
-     */
-    public function getCustomParameters()
+    public function getCustomParameters(): array
     {
         if (!empty($this->data['CustomParameters']['List'])) {
             $parameters = $this->data['CustomParameters']['List'];
@@ -128,10 +107,7 @@ class TransactionResponse extends Response
         return [];
     }
 
-    /**
-     * @return array [ name => value ]
-     */
-    public function getAdditionalParameters()
+    public function getAdditionalParameters(): array
     {
         if (!empty($this->data['AdditionalParameters']['AdditionalParameter'])) {
             $parameters = $this->data['AdditionalParameters']['AdditionalParameter'];
@@ -148,70 +124,44 @@ class TransactionResponse extends Response
         return [];
     }
 
-    /**
-     * @return string
-     */
-    public function getTransactionKey()
+    public function getTransactionKey(): string
     {
         return $this->data['Key'];
     }
 
-    /**
-     * @return string
-     */
-    public function getPaymentKey()
+    public function getPaymentKey(): string
     {
         return $this->data['PaymentKey'];
     }
 
-    /**
-     * @return string
-     */
-    public function getToken()
+    public function getToken(): string
     {
         $params = $this->getAdditionalParameters();
         return trim($params['token']);
     }
 
-    /**
-     * @return string
-     */
-    public function getSignature()
+    public function getSignature(): string
     {
         $params = $this->getAdditionalParameters();
         return trim($params['signature']);
     }
 
-    /**
-     * @return float
-     */
-    public function getAmount()
+    public function getAmount(): string
     {
         return $this->data['AmountDebit'];
     }
 
-    /**
-     * @return string
-     */
-    public function getCurrency()
+    public function getCurrency(): string
     {
         return $this->data['Currency'];
     }
 
-    /**
-     * @return string
-     */
-    public function getInvoice()
+    public function getInvoice(): string
     {
         return $this->data['Invoice'];
     }
 
-    /**
-     * Get the status code of the Buckaroo response
-     *
-     * @return int Buckaroo Response status
-     */
-    public function getStatusCode()
+    public function getStatusCode(): ?string
     {
         if (!empty($this->data['Status']['Code']['Code'])) {
             return $this->data['Status']['Code']['Code'];
@@ -220,12 +170,7 @@ class TransactionResponse extends Response
         return null;
     }
 
-    /**
-     * Get the status subcode of the Buckaroo response
-     *
-     * @return string Buckaroo status subcode
-     */
-    public function getSubStatusCode()
+    public function getSubStatusCode(): ?string
     {
         if (!empty($this->data['Status']['SubCode']['Code'])) {
             return $this->data['Status']['SubCode']['Code'];
@@ -234,23 +179,13 @@ class TransactionResponse extends Response
         return null;
     }
 
-    /**
-     * Check if there is an error in the Response
-     *
-     * @return boolean
-     */
-    public function hasSomeError()
+    public function hasSomeError(): bool
     {
         $getError = $this->getSomeError();
         return !empty($getError);
     }
 
-    /**
-     * Try all possible methods to get an error message, return first one
-     *
-     * @return string
-     */
-    public function getSomeError()
+    public function getSomeError(): string
     {
         if ($this->hasError()) {
             $error = $this->getFirstError();
@@ -272,10 +207,7 @@ class TransactionResponse extends Response
         return '';
     }
 
-    /**
-     * @return boolean
-     */
-    public function hasError()
+    public function hasError(): bool
     {
         return !empty($this->data['RequestErrors']) && (
             !empty($this->data['RequestErrors']['ChannelErrors']) ||
@@ -286,10 +218,7 @@ class TransactionResponse extends Response
         );
     }
 
-    /**
-     * @return array
-     */
-    public function getFirstError()
+    public function getFirstError(): array
     {
         if ($this->hasError()) {
             if (!empty($this->data['RequestErrors']['ChannelErrors'])) {
@@ -316,36 +245,22 @@ class TransactionResponse extends Response
         return [];
     }
 
-    /**
-     * @return boolean
-     */
-    public function hasMessage()
+    public function hasMessage(): bool
     {
         return !empty($this->data['Message']);
     }
 
-    /**
-     * @return  string
-     */
-    public function getMessage()
+    public function getMessage(): string
     {
         return $this->hasMessage() ? $this->data['Message'] : '';
     }
 
-    /**
-     * Check if the response has a user-friendly message
-     *
-     * @return boolean
-     */
-    public function hasConsumerMessage()
+    public function hasConsumerMessage(): bool
     {
         return !empty($this->data['ConsumerMessage']['HtmlText']);
     }
 
-    /**
-     * @return string
-     */
-    public function getConsumerMessage()
+    public function getConsumerMessage(): string
     {
         if ($this->hasConsumerMessage()) {
             return $this->data['ConsumerMessage']['HtmlText'];
@@ -354,20 +269,12 @@ class TransactionResponse extends Response
         return '';
     }
 
-    /**
-     * Check if the response has a subcode message
-     *
-     * @return boolean
-     */
-    public function hasSubCodeMessage()
+    public function hasSubCodeMessage(): bool
     {
         return !empty($this->data['Status']['SubCode']['Description']);
     }
 
-    /**
-     * @return string
-     */
-    public function getSubCodeMessage()
+    public function getSubCodeMessage(): string
     {
         if ($this->hasSubCodeMessage()) {
             return $this->data['Status']['SubCode']['Description'];
@@ -376,10 +283,7 @@ class TransactionResponse extends Response
         return '';
     }
 
-    /**
-     * @return  string
-     */
-    public function getCustomerName()
+    public function getCustomerName(): string
     {
         return $this->data['CustomerName'];
     }

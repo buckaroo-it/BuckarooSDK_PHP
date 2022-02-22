@@ -23,24 +23,10 @@ declare(strict_types=1);
 
 namespace Buckaroo\Exceptions;
 
-use Psr\Log\LoggerInterface;
-
-class TransferException extends \Exception
+class TransferException extends SdkException
 {
-    protected LoggerInterface $logger;
-
-    public function __construct(
-        LoggerInterface $logger,
-        $breakpoint,
-        $message = "",
-        $code = 0,
-        \Throwable $previous = null
-    ) {
-        $this->logger = $logger;
-
-        $message = 'Buckaroo API client error: ' . $message;
-        $this->logger->error($breakpoint, [$message]);
-
-        parent::__construct($message, $code, $previous);
+    protected function getMsg(string $message): string
+    {
+        return 'Buckaroo API client error: ' . $message;
     }
 }

@@ -100,7 +100,7 @@ class Client
         ;
     }
 
-    protected function getHeaders($url, $data, $method)
+    protected function getHeaders(string $url, string $data, string $method): array
     {
         return [
             'Content-Type: application/json; charset=utf-8',
