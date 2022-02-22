@@ -6,7 +6,6 @@ namespace Buckaroo\Payload;
 
 use Buckaroo\Exceptions\SdkException;
 use Buckaroo\Helpers\Validate;
-use Exception;
 use Buckaroo\Helpers\Constants\IPProtocolVersion;
 use Buckaroo\Helpers\Base;
 use Psr\Log\LoggerInterface;
@@ -118,7 +117,7 @@ class TransactionRequest extends Request
 
     private function throwError(string $method, $message, $value)
     {
-        throw new SdkException($this->logger, $method, "$message: '{$value}'");
+        throw new SdkException($this->logger, $method, "Invalid $message: '{$value}'");
     }
 
     public function setServiceParameter(
@@ -268,35 +267,67 @@ class TransactionRequest extends Request
         return $this->data['AmountCredit'];
     }
 
+    public function setAmountDebit(float $amount): void
+    {
+        $this->data['AmountDebit'] = $amount;
+    }
+
+    public function getAmountDebit(): float
+    {
+        return $this->data['AmountDebit'];
+    }
+
+    public function setOrder(string $order): void
+    {
+        if (!Validate::isOrder($order)) {
+            $this->throwError(__METHOD__, "Invalid order number", $order);
+        }
+
+        $this->data['Order'] = $order;
+    }
+
+    public function getOrder(): string
+    {
+        return $this->data['Order'];
+    }
+
+    public function setInvoice(string $invoice): void
+    {
+        if (!Validate::isInvoice($invoice)) {
+            $this->throwError(__METHOD__, "Invalid invoice number", $invoice);
+        }
+
+        $this->data['Invoice'] = $invoice;
+    }
+
+    public function getInvoice(): string
+    {
+        return $this->data['Invoice'];
+    }
+
     public function setOriginalTransactionKey(string $transactionKey): void
     {
+        if (!Validate::isServiceAction($transactionKey)) {
+            $this->throwError(__METHOD__, "Invalid original transaction key", $transactionKey);
+        }
+
         $this->data['OriginalTransactionKey'] = $transactionKey;
     }
 
-    /**
-     * @return string
-     */
-    public function getOriginalTransactionKey()
+    public function getOriginalTransactionKey(): string
     {
         return $this->data['OriginalTransactionKey'];
     }
 
-    /**
-     * Header fields
-     */
-
-    /**
-     * @param string $channel
-     */
-    public function setChannelHeader($channel)
+    public function setChannelHeader(string $channel): void
     {
         $channel = ucfirst(strtolower($channel));
 
-        if (!in_array($channel, ['Web', 'Backoffice'])) {
-            throw new Exception('Channel should be set to "Web" or "Backoffice"');
+        if (!Validate::isChannelHeader($channel)) {
+            $this->throwError(__METHOD__, "Invalid channel (should be set to 'Web' or 'Backoffice')", $channel);
         }
 
-        return $this->setHeader('Channel', $channel);
+        $this->setHeader('Channel', $channel);
     }
 
     /** Implement JsonSerializable */
@@ -343,18 +374,5 @@ class TransactionRequest extends Request
             return ($aKey < $bKey) ? -1 : 1;
         });
         return $this->data;
-    }
-
-    public function setCustomerCardName($customerCardName)
-    {
-        $this->data['CustomerCardName'] = $customerCardName;
-    }
-
-    /**
-     * @return float
-     */
-    public function getcustomerCardName()
-    {
-        return $this->data['CustomerCardName'];
     }
 }

@@ -49,4 +49,24 @@ class Validate
     {
         return in_array($version, [0,1,2,3]);
     }
+
+    public static function isOriginalTransactionKey(string $transactionKey): bool
+    {
+        return !empty($transactionKey);
+    }
+
+    public static function isChannelHeader(string $channel): bool
+    {
+        return in_array($channel, ['Web', 'Backoffice']);
+    }
+
+    public static function isOrder(string $order): bool
+    {
+        return !empty($order);
+    }
+
+    public static function isInvoice(string $invoice): bool
+    {
+        return !empty($invoice);
+    }
 }
