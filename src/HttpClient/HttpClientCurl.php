@@ -44,7 +44,6 @@ class HttpClientCurl extends HttpClientAbstract
 
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 
-        // GET/POST
         $result = curl_exec($curl);
         $curlInfo = curl_getinfo($curl);
 

@@ -29,7 +29,6 @@ use Buckaroo\Helpers\SoftwareHeader;
 use Buckaroo\Helpers\DefaultFactory;
 use Buckaroo\Payload\Request;
 use Buckaroo\HttpClient\HttpClientInterface;
-use Buckaroo\HttpClient\HttpClientGuzzle;
 use Psr\Log\LoggerInterface;
 
 class Client

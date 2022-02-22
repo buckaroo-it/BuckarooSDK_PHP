@@ -23,6 +23,7 @@ declare(strict_types=1);
 
 namespace Buckaroo\Example;
 
+use Buckaroo\Exceptions\SdkException;
 use Buckaroo\Payload\PaymentResult;
 use Buckaroo\Payload\TransactionResponse;
 use Psr\Log\LoggerInterface;
@@ -63,7 +64,7 @@ class App
                 $this->logger->debug(__METHOD__ . '| waiting on user input |');
             }
         } else {
-            $this->logger->debug(__METHOD__ . '| result is invalid |');
+            throw new SdkException($this->logger, __METHOD__, "Push is invalid");
         }
         return $result;
     }
@@ -71,9 +72,8 @@ class App
     public function handleReturn($data, $secretKey)
     {
         $result = $this->handlePush($data, $secretKey);
-        $this->print('Response status: '. $result->getStatusCode());
-        $this->print('Description: '. $result->getSubCodeMessage());
-        //$this->print('Raw response: '. var_export($result->getData(),true));
+        $this->logger->debug(__METHOD__ . ' | Response status: '. $result->getStatusCode());
+        $this->logger->debug(__METHOD__ . ' | Description: '. $result->getSubCodeMessage());
     }
 
     public function handleResponse(TransactionResponse $response)
@@ -81,29 +81,28 @@ class App
         if ($response) {
             if ($response->hasRedirect() && $response->getRedirectUrl()) {
                 if (php_sapi_name() == 'cli') {
-                    $this->print('Redirect to '. $response->getRedirectUrl());
+                    $this->logger->debug(__METHOD__ . ' | Redirect to '. $response->getRedirectUrl());
                 } else {
                     header('Location: ' . $response->getRedirectUrl(), true, 302);
                 }
             } else {
-                $this->print('Response status: '. $response->getStatusCode());
+                $this->logger->debug(__METHOD__ . ' | Response status: '. $response->getStatusCode());
                 if ($response->hasSomeError()) {
-                    $this->print('Description: '. $response->getSomeError());
+                    throw new SdkException(
+                        $this->logger,
+                        __METHOD__,
+                        'Error in response: '. $response->getSomeError()
+                    );
                 }
             }
         } else {
-            $this->print('FAILED!');
+            throw new SdkException($this->logger, __METHOD__, "Empty response");
         }
     }
 
     public function handleException(\Exception $e)
     {
-        $this->print('ERROR: ' . $e->getMessage());
-    }
-
-    private function print($message)
-    {
-        echo $message . ((php_sapi_name() == 'cli') ? "\n" : "<br>");
+        throw new SdkException($this->logger, __METHOD__, $e->getMessage());
     }
 
     public static function getOrderId()
