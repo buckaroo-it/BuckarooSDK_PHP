@@ -1,0 +1,112 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Buckaroo\PaymentMethods;
+
+use Buckaroo\Payload\TransactionRequest;
+use Buckaroo\Payload\TransactionResponse;
+
+class Ideal extends PaymentMethod
+{
+    public const BANK_CODE_ABN = 'ABNANL2A';
+    public const BANK_CODE_ASN = 'ASNBNL21';
+    public const BANK_CODE_BUNQ = 'BUNQNL2A';
+    public const BANK_CODE_ING = 'INGBNL2A';
+    public const BANK_CODE_RABO = 'RABONL2U';
+    public const BANK_CODE_REGIO = 'RBRBNL21';
+    public const BANK_CODE_SNS = 'SNSBNL2A';
+    public const BANK_CODE_TRIODOS = 'TRIONL2U';
+    public const BANK_CODE_TEST = 'BANKNL2Y';
+
+    public function getCode(): string
+    {
+        return PaymentMethod::IDEAL;
+    }
+
+    public function pay(TransactionRequest $transactionRequest): TransactionResponse
+    {
+        $transactionRequest->setServiceVersion(2);
+        return parent::pay($transactionRequest);
+    }
+
+    protected function validatePayRequest(TransactionRequest $transactionRequest): void
+    {
+        if (!$this->transactionRequest->getServiceParameter('issuer')) {
+            $this->throwError(__METHOD__, "Empty bank code");
+        }
+        parent::validatePayRequest($transactionRequest);
+    }
+
+    public function setBankCode(string $bankCode): void
+    {
+        if (!in_array($bankCode, $this->getBanks())) {
+            $this->throwError(__METHOD__, "Invalid bank code", $bankCode);
+        }
+
+        $this->transactionRequest->setServiceParameter('issuer', $bankCode);
+    }
+
+    public function getBanks(): array
+    {
+        return [
+            self::BANK_CODE_ABN,
+            self::BANK_CODE_ASN,
+            self::BANK_CODE_BUNQ,
+            self::BANK_CODE_ING,
+            self::BANK_CODE_RABO,
+            self::BANK_CODE_REGIO,
+            self::BANK_CODE_SNS,
+            self::BANK_CODE_TRIODOS,
+        ];
+    }
+
+    public function getBanksNames()
+    {
+        $issuers = [
+            [
+                'servicename' => self::BANK_CODE_ABN,
+                'displayname' => 'ABN AMRO',
+            ],
+            [
+                'servicename' => self::BANK_CODE_ASN,
+                'displayname' => 'ASN Bank',
+            ],
+            [
+                'servicename' => self::BANK_CODE_BUNQ,
+                'displayname' => 'bunq',
+            ],
+            [
+                'servicename' => self::BANK_CODE_ING,
+                'displayname' => 'ING',
+            ],
+            [
+                'servicename' => self::BANK_CODE_RABO,
+                'displayname' => 'Rabobank',
+            ],
+            [
+                'servicename' => self::BANK_CODE_REGIO,
+                'displayname' => 'RegioBank',
+            ],
+            [
+                'servicename' => self::BANK_CODE_SNS,
+                'displayname' => 'SNS Bank',
+            ],
+            [
+                'servicename' => self::BANK_CODE_TRIODOS,
+                'displayname' => 'Triodos Bank',
+            ],
+        ];
+
+        /*
+        if (Config::getIdinMode() == 'test') {
+            $issuers[] = [
+                'servicename' => self::BANK_CODE_TEST,
+                'displayname' => 'TEST BANK',
+            ];
+        }
+        */
+
+        return $issuers;
+    }
+}

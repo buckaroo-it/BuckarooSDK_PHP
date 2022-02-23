@@ -25,6 +25,7 @@ namespace Buckaroo\Example;
 
 use Buckaroo\Exceptions\SdkException;
 use Buckaroo\Payload\PaymentResult;
+use Buckaroo\Payload\TransactionRequest;
 use Buckaroo\Payload\TransactionResponse;
 use Psr\Log\LoggerInterface;
 
@@ -35,6 +36,20 @@ class App
     public function __construct(LoggerInterface $logger = null)
     {
         $this->logger = $logger;
+    }
+
+    public function prepareTransactionRequest(): TransactionRequest
+    {
+        $request = new TransactionRequest();
+        $request->setAmountDebit(10.10);
+        $request->setInvoice(self::getOrderId());
+        $request->setOrder(self::getOrderId());
+        $request->setCurrency($_ENV['BPE_EXAMPLE_CURRENCY_CODE']);
+        $request->setReturnURL($_ENV['BPE_EXAMPLE_RETURN_URL']);
+        $request->setReturnURLCancel($_ENV['BPE_EXAMPLE_RETURN_URL']);
+        $request->setPushURL($_ENV['BPE_EXAMPLE_RETURN_URL']);
+
+        return $request;
     }
 
     public function handlePush(array $data, string $secretKey): PaymentResult
@@ -88,7 +103,7 @@ class App
                 }
             } else {
                 $this->logger->debug(__METHOD__ . ' | Response status: '. $response->getStatusCode());
-                if ($response->hasSomeError()) {
+                if (!$response->isSuccess() && $response->hasSomeError()) {
                     throw new SdkException(
                         $this->logger,
                         __METHOD__,

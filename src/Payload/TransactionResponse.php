@@ -161,7 +161,7 @@ class TransactionResponse extends Response
         return $this->data['Invoice'];
     }
 
-    public function getStatusCode(): ?string
+    public function getStatusCode(): ?int
     {
         if (!empty($this->data['Status']['Code']['Code'])) {
             return $this->data['Status']['Code']['Code'];
@@ -170,7 +170,7 @@ class TransactionResponse extends Response
         return null;
     }
 
-    public function getSubStatusCode(): ?string
+    public function getSubStatusCode(): ?int
     {
         if (!empty($this->data['Status']['SubCode']['Code'])) {
             return $this->data['Status']['SubCode']['Code'];

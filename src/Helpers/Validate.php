@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Buckaroo\Helpers;
 
 use Buckaroo\Client;
+use Buckaroo\PaymentMethods\PaymentMethodFactory;
 
 class Validate
 {
@@ -37,7 +38,7 @@ class Validate
 
     public static function isServiceName(string $service): bool
     {
-        return (!empty($service) && Base::getMethods()[$service]);
+        return (!empty($service) && in_array($service, PaymentMethodFactory::getMethods()));
     }
 
     public static function isServiceAction(string $action): bool

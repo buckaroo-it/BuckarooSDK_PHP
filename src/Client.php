@@ -147,4 +147,9 @@ class Client
 
         return $response;
     }
+
+    public function getLogger(): LoggerInterface
+    {
+        return $this->logger;
+    }
 }

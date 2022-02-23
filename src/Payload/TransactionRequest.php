@@ -82,7 +82,7 @@ class TransactionRequest extends Request
         $this->data['Services']['ServiceList'][0]['Name'] = $service;
     }
 
-    public function getServiceName(): string
+    public function getServiceName(): ?string
     {
         return $this->data['Services']['ServiceList'][0]['Name'];
     }
@@ -96,7 +96,7 @@ class TransactionRequest extends Request
         $this->data['Services']['ServiceList'][0]['Action'] = $action;
     }
 
-    public function getServiceAction(): string
+    public function getServiceAction(): ?string
     {
         return $this->data['Services']['ServiceList'][0]['Action'];
     }
@@ -110,14 +110,14 @@ class TransactionRequest extends Request
         $this->data['Services']['ServiceList'][0]['Version'] = $version;
     }
 
-    public function getServiceVersion(): int
+    public function getServiceVersion(): ?int
     {
         return $this->data['Services']['ServiceList'][0]['Version'];
     }
 
     private function throwError(string $method, $message, $value): void
     {
-        throw new SdkException($this->logger, $method, "Invalid $message: '{$value}'");
+        throw new SdkException($this->logger, $method, "$message: '{$value}'");
     }
 
     public function setServiceParameter(
@@ -154,6 +154,25 @@ class TransactionRequest extends Request
 
         return $newParam;
     }
+
+    public function getServiceParameter(
+        string $name,
+        ?string $groupType = null,
+        ?string $groupId = null
+    ) {
+        foreach ($this->data['Services']['ServiceList'][0]['Parameters'] as $i => $param) {
+            if (
+                $param['Name'] === $name &&
+                (is_null($groupType) || (isset($param['GroupType']) && $param['GroupType'] === $groupType)) &&
+                (is_null($groupId) || (isset($param['GroupID']) && $param['GroupID'] === $groupId))
+            ) {
+                return $param['Value'];
+            }
+        }
+
+        return '';
+    }
+
 
     public function setCustomParameter(string $key, string $value): string
     {
@@ -262,7 +281,7 @@ class TransactionRequest extends Request
         $this->data['AmountCredit'] = $amount;
     }
 
-    public function getAmountCredit(): float
+    public function getAmountCredit(): ?float
     {
         return $this->data['AmountCredit'];
     }
@@ -272,7 +291,7 @@ class TransactionRequest extends Request
         $this->data['AmountDebit'] = $amount;
     }
 
-    public function getAmountDebit(): float
+    public function getAmountDebit(): ?float
     {
         return $this->data['AmountDebit'];
     }
@@ -300,7 +319,7 @@ class TransactionRequest extends Request
         $this->data['Invoice'] = $invoice;
     }
 
-    public function getInvoice(): string
+    public function getInvoice(): ?string
     {
         return $this->data['Invoice'];
     }
@@ -314,7 +333,7 @@ class TransactionRequest extends Request
         $this->data['OriginalTransactionKey'] = $transactionKey;
     }
 
-    public function getOriginalTransactionKey(): string
+    public function getOriginalTransactionKey(): ?string
     {
         return $this->data['OriginalTransactionKey'];
     }

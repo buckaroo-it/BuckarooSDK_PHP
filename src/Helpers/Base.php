@@ -10,40 +10,6 @@ use InvalidArgumentException;
 
 class Base
 {
-    private static array $methods = [
-        'amex'                    => 'American Express',
-        'bancontactmrcash'        => 'Bancontact / Mr Cash',
-        'transfer'                => 'Bank Transfer',
-        'cartebancaire'           => 'Carte Bancaire',
-        'cartebleuevisa'          => 'Carte Bleue',
-        'dankort'                 => 'Dankort',
-        'eps'                     => 'EPS',
-        'giftcard'                => 'Giftcards',
-        'giropay'                 => 'Giropay',
-        'ideal'                   => 'iDEAL',
-        'idealprocessing'         => 'iDEAL Processing',
-        'maestro'                 => 'Maestro',
-        'mastercard'              => 'Mastercard',
-        'paypal'                  => 'PayPal',
-        'sepadirectdebit'         => 'SEPA Direct Debit',
-        'sofortueberweisung'      => 'Sofort Banking',
-        'belfius'                 => 'Belfius',
-        'visa'                    => 'Visa',
-        'visaelectron'            => 'Visa Electron',
-        'vpay'                    => 'V PAY',
-        'alipay'                  => 'Alipay',
-        'wechatpay'               => 'WeChatPay',
-        'p24'                     => 'P24',
-        'trustly'                 => 'Trustly',
-        'rtp'                     => 'Request To Pay',
-        'tinka'                   => 'Tinka',
-    ];
-
-    public static function getMethods(): array
-    {
-        return self::$methods;
-    }
-
     public static function blank($value): bool
     {
         if (is_null($value)) {
