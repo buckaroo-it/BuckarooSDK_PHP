@@ -4,19 +4,23 @@ declare(strict_types=1);
 
 namespace Buckaroo\Model;
 
-class Address
+class Customer
 {
-    private string $countryCode;
-    private string $firstName;
-    private string $lastName;
-    private string $street;
-    private string $houseNumber;
-    private string $houseNumberAddition;
-    private string $postalCode;
-    private string $city;
-    private string $email;
-    private string $phoneNumber;
-    private string $customerId;
+    protected string $countryCode = '';
+    protected string $firstName = '';
+    protected string $lastName = '';
+    protected string $street = '';
+    protected string $houseNumber = '';
+    protected string $houseNumberAddition = '';
+    protected string $postalCode = '';
+    protected string $city = '';
+    protected string $email = '';
+    protected string $phoneNumber = '';
+    protected string $customerId = '';
+    protected string $identificationId = '';
+    protected string $category = '';
+    protected string $salutation = '';
+    protected string $birthday = '';
 
     public function getCountryCode(): ?string
     {
@@ -146,6 +150,54 @@ class Address
     public function setCustomerId(?string $customerId)
     {
         $this->customerId = $customerId;
+
+        return $this;
+    }
+
+    public function getIdentificationId(): ?string
+    {
+        return $this->identificationId;
+    }
+
+    public function setIdentificationId(?string $identificationId)
+    {
+        $this->identificationId = $identificationId;
+
+        return $this;
+    }
+
+    public function getCategory(): ?string
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?string $category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getSalutation(): ?string
+    {
+        return $this->salutation;
+    }
+
+    public function setSalutation(?string $salutation)
+    {
+        $this->salutation = $salutation;
+
+        return $this;
+    }
+
+    public function getBirthday(): ?string
+    {
+        return $this->birthday;
+    }
+
+    public function setBirthday(?string $birthday)
+    {
+        $this->birthday = $birthday;
 
         return $this;
     }

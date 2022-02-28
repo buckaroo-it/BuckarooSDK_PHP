@@ -24,27 +24,27 @@ class Ideal extends PaymentMethod
         return PaymentMethod::IDEAL;
     }
 
-    public function pay(TransactionRequest $transactionRequest): TransactionResponse
+    public function pay(TransactionRequest $request): TransactionResponse
     {
-        $transactionRequest->setServiceVersion(2);
-        return parent::pay($transactionRequest);
+        $request->setServiceVersion(2);
+        return parent::pay($request);
     }
 
-    protected function validatePayRequest(TransactionRequest $transactionRequest): void
+    protected function validatePayRequest(TransactionRequest $request): void
     {
-        if (!$this->transactionRequest->getServiceParameter('issuer')) {
+        if (!$request->getServiceParameter('issuer')) {
             $this->throwError(__METHOD__, "Empty bank code");
         }
-        parent::validatePayRequest($transactionRequest);
+        parent::validatePayRequest($request);
     }
 
-    public function setBankCode(string $bankCode): void
+    public function setBankCode(TransactionRequest $request, string $bankCode): void
     {
         if (!in_array($bankCode, $this->getBanks())) {
             $this->throwError(__METHOD__, "Invalid bank code", $bankCode);
         }
 
-        $this->transactionRequest->setServiceParameter('issuer', $bankCode);
+        $request->setServiceParameter('issuer', $bankCode);
     }
 
     public function getBanks(): array
@@ -97,15 +97,6 @@ class Ideal extends PaymentMethod
                 'displayname' => 'Triodos Bank',
             ],
         ];
-
-        /*
-        if (Config::getIdinMode() == 'test') {
-            $issuers[] = [
-                'servicename' => self::BANK_CODE_TEST,
-                'displayname' => 'TEST BANK',
-            ];
-        }
-        */
 
         return $issuers;
     }

@@ -14,7 +14,7 @@ abstract class PaymentMethod
     protected Client $client;
 
     protected string $code;
-    protected TransactionRequest $transactionRequest;
+    protected TransactionRequest $request;
 
     public const AFTERPAY = 'afterpay';
     public const KLARNAKP = 'klarnakp';
@@ -47,35 +47,30 @@ abstract class PaymentMethod
 
     abstract public function getCode(): string;
 
-    public function pay(TransactionRequest $transactionRequest): TransactionResponse
+    public function pay(TransactionRequest $request): TransactionResponse
     {
-        $transactionRequest->setServiceAction('Pay');
+        $request->setServiceName($this->getCode());
+        $request->setServiceAction('Pay');
 
-        $this->validatePayRequest($transactionRequest);
+        $this->validatePayRequest($request);
 
         return $this->client->post(
-            $transactionRequest,
+            $request,
             'Buckaroo\Payload\TransactionResponse'
         );
     }
 
-    public function setTransactionRequest(TransactionRequest $transactionRequest): void
+    protected function validatePayRequest(TransactionRequest $request): void
     {
-        $this->transactionRequest = $transactionRequest;
-        $this->transactionRequest->setServiceName($this->getCode());
-    }
-
-    protected function validatePayRequest(TransactionRequest $transactionRequest): void
-    {
-        if (!$transactionRequest->getServiceName()) {
+        if (!$request->getServiceName()) {
             $this->throwError(__METHOD__, "Empty service name");
         }
 
-        if (!$transactionRequest->getAmountDebit()) {
+        if (!$request->getAmountDebit()) {
             $this->throwError(__METHOD__, "Empty amount");
         }
 
-        if (!$transactionRequest->getInvoice()) {
+        if (!$request->getInvoice()) {
             $this->throwError(__METHOD__, "Empty invoice");
         }
     }

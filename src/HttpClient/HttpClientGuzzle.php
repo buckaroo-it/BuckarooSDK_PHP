@@ -55,7 +55,7 @@ class HttpClientGuzzle extends HttpClientAbstract
             throw new TransferException(
                 $this->logger,
                 __METHOD__,
-                $e
+                $e->getMessage()
             );
         }
 
