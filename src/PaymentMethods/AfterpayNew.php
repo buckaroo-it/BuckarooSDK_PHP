@@ -48,69 +48,73 @@ class AfterpayNew extends PaymentMethod
         TransactionRequest $request,
         string $groupType = 'BillingCustomer'
     ): void {
-        $category = $request->getServiceParameter('Category', $groupType);
-        if (!$category) {
-            $this->throwError(__METHOD__, "Empty category");
-        }
-
-        if (!in_array($category, $this->getCategories())) {
-            $this->throwError(__METHOD__, "Wrong category");
-        }
-
-        if (!$request->getServiceParameter('FirstName', $groupType)) {
-            $this->throwError(__METHOD__, "Empty billing info");
-        }
-
-        if (!$request->getServiceParameter('LastName', $groupType)) {
-            $this->throwError(__METHOD__, "Empty last name");
-        }
-
-        if (!$request->getServiceParameter('Street', $groupType)) {
-            $this->throwError(__METHOD__, "Empty street");
-        }
-
-        if (!$request->getServiceParameter('PostalCode', $groupType)) {
-            $this->throwError(__METHOD__, "Empty postal code");
-        }
-
-        if (!$request->getServiceParameter('City', $groupType)) {
-            $this->throwError(__METHOD__, "Empty city");
-        }
 
         $country = $request->getServiceParameter('Country', $groupType);
-
-        if (!$request->getServiceParameter('Country', $groupType)) {
-            $this->throwError(__METHOD__, "Empty country");
-        }
-
-        if (!$request->getServiceParameter('Email', $groupType)) {
-            $this->throwError(__METHOD__, "Empty email");
-        }
-
         if (in_array($country, ["NL", "BE"])) {
-            if (!$request->getServiceParameter('Salutation', $groupType)) {
-                $this->throwError(__METHOD__, "Empty salutation");
-            }
-            if (!in_array($request->getServiceParameter('Salutation', $groupType), $this->getSalutations())) {
-                $this->throwError(__METHOD__, "Wrong salutation");
-            }
+            $countrySpecificParameters = ['Salutation' => ['Empty salutation', 'Wrong salutation'],
+                                          'BirthDate' => 'Empty birth date',
+                                          'Phone' => 'Empty phone',
+                                          'MobilePhone' => 'Empty phone',
+                                          'StreetNumber' => 'Empty street number'
+                                        ];
+        } elseif($country == 'FI') {
+            $countrySpecificParameters = ['IdentificationNumber' => 'Empty identification number'];
+        } else {
+            $countrySpecificParameters = [];
+        }
+        
+        $serviceParameters = ['Category' => ['Empty category', 'Wrong category'],
+                              'FirstName' => 'Empty billing info',
+                              'LastName' => 'Empty last name',
+                              'Street' => 'Empty street',
+                              'PostalCode' => 'Empty postal code',
+                              'City' => 'Empty city',
+                              'Country' => 'Empty country',
+                              'Email' => 'Empty email',
+                              'CountrySpecific' => $countrySpecificParameters
+                            ];
 
-            if (!$request->getServiceParameter('BirthDate', $groupType)) {
-                $this->throwError(__METHOD__, "Empty birth date");
-            }
+        foreach ($serviceParameters as $serviceParameter => $errorMessage) {
+            $result = null;
+            $result = $request->getServiceParameter($serviceParameter);
 
-            if (
-                empty($request->getServiceParameter('Phone', $groupType))
-                && empty($request->getServiceParameter('MobilePhone', $groupType))
-            ) {
-                $this->throwError(__METHOD__, "Empty phone");
-            }
-            if (!$request->getServiceParameter('StreetNumber', $groupType)) {
-                $this->throwError(__METHOD__, "Empty street number");
-            }
-        } elseif ($country == "FI") {
-            if (!$request->getServiceParameter('IdentificationNumber', $groupType)) {
-                $this->throwError(__METHOD__, "Empty identification number");
+            if ($serviceParameter == 'Category'){
+
+                if (!$result) {
+                    $this->throwError(__METHOD__, $errorMessage[0]);
+                }
+        
+                if (!in_array($result, $this->getCategories())) {
+                    $this->throwError(__METHOD__, $errorMessage[1]);
+                }
+            } elseif ($serviceParameter == 'CountrySpecific' && !empty($countrySpecificParameters)) {
+                foreach ($countrySpecificParameters as $countrySpecificParameter => $countrySpecificError) {
+                    $result = null;
+                    $result = $request->getServiceParameter($countrySpecificParameter, $groupType);
+        
+                    if ($countrySpecificParameter == 'Salutation'){
+                        
+                        if (!$result) {
+                            $this->throwError(__METHOD__, $countrySpecificError[0]);
+                        }
+                
+                        if (!in_array($result, $this->getSalutations())) {
+                            $this->throwError(__METHOD__, $countrySpecificError[1]);
+                        }
+                    } else {
+                        if (!$result) {
+                            if (in_array($countrySpecificParameter, ['Phone', 'MobilePhone'])) { //at least one phone number required
+                                $emptyPhone++;
+                                if ($emptyPhone < 2) {
+                                    continue;
+                                }
+                            }                            
+                            $this->throwError(__METHOD__, $countrySpecificError);
+                        }
+                    }
+                }
+            } elseif(!$result) {
+                $this->throwError(__METHOD__, $errorMessage);
             }
         }
     }

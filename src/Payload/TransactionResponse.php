@@ -220,25 +220,14 @@ class TransactionResponse extends Response
 
     public function getFirstError(): array
     {
+        $errorTypes = ['ChannelErrors', 'ServiceErrors', 'ActionErrors', 'ParameterErrors', 'CustomParameterErrors'];
+
         if ($this->hasError()) {
-            if (!empty($this->data['RequestErrors']['ChannelErrors'])) {
-                return $this->data['RequestErrors']['ChannelErrors'][0];
-            }
-
-            if (!empty($this->data['RequestErrors']['ServiceErrors'])) {
-                return $this->data['RequestErrors']['ServiceErrors'][0];
-            }
-
-            if (!empty($this->data['RequestErrors']['ActionErrors'])) {
-                return $this->data['RequestErrors']['ActionErrors'][0];
-            }
-
-            if (!empty($this->data['RequestErrors']['ParameterErrors'])) {
-                return $this->data['RequestErrors']['ParameterErrors'][0];
-            }
-
-            if (!empty($this->data['RequestErrors']['CustomParameterErrors'])) {
-                return $this->data['RequestErrors']['CustomParameterErrors'][0];
+            
+            foreach ($errorTypes as $errorType) {
+                if (!empty($this->data['RequestErrors'][$errorType])) {
+                    return $this->data['RequestErrors'][$errorType][0];
+                }
             }
         }
 

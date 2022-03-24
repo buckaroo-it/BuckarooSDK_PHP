@@ -32,71 +32,25 @@ class Transaction
     public static function create(Client $buckarooClient, $options = array())
     {
         $request = new TransactionRequest();
-
-        if (isset($options['serviceName'])) {
-            $request->setServiceName($options['serviceName']);
-        }
-
-        if (isset($options['serviceAction'])) {
-            $request->setServiceAction($options['serviceAction']);
-        }
-
-        if (isset($options['serviceVersion'])) {
-            $request->setServiceVersion($options['serviceVersion']);
-        }
-
-        if (isset($options['originalTransactionKey'])) {
-            $request->setOriginalTransactionKey($options['originalTransactionKey']);
-        }
-
-        if (isset($options['amountCredit'])) {
-            $request->setAmountCredit($options['amountCredit']);
-        }
-
-        if (isset($options['amountDebit'])) {
-            $request->setAmountDebit($options['amountDebit']);
-        }
-
-        if (isset($options['invoice'])) {
-            $request->setInvoice($options['invoice']);
-        }
-
-        if (isset($options['order'])) {
-            $request->setOrder($options['order']);
-        }
-
-        if (isset($options['currency'])) {
-            $request->setCurrency($options['currency']);
-        }
-
-        if (isset($options['returnURL'])) {
-            $request->setReturnURL($options['returnURL']);
-        }
-
-        if (isset($options['returnURLCancel'])) {
-            $request->setReturnURLCancel($options['returnURLCancel']);
-        }
-
-        if (isset($options['pushURL'])) {
-            $request->setPushURL($options['pushURL']);
-        }
-
-        if (isset($options['clientIP'])) {
-            $request->setClientIP($options['clientIP']);
-        }
-
-        if (isset($options['issuer'])) {
-            $request->setServiceParameter('issuer', $options['issuer']);
-        }
-
-        if (isset($options['serviceParameters'])) {
-            foreach ($options['serviceParameters'] as $item) {
-                $request->setServiceParameter(
-                    $item['name'],
-                    $item['value'],
-                    $item['groupType'] ?? null,
-                    $item['groupId'] ?? null
-                );
+        if (isset($options)) {
+            foreach ($options as $optionKey => $option) {
+                $optionSetMethod = 'set'.ucfirst($optionKey);                
+                if (method_exists($request, $optionSetMethod) || method_exists($request, 'setServiceParameter')) {
+                    if ($optionKey == 'serviceParameters') {
+                        foreach ($options['serviceParameters'] as $item) {
+                            $request->setServiceParameter(
+                                $item['name'],
+                                $item['value'],
+                                $item['groupType'] ?? null,
+                                $item['groupId'] ?? null
+                            );
+                        }
+                    } elseif ($optionKey == 'issuer') {
+                        $request->setServiceParameter('issuer', $option);
+                    } else {
+                        $request->$optionSetMethod($option);
+                    }                  
+                }
             }
         }
 
