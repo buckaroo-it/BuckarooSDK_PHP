@@ -20,11 +20,11 @@ try {
             'pushURL' => $_ENV['BPE_EXAMPLE_RETURN_URL'],
             'clientIP' => $_ENV['BPE_EXAMPLE_IP'],
             'serviceParameters' => [
-                ['name' => 'Description', 'value' => 'Blue Toy Car', 'groupType' => 'Article', 'groupId' => 1],
-                ['name' => 'GrossUnitPrice', 'value' => 10.10, 'groupType' => 'Article', 'groupId' => 1],
-                ['name' => 'VatPercentage', 'value' => 21, 'groupType' => 'Article', 'groupId' => 1],
-                ['name' => 'Quantity', 'value' => 1, 'groupType' => 'Article', 'groupId' => 1],
-                ['name' => 'Identifier', 'value' => 'Articlenumber12345', 'groupType' => 'Article', 'groupId' => 1],
+                ['name' => 'Description', 'value' => 'Blue Toy Car', 'groupType' => 'Article', 'groupId' => '1'],
+                ['name' => 'GrossUnitPrice', 'value' => '10.10', 'groupType' => 'Article', 'groupId' => '1'],
+                ['name' => 'VatPercentage', 'value' => '21', 'groupType' => 'Article', 'groupId' => '1'],
+                ['name' => 'Quantity', 'value' => '1', 'groupType' => 'Article', 'groupId' => '1'],
+                ['name' => 'Identifier', 'value' => 'Articlenumber12345', 'groupType' => 'Article', 'groupId' => '1'],
 
                 ['name' => 'Category', 'value' => 'Person', 'groupType' => 'BillingCustomer'],
                 ['name' => 'FirstName', 'value' => 'Test', 'groupType' => 'BillingCustomer'],
