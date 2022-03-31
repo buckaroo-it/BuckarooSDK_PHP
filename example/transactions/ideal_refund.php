@@ -7,7 +7,7 @@ try {
     $response = Transaction::create(
         $client,
         [
-            'serviceName' => 'ideal',
+            'method' => 'ideal',
             'serviceAction' => 'Refund',
             'invoice' => \Buckaroo\Example\App::getOrderId(),
             'currency' => $_ENV['BPE_EXAMPLE_CURRENCY_CODE'],

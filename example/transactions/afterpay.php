@@ -8,7 +8,7 @@ try {
     $response = Transaction::create(
         $client,
         [
-            'serviceName' => 'afterpay',
+            'method' => 'afterpay',
             'serviceVersion' => 1,
             'serviceAction' => 'Pay',
             'amountDebit' => 10.10,

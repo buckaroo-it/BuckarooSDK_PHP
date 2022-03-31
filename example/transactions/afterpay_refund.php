@@ -9,7 +9,7 @@ try {
         $client,
         [
             'originalTransactionKey' => $originalTransactionKey,
-            'serviceName' => 'afterpay',
+            'method' => 'afterpay',
             'serviceAction' => 'Refund',
             'amountCredit' => 10.10,
             'invoice' => \Buckaroo\Example\App::getOrderId(),

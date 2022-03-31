@@ -73,16 +73,16 @@ class TransactionRequest extends Request
         $this->data['ClientUserAgent'] = $userAgent;
     }
 
-    public function setServiceName(string $service): void
+    public function setMethod(string $method): void
     {
-        if (!Validate::isServiceName($service)) {
-            $this->throwError(__METHOD__, "Invalid service name", $service);
+        if (!Validate::isMethod($method)) {
+            $this->throwError(__METHOD__, "Invalid method name", $method);
         }
 
-        $this->data['Services']['ServiceList'][0]['Name'] = $service;
+        $this->data['Services']['ServiceList'][0]['Name'] = $method;
     }
 
-    public function getServiceName(): ?string
+    public function getMethod(): ?string
     {
         return $this->data['Services']['ServiceList'][0]['Name'];
     }
