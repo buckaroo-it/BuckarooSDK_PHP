@@ -7,8 +7,9 @@ namespace Buckaroo\PaymentMethods;
 use Buckaroo\Helpers\Base;
 use Buckaroo\Payload\TransactionRequest;
 use Buckaroo\Payload\TransactionResponse;
-use Buckaroo\Model\Customer;
 use Buckaroo\Model\Article;
+use Buckaroo\Model\Customer;
+
 
 class AfterpayNew extends PaymentMethod
 {
@@ -35,7 +36,7 @@ class AfterpayNew extends PaymentMethod
     protected function validatePayRequest(TransactionRequest $request): void
     {
         if (!$request->getServiceParameter('Description', 'Article')) {
-            $this->throwError(__METHOD__, "Empty articles");
+            $this->throwError("Empty articles");
         }
 
         $this->validatePayRequestCustomer($request, 'BillingCustomer');
@@ -49,73 +50,60 @@ class AfterpayNew extends PaymentMethod
         string $groupType = 'BillingCustomer'
     ): void {
 
-        $country = $request->getServiceParameter('Country', $groupType);
-        if (in_array($country, ["NL", "BE"])) {
-            $countrySpecificParameters = ['Salutation' => ['Empty salutation', 'Wrong salutation'],
-                                          'BirthDate' => 'Empty birth date',
-                                          'Phone' => 'Empty phone',
-                                          'MobilePhone' => 'Empty phone',
-                                          'StreetNumber' => 'Empty street number'
-                                        ];
-        } elseif($country == 'FI') {
-            $countrySpecificParameters = ['IdentificationNumber' => 'Empty identification number'];
-        } else {
-            $countrySpecificParameters = [];
-        }
-        
-        $serviceParameters = ['Category' => ['Empty category', 'Wrong category'],
-                              'FirstName' => 'Empty billing info',
-                              'LastName' => 'Empty last name',
-                              'Street' => 'Empty street',
-                              'PostalCode' => 'Empty postal code',
-                              'City' => 'Empty city',
-                              'Country' => 'Empty country',
-                              'Email' => 'Empty email',
-                              'CountrySpecific' => $countrySpecificParameters
-                            ];
-
+        $country_code = $request->getServiceParameter('Country', $groupType);        
+        $serviceParameters = $this->serviceParam->getServiceParams($$country_code);
+               
         foreach ($serviceParameters as $serviceParameter => $errorMessage) {
             $result = null;
             $result = $request->getServiceParameter($serviceParameter);
+            switch($serviceParameter)
+            {
+                case 'Category':
+                    if (!$result) {
+                        $this->throwError($errorMessage[0]);
+                    }
+                    $this->requestValidator->validateCategory($result,$errorMessage);
 
-            if ($serviceParameter == 'Category'){
+                break;
 
-                if (!$result) {
-                    $this->throwError(__METHOD__, $errorMessage[0]);
-                }
-        
-                if (!in_array($result, $this->getCategories())) {
-                    $this->throwError(__METHOD__, $errorMessage[1]);
-                }
-            } elseif ($serviceParameter == 'CountrySpecific' && !empty($countrySpecificParameters)) {
-                foreach ($countrySpecificParameters as $countrySpecificParameter => $countrySpecificError) {
-                    $result = null;
-                    $result = $request->getServiceParameter($countrySpecificParameter, $groupType);
-        
-                    if ($countrySpecificParameter == 'Salutation'){
-                        
-                        if (!$result) {
-                            $this->throwError(__METHOD__, $countrySpecificError[0]);
-                        }
+                case 'CountrySpecific':
+                    $emptyPhone = 0;
+                    if ($serviceParameter == 'CountrySpecific' && !empty($countrySpecificParameters)) {
+                        foreach ($countrySpecificParameters as $countrySpecificParameter => $countrySpecificError) {
+                            $result = null;
+                            $result = $request->getServiceParameter($countrySpecificParameter, $groupType);
                 
-                        if (!in_array($result, $this->getSalutations())) {
-                            $this->throwError(__METHOD__, $countrySpecificError[1]);
-                        }
-                    } else {
-                        if (!$result) {
-                            if (in_array($countrySpecificParameter, ['Phone', 'MobilePhone'])) { //at least one phone number required
-                                $emptyPhone++;
-                                if ($emptyPhone < 2) {
-                                    continue;
+                            if ($countrySpecificParameter == 'Salutation'){
+                                
+                                if (!$result) {
+                                    $this->throwError($countrySpecificError[0]);
                                 }
-                            }                            
-                            $this->throwError(__METHOD__, $countrySpecificError);
+                        
+                                if (!in_array($result, $this->getSalutations())) {
+                                    $this->throwError($countrySpecificError[1]);
+                                }
+                            } else {
+                                if (!$result) {
+                                    if (in_array($countrySpecificParameter, ['Phone', 'MobilePhone'])) { 
+                                        //at least one phone number required
+                                        $emptyPhone++;
+                                        if ($emptyPhone < 2) {
+                                            continue;
+                                        }
+                                    }                            
+                                    $this->throwError($countrySpecificError);
+                                }
+                            }
                         }
                     }
-                }
-            } elseif(!$result) {
-                $this->throwError(__METHOD__, $errorMessage);
+                break;
+                default:
+                    if(!$result) {
+                        $this->throwError($errorMessage);
+                    }
+                break;
             }
+            
         }
     }
 
@@ -124,15 +112,15 @@ class AfterpayNew extends PaymentMethod
         Article $article
     ): void {
         if (empty($article->getName())) {
-            $this->throwError(__METHOD__, "Empty article's name");
+            $this->throwError("Empty article's name");
         }
 
         if (empty($article->getQuantity())) {
-            $this->throwError(__METHOD__, "Empty article's quantity");
+            $this->throwError("Empty article's quantity");
         }
 
         if (empty($article->getId())) {
-            $this->throwError(__METHOD__, "Empty article's SKU");
+            $this->throwError("Empty article's SKU");
         }
 
         $this->articlesQty++;
