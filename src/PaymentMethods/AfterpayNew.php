@@ -51,7 +51,7 @@ class AfterpayNew extends PaymentMethod
     ): void {
 
         $country_code = $request->getServiceParameter('Country', $groupType);        
-        $serviceParameters = $this->serviceParam->getServiceParams($$country_code);
+        $serviceParameters = $this->serviceParam->getServiceParams($country_code);
                
         foreach ($serviceParameters as $serviceParameter => $errorMessage) {
             $result = null;
