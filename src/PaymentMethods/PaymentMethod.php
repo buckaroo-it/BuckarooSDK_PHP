@@ -58,7 +58,7 @@ abstract class PaymentMethod
 
     public function pay(TransactionRequest $request): TransactionResponse
     {
-        $request->setServiceName($this->getCode());
+        $request->setMethod($this->getCode());
         $request->setServiceAction('Pay');
 
         $this->validatePayRequest($request);
@@ -71,8 +71,8 @@ abstract class PaymentMethod
 
     protected function validatePayRequest(TransactionRequest $request): void
     {
-        if (!$request->getServiceName()) {
-            $this->throwError(__METHOD__, "Empty service name");
+        if (!$request->getMethod()) {
+            $this->throwError(__METHOD__, "Empty method name");
         }
 
         if (!$request->getAmountDebit()) {

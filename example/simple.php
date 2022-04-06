@@ -6,7 +6,7 @@ require(__DIR__ . '/../vendor/autoload.php');
 $client = new \Buckaroo\Client($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
 $request = new \Buckaroo\Payload\TransactionRequest();
-$request->setServiceName('ideal');
+$request->setMethod('ideal');
 $request->setAmountDebit(1.23);
 $request->setInvoice('sdk' . time());
 $request->setServiceParameter('issuer', 'ABNANL2A');

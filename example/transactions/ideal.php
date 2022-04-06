@@ -7,7 +7,7 @@ try {
     $response = Transaction::create(
         $client,
         [
-            'serviceName' => 'ideal',
+            'method' => 'ideal',
             'serviceVersion' => 2,
             'serviceAction' => 'Pay',
             'amountDebit' => 10.10,

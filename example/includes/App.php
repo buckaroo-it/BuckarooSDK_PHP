@@ -60,7 +60,7 @@ class App
             $this->logger->debug(
                 __METHOD__ . '| params |',
                 [
-                    $result->getServiceName(),
+                    $result->getMethod(),
                     $result->getStatusCode(),
                     $result->getOrder(),
                     $result->getTransactionKey()
