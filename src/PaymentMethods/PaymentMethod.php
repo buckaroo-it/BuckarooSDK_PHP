@@ -4,6 +4,9 @@ namespace Buckaroo\PaymentMethods;
 
 use Buckaroo\Client;
 use Buckaroo\Exceptions\SdkException;
+use Buckaroo\Model\Config;
+use Buckaroo\Model\RequestValidator;
+use Buckaroo\Model\ServiceParam;
 use Buckaroo\Payload\TransactionRequest;
 use Buckaroo\Payload\TransactionResponse;
 use Psr\Log\LoggerInterface;
@@ -39,9 +42,15 @@ abstract class PaymentMethod
     public const BELFIUS = 'belfius';
 
     public function __construct(
-        Client $client
+        Client $client,
+        Config $config,
+        ServiceParam $serviceParam,
+        RequestValidator $requestValidator
     ) {
         $this->client = $client;
+        $this->config = $config;
+        $this->serviceParam = $serviceParam;
+        $this->requestValidator = $requestValidator;
         $this->logger = $client->getLogger();
     }
 
@@ -75,8 +84,8 @@ abstract class PaymentMethod
         }
     }
 
-    protected function throwError(string $method, string $message, $value = ''): void
+    protected function throwError(string $message, $value = ''): void
     {
-        throw new SdkException($this->logger, $method, "$message: '{$value}'");
+        throw new SdkException($this->logger, "$message: '{$value}'");
     }
 }
