@@ -2,8 +2,11 @@
 
 namespace Buckaroo\PaymentMethods;
 
-use Buckaroo\Exceptions\SdkException;
 use Buckaroo\Client;
+use Buckaroo\Exceptions\SdkException;
+use Buckaroo\Model\Config;
+use Buckaroo\Model\RequestValidator;
+use Buckaroo\Model\ServiceParam;
 
 class PaymentMethodFactory
 {
@@ -49,7 +52,10 @@ class PaymentMethodFactory
         }
 
         $className = '\Buckaroo\PaymentMethods\\' . $className;
-        $paymentMethodObject = new $className($client, $paymentMethod);
+        $config = new Config();
+        $serviceParam = new ServiceParam($config);
+        $requestValidator = new RequestValidator();
+        $paymentMethodObject = new $className($client, $config, $serviceParam, $requestValidator);
         return $paymentMethodObject;
     }
 

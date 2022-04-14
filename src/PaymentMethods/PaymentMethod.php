@@ -69,6 +69,45 @@ abstract class PaymentMethod
         );
     }
 
+    public function authorize(TransactionRequest $request): TransactionResponse
+    {
+        $request->setMethod($this->getCode());
+        $request->setServiceAction('Authorize');
+
+        $this->validatePayRequest($request);
+
+        return $this->client->post(
+            $request,
+            'Buckaroo\Payload\TransactionResponse'
+        );
+    }
+
+    public function capture(TransactionRequest $request): TransactionResponse
+    {
+        $request->setMethod($this->getCode());
+        $request->setServiceAction('Capture');
+
+        $this->validateCaptureRequest($request);
+
+        return $this->client->post(
+            $request,
+            'Buckaroo\Payload\TransactionResponse'
+        );
+    }
+
+    public function refund(TransactionRequest $request): TransactionResponse
+    {
+        $request->setMethod($this->getCode());
+        $request->setServiceAction('Refund');
+
+        $this->validateRefundRequest($request);
+
+        return $this->client->post(
+            $request,
+            'Buckaroo\Payload\TransactionResponse'
+        );
+    }
+
     protected function validatePayRequest(TransactionRequest $request): void
     {
         if (!$request->getMethod()) {
@@ -83,6 +122,45 @@ abstract class PaymentMethod
             $this->throwError(__METHOD__, "Empty invoice");
         }
     }
+
+    protected function validateCaptureRequest(TransactionRequest $request): void
+    {
+        if (!$request->getMethod()) {
+            $this->throwError(__METHOD__, "Empty method name");
+        }
+
+        if (!$request->getOriginalTransactionKey()) {
+            $this->throwError(__METHOD__, "Empty original transaction key");
+        }
+
+        if (!$request->getAmountDebit()) {
+            $this->throwError(__METHOD__, "Empty amount");
+        }
+
+        if (!$request->getInvoice()) {
+            $this->throwError(__METHOD__, "Empty invoice");
+        }
+    }
+
+    protected function validateRefundRequest(TransactionRequest $request): void
+    {
+        if (!$request->getMethod()) {
+            $this->throwError(__METHOD__, "Empty method name");
+        }
+
+        if (!$request->getOriginalTransactionKey()) {
+            $this->throwError(__METHOD__, "Empty original transaction key");
+        }
+
+        if (!$request->getAmountCredit()) {
+            $this->throwError(__METHOD__, "Empty amount");
+        }
+
+        if (!$request->getInvoice()) {
+            $this->throwError(__METHOD__, "Empty invoice");
+        }
+    }
+
 
     protected function throwError(string $message, $value = ''): void
     {

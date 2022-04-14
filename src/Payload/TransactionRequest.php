@@ -326,7 +326,7 @@ class TransactionRequest extends Request
 
     public function setOriginalTransactionKey(string $transactionKey): void
     {
-        if (!Validate::isServiceAction($transactionKey)) {
+        if (!Validate::isOriginalTransactionKey($transactionKey)) {
             $this->throwError(__METHOD__, "Invalid original transaction key", $transactionKey);
         }
 
