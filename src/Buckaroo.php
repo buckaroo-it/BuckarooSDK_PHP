@@ -23,7 +23,6 @@ namespace Buckaroo;
 
 use Buckaroo\Client;
 use Buckaroo\Exceptions\SdkException;
-use Buckaroo\Helpers\Base;
 use Buckaroo\Model\Payload;
 use Buckaroo\Payload\PaymentResult;
 use Buckaroo\Payload\TransactionRequest;
@@ -89,11 +88,11 @@ class Buckaroo
     public function prepareTransaction($payload) : TransactionRequest
     {
         if (!is_array($payload)) {
-            if (Base::isJson($payload)) {
-                $payload = json_decode($payload, true);
-            } else {
-                $this->throwError("Invalid payload format. Array or json required.");
-            }
+            $payload = json_decode($payload, true);
+        }
+        
+        if ($payload == null) {
+            $this->throwError("Invalid or empty payload. Array or json format required.");
         }
 
         $payloadSet = array_merge(Payload::getDefaultPayload(), $payload);
