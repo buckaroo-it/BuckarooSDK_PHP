@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace Buckaroo\Model;
 use Buckaroo\Model\Config;
 
-class ServiceParam
+class ServiceParam extends Model
 {
    public function __construct(Config $config)
    {

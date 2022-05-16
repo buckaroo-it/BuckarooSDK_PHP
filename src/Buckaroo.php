@@ -33,23 +33,26 @@ use Buckaroo\PaymentMethods\PaymentMethodFactory;
 class Buckaroo
 {   
     private $websiteKey, $secretKey, $mode;
+    private Client $client;
 
     public function __construct(string $websiteKey, string $secretKey, string $mode = null) {
         $this->websiteKey = $websiteKey;
         $this->secretKey = $secretKey;
         $this->mode = ($mode) ? $mode : $_ENV['BPE_MODE'];
-        
+
+        $this->setDefaultClient();
     }
 
-    public function getDefaultClient() : Client
+    public function setDefaultClient() : self
     {
-        $client = new Client(
+        $this->client = new Client(
             $this->websiteKey,
             $this->secretKey,
-        );        
-        $client->setMode($this->mode);
+        );
 
-        return $client;
+        $this->client->setMode($this->mode);
+
+        return $this;
     }
 
     public function pay($payload) : TransactionResponse
@@ -75,7 +78,8 @@ class Buckaroo
     public function transactionInit($payload, $action) : TransactionResponse
     {
         $prepareTransaction = $this->prepareTransaction($payload);
-        $paymentMethod = PaymentMethodFactory::getPaymentMethod($this->getDefaultClient(), $prepareTransaction->getMethod());
+        $paymentMethod = PaymentMethodFactory::get($this->client, $prepareTransaction->getMethod());
+
         if (in_array($action, $paymentMethod->getServiceActions()) && method_exists($paymentMethod, $action) ) {
             $response = $paymentMethod->$action($prepareTransaction);
         } else {
@@ -95,7 +99,7 @@ class Buckaroo
             $this->throwError("Invalid or empty payload. Array or json format required.");
         }
 
-        $payloadSet = array_merge(Payload::getDefaultPayload(), $payload);
+        $payloadSet = (new Payload($payload))->toArray();
         $prepareTransaction = Transaction::prepare($payloadSet);
 
         return $prepareTransaction;

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Buckaroo\Model;
 
-class Config
+class Config extends Model
 {
     public function getCountrySpecificParamErrors($country_code)
     {

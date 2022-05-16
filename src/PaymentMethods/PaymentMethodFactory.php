@@ -34,29 +34,55 @@ class PaymentMethodFactory
         PaymentMethod::BELFIUS => 'Belfius',
     ];
 
-    public static function getPaymentMethod(
+    private Client $client;
+    private string $paymentMethod;
+
+    public function __construct(
         Client $client,
         string $paymentMethod
-    ): PaymentMethod {
-        $bankCards = CreditCard::getCards();
+    ) {
+        $this->client = $client;
+        $this->paymentMethodRequest = $paymentMethod;
+    }
 
-        $paymentMethod = strtolower($paymentMethod);
+    public function getPaymentMethod() : PaymentMethod
+    {
+        $class = $this->determinePaymentClass();
 
-        $matches = self::$classes;
-        if (isset($matches[$paymentMethod])) {
-            $className = $matches[$paymentMethod];
-        } elseif (in_array($paymentMethod, $bankCards)) {
-            $className = 'CreditCard';
-        } else {
-            throw new SdkException($client->getLogger(), __METHOD__, "Wrong payment method code has been given");
-        }
-
-        $className = '\Buckaroo\PaymentMethods\\' . $className;
         $config = new Config();
         $serviceParam = new ServiceParam($config);
         $requestValidator = new RequestValidator();
-        $paymentMethodObject = new $className($client, $config, $serviceParam, $requestValidator);
+        $paymentMethodObject = new $class($this->client, $config, $serviceParam, $requestValidator);
+
         return $paymentMethodObject;
+    }
+
+    private function determinePaymentClass()
+    {
+        $bankCards = CreditCard::getCards();
+
+        $paymentMethod = strtolower($this->paymentMethodRequest);
+
+        $matches = self::$classes;
+
+        if(isset($matches[$paymentMethod]))
+        {
+            return '\Buckaroo\PaymentMethods\\' . $matches[$paymentMethod];
+        }
+
+        if (in_array($paymentMethod, $bankCards)) {
+            return CreditCard::class;
+        }
+
+        throw new SdkException($this->client->getLogger(), __METHOD__, "Wrong payment method code has been given");
+    }
+
+    public static function get(
+        Client $client,
+        string $paymentMethod
+    ): PaymentMethod {
+        $factory = new self($client, $paymentMethod);
+        return $factory->getPaymentMethod();
     }
 
     public static function getMethods(): array

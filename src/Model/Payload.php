@@ -34,7 +34,7 @@ class Payload extends Model
         $this->setPayload($payload);
     }
 
-    private function setPayload(?array $payload) : void
+    private function setPayload(?array $payload)
     {
         if($payload)
         {

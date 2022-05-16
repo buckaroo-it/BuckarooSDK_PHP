@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Buckaroo\Model;
 
-class Article
+class Article extends Model
 {
     protected string $name = '';
     protected float $price = 0;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Buckaroo\Model;
 
-class Customer
+class Customer extends Model
 {
     protected string $countryCode = '';
     protected string $firstName = '';
