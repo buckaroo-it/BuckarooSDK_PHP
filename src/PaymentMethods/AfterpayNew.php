@@ -27,10 +27,33 @@ class AfterpayNew extends PaymentMethod
         return PaymentMethod::AFTERPAY;
     }
 
+    public function getServiceActions(): array
+    {
+        return ['pay', 'authorize', 'capture', 'refund'];
+    }
+
     public function pay(TransactionRequest $request): TransactionResponse
     {
         $request->setServiceVersion(1);
         return parent::pay($request);
+    }
+
+    public function authorize(TransactionRequest $request): TransactionResponse
+    {
+        $request->setServiceVersion(1);
+        return parent::authorize($request);
+    }
+    
+    public function capture(TransactionRequest $request): TransactionResponse
+    {
+        $request->setServiceVersion(1);
+        return parent::capture($request);
+    }
+
+    public function refund(TransactionRequest $request): TransactionResponse
+    {
+        $request->setServiceVersion(1);
+        return parent::refund($request);
     }
 
     protected function validatePayRequest(TransactionRequest $request): void
@@ -51,7 +74,7 @@ class AfterpayNew extends PaymentMethod
     ): void {
 
         $country_code = $request->getServiceParameter('Country', $groupType);        
-        $serviceParameters = $this->serviceParam->getServiceParams($country_code);
+        $serviceParameters = $this->serviceParam->getServiceParamsErrors($country_code);
                
         foreach ($serviceParameters as $serviceParameter => $errorMessage) {
             $result = null;

@@ -5,7 +5,7 @@ namespace Buckaroo\Model;
 
 class Config
 {
-    public function getCountrySpecificParam($country_code)
+    public function getCountrySpecificParamErrors($country_code)
     {
         switch($country_code)
         {

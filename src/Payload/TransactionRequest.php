@@ -73,16 +73,16 @@ class TransactionRequest extends Request
         $this->data['ClientUserAgent'] = $userAgent;
     }
 
-    public function setServiceName(string $service): void
+    public function setMethod(string $method): void
     {
-        if (!Validate::isServiceName($service)) {
-            $this->throwError(__METHOD__, "Invalid service name", $service);
+        if (!Validate::isMethod($method)) {
+            $this->throwError(__METHOD__, "Invalid method name", $method);
         }
 
-        $this->data['Services']['ServiceList'][0]['Name'] = $service;
+        $this->data['Services']['ServiceList'][0]['Name'] = $method;
     }
 
-    public function getServiceName(): ?string
+    public function getMethod(): ?string
     {
         return $this->data['Services']['ServiceList'][0]['Name'];
     }
@@ -326,7 +326,7 @@ class TransactionRequest extends Request
 
     public function setOriginalTransactionKey(string $transactionKey): void
     {
-        if (!Validate::isServiceAction($transactionKey)) {
+        if (!Validate::isOriginalTransactionKey($transactionKey)) {
             $this->throwError(__METHOD__, "Invalid original transaction key", $transactionKey);
         }
 

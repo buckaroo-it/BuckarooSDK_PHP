@@ -24,20 +24,26 @@ declare(strict_types=1);
 namespace Buckaroo;
 
 use Buckaroo\Client;
-use Buckaroo\Payload\TransactionRequest;
 use Buckaroo\Helpers\Base;
+use Buckaroo\Model\Config;
+use Buckaroo\Model\ServiceParam;
+use Buckaroo\Payload\TransactionRequest;
 
 class Transaction
 {
-    public static function create(Client $buckarooClient, $options = array())
+    public static function prepare($options = array()) : TransactionRequest
     {
         $request = new TransactionRequest();
+        $config = new Config();
+        $serviceParamModel = new ServiceParam($config);
+
         if (isset($options)) {
             foreach ($options as $optionKey => $option) {
                 $optionSetMethod = 'set'.ucfirst($optionKey);                
                 if (method_exists($request, $optionSetMethod) || method_exists($request, 'setServiceParameter')) {
                     if ($optionKey == 'serviceParameters') {
-                        foreach ($options['serviceParameters'] as $item) {
+                        $serviceParameters = $serviceParamModel->getServiceParams($options['serviceParameters']);
+                        foreach ($serviceParameters as $item) {
                             $request->setServiceParameter(
                                 $item['name'],
                                 $item['value'],
@@ -53,6 +59,13 @@ class Transaction
                 }
             }
         }
+
+        return $request;
+    }
+
+    public static function create(Client $buckarooClient, $options = array())
+    {
+        $request = $this->prepare($options);
 
         return $buckarooClient->post(
             $request,

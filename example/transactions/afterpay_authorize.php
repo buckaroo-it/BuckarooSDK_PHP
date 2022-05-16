@@ -34,7 +34,7 @@ $serviceParams['customer']['billing'] = ['FirstName' => 'Test',
                                         ];
 
 //Set to 1 to use billing address for shipping
-$serviceParams['customer']['use_billing_info_for_shipping'] = 0;
+$serviceParams['customer']['use_billing_info_for_shipping'] = 1;
 
 //Ship order to other address
 $serviceParams['customer']['shipping'] = ['FirstName' => 'Test',
@@ -62,7 +62,7 @@ $payload = json_encode($payload); //Payload can be also json
 
 try {
     $buckaroo = new Buckaroo($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
-    $response = $buckaroo->pay($payload);
+    $response = $buckaroo->authorize($payload);
     $app->handleResponse($response);
 } catch (\Exception $e) {
     $app->handleException($e);

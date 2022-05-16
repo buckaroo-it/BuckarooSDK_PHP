@@ -24,10 +24,21 @@ class Ideal extends PaymentMethod
         return PaymentMethod::IDEAL;
     }
 
+    public function getServiceActions(): array
+    {
+        return ['pay', 'refund'];
+    }
+
     public function pay(TransactionRequest $request): TransactionResponse
     {
         $request->setServiceVersion(2);
         return parent::pay($request);
+    }
+
+    public function refund(TransactionRequest $request): TransactionResponse
+    {
+        $request->setServiceVersion(2);
+        return parent::refund($request);
     }
 
     protected function validatePayRequest(TransactionRequest $request): void

@@ -54,7 +54,7 @@ class TransactionResponse extends Response
     /**
      * @return string
      */
-    public function getServiceName(): string
+    public function getMethod(): string
     {
         return $this->data['Services'][0]['Name'];
     }

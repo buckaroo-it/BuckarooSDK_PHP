@@ -251,7 +251,7 @@ class PaymentResult
         return $this->getData('BRQ_STATUSMESSAGE');
     }
 
-    public function getServiceName(): ?string
+    public function getMethod(): ?string
     {
         return $this->getData('BRQ_TRANSACTION_METHOD') ?? $this->getData('BRQ_PAYMENT_METHOD');
     }
@@ -261,7 +261,7 @@ class PaymentResult
         $params = [];
 
         foreach ($this->getData() as $key => $value) {
-            if (Base::stringStartsWith($key, 'BRQ_SERVICE_' . strtoupper($this->getServiceName()))) {
+            if (Base::stringStartsWith($key, 'BRQ_SERVICE_' . strtoupper($this->getMethod()))) {
                 // To get key:
                 // split on '_', take last part, toLowerCase
                 $paramKey = strtolower(array_pop(explode('_', $key)));

@@ -295,4 +295,14 @@ class Base
 
         return $decodedValue;
     }
+
+    public static function isJson(string $data) : bool
+    {
+        json_decode($data);
+        if (json_last_error() === JSON_ERROR_NONE) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -36,9 +36,9 @@ class Validate
             || (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) !== false);
     }
 
-    public static function isServiceName(string $service): bool
+    public static function isMethod(string $method): bool
     {
-        return (!empty($service) && in_array($service, PaymentMethodFactory::getMethods()));
+        return (!empty($method) && in_array($method, PaymentMethodFactory::getMethods()));
     }
 
     public static function isServiceAction(string $action): bool

@@ -2,27 +2,21 @@
 require_once (__DIR__ . '/../includes/init.php');
 require_once (__DIR__ . '/../html/header.php');
 
-use Buckaroo\Transaction;
+use Buckaroo\Buckaroo;
+
+$payload = ['method' => 'afterpay',
+            'originalTransactionKey' => '', //Set transaction key of the transaction to refund
+            'amountCredit' => 50.30
+            ];
+
+$payload = json_encode($payload); //Payload can be also json
 
 try {
-    $response = Transaction::create(
-        $client,
-        [
-            'originalTransactionKey' => $originalTransactionKey,
-            'serviceName' => 'afterpay',
-            'serviceAction' => 'Refund',
-            'amountCredit' => 10.10,
-            'invoice' => \Buckaroo\Example\App::getOrderId(),
-            'currency' => $_ENV['BPE_EXAMPLE_CURRENCY_CODE'],
-            'returnURL' => $_ENV['BPE_EXAMPLE_RETURN_URL'],
-            'returnURLCancel' => $_ENV['BPE_EXAMPLE_RETURN_URL'],
-            'pushURL' => $_ENV['BPE_EXAMPLE_RETURN_URL']
-        ]
-    );
+    $buckaroo = new Buckaroo($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
+    $response = $buckaroo->refund($payload);
     $app->handleResponse($response);
 } catch (\Exception $e) {
     $app->handleException($e);
 }
 
 require_once (__DIR__ . '/../html/footer.php');
-
