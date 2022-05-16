@@ -11,7 +11,7 @@ use Buckaroo\Model\Article;
 use Buckaroo\Model\Customer;
 
 
-class AfterpayNew extends PaymentMethod
+class Afterpay extends PaymentMethod implements PaymentInterface
 {
     public const CATEGORY_PERSON = 'Person';
     public const CATEGORY_COMPANY = 'Company';

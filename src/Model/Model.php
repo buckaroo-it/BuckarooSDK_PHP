@@ -4,7 +4,7 @@ namespace Buckaroo\Model;
 
 abstract class Model
 {
-    private $filter = ['filter', 'fillable'];
+    protected $filter = ['filter', 'fillable'];
 
     public function __get($property)
     {

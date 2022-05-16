@@ -54,8 +54,6 @@ abstract class PaymentMethod
         $this->logger = $client->getLogger();
     }
 
-    abstract public function getCode(): string;
-
     public function pay(TransactionRequest $request): TransactionResponse
     {
         $request->setMethod($this->getCode());
@@ -160,7 +158,6 @@ abstract class PaymentMethod
             $this->throwError(__METHOD__, "Empty invoice");
         }
     }
-
 
     protected function throwError(string $message, $value = ''): void
     {

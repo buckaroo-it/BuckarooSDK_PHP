@@ -7,7 +7,7 @@ namespace Buckaroo\PaymentMethods;
 use Buckaroo\Payload\TransactionRequest;
 use Buckaroo\Payload\TransactionResponse;
 
-class Ideal extends PaymentMethod
+class Ideal extends PaymentMethod implements PaymentInterface
 {
     public const BANK_CODE_ABN = 'ABNANL2A';
     public const BANK_CODE_ASN = 'ASNBNL21';
@@ -22,11 +22,6 @@ class Ideal extends PaymentMethod
     public function getCode(): string
     {
         return PaymentMethod::IDEAL;
-    }
-
-    public function getServiceActions(): array
-    {
-        return ['pay', 'refund'];
     }
 
     public function pay(TransactionRequest $request): TransactionResponse

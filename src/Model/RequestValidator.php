@@ -15,7 +15,6 @@ class RequestValidator
         if (!in_array($result, $this->getCategories())) {
             $this->throwError($errorMessage[1]);
         }
-
     }
 
     public function getCategories(): array

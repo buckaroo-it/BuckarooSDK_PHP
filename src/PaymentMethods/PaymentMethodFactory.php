@@ -11,7 +11,7 @@ use Buckaroo\Model\ServiceParam;
 class PaymentMethodFactory
 {
     private static array $classes = [
-        PaymentMethod::AFTERPAY => 'AfterpayNew',
+        PaymentMethod::AFTERPAY => 'Afterpay',
         PaymentMethod::KLARNAKP => 'Klarna',
         PaymentMethod::KLARNA => 'KlarnaPay',
         PaymentMethod::SEPA => 'Sepa',

@@ -21,14 +21,16 @@
 
 namespace Buckaroo;
 
-use Buckaroo\Client;
 use Buckaroo\Exceptions\SdkException;
 use Buckaroo\Model\Payload;
-use Buckaroo\Payload\PaymentResult;
 use Buckaroo\Payload\TransactionRequest;
 use Buckaroo\Payload\TransactionResponse;
-use Buckaroo\PaymentMethods\PaymentMethod;
 use Buckaroo\PaymentMethods\PaymentMethodFactory;
+use Buckaroo\Transaction\AuthorizeTransaction;
+use Buckaroo\Transaction\CaptureTransaction;
+use Buckaroo\Transaction\PayTransaction;
+use Buckaroo\Transaction\RefundTransaction;
+use Buckaroo\Transaction\Transaction;
 
 class Buckaroo
 {   
@@ -43,7 +45,7 @@ class Buckaroo
         $this->setDefaultClient();
     }
 
-    public function setDefaultClient() : self
+    private function setDefaultClient() : self
     {
         $this->client = new Client(
             $this->websiteKey,
@@ -57,56 +59,29 @@ class Buckaroo
 
     public function pay($payload) : TransactionResponse
     {
-        return $this->transactionInit($payload, 'pay');
+        $transaction = new PayTransaction($this->client, $payload);
+
+        return $transaction->handle();
     }
 
     public function authorize($payload) : TransactionResponse
     {
-        return $this->transactionInit($payload, 'authorize');
+        $transaction = new AuthorizeTransaction($this->client, $payload);
+
+        return $transaction->handle();
     }
 
     public function capture($payload) : TransactionResponse
     {
-        return $this->transactionInit($payload, 'capture');
+        $transaction = new CaptureTransaction($this->client, $payload);
+
+        return $transaction->handle();
     }
 
     public function refund($payload) : TransactionResponse
     {
-        return $this->transactionInit($payload, 'refund');
-    }
+        $transaction = new RefundTransaction($this->client, $payload);
 
-    public function transactionInit($payload, $action) : TransactionResponse
-    {
-        $prepareTransaction = $this->prepareTransaction($payload);
-        $paymentMethod = PaymentMethodFactory::get($this->client, $prepareTransaction->getMethod());
-
-        if (in_array($action, $paymentMethod->getServiceActions()) && method_exists($paymentMethod, $action) ) {
-            $response = $paymentMethod->$action($prepareTransaction);
-        } else {
-            $this->throwError("This payment method doesn't support ".$action." service action. Service actions supported:".explode(', ', $paymentMethod->getServiceActions()));
-        }       
-
-        return $response;
-    }
-
-    public function prepareTransaction($payload) : TransactionRequest
-    {
-        if (!is_array($payload)) {
-            $payload = json_decode($payload, true);
-        }
-        
-        if ($payload == null) {
-            $this->throwError("Invalid or empty payload. Array or json format required.");
-        }
-
-        $payloadSet = (new Payload($payload))->toArray();
-        $prepareTransaction = Transaction::prepare($payloadSet);
-
-        return $prepareTransaction;
-    }
-
-    protected function throwError(string $message, $value = ''): void
-    {
-        throw new SdkException($this->logger, "$message: '{$value}'");
+        return $transaction->handle();
     }
 }
