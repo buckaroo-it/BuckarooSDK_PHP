@@ -65,7 +65,7 @@ class Transaction
 
     public static function create(Client $buckarooClient, $options = array())
     {
-        $request = $this->prepare($options);
+        $request = self::prepare($options);
 
         return $buckarooClient->post(
             $request,
