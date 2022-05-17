@@ -7,11 +7,11 @@ use Buckaroo\Exceptions\SdkException;
 use Buckaroo\Model\Config;
 use Buckaroo\Model\RequestValidator;
 use Buckaroo\Model\ServiceParam;
-use Buckaroo\Payload\TransactionRequest;
+use Buckaroo\Model\TransactionRequest;
 use Buckaroo\Payload\TransactionResponse;
 use Psr\Log\LoggerInterface;
 
-abstract class PaymentMethod
+abstract class PaymentMethod implements PaymentInterface
 {
     protected LoggerInterface $logger;
     protected Client $client;
@@ -56,10 +56,9 @@ abstract class PaymentMethod
 
     public function pay(TransactionRequest $request): TransactionResponse
     {
-        $request->setMethod($this->getCode());
-        $request->setServiceAction('Pay');
-
-        $this->validatePayRequest($request);
+        //TODO
+        //Create validator class that validates specific request
+        //$request->validate();
 
         return $this->client->post(
             $request,
@@ -106,20 +105,22 @@ abstract class PaymentMethod
         );
     }
 
-    protected function validatePayRequest(TransactionRequest $request): void
-    {
-        if (!$request->getMethod()) {
-            $this->throwError(__METHOD__, "Empty method name");
-        }
-
-        if (!$request->getAmountDebit()) {
-            $this->throwError(__METHOD__, "Empty amount");
-        }
-
-        if (!$request->getInvoice()) {
-            $this->throwError(__METHOD__, "Empty invoice");
-        }
-    }
+//    protected function validatePayRequest(TransactionRequest $request): self
+//    {
+//        if (!$request->getMethod()) {
+//            $this->throwError(__METHOD__, "Empty method name");
+//        }
+//
+//        if (!$request->getAmountDebit()) {
+//            $this->throwError(__METHOD__, "Empty amount");
+//        }
+//
+//        if (!$request->getInvoice()) {
+//            $this->throwError(__METHOD__, "Empty invoice");
+//        }
+//
+//        return $this;
+//    }
 
     protected function validateCaptureRequest(TransactionRequest $request): void
     {

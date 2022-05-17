@@ -16,6 +16,6 @@ class RefundTransaction extends Transaction
             return $paymentMethod->refund($this->request);
         }
 
-        throw new \Exception("This payment method doesn't support pay service action.");
+        throw new \Exception("This payment method doesn't support refund service action.");
     }
 }

@@ -96,7 +96,7 @@ class Client
     {
         return ($this->getMode() == self::MODE_LIVE ?
                 self::ENDPOINT_LIVE :
-                self::ENDPOINT_TEST) . '/' . ltrim('json/Transaction', '/')
+                self::ENDPOINT_TEST) . '/' . ltrim('json/TransactionRequest', '/')
         ;
     }
 

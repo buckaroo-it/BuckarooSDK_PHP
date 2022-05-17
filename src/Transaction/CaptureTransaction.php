@@ -3,7 +3,7 @@
 namespace Buckaroo\Transaction;
 
 use Buckaroo\Payload\TransactionResponse;
-use Buckaroo\PaymentMethods\PaymentInterface;
+use Buckaroo\PaymentMethods\AuthorizePaymentInterface;
 
 class CaptureTransaction extends Transaction
 {
@@ -11,7 +11,7 @@ class CaptureTransaction extends Transaction
     {
         $paymentMethod = $this->getPaymentMethod();
 
-        if(is_a($paymentMethod, PaymentInterface::class))
+        if(is_a($paymentMethod, AuthorizePaymentInterface::class))
         {
             return $paymentMethod->capture($this->request);
         }

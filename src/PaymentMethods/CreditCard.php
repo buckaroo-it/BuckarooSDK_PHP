@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Buckaroo\PaymentMethods;
 
-class CreditCard extends PaymentMethod implements PaymentInterface
+class CreditCard extends PaymentMethod
 {
     public function getCode(): string
     {

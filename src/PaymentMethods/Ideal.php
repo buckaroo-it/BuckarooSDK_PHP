@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Buckaroo\PaymentMethods;
 
-use Buckaroo\Payload\TransactionRequest;
+use Buckaroo\Model\TransactionRequest;
 use Buckaroo\Payload\TransactionResponse;
 
 class Ideal extends PaymentMethod implements PaymentInterface
@@ -24,33 +24,35 @@ class Ideal extends PaymentMethod implements PaymentInterface
         return PaymentMethod::IDEAL;
     }
 
-    public function pay(TransactionRequest $request): TransactionResponse
-    {
-        $request->setServiceVersion(2);
-        return parent::pay($request);
-    }
-
     public function refund(TransactionRequest $request): TransactionResponse
     {
         $request->setServiceVersion(2);
+
         return parent::refund($request);
     }
 
-    protected function validatePayRequest(TransactionRequest $request): void
+    protected function validatePayRequest(TransactionRequest $request): self
     {
-        if (!$request->getServiceParameter('issuer')) {
-            $this->throwError(__METHOD__, "Empty bank code");
+        if($request->getServiceParameter('issuer'))
+        {
+            parent::validatePayRequest($request);
+
+            return $this;
         }
-        parent::validatePayRequest($request);
+
+        $this->throwError(__METHOD__, "Empty bank code");
     }
 
-    public function setBankCode(TransactionRequest $request, string $bankCode): void
+    public function setBankCode(TransactionRequest $request, string $bankCode): self
     {
-        if (!in_array($bankCode, $this->getBanks())) {
-            $this->throwError(__METHOD__, "Invalid bank code", $bankCode);
+        if (in_array($bankCode, $this->getBanks()))
+        {
+            $request->setServiceParameter('issuer', $bankCode);
+
+            return $this;
         }
 
-        $request->setServiceParameter('issuer', $bankCode);
+        $this->throwError(__METHOD__, "Invalid bank code", $bankCode);
     }
 
     public function getBanks(): array

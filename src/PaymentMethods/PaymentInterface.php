@@ -2,8 +2,9 @@
 
 namespace Buckaroo\PaymentMethods;
 
-use Buckaroo\Payload\TransactionRequest;
+use Buckaroo\Model\TransactionRequest;
 use Buckaroo\Payload\TransactionResponse;
+use http\Exception;
 
 interface PaymentInterface
 {

@@ -11,7 +11,7 @@ use Buckaroo\Model\Article;
 use Buckaroo\Model\Customer;
 
 
-class Afterpay extends PaymentMethod implements PaymentInterface
+class Afterpay extends PaymentMethod implements AuthorizePaymentInterface
 {
     public const CATEGORY_PERSON = 'Person';
     public const CATEGORY_COMPANY = 'Company';
@@ -25,11 +25,6 @@ class Afterpay extends PaymentMethod implements PaymentInterface
     public function getCode(): string
     {
         return PaymentMethod::AFTERPAY;
-    }
-
-    public function getServiceActions(): array
-    {
-        return ['pay', 'authorize', 'capture', 'refund'];
     }
 
     public function pay(TransactionRequest $request): TransactionResponse

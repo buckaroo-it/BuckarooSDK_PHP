@@ -12,13 +12,22 @@ use Psr\Log\LoggerInterface;
 
 class TransactionRequest extends Request
 {
+    protected $transaction;
+
     public function __construct(
         ?LoggerInterface $logger = null
     ) {
+        $this->transaction = new TransactionRequest;
+
         parent::__construct($logger);
         $this->setClientIP();
         $this->setClientUserAgent();
         $this->createDefaultService();
+    }
+
+    public function getTransaction() : TransactionRequest
+    {
+        return $this->transaction;
     }
 
     protected function createDefaultService(): void

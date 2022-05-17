@@ -192,7 +192,9 @@ class Base
          */
         if (!empty($headers['X-Forwarded-For']) && filter_var($headers['X-Forwarded-For'], FILTER_VALIDATE_IP)) {
             return $headers['X-Forwarded-For'];
-        } elseif (
+        }
+
+        if (
             !empty($headers['HTTP_X_FORWARDED_FOR'])
             && filter_var($headers['HTTP_X_FORWARDED_FOR'], FILTER_VALIDATE_IP)
         ) {

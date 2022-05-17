@@ -35,6 +35,7 @@ use Buckaroo\Transaction\Transaction;
 class Buckaroo
 {   
     private $websiteKey, $secretKey, $mode;
+
     private Client $client;
 
     public function __construct(string $websiteKey, string $secretKey, string $mode = null) {

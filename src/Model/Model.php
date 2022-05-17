@@ -2,7 +2,9 @@
 
 namespace Buckaroo\Model;
 
-abstract class Model
+use Buckaroo\Helpers\Arrayable;
+
+abstract class Model implements Arrayable
 {
     protected $filter = ['filter', 'fillable'];
 

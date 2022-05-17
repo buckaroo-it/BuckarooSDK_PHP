@@ -51,7 +51,7 @@ $serviceParams['customer']['shipping'] = ['FirstName' => 'Test',
                                          'BirthDate' => '01-01-1990'
                                         ];
 
-//Transaction payload              
+//TransactionRequest payload
 $payload = ['method' => 'afterpay',
             'amountDebit' => 50.30,
             'clientIP' => $_ENV['BPE_EXAMPLE_IP'],

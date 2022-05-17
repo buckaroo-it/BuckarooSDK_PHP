@@ -23,30 +23,29 @@
 namespace Buckaroo\Transaction;
 
 use Buckaroo\Client;
-use Buckaroo\Helpers\Base;
 use Buckaroo\Model\Config;
 use Buckaroo\Model\Payload;
+use Buckaroo\Model\TransactionRequest;
+use Buckaroo\Model\ServiceList;
 use Buckaroo\Model\ServiceParam;
-use Buckaroo\Payload\TransactionRequest;
 use Buckaroo\Payload\TransactionResponse;
 use Buckaroo\PaymentMethods\PaymentMethodFactory;
 
 abstract class Transaction
 {
     protected $client;
-    private array $payload;
+    protected Payload $payload;
 
     abstract public function handle() : TransactionResponse;
 
     public function __construct(Client $client, array $payload)
     {
         $this->client = $client;
-        $this->request = new TransactionRequest();
-        $this->config = new Config();
+        $this->request = new TransactionRequest;
+        $this->config = new Config;
         $this->serviceParamModel = new ServiceParam($this->config);
 
         $this->setPayload($payload);
-
         $this->prepare();
     }
 
@@ -59,57 +58,40 @@ abstract class Transaction
 
         if($payload == null)
         {
-            //Throw error
-            //$this->throwError("Invalid or empty payload. Array or json format required.");
             throw new \Exception("Invalid or empty payload. Array or json format required.");
         }
 
-        $this->payload = (new Payload($payload))->toArray();
+        $this->payload = new Payload($payload);
 
         return $this;
     }
 
     private function prepare()
     {
-        foreach($this->payload as $optionKey => $option)
-        {
-            $optionSetMethod = 'set' . ucfirst($optionKey);
-
-            if (method_exists($this->request, $optionSetMethod) || method_exists($this->request, 'setServiceParameter'))
-            {
-                if ($optionKey == 'serviceParameters')
-                {
-                    $serviceParameters = $this->serviceParamModel->getServiceParams($this->payload['serviceParameters']);
-
-                    foreach ($serviceParameters as $item)
-                    {
-                        $this->request->setServiceParameter(
-                            $item['name'],
-                            $item['value'],
-                            $item['groupType'] ?? null,
-                            $item['groupId'] ?? null
-                        );
-                    }
-
-                    continue;
-                }
-
-                if($optionKey == 'issuer') {
-                    $this->request->setServiceParameter('issuer', $option);
-
-                    continue;
-                }
-
-                $this->request->$optionSetMethod($option);
-            }
-        }
+        $this->request->getServices()->pushServiceList($this->getServiceList());
+        $this->request->setPayload($this->payload);
 
         return $this;
     }
 
+    private function getServiceList() : ServiceList
+    {
+        $parameters = [
+            'name' => 'issuer',
+            'Value' => $this->payload->issuer
+        ];
+
+        return new ServiceList(
+            $this->payload->method,
+            $this->payload->serviceVersion,
+            $this->payload->serviceAction,
+            $parameters
+        );
+    }
+
     protected function getPaymentMethod()
     {
-        return PaymentMethodFactory::get($this->client, $this->request->getMethod());
+        return PaymentMethodFactory::get($this->client, $this->payload->method);
     }
 
 //    public static function create(Client $buckarooClient, $options = array())

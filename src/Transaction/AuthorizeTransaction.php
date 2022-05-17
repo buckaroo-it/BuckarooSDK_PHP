@@ -3,7 +3,7 @@
 namespace Buckaroo\Transaction;
 
 use Buckaroo\Payload\TransactionResponse;
-use Buckaroo\PaymentMethods\PaymentInterface;
+use Buckaroo\PaymentMethods\AuthorizePaymentInterface;
 
 class AuthorizeTransaction extends Transaction
 {
@@ -11,11 +11,11 @@ class AuthorizeTransaction extends Transaction
     {
         $paymentMethod = $this->getPaymentMethod();
 
-        if(is_a($paymentMethod, PaymentInterface::class))
+        if(is_a($paymentMethod, AuthorizePaymentInterface::class))
         {
             return $paymentMethod->authorize($this->request);
         }
 
-        throw new \Exception("This payment method doesn't support pay service action.");
+        throw new \Exception("This payment method doesn't support authorize service action.");
     }
 }

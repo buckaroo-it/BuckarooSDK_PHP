@@ -2,6 +2,7 @@
 
 namespace Buckaroo\Transaction;
 
+use Buckaroo\Model\ServiceList;
 use Buckaroo\Payload\TransactionResponse;
 use Buckaroo\PaymentMethods\PaymentInterface;
 

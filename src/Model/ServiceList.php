@@ -1,0 +1,32 @@
+<?php
+
+namespace Buckaroo\Model;
+
+class ServiceList extends Model
+{
+    protected $fillable = [
+        'Parameters',
+        'Version',
+        'Action',
+        'Name'
+    ];
+
+    protected array $Parameters = [];
+
+    public function __construct(string $name, int $version, string $action, array $parameters = [])
+    {
+        $this->Name = $name;
+        $this->Version = $version;
+        $this->Action = $action;
+
+        if(!empty($parameters))
+        {
+            $this->Parameters[] = $parameters;
+        }
+    }
+
+    public function getParameters(): array
+    {
+        return $this->Parameters;
+    }
+}
