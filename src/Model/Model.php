@@ -28,8 +28,28 @@ abstract class Model implements Arrayable
 
     public function toArray() : array
     {
-        return array_filter(get_object_vars($this), function($value, $key){
+        $array =  array_filter(get_object_vars($this), function($value, $key){
             return !in_array($key, $this->filter);
         }, ARRAY_FILTER_USE_BOTH);
+
+        return $this->recursiveToArray($array);
+    }
+
+    private function recursiveToArray(array $array) : array
+    {
+        foreach($array as $key => $value)
+        {
+            if(is_array($value))
+            {
+                $array[$key] = $this->recursiveToArray($value);
+            }
+
+            if(is_a($value, Arrayable::class))
+            {
+                $array[$key] = $value->toArray();
+            }
+        }
+
+        return $array;
     }
 }

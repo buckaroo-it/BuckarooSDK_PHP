@@ -25,9 +25,9 @@ namespace Buckaroo\Transaction;
 use Buckaroo\Client;
 use Buckaroo\Model\Config;
 use Buckaroo\Model\Payload;
-use Buckaroo\Model\TransactionRequest;
 use Buckaroo\Model\ServiceList;
 use Buckaroo\Model\ServiceParam;
+use Buckaroo\Payload\TransactionRequest;
 use Buckaroo\Payload\TransactionResponse;
 use Buckaroo\PaymentMethods\PaymentMethodFactory;
 

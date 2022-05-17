@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Buckaroo\PaymentMethods;
 
-use Buckaroo\Model\TransactionRequest;
+use Buckaroo\Payload\TransactionRequest;
 use Buckaroo\Payload\TransactionResponse;
 
 class Ideal extends PaymentMethod implements PaymentInterface

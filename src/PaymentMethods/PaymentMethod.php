@@ -7,7 +7,7 @@ use Buckaroo\Exceptions\SdkException;
 use Buckaroo\Model\Config;
 use Buckaroo\Model\RequestValidator;
 use Buckaroo\Model\ServiceParam;
-use Buckaroo\Model\TransactionRequest;
+use Buckaroo\Payload\TransactionRequest;
 use Buckaroo\Payload\TransactionResponse;
 use Psr\Log\LoggerInterface;
 

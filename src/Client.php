@@ -135,7 +135,7 @@ class Client
             $url = $this->getTransactionUrl();
         }
 
-        $json = json_encode($data, JSON_PRETTY_PRINT);
+        $json = json_encode($data->toArray());
 
         // all headers have to be set at once
         $headers = $this->getHeaders($url, $json, $method);
