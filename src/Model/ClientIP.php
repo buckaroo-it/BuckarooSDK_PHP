@@ -8,7 +8,7 @@ use Buckaroo\Helpers\Validate;
 
 class ClientIP extends Model
 {
-    protected $fillable = ['Type', 'Address'];
+    protected $Type, $Address;
 
     public function __construct(?string $ip = null)
     {

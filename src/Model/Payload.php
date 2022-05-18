@@ -5,28 +5,21 @@ namespace Buckaroo\Model;
 
 class Payload extends Model
 {
-    protected $fillable = [
-        'amountDebit',
-        'serviceVersion',
-        'serviceAction',
-        'invoice',
-        'issuer',
-        'method',
-        'order',
-        'currency',
-        'returnURL',
-        'returnURLCancel',
-        'pushURL'
-    ];
+    protected
+        $invoice,
+        $order,
+        $currency,
+        $returnURL,
+        $returnURLCancel,
+        $pushURL,
+        $amountDebit,
+        $issuer,
+        $method,
+        $serviceVersion,
+        $serviceAction;
 
-    protected $serviceVersion = 2;
-    protected $serviceAction = 'Pay';
-    protected $invoice = null;
-    protected $order = null;
-    protected $currency = null;
-    protected $returnURL = null;
-    protected $returnURLCancel = null;
-    protected $pushURL = null;
+//    protected $serviceVersion = 2;
+//    protected $serviceAction = 'Pay';
 
     public function __construct(?array $payload)
     {

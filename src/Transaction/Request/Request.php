@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Buckaroo\Payload;
+namespace Buckaroo\Transaction\Request;
 
-use Buckaroo\Helpers\DefaultFactory;
-use Exception;
 use ArrayAccess;
 use Buckaroo\Helpers\Arrayable;
 use Buckaroo\Helpers\Base;
+use Buckaroo\Helpers\DefaultFactory;
+use Exception;
 use JsonSerializable;
 use Psr\Log\LoggerInterface;
 

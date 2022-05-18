@@ -24,9 +24,9 @@ declare(strict_types=1);
 namespace Buckaroo\Example;
 
 use Buckaroo\Exceptions\SdkException;
-use Buckaroo\Payload\PaymentResult;
-use Buckaroo\Payload\TransactionRequest;
-use Buckaroo\Payload\TransactionResponse;
+use Buckaroo\Transaction\Request\TransactionRequest;
+use Buckaroo\Transaction\Response\PaymentResult;
+use Buckaroo\Transaction\Response\TransactionResponse;
 use Psr\Log\LoggerInterface;
 
 class App

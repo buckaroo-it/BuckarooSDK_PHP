@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Buckaroo\Payload;
+namespace Buckaroo\Transaction\Response;
 
 /**
  * DataResponse inherits from TransactionResponse

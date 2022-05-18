@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace Buckaroo\Payload;
 
 use Buckaroo\Exceptions\SdkException;
-use Buckaroo\Helpers\Validate;
-use Buckaroo\Helpers\Constants\IPProtocolVersion;
 use Buckaroo\Helpers\Base;
+use Buckaroo\Helpers\Constants\IPProtocolVersion;
+use Buckaroo\Helpers\Validate;
+use Buckaroo\Transaction\Request\Request;
 use Psr\Log\LoggerInterface;
 
 class TransactionRequest extends Request

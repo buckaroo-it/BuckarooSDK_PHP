@@ -4,10 +4,6 @@ namespace Buckaroo\Model;
 
 class Services extends Model
 {
-    protected $fillable = [
-        'ServiceList'
-    ];
-
     protected array $ServiceList = [];
 
     public function getServiceList(): array

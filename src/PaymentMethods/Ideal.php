@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Buckaroo\PaymentMethods;
 
-use Buckaroo\Payload\TransactionRequest;
-use Buckaroo\Payload\TransactionResponse;
+use Buckaroo\Model\Payload;
+use Buckaroo\Model\ServiceList;
 
 class Ideal extends PaymentMethod implements PaymentInterface
 {
@@ -18,94 +18,34 @@ class Ideal extends PaymentMethod implements PaymentInterface
     public const BANK_CODE_SNS = 'SNSBNL2A';
     public const BANK_CODE_TRIODOS = 'TRIONL2U';
     public const BANK_CODE_TEST = 'BANKNL2Y';
+    public const SERVICE_VERSION = 2;
 
     public function getCode(): string
     {
         return PaymentMethod::IDEAL;
     }
 
-    public function refund(TransactionRequest $request): TransactionResponse
+    public function getPayServiceList(Payload $payload) : ServiceList
     {
-        $request->setServiceVersion(2);
-
-        return parent::refund($request);
-    }
-
-    protected function validatePayRequest(TransactionRequest $request): self
-    {
-        if($request->getServiceParameter('issuer'))
-        {
-            parent::validatePayRequest($request);
-
-            return $this;
-        }
-
-        $this->throwError(__METHOD__, "Empty bank code");
-    }
-
-    public function setBankCode(TransactionRequest $request, string $bankCode): self
-    {
-        if (in_array($bankCode, $this->getBanks()))
-        {
-            $request->setServiceParameter('issuer', $bankCode);
-
-            return $this;
-        }
-
-        $this->throwError(__METHOD__, "Invalid bank code", $bankCode);
-    }
-
-    public function getBanks(): array
-    {
-        return [
-            self::BANK_CODE_ABN,
-            self::BANK_CODE_ASN,
-            self::BANK_CODE_BUNQ,
-            self::BANK_CODE_ING,
-            self::BANK_CODE_RABO,
-            self::BANK_CODE_REGIO,
-            self::BANK_CODE_SNS,
-            self::BANK_CODE_TRIODOS,
-        ];
-    }
-
-    public function getBanksNames()
-    {
-        $issuers = [
-            [
-                'servicename' => self::BANK_CODE_ABN,
-                'displayname' => 'ABN AMRO',
-            ],
-            [
-                'servicename' => self::BANK_CODE_ASN,
-                'displayname' => 'ASN Bank',
-            ],
-            [
-                'servicename' => self::BANK_CODE_BUNQ,
-                'displayname' => 'bunq',
-            ],
-            [
-                'servicename' => self::BANK_CODE_ING,
-                'displayname' => 'ING',
-            ],
-            [
-                'servicename' => self::BANK_CODE_RABO,
-                'displayname' => 'Rabobank',
-            ],
-            [
-                'servicename' => self::BANK_CODE_REGIO,
-                'displayname' => 'RegioBank',
-            ],
-            [
-                'servicename' => self::BANK_CODE_SNS,
-                'displayname' => 'SNS Bank',
-            ],
-            [
-                'servicename' => self::BANK_CODE_TRIODOS,
-                'displayname' => 'Triodos Bank',
-            ],
+        $parameters = [
+            'name' => 'issuer',
+            'Value' => $payload->issuer
         ];
 
-        return $issuers;
+        return new ServiceList(
+            self::IDEAL,
+            self::SERVICE_VERSION,
+            'Pay',
+            $parameters
+        );
+    }
+
+    public function getRefundServiceList(Payload $payload): ServiceList
+    {
+        return new ServiceList(
+            self::IDEAL,
+            self::SERVICE_VERSION,
+            'Refund'
+        );
     }
 }

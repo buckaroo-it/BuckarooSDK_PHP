@@ -4,13 +4,7 @@ namespace Buckaroo\Model;
 
 class ServiceList extends Model
 {
-    protected $fillable = [
-        'Parameters',
-        'Version',
-        'Action',
-        'Name'
-    ];
-
+    protected $Version, $Action, $Name;
     protected array $Parameters = [];
 
     public function __construct(string $name, int $version, string $action, array $parameters = [])

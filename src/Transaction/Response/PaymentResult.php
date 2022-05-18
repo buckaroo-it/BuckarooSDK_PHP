@@ -1,6 +1,6 @@
 <?php
 
-namespace Buckaroo\Payload;
+namespace Buckaroo\Transaction\Response;
 
 use Buckaroo\Helpers\Base;
 use Buckaroo\Helpers\Constants\ResponseStatus;

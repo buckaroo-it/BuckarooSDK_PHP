@@ -2,8 +2,8 @@
 
 namespace Buckaroo\Transaction;
 
-use Buckaroo\Payload\TransactionResponse;
 use Buckaroo\PaymentMethods\AuthorizePaymentInterface;
+use Buckaroo\Transaction\Response\TransactionResponse;
 
 class AuthorizeTransaction extends Transaction
 {

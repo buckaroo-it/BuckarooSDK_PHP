@@ -2,7 +2,8 @@
 
 namespace Buckaroo\PaymentMethods;
 
-use Buckaroo\Payload\TransactionRequest;
+
+use Buckaroo\Transaction\Request\TransactionRequest;
 
 interface AuthorizePaymentInterface extends PaymentInterface
 {

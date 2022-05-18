@@ -24,11 +24,11 @@ declare(strict_types=1);
 namespace Buckaroo;
 
 use Buckaroo\Helpers\CultureHeader;
+use Buckaroo\Helpers\DefaultFactory;
 use Buckaroo\Helpers\HmacHeader;
 use Buckaroo\Helpers\SoftwareHeader;
-use Buckaroo\Helpers\DefaultFactory;
-use Buckaroo\Payload\Request;
 use Buckaroo\HttpClient\HttpClientInterface;
+use Buckaroo\Transaction\Request\Request;
 use Psr\Log\LoggerInterface;
 
 class Client
@@ -96,7 +96,7 @@ class Client
     {
         return ($this->getMode() == self::MODE_LIVE ?
                 self::ENDPOINT_LIVE :
-                self::ENDPOINT_TEST) . '/' . ltrim('json/TransactionRequest', '/')
+                self::ENDPOINT_TEST) . '/' . ltrim('json/Transaction', '/')
         ;
     }
 
@@ -111,12 +111,12 @@ class Client
         ];
     }
 
-    public function get($responseClass = 'Buckaroo\Payload\Response')
+    public function get($responseClass = 'Buckaroo\Transaction\Response\Response')
     {
         return $this->call(self::METHOD_GET, null, $responseClass);
     }
 
-    public function post(Request $data = null, $responseClass = 'Buckaroo\Payload\TransactionResponse')
+    public function post(Request $data = null, $responseClass = 'Buckaroo\Transaction\Response\TransactionResponse')
     {
         return $this->call(self::METHOD_POST, $data, $responseClass);
     }
@@ -124,7 +124,7 @@ class Client
     protected function call(
         $method = self::METHOD_GET,
         Request $data = null,
-        $responseClass = 'Buckaroo\Payload\Response',
+        $responseClass = 'Buckaroo\Transaction\Response\Response',
         $url = ''
     ) {
         if (!$data) {

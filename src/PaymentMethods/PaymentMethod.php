@@ -7,8 +7,8 @@ use Buckaroo\Exceptions\SdkException;
 use Buckaroo\Model\Config;
 use Buckaroo\Model\RequestValidator;
 use Buckaroo\Model\ServiceParam;
-use Buckaroo\Payload\TransactionRequest;
-use Buckaroo\Payload\TransactionResponse;
+use Buckaroo\Transaction\Request\TransactionRequest;
+use Buckaroo\Transaction\Response\TransactionResponse;
 use Psr\Log\LoggerInterface;
 
 abstract class PaymentMethod implements PaymentInterface
@@ -62,7 +62,7 @@ abstract class PaymentMethod implements PaymentInterface
 
         return $this->client->post(
             $request,
-            'Buckaroo\Payload\TransactionResponse'
+            'Buckaroo\Transaction\Response\TransactionResponse'
         );
     }
 
@@ -75,7 +75,7 @@ abstract class PaymentMethod implements PaymentInterface
 
         return $this->client->post(
             $request,
-            'Buckaroo\Payload\TransactionResponse'
+            'Buckaroo\Transaction\Response\TransactionResponse'
         );
     }
 
@@ -88,7 +88,7 @@ abstract class PaymentMethod implements PaymentInterface
 
         return $this->client->post(
             $request,
-            'Buckaroo\Payload\TransactionResponse'
+            'Buckaroo\Transaction\Response\TransactionResponse'
         );
     }
 
@@ -101,7 +101,7 @@ abstract class PaymentMethod implements PaymentInterface
 
         return $this->client->post(
             $request,
-            'Buckaroo\Payload\TransactionResponse'
+            'Buckaroo\Transaction\Response\TransactionResponse'
         );
     }
 

@@ -6,8 +6,6 @@ use Buckaroo\Helpers\Arrayable;
 
 abstract class Model implements Arrayable
 {
-    protected $filter = ['filter', 'fillable'];
-
     public function __get($property)
     {
         if (property_exists($this, $property))
@@ -18,7 +16,7 @@ abstract class Model implements Arrayable
 
     public function __set($property, $value)
     {
-        if($this->fillable && in_array($property, $this->fillable))
+        if (property_exists($this, $property))
         {
             $this->$property = $value;
         }
@@ -28,11 +26,7 @@ abstract class Model implements Arrayable
 
     public function toArray() : array
     {
-        $array =  array_filter(get_object_vars($this), function($value, $key){
-            return !in_array($key, $this->filter);
-        }, ARRAY_FILTER_USE_BOTH);
-
-        return $this->recursiveToArray($array);
+        return $this->recursiveToArray(get_object_vars($this));
     }
 
     private function recursiveToArray(array $array) : array

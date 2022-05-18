@@ -21,16 +21,11 @@
 
 namespace Buckaroo;
 
-use Buckaroo\Exceptions\SdkException;
-use Buckaroo\Model\Payload;
-use Buckaroo\Payload\TransactionRequest;
-use Buckaroo\Payload\TransactionResponse;
-use Buckaroo\PaymentMethods\PaymentMethodFactory;
 use Buckaroo\Transaction\AuthorizeTransaction;
 use Buckaroo\Transaction\CaptureTransaction;
 use Buckaroo\Transaction\PayTransaction;
 use Buckaroo\Transaction\RefundTransaction;
-use Buckaroo\Transaction\Transaction;
+use Buckaroo\Transaction\Response\TransactionResponse;
 
 class Buckaroo
 {   
@@ -58,7 +53,7 @@ class Buckaroo
         return $this;
     }
 
-    public function pay($payload) : TransactionResponse
+    public function pay(array $payload) : TransactionResponse
     {
         $transaction = new PayTransaction($this->client, $payload);
 

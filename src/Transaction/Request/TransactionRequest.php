@@ -1,8 +1,7 @@
 <?php
 
-namespace Buckaroo\Payload;
+namespace Buckaroo\Transaction\Request;
 
-use Buckaroo\Helpers\Arrayable;
 use Buckaroo\Helpers\Base;
 use Buckaroo\Helpers\Validate;
 use Buckaroo\Model\ClientIP;
@@ -12,14 +11,14 @@ use Buckaroo\Model\Services;
 class TransactionRequest extends Request
 {
     protected $Currency = 'EUR';
+    protected $Services;
 
     public function __construct()
     {
         parent::__construct(null);
 
-        $this->ClientIP = new ClientIP();
+        $this->ClientIP = new ClientIP;
         $this->ClientUserAgent =  Base::getRemoteUserAgent();
-        $this->Services = new Services();
     }
 
     public function setCurrency(string $currency): self
@@ -37,6 +36,7 @@ class TransactionRequest extends Request
     public function setPayload(Payload $payload)
     {
         $this->Invoice = $payload->invoice;
+        $this->Order = $payload->order;
         $this->ReturnURL = $payload->returnURL;
         $this->ReturnURLCancel = $payload->returnURLCancel;
         $this->PushURL = $payload->pushURL;
@@ -49,6 +49,8 @@ class TransactionRequest extends Request
 
     public function getServices() : Services
     {
+        $this->Services = $this->Services ?? new Services;
+
         return $this->Services;
     }
 
@@ -59,6 +61,7 @@ class TransactionRequest extends Request
             'ClientUserAgent'   => $this->ClientUserAgent,
             'Services'          => $this->Services->toArray(),
             'Invoice'           => $this->Invoice,
+            'Order'             => $this->Order,
             'ReturnURL'         => $this->ReturnURL,
             'ReturnURLCancel'   => $this->ReturnURLCancel,
             'PushURL'           => $this->PushURL,

@@ -2,8 +2,8 @@
 
 namespace Buckaroo\Transaction;
 
-use Buckaroo\Payload\TransactionResponse;
 use Buckaroo\PaymentMethods\PaymentInterface;
+use Buckaroo\Transaction\Response\TransactionResponse;
 
 class RefundTransaction extends Transaction
 {

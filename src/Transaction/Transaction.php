@@ -25,11 +25,10 @@ namespace Buckaroo\Transaction;
 use Buckaroo\Client;
 use Buckaroo\Model\Config;
 use Buckaroo\Model\Payload;
-use Buckaroo\Model\ServiceList;
 use Buckaroo\Model\ServiceParam;
-use Buckaroo\Payload\TransactionRequest;
-use Buckaroo\Payload\TransactionResponse;
 use Buckaroo\PaymentMethods\PaymentMethodFactory;
+use Buckaroo\Transaction\Request\TransactionRequest;
+use Buckaroo\Transaction\Response\TransactionResponse;
 
 abstract class Transaction
 {
@@ -46,7 +45,6 @@ abstract class Transaction
         $this->serviceParamModel = new ServiceParam($this->config);
 
         $this->setPayload($payload);
-        $this->prepare();
     }
 
     private function setPayload($payload)
@@ -63,30 +61,9 @@ abstract class Transaction
 
         $this->payload = new Payload($payload);
 
-        return $this;
-    }
-
-    private function prepare()
-    {
-        $this->request->getServices()->pushServiceList($this->getServiceList());
         $this->request->setPayload($this->payload);
 
         return $this;
-    }
-
-    private function getServiceList() : ServiceList
-    {
-        $parameters = [
-            'name' => 'issuer',
-            'Value' => $this->payload->issuer
-        ];
-
-        return new ServiceList(
-            $this->payload->method,
-            $this->payload->serviceVersion,
-            $this->payload->serviceAction,
-            $parameters
-        );
     }
 
     protected function getPaymentMethod()

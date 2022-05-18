@@ -2,11 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Buckaroo\Payload;
+namespace Buckaroo\Transaction\Response;
 
-use Buckaroo\Payload\Response;
 use Buckaroo\Helpers\Constants\ResponseStatus;
-use Buckaroo\Helpers\Base;
 
 class TransactionResponse extends Response
 {

@@ -5,14 +5,18 @@ declare(strict_types=1);
 namespace Buckaroo\PaymentMethods;
 
 use Buckaroo\Helpers\Base;
-use Buckaroo\Payload\TransactionRequest;
-use Buckaroo\Payload\TransactionResponse;
 use Buckaroo\Model\Article;
 use Buckaroo\Model\Customer;
+use Buckaroo\Model\Payload;
+use Buckaroo\Model\ServiceList;
+use Buckaroo\Transaction\Request\TransactionRequest;
+use Buckaroo\Transaction\Response\TransactionResponse;
 
 
 class Afterpay extends PaymentMethod implements AuthorizePaymentInterface
 {
+    public const SERVICE_VERSION = 1;
+
     public const CATEGORY_PERSON = 'Person';
     public const CATEGORY_COMPANY = 'Company';
 
@@ -236,5 +240,23 @@ class Afterpay extends PaymentMethod implements AuthorizePaymentInterface
     public function getSalutations(): array
     {
         return [self::SALUTATION_MR, self::SALUTATION_MRS, self::SALUTATION_MISS];
+    }
+
+    public function getPayServiceList(Payload $payload): ServiceList
+    {
+        return new ServiceList(
+            self::AFTERPAY,
+            self::SERVICE_VERSION,
+            'Pay'
+        );
+    }
+
+    public function getRefundServiceList(Payload $payload): ServiceList
+    {
+        return new ServiceList(
+            self::AFTERPAY,
+            self::SERVICE_VERSION,
+            'Refund'
+        );
     }
 }
