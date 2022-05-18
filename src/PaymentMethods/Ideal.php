@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Buckaroo\PaymentMethods;
 
-use Buckaroo\Model\Payload;
+use Buckaroo\Model\PaymentPayload;
+use Buckaroo\Model\RefundPayload;
 use Buckaroo\Model\ServiceList;
 
 class Ideal extends PaymentMethod implements PaymentInterface
@@ -25,7 +26,7 @@ class Ideal extends PaymentMethod implements PaymentInterface
         return PaymentMethod::IDEAL;
     }
 
-    public function getPayServiceList(Payload $payload) : ServiceList
+    public function getPayServiceList(PaymentPayload $payload) : ServiceList
     {
         $parameters = [
             'name' => 'issuer',
@@ -40,7 +41,7 @@ class Ideal extends PaymentMethod implements PaymentInterface
         );
     }
 
-    public function getRefundServiceList(Payload $payload): ServiceList
+    public function getRefundServiceList(RefundPayload $payload): ServiceList
     {
         return new ServiceList(
             self::IDEAL,

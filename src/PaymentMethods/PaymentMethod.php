@@ -94,10 +94,10 @@ abstract class PaymentMethod implements PaymentInterface
 
     public function refund(TransactionRequest $request): TransactionResponse
     {
-        $request->setMethod($this->getCode());
-        $request->setServiceAction('Refund');
-
-        $this->validateRefundRequest($request);
+//        $request->setMethod($this->getCode());
+//        $request->setServiceAction('Refund');
+//
+//        $this->validateRefundRequest($request);
 
         return $this->client->post(
             $request,

@@ -25,6 +25,7 @@ namespace Buckaroo\Transaction;
 use Buckaroo\Client;
 use Buckaroo\Model\Config;
 use Buckaroo\Model\Payload;
+use Buckaroo\Model\PaymentPayload;
 use Buckaroo\Model\ServiceParam;
 use Buckaroo\PaymentMethods\PaymentMethodFactory;
 use Buckaroo\Transaction\Request\TransactionRequest;
@@ -33,42 +34,43 @@ use Buckaroo\Transaction\Response\TransactionResponse;
 abstract class Transaction
 {
     protected $client;
+    protected $payloadRequest;
     protected Payload $payload;
 
     abstract public function handle() : TransactionResponse;
 
-    public function __construct(Client $client, array $payload)
+    public function __construct(Client $client, $payload)
     {
         $this->client = $client;
         $this->request = new TransactionRequest;
         $this->config = new Config;
         $this->serviceParamModel = new ServiceParam($this->config);
 
-        $this->setPayload($payload);
+        $this->payloadRequest = $payload;
     }
 
-    private function setPayload($payload)
+    protected function setPayload(string $class, string $adapter)
     {
-        if (!is_array($payload))
+        if (!is_array($this->payloadRequest))
         {
-            $payload = json_decode($payload, true);
+            $this->payloadRequest = json_decode($this->payloadRequest, true);
         }
 
-        if($payload == null)
+        if($this->payloadRequest == null)
         {
             throw new \Exception("Invalid or empty payload. Array or json format required.");
         }
 
-        $this->payload = new Payload($payload);
+        $this->payload = new $class($this->payloadRequest);
 
-        $this->request->setPayload($this->payload);
+        $this->request->setPayload(new $adapter($this->payload));
 
         return $this;
     }
 
     protected function getPaymentMethod()
     {
-        return PaymentMethodFactory::get($this->client, $this->payload->method);
+        return PaymentMethodFactory::get($this->client, $this->payloadRequest['method']);
     }
 
 //    public static function create(Client $buckarooClient, $options = array())

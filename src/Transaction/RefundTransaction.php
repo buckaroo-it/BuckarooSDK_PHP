@@ -2,7 +2,9 @@
 
 namespace Buckaroo\Transaction;
 
+use Buckaroo\Model\RefundPayload;
 use Buckaroo\PaymentMethods\PaymentInterface;
+use Buckaroo\Transaction\Request\Adapters\RefundPayloadAdapter;
 use Buckaroo\Transaction\Response\TransactionResponse;
 
 class RefundTransaction extends Transaction
@@ -13,6 +15,10 @@ class RefundTransaction extends Transaction
 
         if(is_a($paymentMethod, PaymentInterface::class))
         {
+            $this->setPayload(RefundPayload::class, RefundPayloadAdapter::class);
+
+            $this->request->getServices()->pushServiceList($paymentMethod->getRefundServiceList($this->payload));
+
             return $paymentMethod->refund($this->request);
         }
 

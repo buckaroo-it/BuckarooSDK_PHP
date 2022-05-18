@@ -2,7 +2,9 @@
 
 namespace Buckaroo\Transaction;
 
+use Buckaroo\Model\PaymentPayload;
 use Buckaroo\PaymentMethods\PaymentInterface;
+use Buckaroo\Transaction\Request\Adapters\PaymentPayloadAdapter;
 use Buckaroo\Transaction\Response\TransactionResponse;
 
 class PayTransaction extends Transaction
@@ -13,6 +15,8 @@ class PayTransaction extends Transaction
 
         if(is_a($paymentMethod, PaymentInterface::class))
         {
+            $this->setPayload(PaymentPayload::class, PaymentPayloadAdapter::class);
+
             $this->request->getServices()->pushServiceList($paymentMethod->getPayServiceList($this->payload));
 
             return $paymentMethod->pay($this->request);

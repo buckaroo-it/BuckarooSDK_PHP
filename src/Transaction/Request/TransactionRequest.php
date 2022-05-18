@@ -2,11 +2,11 @@
 
 namespace Buckaroo\Transaction\Request;
 
+use Buckaroo\Helpers\Arrayable;
 use Buckaroo\Helpers\Base;
-use Buckaroo\Helpers\Validate;
 use Buckaroo\Model\ClientIP;
-use Buckaroo\Model\Payload;
 use Buckaroo\Model\Services;
+use Buckaroo\Transaction\Request\Adapters\TransactionAdapter;
 
 class TransactionRequest extends Request
 {
@@ -21,52 +21,33 @@ class TransactionRequest extends Request
         $this->ClientUserAgent =  Base::getRemoteUserAgent();
     }
 
-    public function setCurrency(string $currency): self
+    public function setPayload(TransactionAdapter $adapter)
     {
-        if (!Validate::isCurrency($currency))
+        foreach($adapter->getValues() as $property => $value)
         {
-            throw new \Exception("Invalid currency " . $currency);
+            $this->data[$property] = $value;
         }
-
-        $this->Currency = $currency;
-
-        return $this;
-    }
-
-    public function setPayload(Payload $payload)
-    {
-        $this->Invoice = $payload->invoice;
-        $this->Order = $payload->order;
-        $this->ReturnURL = $payload->returnURL;
-        $this->ReturnURLCancel = $payload->returnURLCancel;
-        $this->PushURL = $payload->pushURL;
-        $this->AmountDebit = $payload->amountDebit;
-
-        $this->setCurrency($payload->currency);
 
         return $this;
     }
 
     public function getServices() : Services
     {
-        $this->Services = $this->Services ?? new Services;
+        $this->data['Services'] = $this->data['Services'] ?? new Services;
 
-        return $this->Services;
+        return $this->data['Services'];
     }
 
     public function toArray(): array
     {
-        return [
-            'ClientIP'          => $this->ClientIP->toArray(),
-            'ClientUserAgent'   => $this->ClientUserAgent,
-            'Services'          => $this->Services->toArray(),
-            'Invoice'           => $this->Invoice,
-            'Order'             => $this->Order,
-            'ReturnURL'         => $this->ReturnURL,
-            'ReturnURLCancel'   => $this->ReturnURLCancel,
-            'PushURL'           => $this->PushURL,
-            'AmountDebit'       => $this->AmountDebit,
-            'Currency'          => $this->Currency
-        ];
+        foreach($this->data as $key => $value)
+        {
+            if(is_a($value, Arrayable::class))
+            {
+                $this->data[$key] = $value->toArray();
+            }
+        }
+
+        return $this->data;
     }
 }

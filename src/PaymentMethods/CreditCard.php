@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Buckaroo\PaymentMethods;
 
-use Buckaroo\Model\Payload;
+use Buckaroo\Model\PaymentPayload;
+use Buckaroo\Model\RefundPayload;
 use Buckaroo\Model\ServiceList;
 
 class CreditCard extends PaymentMethod
@@ -24,7 +25,7 @@ class CreditCard extends PaymentMethod
         ];
     }
 
-    public function getPayServiceList(Payload $payload): ServiceList
+    public function getPayServiceList(PaymentPayload $payload): ServiceList
     {
         return new ServiceList(
             'CreditCard',
@@ -33,7 +34,7 @@ class CreditCard extends PaymentMethod
         );
     }
 
-    public function getRefundServiceList(Payload $payload): ServiceList
+    public function getRefundServiceList(RefundPayload $payload): ServiceList
     {
         return new ServiceList(
             'CreditCard',

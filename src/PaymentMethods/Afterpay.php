@@ -7,7 +7,8 @@ namespace Buckaroo\PaymentMethods;
 use Buckaroo\Helpers\Base;
 use Buckaroo\Model\Article;
 use Buckaroo\Model\Customer;
-use Buckaroo\Model\Payload;
+use Buckaroo\Model\PaymentPayload;
+use Buckaroo\Model\RefundPayload;
 use Buckaroo\Model\ServiceList;
 use Buckaroo\Transaction\Request\TransactionRequest;
 use Buckaroo\Transaction\Response\TransactionResponse;
@@ -242,7 +243,7 @@ class Afterpay extends PaymentMethod implements AuthorizePaymentInterface
         return [self::SALUTATION_MR, self::SALUTATION_MRS, self::SALUTATION_MISS];
     }
 
-    public function getPayServiceList(Payload $payload): ServiceList
+    public function getPayServiceList(PaymentPayload $payload): ServiceList
     {
         return new ServiceList(
             self::AFTERPAY,
@@ -251,7 +252,7 @@ class Afterpay extends PaymentMethod implements AuthorizePaymentInterface
         );
     }
 
-    public function getRefundServiceList(Payload $payload): ServiceList
+    public function getRefundServiceList(RefundPayload $payload): ServiceList
     {
         return new ServiceList(
             self::AFTERPAY,
