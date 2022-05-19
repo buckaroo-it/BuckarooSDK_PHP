@@ -119,4 +119,9 @@ class Request implements JsonSerializable, ArrayAccess, Arrayable
             return $key . ': ' . $value;
         });
     }
+
+    public function getData(): array
+    {
+        return $this->data;
+    }
 }

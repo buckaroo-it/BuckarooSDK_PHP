@@ -26,12 +26,12 @@ class Ideal extends PaymentMethod implements PaymentInterface
         return PaymentMethod::IDEAL;
     }
 
-    public function getPayServiceList(PaymentPayload $payload) : ServiceList
+    public function getPayServiceList(PaymentPayload $payload, array $serviceParameters = []) : ServiceList
     {
-        $parameters = [
+        $parameters = array([
             'name' => 'issuer',
             'Value' => $payload->issuer
-        ];
+        ]);
 
         return new ServiceList(
             self::IDEAL,

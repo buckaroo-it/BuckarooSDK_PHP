@@ -17,7 +17,9 @@ class PayTransaction extends Transaction
         {
             $this->setPayload(PaymentPayload::class, PaymentPayloadAdapter::class);
 
-            $this->request->getServices()->pushServiceList($paymentMethod->getPayServiceList($this->payload));
+            $serviceList = $paymentMethod->getPayServiceList($this->payload, $this->payloadRequest['serviceParameters'] ?? []);
+
+            $this->request->getServices()->pushServiceList($serviceList);
 
             return $paymentMethod->pay($this->request);
         }

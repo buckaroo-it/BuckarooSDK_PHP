@@ -25,7 +25,7 @@ class CreditCard extends PaymentMethod
         ];
     }
 
-    public function getPayServiceList(PaymentPayload $payload): ServiceList
+    public function getPayServiceList(PaymentPayload $payload, array $serviceParameters = []): ServiceList
     {
         return new ServiceList(
             'CreditCard',

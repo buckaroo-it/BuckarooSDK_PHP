@@ -17,8 +17,8 @@ class TransactionRequest extends Request
     {
         parent::__construct(null);
 
-        $this->ClientIP = new ClientIP;
-        $this->ClientUserAgent =  Base::getRemoteUserAgent();
+        $this->data['ClientIP'] = new ClientIP;
+        $this->data['ClientUserAgent'] =  Base::getRemoteUserAgent();
     }
 
     public function setPayload(TransactionAdapter $adapter)

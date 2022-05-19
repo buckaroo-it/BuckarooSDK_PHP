@@ -14,6 +14,6 @@ interface PaymentInterface
     public function pay(TransactionRequest $request) : TransactionResponse;
     public function refund(TransactionRequest $request) : TransactionResponse;
 
-    public function getPayServiceList(PaymentPayload $payload) : ServiceList;
+    public function getPayServiceList(PaymentPayload $payload, array $serviceParameters = []) : ServiceList;
     public function getRefundServiceList(RefundPayload $payload) : ServiceList;
 }

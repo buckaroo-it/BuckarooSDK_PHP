@@ -24,6 +24,19 @@ abstract class Model implements Arrayable
         return $this;
     }
 
+    public function setProperties(array $data)
+    {
+        if($data)
+        {
+            foreach($data ?? array() as $property => $value)
+            {
+                $this->$property = $value;
+            }
+        }
+
+        return $this;
+    }
+
     public function toArray() : array
     {
         return $this->recursiveToArray(get_object_vars($this));

@@ -12,11 +12,7 @@ class ServiceList extends Model
         $this->Name = $name;
         $this->Version = $version;
         $this->Action = $action;
-
-        if(!empty($parameters))
-        {
-            $this->Parameters[] = $parameters;
-        }
+        $this->Parameters = $parameters ?? [];
     }
 
     public function getParameters(): array

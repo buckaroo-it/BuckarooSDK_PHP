@@ -13,6 +13,12 @@ class CaptureTransaction extends Transaction
 
         if(is_a($paymentMethod, AuthorizePaymentInterface::class))
         {
+            $this->setPayload(RefundPayload::class, RefundPayloadAdapter::class);
+
+            $serviceList = $paymentMethod->getPayServiceList($this->payload, $this->payloadRequest['serviceParameters'] ?? []);
+
+            $this->request->getServices()->pushServiceList($serviceList);
+
             return $paymentMethod->capture($this->request);
         }
 

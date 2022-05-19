@@ -59,7 +59,6 @@ abstract class PaymentMethod implements PaymentInterface
         //TODO
         //Create validator class that validates specific request
         //$request->validate();
-
         return $this->client->post(
             $request,
             'Buckaroo\Transaction\Response\TransactionResponse'
@@ -68,11 +67,6 @@ abstract class PaymentMethod implements PaymentInterface
 
     public function authorize(TransactionRequest $request): TransactionResponse
     {
-        $request->setMethod($this->getCode());
-        $request->setServiceAction('Authorize');
-
-        $this->validatePayRequest($request);
-
         return $this->client->post(
             $request,
             'Buckaroo\Transaction\Response\TransactionResponse'
@@ -81,11 +75,6 @@ abstract class PaymentMethod implements PaymentInterface
 
     public function capture(TransactionRequest $request): TransactionResponse
     {
-        $request->setMethod($this->getCode());
-        $request->setServiceAction('Capture');
-
-        $this->validateCaptureRequest($request);
-
         return $this->client->post(
             $request,
             'Buckaroo\Transaction\Response\TransactionResponse'
@@ -94,11 +83,6 @@ abstract class PaymentMethod implements PaymentInterface
 
     public function refund(TransactionRequest $request): TransactionResponse
     {
-//        $request->setMethod($this->getCode());
-//        $request->setServiceAction('Refund');
-//
-//        $this->validateRefundRequest($request);
-
         return $this->client->post(
             $request,
             'Buckaroo\Transaction\Response\TransactionResponse'
