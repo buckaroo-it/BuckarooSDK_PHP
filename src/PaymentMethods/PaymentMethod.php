@@ -22,6 +22,7 @@ abstract class PaymentMethod implements PaymentInterface
     protected array $payload;
 
     public const AFTERPAY = 'afterpay';
+    public const AFTERPAYDIGIACCEPT = 'afterpaydigiaccept';
     public const KLARNAKP = 'klarnakp';
     public const KLARNA = 'klarna';
     public const SEPA = 'sepadirectdebit';
