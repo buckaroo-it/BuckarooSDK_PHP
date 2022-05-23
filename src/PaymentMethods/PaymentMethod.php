@@ -32,6 +32,7 @@ abstract class PaymentMethod implements PaymentInterface
     public const PAYCONIQ = 'payconiq';
     public const P24 = 'przelewy24';
     public const IDEAL = 'ideal';
+    public const IDEALPROCESSING = 'idealprocessing';
     public const CAPAYABLE = 'capayable';
     public const GIROPAY = 'giropay';
     public const GIFTCARD = 'giftcard';
@@ -94,37 +95,4 @@ abstract class PaymentMethod implements PaymentInterface
             TransactionResponse::class
         );
     }
-
-//    public function authorize(TransactionRequest $request): TransactionResponse
-//    {
-//        return $this->client->post(
-//            $request,
-//            'Buckaroo\Transaction\Response\TransactionResponse'
-//        );
-//    }
-//
-//    public function capture(TransactionRequest $request): TransactionResponse
-//    {
-//        return $this->client->post(
-//            $request,
-//            'Buckaroo\Transaction\Response\TransactionResponse'
-//        );
-//    }
-
-//    protected function validatePayRequest(TransactionRequest $request): self
-//    {
-//        if (!$request->getMethod()) {
-//            $this->throwError(__METHOD__, "Empty method name");
-//        }
-//
-//        if (!$request->getAmountDebit()) {
-//            $this->throwError(__METHOD__, "Empty amount");
-//        }
-//
-//        if (!$request->getInvoice()) {
-//            $this->throwError(__METHOD__, "Empty invoice");
-//        }
-//
-//        return $this;
-//    }
 }
