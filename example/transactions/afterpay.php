@@ -6,8 +6,7 @@ use Buckaroo\Buckaroo;
 
 $buckaroo = new Buckaroo($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
-$response = $buckaroo->pay([
-    'method'            => 'afterpay',
+$response = $buckaroo->payment('afterpay')->pay([
     'amountDebit'       => 50.30,
     'order'             => 'aftpay_order_test',
     'invoice'           => 'aftpay_invoice_test',
@@ -61,7 +60,6 @@ $response = $buckaroo->pay([
         ]
     ]
 ]);
-
 //
 ////Products setup
 //$serviceParams['products'][] = ['Identifier' => 'Articlenumber1',

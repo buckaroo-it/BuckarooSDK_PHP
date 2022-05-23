@@ -10,9 +10,6 @@ use Buckaroo\Transaction\Request\Adapters\TransactionAdapter;
 
 class TransactionRequest extends Request
 {
-    protected $Currency = 'EUR';
-    protected $Services;
-
     public function __construct()
     {
         parent::__construct(null);
@@ -21,9 +18,9 @@ class TransactionRequest extends Request
         $this->data['ClientUserAgent'] =  Base::getRemoteUserAgent();
     }
 
-    public function setPayload(TransactionAdapter $adapter)
+    public function setPayload(array $payload)
     {
-        foreach($adapter->getValues() as $property => $value)
+        foreach($payload as $property => $value)
         {
             $this->data[$property] = $value;
         }

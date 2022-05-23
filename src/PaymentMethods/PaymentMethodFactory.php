@@ -49,10 +49,7 @@ class PaymentMethodFactory
     {
         $class = $this->determinePaymentClass();
 
-        $config = new Config();
-        $serviceParam = new ServiceParam($config);
-        $requestValidator = new RequestValidator();
-        $paymentMethodObject = new $class($this->client, $config, $serviceParam, $requestValidator);
+        $paymentMethodObject = new $class($this->client);
 
         return $paymentMethodObject;
     }

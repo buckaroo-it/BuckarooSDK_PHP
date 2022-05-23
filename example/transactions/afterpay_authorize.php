@@ -6,8 +6,7 @@ use Buckaroo\Buckaroo;
 
 $buckaroo = new Buckaroo($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
-$response = $buckaroo->authorize([
-    'method'            => 'afterpay',
+$response = $buckaroo->payment('afterpay')->authorize([
     'amountDebit'       => 50.30,
     'order'             => uniqid(),
     'invoice'           => uniqid(),

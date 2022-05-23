@@ -3,10 +3,11 @@
 namespace Buckaroo\PaymentMethods;
 
 use Buckaroo\Client;
-use Buckaroo\Exceptions\SdkException;
-use Buckaroo\Model\Config;
-use Buckaroo\Model\RequestValidator;
-use Buckaroo\Model\ServiceParam;
+use Buckaroo\Model\PaymentPayload;
+use Buckaroo\Model\RefundPayload;
+use Buckaroo\Services\PayloadService;
+use Buckaroo\Transaction\Request\Adapters\PaymentPayloadAdapter;
+use Buckaroo\Transaction\Request\Adapters\RefundPayloadAdapter;
 use Buckaroo\Transaction\Request\TransactionRequest;
 use Buckaroo\Transaction\Response\TransactionResponse;
 use Psr\Log\LoggerInterface;
@@ -18,6 +19,7 @@ abstract class PaymentMethod implements PaymentInterface
 
     protected string $code;
     protected TransactionRequest $request;
+    protected array $payload;
 
     public const AFTERPAY = 'afterpay';
     public const KLARNAKP = 'klarnakp';
@@ -42,52 +44,72 @@ abstract class PaymentMethod implements PaymentInterface
     public const BELFIUS = 'belfius';
 
     public function __construct(
-        Client $client,
-        Config $config,
-        ServiceParam $serviceParam,
-        RequestValidator $requestValidator
+        Client $client
     ) {
         $this->client = $client;
-        $this->config = $config;
-        $this->serviceParam = $serviceParam;
-        $this->requestValidator = $requestValidator;
         $this->logger = $client->getLogger();
+
+        $this->request = new TransactionRequest;
     }
 
-    public function pay(TransactionRequest $request): TransactionResponse
+    public function pay($payload): TransactionResponse
     {
+        $this->payload = (new PayloadService($payload))->toArray();
+
+        $this->request->setPayload($this->getPaymentPayload());
+
+        $this->setPayServiceList($this->payload['serviceParameters'] ?? []);
+
         //TODO
         //Create validator class that validates specific request
         //$request->validate();
+        return $this->postRequest();
+    }
+
+    public function refund($payload): TransactionResponse
+    {
+        $this->payload = (new PayloadService($payload))->toArray();
+
+        $this->request->setPayload($this->getRefundPayload());
+
+        $this->setRefundServiceList();
+
+        return $this->postRequest();
+    }
+
+    public function getPaymentPayload(): array
+    {
+        return (new PaymentPayloadAdapter(new PaymentPayload($this->payload)))->getValues();
+    }
+
+    public function getRefundPayload(): array
+    {
+        return (new RefundPayloadAdapter(new RefundPayload($this->payload)))->getValues();
+    }
+
+    protected function postRequest(): TransactionResponse
+    {
         return $this->client->post(
-            $request,
-            'Buckaroo\Transaction\Response\TransactionResponse'
+            $this->request,
+            TransactionResponse::class
         );
     }
 
-    public function authorize(TransactionRequest $request): TransactionResponse
-    {
-        return $this->client->post(
-            $request,
-            'Buckaroo\Transaction\Response\TransactionResponse'
-        );
-    }
-
-    public function capture(TransactionRequest $request): TransactionResponse
-    {
-        return $this->client->post(
-            $request,
-            'Buckaroo\Transaction\Response\TransactionResponse'
-        );
-    }
-
-    public function refund(TransactionRequest $request): TransactionResponse
-    {
-        return $this->client->post(
-            $request,
-            'Buckaroo\Transaction\Response\TransactionResponse'
-        );
-    }
+//    public function authorize(TransactionRequest $request): TransactionResponse
+//    {
+//        return $this->client->post(
+//            $request,
+//            'Buckaroo\Transaction\Response\TransactionResponse'
+//        );
+//    }
+//
+//    public function capture(TransactionRequest $request): TransactionResponse
+//    {
+//        return $this->client->post(
+//            $request,
+//            'Buckaroo\Transaction\Response\TransactionResponse'
+//        );
+//    }
 
 //    protected function validatePayRequest(TransactionRequest $request): self
 //    {
@@ -105,47 +127,4 @@ abstract class PaymentMethod implements PaymentInterface
 //
 //        return $this;
 //    }
-
-    protected function validateCaptureRequest(TransactionRequest $request): void
-    {
-        if (!$request->getMethod()) {
-            $this->throwError(__METHOD__, "Empty method name");
-        }
-
-        if (!$request->getOriginalTransactionKey()) {
-            $this->throwError(__METHOD__, "Empty original transaction key");
-        }
-
-        if (!$request->getAmountDebit()) {
-            $this->throwError(__METHOD__, "Empty amount");
-        }
-
-        if (!$request->getInvoice()) {
-            $this->throwError(__METHOD__, "Empty invoice");
-        }
-    }
-
-    protected function validateRefundRequest(TransactionRequest $request): void
-    {
-        if (!$request->getMethod()) {
-            $this->throwError(__METHOD__, "Empty method name");
-        }
-
-        if (!$request->getOriginalTransactionKey()) {
-            $this->throwError(__METHOD__, "Empty original transaction key");
-        }
-
-        if (!$request->getAmountCredit()) {
-            $this->throwError(__METHOD__, "Empty amount");
-        }
-
-        if (!$request->getInvoice()) {
-            $this->throwError(__METHOD__, "Empty invoice");
-        }
-    }
-
-    protected function throwError(string $message, $value = ''): void
-    {
-        throw new SdkException($this->logger, "$message: '{$value}'");
-    }
 }
