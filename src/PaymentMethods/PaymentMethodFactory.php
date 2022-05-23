@@ -22,6 +22,7 @@ class PaymentMethodFactory
         PaymentMethod::PAYCONIQ => 'Payconiq',
         PaymentMethod::P24 => 'P24',
         PaymentMethod::IDEAL => 'Ideal',
+        PaymentMethod::IDEALPROCESSING => 'Ideal',
         PaymentMethod::CAPAYABLE => 'Capayable',
         PaymentMethod::GIROPAY => 'Giropay',
         PaymentMethod::GIFTCARD => 'GiftCard',
