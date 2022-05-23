@@ -5,8 +5,8 @@ use Buckaroo\Buckaroo;
 
 $buckaroo = new Buckaroo($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
-$response = $buckaroo->pay([
-    'method' => 'ideal',
+//Also accepts json
+$response = $buckaroo->payment('ideal')->pay([
     'issuer' => 'ABNANL2A',
     'amountDebit' => 10.10
 ]);

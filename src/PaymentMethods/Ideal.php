@@ -8,7 +8,7 @@ use Buckaroo\Model\PaymentPayload;
 use Buckaroo\Model\RefundPayload;
 use Buckaroo\Model\ServiceList;
 
-class Ideal extends PaymentMethod implements PaymentInterface
+class Ideal extends PaymentMethod
 {
     public const BANK_CODE_ABN = 'ABNANL2A';
     public const BANK_CODE_ASN = 'ASNBNL21';
@@ -21,32 +21,37 @@ class Ideal extends PaymentMethod implements PaymentInterface
     public const BANK_CODE_TEST = 'BANKNL2Y';
     public const SERVICE_VERSION = 2;
 
-    public function getCode(): string
+    public function setPayServiceList(array $serviceParameters = []): self
     {
-        return PaymentMethod::IDEAL;
-    }
+        $paymentModel = new PaymentPayload($this->payload);
 
-    public function getPayServiceList(PaymentPayload $payload, array $serviceParameters = []) : ServiceList
-    {
         $parameters = array([
             'name' => 'issuer',
-            'Value' => $payload->issuer
+            'Value' => $paymentModel->issuer
         ]);
 
-        return new ServiceList(
+        $serviceList = new ServiceList(
             self::IDEAL,
             self::SERVICE_VERSION,
             'Pay',
             $parameters
         );
+
+        $this->request->getServices()->pushServiceList($serviceList);
+
+        return $this;
     }
 
-    public function getRefundServiceList(RefundPayload $payload): ServiceList
+    public function setRefundServiceList(): self
     {
-        return new ServiceList(
+        $serviceList =  new ServiceList(
             self::IDEAL,
             self::SERVICE_VERSION,
             'Refund'
         );
+
+        $this->request->getServices()->pushServiceList($serviceList);
+
+        return $this;
     }
 }

@@ -2,198 +2,98 @@
 
 namespace Buckaroo\PaymentMethods;
 
+use Buckaroo\Client;
 use Buckaroo\Model\Address;
 use Buckaroo\Model\Article;
+use Buckaroo\Model\CapturePayload;
 use Buckaroo\Model\Customer;
 use Buckaroo\Model\PaymentPayload;
 use Buckaroo\Model\RefundPayload;
 use Buckaroo\Model\ServiceList;
+use Buckaroo\Services\AfterpayParametersService;
+use Buckaroo\Services\PayloadService;
+use Buckaroo\Transaction\Request\Adapters\CapturePayloadAdapter;
+use Buckaroo\Transaction\Response\TransactionResponse;
 
-class Afterpay extends PaymentMethod implements AuthorizePaymentInterface
+class Afterpay extends PaymentMethod
 {
     public const SERVICE_VERSION = 1;
 
-    private $parameters = [];
+    private AfterpayParametersService $parametersService;
 
-    public function getCode(): string
+    public function __construct(Client $client)
     {
-        return PaymentMethod::AFTERPAY;
+        $this->parametersService = new AfterpayParametersService();
+
+        parent::__construct($client);
     }
 
-    public function getPayServiceList(PaymentPayload $payload, array $serviceParameters = []): ServiceList
+    public function authorize($payload): TransactionResponse
     {
-        $this->processArticles($serviceParameters['articles'] ?? []);
-        $this->processCustomer($serviceParameters['customer'] ?? []);
+        $this->payload = (new PayloadService($payload))->toArray();
 
-        return new ServiceList(
-            self::AFTERPAY,
-            self::SERVICE_VERSION,
-            'Pay',
-            $this->parameters
-        );
-    }
+        $this->request->setPayload($this->getPaymentPayload());
 
-    public function getAuthorizeServiceList(PaymentPayload $payload, array $serviceParameters = []): ServiceList
-    {
-        $this->processArticles($serviceParameters['articles'] ?? []);
-        $this->processCustomer($serviceParameters['customer'] ?? []);
+        $this->parametersService->processArticles($this->payload['serviceParameters']['articles'] ?? []);
+        $this->parametersService->processCustomer($this->payload['serviceParameters']['customer'] ?? []);
 
-        return new ServiceList(
+        $serviceList = new ServiceList(
             self::AFTERPAY,
             self::SERVICE_VERSION,
             'Authorize',
-            $this->parameters
+            $this->parametersService->toArray()
         );
+
+        $this->request->getServices()->pushServiceList($serviceList);
+
+        return $this->postRequest();
     }
 
-    public function getRefundServiceList(RefundPayload $payload): ServiceList
+    public function capture($payload): TransactionResponse
+    {
+        $this->payload = (new PayloadService($payload))->toArray();
+
+        $capturePayload = (new CapturePayloadAdapter(new CapturePayload($this->payload)))->getValues();
+
+        $this->request->setPayload($capturePayload);
+
+        $this->parametersService->processArticles($this->payload['serviceParameters']['articles'] ?? []);
+
+        $serviceList = new ServiceList(
+            self::AFTERPAY,
+            self::SERVICE_VERSION,
+            'Capture',
+            $this->parametersService->toArray()
+        );
+
+        $this->request->getServices()->pushServiceList($serviceList);
+
+        return $this->postRequest();
+    }
+
+    public function setPayServiceList(array $serviceParameters = [])
+    {
+        $this->parametersService->processArticles($serviceParameters['articles'] ?? []);
+        $this->parametersService->processCustomer($serviceParameters['customer'] ?? []);
+
+        $serviceList =  new ServiceList(
+            self::AFTERPAY,
+            self::SERVICE_VERSION,
+            'Pay',
+            $this->parametersService->toArray()
+        );
+
+        $this->request->getServices()->pushServiceList($serviceList);
+
+        return $this;
+    }
+
+    public function setRefundServiceList(): ServiceList
     {
         return new ServiceList(
             self::AFTERPAY,
             self::SERVICE_VERSION,
             'Refund'
         );
-    }
-
-    private function processArticles(array $articles)
-    {
-        foreach($articles as $groupKey => $article)
-        {
-            $groupKey += 1;
-
-            $article = (new Article())->setProperties($article);
-
-            $this->attachArticle($groupKey, $article);
-        }
-    }
-
-    private function attachArticle(int $groupKey, Article $article)
-    {
-        $this->parameters[] = [
-            "Name"              => "Identifier",
-            "Value"             => $article->identifier,
-            "GroupType"         => "Article",
-            "GroupID"           => $groupKey
-        ];
-
-        $this->parameters[] = [
-            "Name"              => "Description",
-            "Value"             => $article->description,
-            "GroupType"         => "Article",
-            "GroupID"           => $groupKey
-        ];
-
-        $this->parameters[] = [
-            "Name"              => "VatPercentage",
-            "Value"             => $article->vatPercentage,
-            "GroupType"         => "Article",
-            "GroupID"           => $groupKey
-        ];
-
-        $this->parameters[] = [
-            "Name"              => "Quantity",
-            "Value"             => $article->quantity,
-            "GroupType"         => "Article",
-            "GroupID"           => $groupKey
-        ];
-
-        $this->parameters[] = [
-            "Name"              => "GrossUnitPrice",
-            "Value"             => $article->grossUnitPrice,
-            "GroupType"         => "Article",
-            "GroupID"           => $groupKey
-        ];
-    }
-
-    private function processCustomer(array $customer)
-    {
-        if($customer)
-        {
-            $customer = (new Customer())->setProperties($customer);
-
-            $this->attachCustomerAddress('BillingCustomer', $customer->billing);
-            $this->attachCustomerAddress('ShippingCustomer', $customer->shipping);
-        }
-    }
-
-    private function attachCustomerAddress(string $groupType, Address $address)
-    {
-        $this->parameters[] = [
-            "Name"              => "Category",
-            "Value"             => "Person",
-            "GroupType"         => $groupType
-        ];
-
-        $this->parameters[] = [
-            "Name"              => "FirstName",
-            "Value"             => $address->firstName,
-            "GroupType"         => $groupType
-        ];
-
-        $this->parameters[] = [
-            "Name"              => "LastName",
-            "Value"             => $address->lastName,
-            "GroupType"         => $groupType
-        ];
-
-        $this->parameters[] = [
-            "Name"              => "Email",
-            "Value"             => $address->email,
-            "GroupType"         => $groupType
-        ];
-
-        $this->parameters[] = [
-            "Name"              => "Phone",
-            "Value"             => $address->phone,
-            "GroupType"         => $groupType
-        ];
-
-        $this->parameters[] = [
-            "Name"              => "Street",
-            "Value"             => $address->street,
-            "GroupType"         => $groupType
-        ];
-
-        $this->parameters[] = [
-            "Name"              => "StreetNumber",
-            "Value"             => $address->streetNumber,
-            "GroupType"         => $groupType
-        ];
-
-        $this->parameters[] = [
-            "Name"              => "StreetNumberAdditional",
-            "Value"             => $address->streetNumber,
-            "GroupType"         => $groupType
-        ];
-
-        $this->parameters[] = [
-            "Name"              => "PostalCode",
-            "Value"             => $address->postalCode,
-            "GroupType"         => $groupType
-        ];
-
-        $this->parameters[] = [
-            "Name"              => "City",
-            "Value"             => $address->city,
-            "GroupType"         => $groupType
-        ];
-
-        $this->parameters[] = [
-            "Name"              => "Country",
-            "Value"             => $address->country,
-            "GroupType"         => $groupType
-        ];
-
-        $this->parameters[] = [
-            "Name"              => "Salutation",
-            "Value"             => $address->salutation,
-            "GroupType"         => $groupType
-        ];
-
-        $this->parameters[] = [
-            "Name"              => "BirthDate",
-            "Value"             => $address->birthDate,
-            "GroupType"         => $groupType
-        ];
     }
 }

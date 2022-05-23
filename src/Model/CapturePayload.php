@@ -2,14 +2,12 @@
 
 namespace Buckaroo\Model;
 
-class RefundPayload extends Payload
+class CapturePayload extends Payload
 {
-    protected
+    protected $originalTransactionKey,
         $currency,
-        $amountCredit,
-        $invoice,
-        $pushURL,
-        $originalTransactionKey;
+        $amountDebit,
+        $invoice;
 
     public function __construct(?array $payload)
     {

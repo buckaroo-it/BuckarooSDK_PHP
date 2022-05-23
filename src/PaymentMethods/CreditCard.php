@@ -12,11 +12,6 @@ class CreditCard extends PaymentMethod
 {
     public const SERVICE_VERSION = 2;
 
-    public function getCode(): string
-    {
-        return '';
-    }
-
     public static function getCards(): array
     {
         return [
@@ -25,21 +20,25 @@ class CreditCard extends PaymentMethod
         ];
     }
 
-    public function getPayServiceList(PaymentPayload $payload, array $serviceParameters = []): ServiceList
+    public function setPayServiceList(array $serviceParameters = []): self
     {
-        return new ServiceList(
+        new ServiceList(
             'CreditCard',
             self::SERVICE_VERSION,
             'Pay'
         );
+
+        return $this;
     }
 
-    public function getRefundServiceList(RefundPayload $payload): ServiceList
+    public function setRefundServiceList(): self
     {
-        return new ServiceList(
+        new ServiceList(
             'CreditCard',
             self::SERVICE_VERSION,
             'Refund'
         );
+
+        return $this;
     }
 }

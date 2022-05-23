@@ -21,11 +21,7 @@
 
 namespace Buckaroo;
 
-use Buckaroo\Transaction\AuthorizeTransaction;
-use Buckaroo\Transaction\CaptureTransaction;
-use Buckaroo\Transaction\PayTransaction;
-use Buckaroo\Transaction\RefundTransaction;
-use Buckaroo\Transaction\Response\TransactionResponse;
+use Buckaroo\PaymentMethods\PaymentMethodFactory;
 
 class Buckaroo
 {   
@@ -53,31 +49,8 @@ class Buckaroo
         return $this;
     }
 
-    public function pay(array $payload) : TransactionResponse
+    public function payment(string $method)
     {
-        $transaction = new PayTransaction($this->client, $payload);
-
-        return $transaction->handle();
-    }
-
-    public function authorize($payload) : TransactionResponse
-    {
-        $transaction = new AuthorizeTransaction($this->client, $payload);
-
-        return $transaction->handle();
-    }
-
-    public function capture($payload) : TransactionResponse
-    {
-        $transaction = new CaptureTransaction($this->client, $payload);
-
-        return $transaction->handle();
-    }
-
-    public function refund($payload) : TransactionResponse
-    {
-        $transaction = new RefundTransaction($this->client, $payload);
-
-        return $transaction->handle();
+        return PaymentMethodFactory::get($this->client, $method);
     }
 }
