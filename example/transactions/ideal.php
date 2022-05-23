@@ -1,28 +1,18 @@
-<?php 
-require_once (__DIR__ . '/../includes/init.php');
-
+<?php
 use Buckaroo\Buckaroo;
 
 $buckaroo = new Buckaroo($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
 //Also accepts json
-$response = $buckaroo->payment('ideal')->pay([
+//Pay
+$response = $buckaroo->payment('idealprocessing')->pay([
     'issuer' => 'ABNANL2A',
     'amountDebit' => 10.10
 ]);
 
-
-//$payload = ['method' => 'ideal',
-//            'issuer' => 'ABNANL2A',
-//            'amountDebit' => 10.10
-//           ];
-//
-//$payload = json_encode($payload); //Payload can be also json
-//
-//try {
-//    $buckaroo = new Buckaroo($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
-//    $response = $buckaroo->pay($payload);
-//    $app->handleResponse($response);
-//} catch (\Exception $e) {
-//    $app->handleException($e);
-//}
+//Refund
+$response = $buckaroo->payment('ideal')->refund([
+    'invoice'   => '', //Set invoice number of the transaction to refund
+    'originalTransactionKey' => '', //Set transaction key of the transaction to refund
+    'amountCredit' => 10.10
+]);
