@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Buckaroo\PaymentMethods;
 
 use Buckaroo\Model\PaymentPayload;
-use Buckaroo\Model\RefundPayload;
 use Buckaroo\Model\ServiceList;
 
 class Ideal extends PaymentMethod

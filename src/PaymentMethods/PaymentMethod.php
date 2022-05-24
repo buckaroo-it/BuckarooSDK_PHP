@@ -3,6 +3,7 @@
 namespace Buckaroo\PaymentMethods;
 
 use Buckaroo\Client;
+use Buckaroo\Handlers\Reply\ReplyHandler;
 use Buckaroo\Model\PaymentPayload;
 use Buckaroo\Model\RefundPayload;
 use Buckaroo\Services\PayloadService;
@@ -22,6 +23,7 @@ abstract class PaymentMethod implements PaymentInterface
     protected array $payload;
 
     public const AFTERPAY = 'afterpay';
+    public const AFTERPAYDIGIACCEPT = 'afterpaydigiaccept';
     public const KLARNAKP = 'klarnakp';
     public const KLARNA = 'klarna';
     public const SEPA = 'sepadirectdebit';
@@ -32,6 +34,7 @@ abstract class PaymentMethod implements PaymentInterface
     public const PAYCONIQ = 'payconiq';
     public const P24 = 'przelewy24';
     public const IDEAL = 'ideal';
+    public const IDEALPROCESSING = 'idealprocessing';
     public const CAPAYABLE = 'capayable';
     public const GIROPAY = 'giropay';
     public const GIFTCARD = 'giftcard';
@@ -95,36 +98,8 @@ abstract class PaymentMethod implements PaymentInterface
         );
     }
 
-//    public function authorize(TransactionRequest $request): TransactionResponse
-//    {
-//        return $this->client->post(
-//            $request,
-//            'Buckaroo\Transaction\Response\TransactionResponse'
-//        );
-//    }
-//
-//    public function capture(TransactionRequest $request): TransactionResponse
-//    {
-//        return $this->client->post(
-//            $request,
-//            'Buckaroo\Transaction\Response\TransactionResponse'
-//        );
-//    }
-
-//    protected function validatePayRequest(TransactionRequest $request): self
-//    {
-//        if (!$request->getMethod()) {
-//            $this->throwError(__METHOD__, "Empty method name");
-//        }
-//
-//        if (!$request->getAmountDebit()) {
-//            $this->throwError(__METHOD__, "Empty amount");
-//        }
-//
-//        if (!$request->getInvoice()) {
-//            $this->throwError(__METHOD__, "Empty invoice");
-//        }
-//
-//        return $this;
-//    }
+    public function handleReply(array $data): ReplyHandler
+    {
+        return new ReplyHandler($this->client->config, $data);
+    }
 }
