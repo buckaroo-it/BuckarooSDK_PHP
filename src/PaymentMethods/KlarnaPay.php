@@ -38,6 +38,14 @@ class KlarnaPay extends PaymentMethod
 
     public function setRefundServiceList()
     {
-        // TODO: Implement setRefundServiceList() method.
+        $serviceList =  new ServiceList(
+            self::KLARNA,
+            self::SERVICE_VERSION,
+            'Refund'
+        );
+
+        $this->request->getServices()->pushServiceList($serviceList);
+
+        return $this;
     }
 }
