@@ -3,7 +3,7 @@
 namespace Buckaroo\PaymentMethods;
 
 use Buckaroo\Client;
-use Buckaroo\Handlers\Push\PushHandler;
+use Buckaroo\Handlers\Reply\ReplyHandler;
 use Buckaroo\Model\PaymentPayload;
 use Buckaroo\Model\RefundPayload;
 use Buckaroo\Services\PayloadService;
@@ -98,8 +98,8 @@ abstract class PaymentMethod implements PaymentInterface
         );
     }
 
-    public function handlePush(array $data): PushHandler
+    public function handleReply(array $data): ReplyHandler
     {
-        return new PushHandler($this->client->config, $data);
+        return new ReplyHandler($this->client->config, $data);
     }
 }

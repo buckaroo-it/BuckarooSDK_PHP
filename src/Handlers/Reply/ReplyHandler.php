@@ -1,10 +1,10 @@
 <?php
 
-namespace Buckaroo\Handlers\Push;
+namespace Buckaroo\Handlers\Reply;
 
 use Buckaroo\Config;
 
-class PushHandler
+class ReplyHandler
 {
     private Config $config;
     private array $data;

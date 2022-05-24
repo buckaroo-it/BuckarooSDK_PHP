@@ -30,9 +30,8 @@ $pushReponse = [
 
 $buckaroo = new Buckaroo($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
-$pushHandler = $buckaroo->payment($pushReponse['brq_payment_method'])->handlePush($pushReponse);
-$pushHandler->validate();
+$replyHandler = $buckaroo->payment($pushReponse['brq_payment_method'])->handleReply($pushReponse);
+$replyHandler->validate();
 
-$pushHandler->isValid();
-
+$replyHandler->isValid();
 
