@@ -1,22 +1,12 @@
-<phpunit bootstrap="../vendor/autoload.php" colors="true">
+<phpunit bootstrap="./vendor/autoload.php" colors="true">
     <testsuites>
         <testsuite name="BuckarooSDK">
-            <directory>src/Tests</directory>
+            <directory>src/Tests/</directory>
         </testsuite>
     </testsuites>
+
     <php>
         <ini name="display_errors" value="stderr"/>
         <ini name="error_log" value="/dev/null"/>
-
-        <env name="BPE_WEBSITE" value="SDKDevelopment.com" force="true" />
-        <env name="BPE_WEBSITE_KEY" value="xxx" force="true" />
-        <env name="BPE_SECRET_KEY" value="xxx" force="true" />
-        <env name="BPE_MODE" value="test" force="true" />
-        <env name="BPE_DEBUG" value="true" force="true" />
-        <env name="BPE_EXAMPLE_BASE_URL" value="http://sdk.local/buckaroo/" force="true" />
-        <env name="BPE_EXAMPLE_RETURN_URL" value="https://example.com/buckaroo/return" force="true" />
-        <env name="BPE_EXAMPLE_PUSH_URL" value="https://example.com/buckaroo/push" force="true" />
-        <env name="BPE_EXAMPLE_IP" value="36.225.60.99" force="true" />
-        <env name="BPE_EXAMPLE_CURRENCY_CODE" value="EUR" force="true" />
     </php>
 </phpunit>

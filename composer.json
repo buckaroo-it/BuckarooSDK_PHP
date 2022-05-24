@@ -1,7 +1,7 @@
 {
     "name": "buckaroo/sdk",
     "description": "Buckaroo payment SDK",
-    "version": "0.0.2",
+    "version": "1.0.0",
     "type": "library",
     "require": {
         "php": ">=7.4|^8.0",
