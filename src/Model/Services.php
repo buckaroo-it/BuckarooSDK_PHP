@@ -6,7 +6,7 @@ class Services extends Model
 {
     protected array $ServiceList = [];
 
-    public function getServiceList(): array
+    public function serviceList(): array
     {
         return $this->ServiceList;
     }

@@ -36,9 +36,9 @@ class IdealTest extends BuckarooTestCase
     /**
      * @test
      */
-    public function it_creates_a_ideal_refund()
-    {
-        $response = $this->buckaroo->payment('ideal')->refund($this->refundPayload);
-        $this->assertTrue($response->isSuccess());
-    }
+//    public function it_creates_a_ideal_refund()
+//    {
+//        $response = $this->buckaroo->payment('ideal')->refund($this->refundPayload);
+//        $this->assertTrue($response->isSuccess());
+//    }
 }
