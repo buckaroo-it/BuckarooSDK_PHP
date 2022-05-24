@@ -4,14 +4,12 @@ namespace Buckaroo\PaymentMethods;
 
 use Buckaroo\Client;
 use Buckaroo\Exceptions\SdkException;
-use Buckaroo\Model\Config;
-use Buckaroo\Model\RequestValidator;
-use Buckaroo\Model\ServiceParam;
 
 class PaymentMethodFactory
 {
     private static array $classes = [
         PaymentMethod::AFTERPAY => 'Afterpay',
+        PaymentMethod::AFTERPAYDIGIACCEPT => 'Afterpay',
         PaymentMethod::KLARNAKP => 'Klarna',
         PaymentMethod::KLARNA => 'KlarnaPay',
         PaymentMethod::SEPA => 'Sepa',

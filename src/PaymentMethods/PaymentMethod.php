@@ -3,6 +3,7 @@
 namespace Buckaroo\PaymentMethods;
 
 use Buckaroo\Client;
+use Buckaroo\Handlers\Reply\ReplyHandler;
 use Buckaroo\Model\PaymentPayload;
 use Buckaroo\Model\RefundPayload;
 use Buckaroo\Services\PayloadService;
@@ -22,6 +23,7 @@ abstract class PaymentMethod implements PaymentInterface
     protected array $payload;
 
     public const AFTERPAY = 'afterpay';
+    public const AFTERPAYDIGIACCEPT = 'afterpaydigiaccept';
     public const KLARNAKP = 'klarnakp';
     public const KLARNA = 'klarna';
     public const SEPA = 'sepadirectdebit';
@@ -94,5 +96,10 @@ abstract class PaymentMethod implements PaymentInterface
             $this->request,
             TransactionResponse::class
         );
+    }
+
+    public function handleReply(array $data): ReplyHandler
+    {
+        return new ReplyHandler($this->client->config, $data);
     }
 }
