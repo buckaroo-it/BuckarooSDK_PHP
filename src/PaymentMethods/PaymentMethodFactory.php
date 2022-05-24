@@ -31,6 +31,7 @@ class PaymentMethodFactory
         PaymentMethod::WECHATPAY => 'WeChatPay',
         PaymentMethod::BILLINK => 'Billink',
         PaymentMethod::BELFIUS => 'Belfius',
+        PaymentMethod::BANCONTACT => 'Bancontact',
     ];
 
     private Client $client;

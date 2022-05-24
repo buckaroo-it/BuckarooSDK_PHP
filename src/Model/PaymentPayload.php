@@ -14,6 +14,10 @@ class PaymentPayload extends Payload
         $pushURL,
         $amountDebit,
         $issuer,
+        $bic,
+        $customerAccountName,
+        $customerBic,
+        $customerIban,
         $method,
         $serviceVersion,
         $serviceAction;
