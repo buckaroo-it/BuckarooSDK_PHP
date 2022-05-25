@@ -8,29 +8,13 @@ class Paypal extends PaymentMethod
 {
     public const SERVICE_VERSION = 0;
 
-    public function setPayServiceList(array $serviceParameters = [])
+    public function paymentName(): string
     {
-        $serviceList =  new ServiceList(
-            self::PAYPAL,
-            self::SERVICE_VERSION,
-            'Pay'
-        );
-
-        $this->request->getServices()->pushServiceList($serviceList);
-
-        return $this;
+        return self::PAYPAL;
     }
 
-    public function setRefundServiceList()
+    public function serviceVersion(): int
     {
-        $serviceList =  new ServiceList(
-            self::PAYPAL,
-            self::SERVICE_VERSION,
-            'Refund'
-        );
-
-        $this->request->getServices()->pushServiceList($serviceList);
-
-        return $this;
+        return self::SERVICE_VERSION;
     }
 }

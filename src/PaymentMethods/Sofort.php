@@ -12,11 +12,6 @@ class Sofort extends PaymentMethod
 {
     public const SERVICE_VERSION = 1;
 
-    public function getCode(): string
-    {
-        return PaymentMethod::SOFORT;
-    }
-
     public function setPayServiceList(array $serviceParameters = []): self
     {
         $paymentModel = new PaymentPayload($this->payload);
@@ -43,5 +38,15 @@ class Sofort extends PaymentMethod
         $this->request->getServices()->pushServiceList($serviceList);
 
         return $this;
+    }
+
+    public function paymentName(): string
+    {
+        return self::SOFORT;
+    }
+
+    public function serviceVersion(): int
+    {
+        return self::SERVICE_VERSION;
     }
 }

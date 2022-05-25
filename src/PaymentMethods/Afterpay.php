@@ -88,12 +88,13 @@ class Afterpay extends PaymentMethod
         return $this;
     }
 
-    public function setRefundServiceList(): ServiceList
+    public function paymentName(): string
     {
-        return new ServiceList(
-            self::AFTERPAY,
-            self::SERVICE_VERSION,
-            'Refund'
-        );
+        return self::AFTERPAY;
+    }
+
+    public function serviceVersion(): int
+    {
+        return self::SERVICE_VERSION;
     }
 }

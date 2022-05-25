@@ -14,6 +14,9 @@ interface PaymentInterface
     public function pay($request) : TransactionResponse;
     public function refund($request) : TransactionResponse;
 
+    public function paymentName(): string;
+    public function serviceVersion(): int;
+
     public function setPayServiceList(array $serviceParameters = []);
     public function setRefundServiceList();
 
