@@ -6,6 +6,7 @@ use Buckaroo\Client;
 use Buckaroo\Handlers\Reply\ReplyHandler;
 use Buckaroo\Model\PaymentPayload;
 use Buckaroo\Model\RefundPayload;
+use Buckaroo\Model\ServiceList;
 use Buckaroo\Services\PayloadService;
 use Buckaroo\Transaction\Request\Adapters\PaymentPayloadAdapter;
 use Buckaroo\Transaction\Request\Adapters\RefundPayloadAdapter;
@@ -79,6 +80,32 @@ abstract class PaymentMethod implements PaymentInterface
         $this->setRefundServiceList();
 
         return $this->postRequest();
+    }
+
+    public function setPayServiceList(array $serviceParameters = [])
+    {
+        $serviceList =  new ServiceList(
+            $this->paymentName(),
+            $this->serviceVersion(),
+            'Pay'
+        );
+
+        $this->request->getServices()->pushServiceList($serviceList);
+
+        return $this;
+    }
+
+    public function setRefundServiceList()
+    {
+        $serviceList =  new ServiceList(
+            $this->paymentName(),
+            $this->serviceVersion(),
+            'Refund'
+        );
+
+        $this->request->getServices()->pushServiceList($serviceList);
+
+        return $this;
     }
 
     public function getPaymentPayload(): array

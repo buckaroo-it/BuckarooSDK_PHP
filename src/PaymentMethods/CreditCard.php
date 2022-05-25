@@ -1,12 +1,5 @@
 <?php
-
-declare(strict_types=1);
-
 namespace Buckaroo\PaymentMethods;
-
-use Buckaroo\Model\PaymentPayload;
-use Buckaroo\Model\RefundPayload;
-use Buckaroo\Model\ServiceList;
 
 class CreditCard extends PaymentMethod
 {
@@ -20,25 +13,13 @@ class CreditCard extends PaymentMethod
         ];
     }
 
-    public function setPayServiceList(array $serviceParameters = []): self
+    public function paymentName(): string
     {
-        new ServiceList(
-            'CreditCard',
-            self::SERVICE_VERSION,
-            'Pay'
-        );
-
-        return $this;
+        return '';
     }
 
-    public function setRefundServiceList(): self
+    public function serviceVersion(): int
     {
-        new ServiceList(
-            'CreditCard',
-            self::SERVICE_VERSION,
-            'Refund'
-        );
-
-        return $this;
+        return self::SERVICE_VERSION;
     }
 }

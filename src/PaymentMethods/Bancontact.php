@@ -12,36 +12,13 @@ class Bancontact extends PaymentMethod
 {
     public const SERVICE_VERSION = 1;
 
-    public function getCode(): string
+    public function paymentName(): string
     {
-        return PaymentMethod::BANCONTACT;
+        return self::BANCONTACT;
     }
 
-    public function setPayServiceList(array $serviceParameters = []): self
+    public function serviceVersion(): int
     {
-        $paymentModel = new PaymentPayload($this->payload);
-
-        $serviceList = new ServiceList(
-            self::BANCONTACT,
-            self::SERVICE_VERSION,
-            'Pay'
-        );
-
-        $this->request->getServices()->pushServiceList($serviceList);
-
-        return $this;
-    }
-
-    public function setRefundServiceList(): self
-    {
-        $serviceList =  new ServiceList(
-            self::BANCONTACT,
-            self::SERVICE_VERSION,
-            'Refund'
-        );
-
-        $this->request->getServices()->pushServiceList($serviceList);
-
-        return $this;
+        return self::SERVICE_VERSION;
     }
 }

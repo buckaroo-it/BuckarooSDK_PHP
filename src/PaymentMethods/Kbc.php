@@ -12,36 +12,13 @@ class Kbc extends PaymentMethod
 {
     public const SERVICE_VERSION = 1;
 
-    public function getCode(): string
+    public function paymentName(): string
     {
-        return PaymentMethod::KBC;
+        return self::KBC;
     }
 
-    public function setPayServiceList(array $serviceParameters = []): self
+    public function serviceVersion(): int
     {
-        $paymentModel = new PaymentPayload($this->payload);
-
-        $serviceList = new ServiceList(
-            self::KBC,
-            self::SERVICE_VERSION,
-            'Pay'
-        );
-
-        $this->request->getServices()->pushServiceList($serviceList);
-
-        return $this;
-    }
-
-    public function setRefundServiceList(): self
-    {
-        $serviceList =  new ServiceList(
-            self::KBC,
-            self::SERVICE_VERSION,
-            'Refund'
-        );
-
-        $this->request->getServices()->pushServiceList($serviceList);
-
-        return $this;
+        return self::SERVICE_VERSION;
     }
 }

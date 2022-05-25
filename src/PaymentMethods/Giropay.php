@@ -32,16 +32,13 @@ class Giropay extends PaymentMethod
         return $this;
     }
 
-    public function setRefundServiceList(): self
+    public function paymentName(): string
     {
-        $serviceList =  new ServiceList(
-            self::GIROPAY,
-            self::SERVICE_VERSION,
-            'Refund'
-        );
+        return self::GIROPAY;
+    }
 
-        $this->request->getServices()->pushServiceList($serviceList);
-
-        return $this;
+    public function serviceVersion(): int
+    {
+        return self::SERVICE_VERSION;
     }
 }

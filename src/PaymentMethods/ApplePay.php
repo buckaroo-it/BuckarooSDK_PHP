@@ -1,27 +1,29 @@
 <?php
 
-declare(strict_types=1);
-
 namespace Buckaroo\PaymentMethods;
 
 use Buckaroo\Model\PaymentPayload;
 use Buckaroo\Model\ServiceList;
 
-class Ideal extends PaymentMethod
+class ApplePay extends PaymentMethod
 {
-    public const SERVICE_VERSION = 2;
+    public const SERVICE_VERSION = 0;
 
     public function setPayServiceList(array $serviceParameters = []): self
     {
         $paymentModel = new PaymentPayload($this->payload);
 
         $parameters = array([
-            'name' => 'issuer',
-            'Value' => $paymentModel->issuer
+            'name' => 'PaymentData',
+            'Value' => $paymentModel->paymentData
+        ],
+        [
+            'name' => 'CustomerCardName',
+            'Value' => $paymentModel->customerCardName
         ]);
 
         $serviceList = new ServiceList(
-            self::IDEAL,
+            self::APPLEPAY,
             self::SERVICE_VERSION,
             'Pay',
             $parameters
@@ -34,7 +36,7 @@ class Ideal extends PaymentMethod
 
     public function paymentName(): string
     {
-        return self::IDEAL;
+        return self::APPLEPAY;
     }
 
     public function serviceVersion(): int

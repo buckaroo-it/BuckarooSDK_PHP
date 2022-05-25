@@ -13,6 +13,11 @@ class TransactionResponse extends Response
         return $this->getStatusCode() == ResponseStatus::BUCKAROO_STATUSCODE_SUCCESS;
     }
 
+    public function isFailed(): bool
+    {
+        return $this->getStatusCode() == ResponseStatus::BUCKAROO_STATUSCODE_FAILED;
+    }
+
     public function isCanceled(): bool
     {
         return $this->getStatusCode() == ResponseStatus::BUCKAROO_STATUSCODE_CANCELLED_BY_USER
