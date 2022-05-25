@@ -45,6 +45,7 @@ abstract class PaymentMethod implements PaymentInterface
     public const WECHATPAY = 'wechatpay';
     public const BILLINK = 'billink';
     public const BELFIUS = 'belfius';
+    public const BANCONTACT = 'bancontactmrcash';
 
     public function __construct(
         Client $client
