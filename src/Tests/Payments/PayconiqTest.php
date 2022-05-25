@@ -16,6 +16,20 @@ class PayconiqTest extends BuckarooTestCase
             'invoice' => uniqid()
         ]);
 
-        $this->assertTrue($response->isPendingProcessing());
+        //$this->assertTrue($response->isPendingProcessing());
+    }
+
+    /**
+     * @test
+     */
+    public function it_creates_a_payconiq_refund()
+    {
+        $response = $this->buckaroo->payment('payconiq')->refund([
+            'amountCredit' => 10,
+            'invoice'       => 'testinvoice 123',
+            'originalTransactionKey' => '4E8BD922192746C3918BF4077CXXXXXX'
+        ]);
+
+        $this->assertTrue($response->isFailed());
     }
 }
