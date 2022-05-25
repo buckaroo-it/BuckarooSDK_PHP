@@ -68,11 +68,32 @@ class ArticleParameters implements ServiceListParameter
             "GroupID"           => $groupKey
         ]);
 
-        $this->serviceList->appendParameter([
-            "Name"              => "GrossUnitPrice",
-            "Value"             => $article->grossUnitPrice,
-            "GroupType"         => "Article",
-            "GroupID"           => $groupKey
-        ]);
+        if($article->grossUnitPrice) {
+            $this->serviceList->appendParameter([
+                "Name"              => "GrossUnitPrice",
+                "Value"             => $article->grossUnitPrice,
+                "GroupType"         => "Article",
+                "GroupID"           => $groupKey
+            ]);
+        }
+
+        if($article->grossUnitPriceIncl) {
+            $this->serviceList->appendParameter([
+                "Name"              => "GrossUnitPriceIncl",
+                "Value"             => $article->grossUnitPriceIncl,
+                "GroupType"         => "Article",
+                "GroupID"           => $groupKey
+            ]);
+        }
+
+        if($article->grossUnitPriceExcl) {
+            $this->serviceList->appendParameter([
+                "Name"              => "GrossUnitPriceExcl",
+                "Value"             => $article->grossUnitPriceExcl,
+                "GroupType"         => "Article",
+                "GroupID"           => $groupKey
+            ]);
+        }
+
     }
 }

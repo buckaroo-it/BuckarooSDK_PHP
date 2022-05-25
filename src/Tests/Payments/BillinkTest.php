@@ -19,6 +19,16 @@ class BillinkTest extends BuckarooTestCase
     /**
      * @test
      */
+    public function it_creates_a_billink_authorize()
+    {
+        $response = $this->buckaroo->payment('billink')->authorize($this->getAuthorizePayload());
+        dd($response);
+        $this->assertTrue($response->isSuccess());
+    }
+
+    /**
+     * @test
+     */
     public function it_creates_a_billink_refund()
     {
         $response = $this->buckaroo->payment('billink')->refund([
@@ -73,6 +83,63 @@ class BillinkTest extends BuckarooTestCase
                         'lastName' => 'Aflever',
                         'email' => 'billingcustomer@buckaroo.nl',
                         'phone' => '0109876543',
+                        'street' => 'Hoofdstraat',
+                        'streetNumber' => '80',
+                        'streetNumberAdditional' => 'A',
+                        'postalCode' => '8441EE',
+                        'city' => 'Heerenveen',
+                        'country' => 'NL',
+                        'salutation' => 'Mr',
+                        'birthDate' => '01-01-1990'
+                    ]
+                ]
+            ]
+        ];
+    }
+
+    private function getAuthorizePayload(): array {
+        return [
+            'amountDebit'       => 50.30,
+            'order'             => uniqid(),
+            'invoice'           => uniqid(),
+            'serviceParameters' => [
+                'articles'      => [
+                    [
+                        'identifier' => 'Articlenumber1',
+                        'description' => 'Blue Toy Car',
+                        'vatPercentage' => '21',
+                        'quantity' => '2',
+                        'grossUnitPriceIncl' => '20.10',
+                        'grossUnitPriceExcl' => '15'
+                    ],
+                    [
+                        'identifier' => 'Articlenumber2',
+                        'description' => 'Red Toy Car',
+                        'vatPercentage' => '21',
+                        'quantity' => '1',
+                        'grossUnitPriceIncl' => '10.10',
+                        'grossUnitPriceExcl' => '5'
+                    ],
+                ],
+                'customer'      => [
+                    'useBillingInfoForShipping' => false,
+                    'billing'                   => [
+                        'firstName' => 'Test',
+                        'lastName' => 'Acceptatie',
+                        'email' => 'billingcustomer@buckaroo.nl',
+                        'street' => 'Hoofdstraat',
+                        'streetNumber' => '80',
+                        'streetNumberAdditional' => 'A',
+                        'postalCode' => '8441EE',
+                        'city' => 'Heerenveen',
+                        'country' => 'NL',
+                        'salutation' => 'Mr',
+                        'birthDate' => '01-01-1990'
+                    ],
+                    'shipping'                  => [
+                        'firstName' => 'Test',
+                        'lastName' => 'Aflever',
+                        'email' => 'billingcustomer@buckaroo.nl',
                         'street' => 'Hoofdstraat',
                         'streetNumber' => '80',
                         'streetNumberAdditional' => 'A',

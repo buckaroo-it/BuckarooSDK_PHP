@@ -61,11 +61,13 @@ class CustomerParameters implements ServiceListParameter
             "GroupType"         => $groupType
         ]);
 
-        $this->serviceList->appendParameter([
-            "Name"              => "Phone",
-            "Value"             => $address->phone,
-            "GroupType"         => $groupType
-        ]);
+        if($address->phone) {
+            $this->serviceList->appendParameter([
+                "Name"              => "Phone",
+                "Value"             => $address->phone,
+                "GroupType"         => $groupType
+            ]);
+        }
 
         $this->serviceList->appendParameter([
             "Name"              => "Street",

@@ -34,8 +34,8 @@ class Afterpay extends PaymentMethod
         );
 
         $parametersService = new DefaultParameters($serviceList);
-        $parametersService = new ArticleParameters($parametersService, $serviceParameters['articles'] ?? []);
-        $parametersService = new CustomerParameters($parametersService, $serviceParameters['customer'] ?? []);
+        $parametersService = new ArticleParameters($parametersService, $this->payload['articles'] ?? []);
+        $parametersService = new CustomerParameters($parametersService, $this->payload['customer'] ?? []);
         $parametersService->data();
 
         $this->request->getServices()->pushServiceList($serviceList);
