@@ -1,0 +1,40 @@
+<?php
+
+namespace Buckaroo\PaymentMethods;
+
+use Buckaroo\Model\ServiceList;
+use Buckaroo\Services\ServiceListParameters\ArticleParameters;
+use Buckaroo\Services\ServiceListParameters\CustomerParameters;
+use Buckaroo\Services\ServiceListParameters\DefaultParameters;
+
+class Billink extends PaymentMethod
+{
+    public const SERVICE_VERSION = 0;
+
+    public function setPayServiceList(array $serviceParameters = [])
+    {
+        $serviceList =  new ServiceList(
+            self::AFTERPAY,
+            self::SERVICE_VERSION,
+            'Pay'
+        );
+
+        $parametersService = new DefaultParameters($serviceList);
+        $parametersService = new ArticleParameters($parametersService, $serviceParameters['articles'] ?? []);
+        $parametersService = new CustomerParameters($parametersService, $serviceParameters['customer'] ?? []);
+        $parametersService->data();
+
+        $this->request->getServices()->pushServiceList($serviceList);
+
+        return $this;
+    }
+    public function paymentName(): string
+    {
+        return self::BILLINK;
+    }
+
+    public function serviceVersion(): int
+    {
+        return self::SERVICE_VERSION;
+    }
+}
