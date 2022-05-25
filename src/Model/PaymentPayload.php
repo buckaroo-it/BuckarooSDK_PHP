@@ -20,7 +20,9 @@ class PaymentPayload extends Payload
         $customerIban,
         $method,
         $serviceVersion,
-        $serviceAction;
+        $serviceAction,
+        $paymentData,
+        $customerCardName;
 
     public function __construct(?array $payload)
     {
