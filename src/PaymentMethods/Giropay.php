@@ -21,8 +21,8 @@ class Giropay extends PaymentMethod
         ]);
 
         $serviceList = new ServiceList(
-            self::GIROPAY,
-            self::SERVICE_VERSION,
+            $this->paymentName(),
+            $this->serviceVersion(),
             'Pay',
             $parameters
         );
