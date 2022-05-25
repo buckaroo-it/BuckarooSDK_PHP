@@ -12,6 +12,9 @@ use Buckaroo\Model\RefundPayload;
 use Buckaroo\Model\ServiceList;
 use Buckaroo\Services\AfterpayParametersService;
 use Buckaroo\Services\PayloadService;
+use Buckaroo\Services\ServiceListParameters\ArticleParameters;
+use Buckaroo\Services\ServiceListParameters\CustomerParameters;
+use Buckaroo\Services\ServiceListParameters\DefaultParameters;
 use Buckaroo\Transaction\Request\Adapters\CapturePayloadAdapter;
 use Buckaroo\Transaction\Response\TransactionResponse;
 
@@ -19,30 +22,21 @@ class Afterpay extends PaymentMethod
 {
     public const SERVICE_VERSION = 1;
 
-    private AfterpayParametersService $parametersService;
-
-    public function __construct(Client $client)
-    {
-        $this->parametersService = new AfterpayParametersService();
-
-        parent::__construct($client);
-    }
-
     public function authorize($payload): TransactionResponse
     {
         $this->payload = (new PayloadService($payload))->toArray();
-
         $this->request->setPayload($this->getPaymentPayload());
-
-        $this->parametersService->processArticles($this->payload['serviceParameters']['articles'] ?? []);
-        $this->parametersService->processCustomer($this->payload['serviceParameters']['customer'] ?? []);
 
         $serviceList = new ServiceList(
             self::AFTERPAY,
             self::SERVICE_VERSION,
-            'Authorize',
-            $this->parametersService->toArray()
+            'Authorize'
         );
+
+        $parametersService = new DefaultParameters($serviceList);
+        $parametersService = new ArticleParameters($parametersService, $serviceParameters['articles'] ?? []);
+        $parametersService = new CustomerParameters($parametersService, $serviceParameters['customer'] ?? []);
+        $parametersService->data();
 
         $this->request->getServices()->pushServiceList($serviceList);
 
@@ -57,14 +51,14 @@ class Afterpay extends PaymentMethod
 
         $this->request->setPayload($capturePayload);
 
-        $this->parametersService->processArticles($this->payload['serviceParameters']['articles'] ?? []);
-
         $serviceList = new ServiceList(
             self::AFTERPAY,
             self::SERVICE_VERSION,
-            'Capture',
-            $this->parametersService->toArray()
+            'Capture'
         );
+
+        $parametersService = new DefaultParameters($serviceList);
+        $parametersService = new ArticleParameters($parametersService, $serviceParameters['articles'] ?? []);
 
         $this->request->getServices()->pushServiceList($serviceList);
 
@@ -73,15 +67,16 @@ class Afterpay extends PaymentMethod
 
     public function setPayServiceList(array $serviceParameters = [])
     {
-        $this->parametersService->processArticles($serviceParameters['articles'] ?? []);
-        $this->parametersService->processCustomer($serviceParameters['customer'] ?? []);
-
         $serviceList =  new ServiceList(
             self::AFTERPAY,
             self::SERVICE_VERSION,
-            'Pay',
-            $this->parametersService->toArray()
+            'Pay'
         );
+
+        $parametersService = new DefaultParameters($serviceList);
+        $parametersService = new ArticleParameters($parametersService, $serviceParameters['articles'] ?? []);
+        $parametersService = new CustomerParameters($parametersService, $serviceParameters['customer'] ?? []);
+        $parametersService->data();
 
         $this->request->getServices()->pushServiceList($serviceList);
 

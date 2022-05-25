@@ -15,8 +15,21 @@ class ServiceList extends Model
         $this->Parameters = $parameters ?? [];
     }
 
-    public function getParameters(): array
+    public function parameters(): array
     {
         return $this->Parameters;
+    }
+
+    public function appendParameter($value, $key = null)
+    {
+        if($key) {
+            $this->Parameters[$key] = $value;
+
+            return $this;
+        }
+
+        $this->Parameters[] = $value;
+
+        return $this;
     }
 }
