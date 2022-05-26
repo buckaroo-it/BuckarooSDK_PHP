@@ -18,6 +18,8 @@ class PaymentPayload extends Payload
         $customerAccountName,
         $customerBic,
         $customerIban,
+        $encryptedCardData,
+        $saveToken,
         $method,
         $serviceVersion,
         $serviceAction;
