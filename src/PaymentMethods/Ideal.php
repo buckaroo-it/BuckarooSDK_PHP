@@ -10,6 +10,7 @@ use Buckaroo\Model\ServiceList;
 class Ideal extends PaymentMethod
 {
     public const SERVICE_VERSION = 2;
+    public const PAYMENT_NAME = 'ideal';
 
     public function setPayServiceList(array $serviceParameters = []): self
     {
@@ -21,7 +22,7 @@ class Ideal extends PaymentMethod
         ]);
 
         $serviceList = new ServiceList(
-            self::IDEAL,
+            self::PAYMENT_NAME,
             self::SERVICE_VERSION,
             'Pay',
             $parameters
@@ -34,7 +35,7 @@ class Ideal extends PaymentMethod
 
     public function paymentName(): string
     {
-        return self::IDEAL;
+        return self::PAYMENT_NAME;
     }
 
     public function serviceVersion(): int

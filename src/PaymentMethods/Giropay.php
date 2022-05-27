@@ -10,6 +10,7 @@ use Buckaroo\Model\ServiceList;
 class Giropay extends PaymentMethod
 {
     public const SERVICE_VERSION = 2;
+    public const PAYMENT_NAME = 'giropay';
 
     public function setPayServiceList(array $serviceParameters = []): self
     {
@@ -34,7 +35,7 @@ class Giropay extends PaymentMethod
 
     public function paymentName(): string
     {
-        return self::GIROPAY;
+        return self::PAYMENT_NAME;
     }
 
     public function serviceVersion(): int

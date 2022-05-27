@@ -14,11 +14,12 @@ use Buckaroo\Transaction\Response\TransactionResponse;
 class Billink extends PaymentMethod
 {
     public const SERVICE_VERSION = 0;
+    public const PAYMENT_NAME = 'billink';
 
     public function setPayServiceList(array $serviceParameters = [])
     {
         $serviceList =  new ServiceList(
-            self::BILLINK,
+            self::PAYMENT_NAME,
             self::SERVICE_VERSION,
             'Pay'
         );
@@ -39,7 +40,7 @@ class Billink extends PaymentMethod
         $this->request->setPayload($this->getPaymentPayload());
 
         $serviceList = new ServiceList(
-            self::BILLINK,
+            self::PAYMENT_NAME,
             self::SERVICE_VERSION,
             'Authorize'
         );
@@ -74,7 +75,7 @@ class Billink extends PaymentMethod
         $this->request->setPayload($capturePayload);
 
         $serviceList = new ServiceList(
-            self::BILLINK,
+            self::PAYMENT_NAME,
             self::SERVICE_VERSION,
             'Capture'
         );
@@ -90,7 +91,7 @@ class Billink extends PaymentMethod
 
     public function paymentName(): string
     {
-        return self::BILLINK;
+        return self::PAYMENT_NAME;
     }
 
     public function serviceVersion(): int

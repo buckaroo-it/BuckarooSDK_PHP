@@ -11,10 +11,11 @@ use Buckaroo\Model\ServiceList;
 class Belfius extends PaymentMethod
 {
     public const SERVICE_VERSION = 0;
+    public const PAYMENT_NAME = 'belfius';
 
     public function paymentName(): string
     {
-        return self::BELFIUS;
+        return self::PAYMENT_NAME;
     }
 
     public function serviceVersion(): int

@@ -8,6 +8,7 @@ use Buckaroo\Model\ServiceList;
 class GiftCard extends PaymentMethod
 {
     public const SERVICE_VERSION = 0;
+    public const PAYMENT_NAME = 'giftcard';
 
     public function setPayServiceList(array $serviceParameters = []): self
     {

@@ -21,6 +21,7 @@ use Buckaroo\Transaction\Response\TransactionResponse;
 class Afterpay extends PaymentMethod
 {
     public const SERVICE_VERSION = 1;
+    public const PAYMENT_NAME = 'afterpay';
 
     public function authorize($payload): TransactionResponse
     {
@@ -28,7 +29,7 @@ class Afterpay extends PaymentMethod
         $this->request->setPayload($this->getPaymentPayload());
 
         $serviceList = new ServiceList(
-            self::AFTERPAY,
+            self::PAYMENT_NAME,
             self::SERVICE_VERSION,
             'Authorize'
         );
@@ -52,7 +53,7 @@ class Afterpay extends PaymentMethod
         $this->request->setPayload($capturePayload);
 
         $serviceList = new ServiceList(
-            self::AFTERPAY,
+            self::PAYMENT_NAME,
             self::SERVICE_VERSION,
             'Capture'
         );
@@ -68,7 +69,7 @@ class Afterpay extends PaymentMethod
     public function setPayServiceList(array $serviceParameters = [])
     {
         $serviceList =  new ServiceList(
-            self::AFTERPAY,
+            self::PAYMENT_NAME,
             self::SERVICE_VERSION,
             'Pay'
         );
@@ -85,7 +86,7 @@ class Afterpay extends PaymentMethod
 
     public function paymentName(): string
     {
-        return self::AFTERPAY;
+        return self::PAYMENT_NAME;
     }
 
     public function serviceVersion(): int

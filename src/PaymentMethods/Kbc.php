@@ -11,10 +11,11 @@ use Buckaroo\Model\ServiceList;
 class Kbc extends PaymentMethod
 {
     public const SERVICE_VERSION = 1;
+    public const PAYMENT_NAME = 'kbcpaymentbutton';
 
     public function paymentName(): string
     {
-        return self::KBC;
+        return self::PAYMENT_NAME;
     }
 
     public function serviceVersion(): int

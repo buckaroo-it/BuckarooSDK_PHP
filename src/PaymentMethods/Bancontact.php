@@ -11,10 +11,11 @@ use Buckaroo\Model\ServiceList;
 class Bancontact extends PaymentMethod
 {
     public const SERVICE_VERSION = 1;
+    public const PAYMENT_NAME = 'bancontactmrcash';
 
     public function paymentName(): string
     {
-        return self::BANCONTACT;
+        return self::PAYMENT_NAME;
     }
 
     public function serviceVersion(): int

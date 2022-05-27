@@ -4,17 +4,14 @@ declare(strict_types=1);
 
 namespace Buckaroo\PaymentMethods;
 
-use Buckaroo\Model\PaymentPayload;
-use Buckaroo\Model\RefundPayload;
-use Buckaroo\Model\ServiceList;
-
 class Eps extends PaymentMethod
 {
     public const SERVICE_VERSION = 1;
+    public const PAYMENT_NAME = 'eps';
 
     public function paymentName(): string
     {
-        return self::EPS;
+        return self::PAYMENT_NAME;
     }
 
     public function serviceVersion(): int
