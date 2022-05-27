@@ -44,6 +44,7 @@ class AfterpayTest extends BuckarooTestCase
                 'customer'      => [
                     'useBillingInfoForShipping' => false,
                     'billing'                   => [
+                        'category'  => 'Person',
                         'firstName' => 'Test',
                         'lastName' => 'Acceptatie',
                         'email' => 'billingcustomer@buckaroo.nl',
@@ -58,6 +59,7 @@ class AfterpayTest extends BuckarooTestCase
                         'birthDate' => '01-01-1990'
                     ],
                     'shipping'                  => [
+                        'category'  => 'Person',
                         'firstName' => 'Test',
                         'lastName' => 'Aflever',
                         'email' => 'billingcustomer@buckaroo.nl',

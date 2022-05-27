@@ -39,6 +39,11 @@ class TransactionResponse extends Response
         return $this->getStatusCode() == ResponseStatus::BUCKAROO_STATUSCODE_WAITING_ON_USER_INPUT;
     }
 
+    public function isRejected(): bool
+    {
+        return $this->getStatusCode() == ResponseStatus::BUCKAROO_STATUSCODE_REJECTED;
+    }
+
     public function hasRedirect(): bool
     {
         return !empty($this->data['RequiredAction']['RedirectURL'])

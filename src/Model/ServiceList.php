@@ -22,6 +22,16 @@ class ServiceList extends Model
 
     public function appendParameter($value, $key = null)
     {
+        /* Check value pass multiple, iterate through it*/
+        if(is_array($value) && is_array(current($value))) {
+            foreach($value as $singleValue)
+            {
+                $this->appendParameter($singleValue, $key);
+            }
+
+            return $this;
+        }
+
         if($key) {
             $this->Parameters[$key] = $value;
 

@@ -11,7 +11,11 @@ class Article extends Model
         $description,
         $vatPercentage,
         $quantity,
-        $grossUnitPrice;
+        $grossUnitPrice,
+        $grossUnitPriceIncl,
+        $grossUnitPriceExcl;
+
+
 //    protected string $name = '';
 //    protected float $price = 0;
 //    protected string $vat = '21';

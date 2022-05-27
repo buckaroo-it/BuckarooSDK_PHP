@@ -21,9 +21,43 @@ class BillinkTest extends BuckarooTestCase
      */
     public function it_creates_a_billink_authorize()
     {
-        $response = $this->buckaroo->payment('billink')->authorize($this->getAuthorizePayload());
-        dd($response);
+        $response = $this->buckaroo->payment('billink')->authorize($this->getPaymentPayload());
+
         $this->assertTrue($response->isSuccess());
+    }
+
+    /**
+     * @test
+     */
+    public function it_creates_a_billink_capture()
+    {
+        $response = $this->buckaroo->payment('billink')->capture([
+            'originalTransactionKey' => '74AD098CCFAA4F739FE16279B5059B6B', //Set transaction key of the transaction to capture
+            'invoice' => '62905fa2650f4', //Set invoice id
+            'amountDebit' => 50.30, //set amount to capture
+            'serviceParameters' => [
+                'articles'      => [
+                    [
+                        'identifier' => 'Articlenumber1',
+                        'description' => 'Blue Toy Car',
+                        'vatPercentage' => '21',
+                        'quantity' => '2',
+                        'grossUnitPriceIncl' => '20.10',
+                        'grossUnitPriceExcl' => '15'
+                    ],
+                    [
+                        'identifier' => 'Articlenumber2',
+                        'description' => 'Red Toy Car',
+                        'vatPercentage' => '21',
+                        'quantity' => '1',
+                        'grossUnitPriceIncl' => '10.10',
+                        'grossUnitPriceExcl' => '5'
+                    ],
+                ],
+            ]
+        ]);
+
+        $this->assertTrue($response->isRejected());
     }
 
     /**
@@ -46,63 +80,8 @@ class BillinkTest extends BuckarooTestCase
             'order'             => uniqid(),
             'invoice'           => uniqid(),
             'serviceParameters' => [
-                'articles'      => [
-                    [
-                        'identifier' => 'Articlenumber1',
-                        'description' => 'Blue Toy Car',
-                        'vatPercentage' => '21',
-                        'quantity' => '2',
-                        'grossUnitPrice' => '20.10'
-                    ],
-                    [
-                        'identifier' => 'Articlenumber2',
-                        'description' => 'Red Toy Car',
-                        'vatPercentage' => '21',
-                        'quantity' => '1',
-                        'grossUnitPrice' => '10.10'
-                    ],
-                ],
-                'customer'      => [
-                    'useBillingInfoForShipping' => false,
-                    'billing'                   => [
-                        'firstName' => 'Test',
-                        'lastName' => 'Acceptatie',
-                        'email' => 'billingcustomer@buckaroo.nl',
-                        'phone' => '0109876543',
-                        'street' => 'Hoofdstraat',
-                        'streetNumber' => '80',
-                        'streetNumberAdditional' => 'A',
-                        'postalCode' => '8441EE',
-                        'city' => 'Heerenveen',
-                        'country' => 'NL',
-                        'salutation' => 'Mr',
-                        'birthDate' => '01-01-1990'
-                    ],
-                    'shipping'                  => [
-                        'firstName' => 'Test',
-                        'lastName' => 'Aflever',
-                        'email' => 'billingcustomer@buckaroo.nl',
-                        'phone' => '0109876543',
-                        'street' => 'Hoofdstraat',
-                        'streetNumber' => '80',
-                        'streetNumberAdditional' => 'A',
-                        'postalCode' => '8441EE',
-                        'city' => 'Heerenveen',
-                        'country' => 'NL',
-                        'salutation' => 'Mr',
-                        'birthDate' => '01-01-1990'
-                    ]
-                ]
-            ]
-        ];
-    }
-
-    private function getAuthorizePayload(): array {
-        return [
-            'amountDebit'       => 50.30,
-            'order'             => uniqid(),
-            'invoice'           => uniqid(),
-            'serviceParameters' => [
+                'trackAndTrace' => 'TR0F123456789',
+                'vatNumber'     => '2',
                 'articles'      => [
                     [
                         'identifier' => 'Articlenumber1',
@@ -124,8 +103,12 @@ class BillinkTest extends BuckarooTestCase
                 'customer'      => [
                     'useBillingInfoForShipping' => false,
                     'billing'                   => [
+                        'careOf'        => 'John Smith',
+                        'initials'  => 'T',
+                        'salutation' => 'Male',
                         'firstName' => 'Test',
                         'lastName' => 'Acceptatie',
+                        'chamberOfCommerce' => 'Kvk123456789',
                         'email' => 'billingcustomer@buckaroo.nl',
                         'street' => 'Hoofdstraat',
                         'streetNumber' => '80',
@@ -133,10 +116,12 @@ class BillinkTest extends BuckarooTestCase
                         'postalCode' => '8441EE',
                         'city' => 'Heerenveen',
                         'country' => 'NL',
-                        'salutation' => 'Mr',
+                        'mobilePhone' => '0698765433',
                         'birthDate' => '01-01-1990'
                     ],
                     'shipping'                  => [
+                        'careOf'        => 'John Smith',
+                        'initials'  => 'T',
                         'firstName' => 'Test',
                         'lastName' => 'Aflever',
                         'email' => 'billingcustomer@buckaroo.nl',
@@ -146,7 +131,8 @@ class BillinkTest extends BuckarooTestCase
                         'postalCode' => '8441EE',
                         'city' => 'Heerenveen',
                         'country' => 'NL',
-                        'salutation' => 'Mr',
+                        'mobilePhone' => '0698765433',
+                        'salutation' => 'Male',
                         'birthDate' => '01-01-1990'
                     ]
                 ]

@@ -135,13 +135,11 @@ class Client
             $url = $this->getTransactionUrl();
         }
 
-        $json = json_encode($data->toArray());
-
         // all headers have to be set at once
-        $headers = $this->getHeaders($url, $json, $method);
+        $headers = $this->getHeaders($url, $data->toJson(), $method);
         $headers = array_merge($headers, $data->getHeaders());
 
-        $decodedResult = $this->httpClient->call($url, $headers, $method, $json, $responseClass);
+        $decodedResult = $this->httpClient->call($url, $headers, $method, $data->toJson(), $responseClass);
 
         $response = new $responseClass($decodedResult);
 

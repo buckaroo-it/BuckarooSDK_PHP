@@ -37,11 +37,37 @@ class CustomerParameters implements ServiceListParameter
 
     private function attachCustomerAddress(string $groupType, Address $address)
     {
-        $this->serviceList->appendParameter([
-            "Name"              => "Category",
-            "Value"             => "Person",
-            "GroupType"         => $groupType
-        ]);
+        if($address->category) {
+            $this->serviceList->appendParameter([
+                "Name"              => "Category",
+                "Value"             => $address->category,
+                "GroupType"         => $groupType
+            ]);
+        }
+
+        if($address->careOf) {
+            $this->serviceList->appendParameter([
+                "Name"              => "CareOf",
+                "Value"             => $address->careOf,
+                "GroupType"         => $groupType
+            ]);
+        }
+
+        if($address->initials) {
+            $this->serviceList->appendParameter([
+                "Name"              => "Initials",
+                "Value"             => $address->initials,
+                "GroupType"         => $groupType
+            ]);
+        }
+
+        if($address->salutation) {
+            $this->serviceList->appendParameter([
+                "Name"              => "Salutation",
+                "Value"             => $address->salutation,
+                "GroupType"         => $groupType
+            ]);
+        }
 
         $this->serviceList->appendParameter([
             "Name"              => "FirstName",
@@ -55,6 +81,14 @@ class CustomerParameters implements ServiceListParameter
             "GroupType"         => $groupType
         ]);
 
+        if($address->chamberOfCommerce) {
+            $this->serviceList->appendParameter([
+                "Name"              => "ChamberOfCommerce",
+                "Value"             => $address->chamberOfCommerce,
+                "GroupType"         => $groupType
+            ]);
+        }
+
         $this->serviceList->appendParameter([
             "Name"              => "Email",
             "Value"             => $address->email,
@@ -65,6 +99,14 @@ class CustomerParameters implements ServiceListParameter
             $this->serviceList->appendParameter([
                 "Name"              => "Phone",
                 "Value"             => $address->phone,
+                "GroupType"         => $groupType
+            ]);
+        }
+
+        if($address->mobilePhone) {
+            $this->serviceList->appendParameter([
+                "Name"              => "MobilePhone",
+                "Value"             => $address->mobilePhone,
                 "GroupType"         => $groupType
             ]);
         }
@@ -102,12 +144,6 @@ class CustomerParameters implements ServiceListParameter
         $this->serviceList->appendParameter([
             "Name"              => "Country",
             "Value"             => $address->country,
-            "GroupType"         => $groupType
-        ]);
-
-        $this->serviceList->appendParameter([
-            "Name"              => "Salutation",
-            "Value"             => $address->salutation,
             "GroupType"         => $groupType
         ]);
 
