@@ -21,10 +21,34 @@ class Bancontact extends PaymentMethod
     {
         $paymentModel = new PaymentPayload($this->payload);
 
+        $serviceVersion = self::SERVICE_VERSION;
+        $payAction = 'Pay';
+        $parameters = [];
+
+        if (($paymentModel->saveToken === true)) {
+
+            $parameters = array([
+                'name' => 'SaveToken',
+                'Value' => $paymentModel->saveToken
+            ]);
+            
+        } elseif (isset($paymentModel->encryptedCardData)) {
+
+            $parameters = array([
+                'name' => 'EncryptedCardData',
+                'Value' => $paymentModel->encryptedCardData
+            ]);
+
+            $serviceVersion = 0;
+            $payAction = 'PayEncrypted';
+
+        }
+
         $serviceList = new ServiceList(
             self::BANCONTACT,
-            self::SERVICE_VERSION,
-            'Pay'
+            $serviceVersion,
+            $payAction,
+            $parameters
         );
 
         $this->request->getServices()->pushServiceList($serviceList);
