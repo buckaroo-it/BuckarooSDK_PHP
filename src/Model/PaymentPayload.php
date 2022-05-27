@@ -22,7 +22,8 @@ class PaymentPayload extends Payload
         $serviceVersion,
         $serviceAction,
         $paymentData,
-        $customerCardName;
+        $customerCardName,
+        $originalTransactionKey;
 
     public function __construct(?array $payload)
     {

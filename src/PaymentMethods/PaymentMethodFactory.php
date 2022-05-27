@@ -14,7 +14,7 @@ class PaymentMethodFactory
         Bancontact::class               => ['bancontactmrcash'],
         Billink::class                  => ['billink'],
         Belfius::class                  => ['belfius'],
-        CreditCard::class               => ['vpay', 'cartebancaire', 'mastercard', 'visa', 'maestro', 'visaelectron', 'cartebleuevisa', 'dankort', 'nexi', 'postepay', 'amex'],
+        CreditCard::class               => ['creditcard', 'mastercard', 'visa', 'amex', 'vpay', 'maestro', 'visaelectron', 'cartebleuevisa', 'cartebancaire', 'dankort', 'nexi', 'postepay'],
         //AfterpayDigiAccept::class       => ['afterpaydigiaccept'],
         Ideal::class                    => ['ideal', 'idealprocessing'],
         //KlarnaKP::class                    => ['klarnakp'],

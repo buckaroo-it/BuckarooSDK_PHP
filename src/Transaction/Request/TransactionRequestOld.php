@@ -6,8 +6,8 @@ namespace Buckaroo\Payload;
 
 use Buckaroo\Exceptions\SdkException;
 use Buckaroo\Helpers\Base;
-use Buckaroo\Helpers\Constants\IPProtocolVersion;
 use Buckaroo\Helpers\Validate;
+use Buckaroo\Resources\Constants\IPProtocolVersion;
 use Buckaroo\Transaction\Request\Request;
 use Psr\Log\LoggerInterface;
 

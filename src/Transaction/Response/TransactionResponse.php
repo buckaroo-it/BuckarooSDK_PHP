@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Buckaroo\Transaction\Response;
 
-use Buckaroo\Helpers\Constants\ResponseStatus;
+use Buckaroo\Resources\Constants\ResponseStatus;
 
 class TransactionResponse extends Response
 {
@@ -42,6 +42,11 @@ class TransactionResponse extends Response
     public function isRejected(): bool
     {
         return $this->getStatusCode() == ResponseStatus::BUCKAROO_STATUSCODE_REJECTED;
+    }
+
+    public function isValidationFailure(): bool
+    {
+        return $this->getStatusCode() == ResponseStatus::BUCKAROO_STATUSCODE_VALIDATION_FAILURE;
     }
 
     public function hasRedirect(): bool
