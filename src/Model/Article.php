@@ -8,16 +8,19 @@ class Article extends Model
 {
     protected
         $identifier,
+        $articleId,
         $articleNumber,
+        $articleDescription,
+        $articleUnitprice,
+        $articleQuantity,
+        $articleVatcategory,
         $description,
         $vatPercentage,
         $quantity,
         $grossUnitPrice,
         $grossUnitPriceIncl,
         $grossUnitPriceExcl,
-        $reservationNumber,
-        $articleQuantity;
-
+        $reservationNumber;
 
 //    protected string $name = '';
 //    protected float $price = 0;

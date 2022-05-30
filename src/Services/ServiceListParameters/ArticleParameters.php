@@ -40,60 +40,31 @@ class ArticleParameters implements ServiceListParameter
 
     private function attachArticle(int $groupKey, Article $article)
     {
-        $this->serviceList->appendParameter([
-            "Name"              => "Identifier",
-            "Value"             => $article->identifier,
-            "GroupType"         => "Article",
-            "GroupID"           => $groupKey
-        ]);
+        $this->appendParameter($groupKey,"ArticleId", $article->articleId);
+        $this->appendParameter($groupKey,"ArticleDescription", $article->articleDescription);
+        $this->appendParameter($groupKey,"ArticleUnitprice", $article->articleUnitprice);
+        $this->appendParameter($groupKey,"ArticleQuantity", $article->articleQuantity);
+        $this->appendParameter($groupKey,"ArticleVatcategory", $article->articleVatcategory);
+        $this->appendParameter($groupKey,"Identifier", $article->identifier);
+        $this->appendParameter($groupKey,"Description", $article->description);
+        $this->appendParameter($groupKey,"VatPercentage", $article->vatPercentage);
+        $this->appendParameter($groupKey,"Quantity",  $article->quantity);
+        $this->appendParameter($groupKey,"GrossUnitPrice", $article->grossUnitPrice);
+        $this->appendParameter($groupKey,"GrossUnitPriceIncl", $article->grossUnitPriceIncl);
+        $this->appendParameter($groupKey,"GrossUnitPriceExcl", $article->grossUnitPriceExcl);
+    }
 
-        $this->serviceList->appendParameter([
-            "Name"              => "Description",
-            "Value"             => $article->description,
-            "GroupType"         => "Article",
-            "GroupID"           => $groupKey
-        ]);
-
-        $this->serviceList->appendParameter([
-            "Name"              => "VatPercentage",
-            "Value"             => $article->vatPercentage,
-            "GroupType"         => "Article",
-            "GroupID"           => $groupKey
-        ]);
-
-        $this->serviceList->appendParameter([
-            "Name"              => "Quantity",
-            "Value"             => $article->quantity,
-            "GroupType"         => "Article",
-            "GroupID"           => $groupKey
-        ]);
-
-        if($article->grossUnitPrice) {
+    private function appendParameter(int $groupKey, string $name, $value)
+    {
+        if($value) {
             $this->serviceList->appendParameter([
-                "Name"              => "GrossUnitPrice",
-                "Value"             => $article->grossUnitPrice,
+                "Name"              => $name,
+                "Value"             => $value,
                 "GroupType"         => "Article",
                 "GroupID"           => $groupKey
             ]);
         }
 
-        if($article->grossUnitPriceIncl) {
-            $this->serviceList->appendParameter([
-                "Name"              => "GrossUnitPriceIncl",
-                "Value"             => $article->grossUnitPriceIncl,
-                "GroupType"         => "Article",
-                "GroupID"           => $groupKey
-            ]);
-        }
-
-        if($article->grossUnitPriceExcl) {
-            $this->serviceList->appendParameter([
-                "Name"              => "GrossUnitPriceExcl",
-                "Value"             => $article->grossUnitPriceExcl,
-                "GroupType"         => "Article",
-                "GroupID"           => $groupKey
-            ]);
-        }
-
+        return $this;
     }
 }

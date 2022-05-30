@@ -24,12 +24,14 @@ abstract class PaymentMethod implements PaymentInterface
     protected array $payload;
 
     public function __construct(
-        Client $client
+        Client $client,
+        ?string $serviceCode
     ) {
         $this->client = $client;
         $this->logger = $client->getLogger();
 
         $this->request = new TransactionRequest;
+        $this->serviceCode = $serviceCode;
     }
 
     public function pay($payload): TransactionResponse

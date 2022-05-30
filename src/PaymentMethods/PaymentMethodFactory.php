@@ -11,11 +11,12 @@ class PaymentMethodFactory
         ApplePay::class                 => ['applepay'],
 //        Alipay::class                   => ['alipay'],
         Afterpay::class                 => ['afterpay'],
+        AfterpayDigiAccept::class       => ['afterpaydigiaccept'],
         Bancontact::class               => ['bancontactmrcash'],
         Billink::class                  => ['billink'],
         Belfius::class                  => ['belfius'],
         CreditCard::class               => ['creditcard', 'mastercard', 'visa', 'amex', 'vpay', 'maestro', 'visaelectron', 'cartebleuevisa', 'cartebancaire', 'dankort', 'nexi', 'postepay'],
-        //AfterpayDigiAccept::class       => ['afterpaydigiaccept'],
+
         Ideal::class                    => ['ideal', 'idealprocessing'],
         KlarnaKP::class                    => ['klarnakp'],
         Sepa::class                     => ['sepadirectdebit'],
@@ -48,7 +49,7 @@ class PaymentMethodFactory
     {
         foreach(self::$payments as $class => $alias) {
             if(in_array($this->paymentMethod, $alias)) {
-                return new $class($this->client);
+                return new $class($this->client, $this->paymentMethod);
             }
         }
 

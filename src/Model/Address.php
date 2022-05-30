@@ -17,6 +17,7 @@ class Address extends Model
         $mobilePhone,
         $street,
         $streetNumber,
+        $housenumber,
         $streetNumberAdditional,
         $postalCode,
         $city,

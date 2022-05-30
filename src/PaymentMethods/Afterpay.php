@@ -29,8 +29,8 @@ class Afterpay extends PaymentMethod
         $this->request->setPayload($this->getPaymentPayload());
 
         $serviceList = new ServiceList(
-            self::PAYMENT_NAME,
-            self::SERVICE_VERSION,
+            $this->paymentName(),
+            $this->serviceVersion(),
             'Authorize'
         );
 
@@ -53,8 +53,8 @@ class Afterpay extends PaymentMethod
         $this->request->setPayload($capturePayload);
 
         $serviceList = new ServiceList(
-            self::PAYMENT_NAME,
-            self::SERVICE_VERSION,
+            $this->paymentName(),
+            $this->serviceVersion(),
             'Capture'
         );
 
@@ -69,8 +69,8 @@ class Afterpay extends PaymentMethod
     public function setPayServiceList(array $serviceParameters = [])
     {
         $serviceList =  new ServiceList(
-            self::PAYMENT_NAME,
-            self::SERVICE_VERSION,
+            $this->paymentName(),
+            $this->serviceVersion(),
             'Pay'
         );
 
