@@ -6,11 +6,12 @@ use Buckaroo\Model\ServiceList;
 use Buckaroo\Services\PayloadService;
 use Buckaroo\Services\ServiceListParameters\DefaultParameters;
 use Buckaroo\Services\ServiceListParameters\iDealQRParameters;
+use Buckaroo\Transaction\Response\TransactionResponse;
 
 class IdealQR extends PaymentMethod
 {
     public const SERVICE_VERSION = 0;
-    public const PAYMENT_NAME = 'IdealQr';
+    public const PAYMENT_NAME = 'idealqr';
 
     public function generate($payload)
     {
@@ -29,7 +30,10 @@ class IdealQR extends PaymentMethod
 
         $this->request->getServices()->pushServiceList($serviceList);
 
-        return $this->postRequest();
+        return $this->client->dataRequest(
+            $this->request,
+            TransactionResponse::class
+        );
     }
 
     public function paymentName(): string

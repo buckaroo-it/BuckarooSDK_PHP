@@ -26,6 +26,7 @@ class PaymentMethodFactory
         Paypal::class                   => ['paypal'],
         Eps::class                      => ['eps'],
         Sofort::class                   => ['sofort'],
+        Tinka::class                    => ['tinka'],
         Payconiq::class                 => ['payconiq'],
         //P24::class                      => ['przelewy24'],
         Giropay::class                  => ['giropay'],

@@ -27,9 +27,7 @@ class IdealQRTest extends BuckarooTestCase
                 ]
             ]
         ]);
-
         dd($response);
-
         $this->assertTrue($response->isSuccess());
     }
 }

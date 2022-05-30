@@ -40,12 +40,18 @@ class ArticleParameters implements ServiceListParameter
 
     private function attachArticle(int $groupKey, Article $article)
     {
+        dd($article->grossUnitPrice);
         $this->appendParameter($groupKey,"ArticleId", $article->articleId);
         $this->appendParameter($groupKey,"ArticleDescription", $article->articleDescription);
         $this->appendParameter($groupKey,"ArticleUnitprice", $article->articleUnitprice);
         $this->appendParameter($groupKey,"ArticleQuantity", $article->articleQuantity);
         $this->appendParameter($groupKey,"ArticleVatcategory", $article->articleVatcategory);
         $this->appendParameter($groupKey,"Identifier", $article->identifier);
+        $this->appendParameter($groupKey,"Color", $article->color);
+        $this->appendParameter($groupKey,"UnitCode", $article->unitCode);
+        $this->appendParameter($groupKey,"Brand", $article->brand);
+        $this->appendParameter($groupKey,"Manufacturer", $article->manufacturer);
+        $this->appendParameter($groupKey,"Size", $article->size);
         $this->appendParameter($groupKey,"Description", $article->description);
         $this->appendParameter($groupKey,"VatPercentage", $article->vatPercentage);
         $this->appendParameter($groupKey,"Quantity",  $article->quantity);

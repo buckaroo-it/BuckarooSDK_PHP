@@ -8,12 +8,18 @@ class Article extends Model
 {
     protected
         $identifier,
+        $type,
         $articleId,
         $articleNumber,
         $articleDescription,
         $articleUnitprice,
         $articleQuantity,
         $articleVatcategory,
+        $brand,
+        $manufacturer,
+        $color,
+        $size,
+        $unitCode,
         $description,
         $vatPercentage,
         $quantity,
