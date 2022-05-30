@@ -38,6 +38,7 @@ class CustomerParameters implements ServiceListParameter
     private function attachCustomerAddress(string $groupType, Address $address)
     {
         $this->appendParameter($groupType, "Category", $address->category);
+        $this->appendParameter($groupType, "Gender", ($address->gender)? 'Male' : 'Female');
         $this->appendParameter($groupType, "CareOf", $address->careOf);
         $this->appendParameter($groupType, "Initials", $address->initials);
         $this->appendParameter($groupType, "Salutation", $address->salutation);

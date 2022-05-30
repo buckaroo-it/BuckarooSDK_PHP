@@ -13,10 +13,8 @@ class KlarnaTest extends BuckarooTestCase
     public function it_creates_a_klarna_payment()
     {
         $response = $this->buckaroo->payment('klarna')->pay($this->getPaymentPayload());
-        $this->assertTrue($response->isSuccess());
 
-        $response = $this->buckaroo->payment('klarna')->pay(json_encode($this->getPaymentPayload()));
-        $this->assertTrue($response->isSuccess());
+        $this->assertTrue($response->isPendingProcessing());
     }
 
     private function getPaymentPayload(): array {
@@ -44,6 +42,8 @@ class KlarnaTest extends BuckarooTestCase
                 'customer'      => [
                     'useBillingInfoForShipping' => false,
                     'billing'                   => [
+                        'category'      => 'B2C',
+                        'gender'        => '1',
                         'firstName' => 'Test',
                         'lastName' => 'Acceptatie',
                         'email' => 'billingcustomer@buckaroo.nl',
@@ -54,10 +54,11 @@ class KlarnaTest extends BuckarooTestCase
                         'postalCode' => '8441EE',
                         'city' => 'Heerenveen',
                         'country' => 'NL',
-                        'salutation' => 'Mr',
                         'birthDate' => '01-01-1990'
                     ],
                     'shipping'                  => [
+                        'category'      => 'B2C',
+                        'gender'        => '0',
                         'firstName' => 'Test',
                         'lastName' => 'Aflever',
                         'email' => 'billingcustomer@buckaroo.nl',
@@ -68,7 +69,6 @@ class KlarnaTest extends BuckarooTestCase
                         'postalCode' => '8441EE',
                         'city' => 'Heerenveen',
                         'country' => 'NL',
-                        'salutation' => 'Mr',
                         'birthDate' => '01-01-1990'
                     ]
                 ]

@@ -5,6 +5,7 @@ namespace Buckaroo\Model;
 class Address extends Model
 {
     protected
+    $gender,
         $category,
         $careOf,
         $initials,

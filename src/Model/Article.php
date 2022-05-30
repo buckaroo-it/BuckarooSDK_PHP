@@ -17,6 +17,7 @@ class Article extends Model
         $description,
         $vatPercentage,
         $quantity,
+        $price,
         $grossUnitPrice,
         $grossUnitPriceIncl,
         $grossUnitPriceExcl,

@@ -11,6 +11,7 @@ class PaymentPayloadAdapter extends TransactionAdapter
         return [
             'Invoice'                   => $this->payload->invoice,
             'Order'                     =>  $this->payload->order,
+            'Description'               => $this->payload->description,
             'ReturnURL'                 =>  $this->payload->returnURL,
             'ReturnURLCancel'           =>  $this->payload->returnURLCancel,
             'PushURL'                   =>  $this->payload->pushURL,

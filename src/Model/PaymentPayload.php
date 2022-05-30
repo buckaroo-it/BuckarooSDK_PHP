@@ -8,6 +8,7 @@ class PaymentPayload extends Payload
     protected
         $invoice,
         $order,
+        $description,
         $currency,
         $returnURL,
         $returnURLCancel,
