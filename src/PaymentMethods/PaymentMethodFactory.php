@@ -17,6 +17,7 @@ class PaymentMethodFactory
         Belfius::class                  => ['belfius'],
         CreditCard::class               => ['creditcard', 'mastercard', 'visa', 'amex', 'vpay', 'maestro', 'visaelectron', 'cartebleuevisa', 'cartebancaire', 'dankort', 'nexi', 'postepay'],
         Ideal::class                    => ['ideal', 'idealprocessing'],
+        IdealQR::class                  => ['ideal_qr'],
         In3::class                      => ['in3'],
         KlarnaPay::class                => ['klarna'],
         KlarnaKP::class                 => ['klarnakp'],
