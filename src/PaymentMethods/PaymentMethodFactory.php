@@ -17,7 +17,7 @@ class PaymentMethodFactory
         CreditCard::class               => ['creditcard', 'mastercard', 'visa', 'amex', 'vpay', 'maestro', 'visaelectron', 'cartebleuevisa', 'cartebancaire', 'dankort', 'nexi', 'postepay'],
         //AfterpayDigiAccept::class       => ['afterpaydigiaccept'],
         Ideal::class                    => ['ideal', 'idealprocessing'],
-        //KlarnaKP::class                    => ['klarnakp'],
+        KlarnaKP::class                    => ['klarnakp'],
         Sepa::class                     => ['sepadirectdebit'],
         Kbc::class                      => ['kbcpaymentbutton'],
         Paypal::class                   => ['paypal'],

@@ -8,12 +8,15 @@ class Article extends Model
 {
     protected
         $identifier,
+        $articleNumber,
         $description,
         $vatPercentage,
         $quantity,
         $grossUnitPrice,
         $grossUnitPriceIncl,
-        $grossUnitPriceExcl;
+        $grossUnitPriceExcl,
+        $reservationNumber,
+        $articleQuantity;
 
 
 //    protected string $name = '';
