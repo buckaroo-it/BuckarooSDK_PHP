@@ -2,6 +2,8 @@
 
 namespace Buckaroo\PaymentMethods;
 
+use Buckaroo\Model\Adapters\ServiceParametersKeys\TinkaArticleAdapter;
+use Buckaroo\Model\Article;
 use Buckaroo\Model\ServiceList;
 use Buckaroo\Services\ServiceListParameters\ArticleParameters;
 use Buckaroo\Services\ServiceListParameters\CompanyParameters;
@@ -43,8 +45,10 @@ class Tinka extends PaymentMethod
             ]
         ]);
 
-        $parametersService = new DefaultParameters($serviceList);
-        $parametersService = new ArticleParameters($parametersService, $serviceParameters['articles'] ?? []);
+        $parametersService = new ArticleParameters(new DefaultParameters($serviceList), array_map(function($article){
+            return new TinkaArticleAdapter((new Article())->setProperties($article));
+        }, $serviceParameters['articles'] ?? []));
+
 //        $parametersService = new CompanyParameters($parametersService, $serviceParameters['company'] ?? []);
 //        $parametersService = new In3CustomerParameters($parametersService, $serviceParameters['customer'] ?? []);
         $parametersService->data();

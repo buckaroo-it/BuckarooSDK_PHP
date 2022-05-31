@@ -11,7 +11,7 @@ class In3CustomerParameters extends ServiceListParameter
     {
         $customer = (new Customer())->setProperties($this->data);
 
-        $this->appendParameter(null,'Person', 'Culture', 'nl-NL');
+        $this->appendParameter(null,'Person', 'Culture', 'nl-NL'); //Currently this is the only option
         $this->appendParameter(null,'Person', 'Gender', $customer->gender);
         $this->appendParameter(null,'Person', 'Initials', $customer->initials);
         $this->appendParameter(null,'Person', 'LastName', $customer->lastName);

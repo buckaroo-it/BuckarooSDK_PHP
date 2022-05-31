@@ -13,8 +13,8 @@ class CompanyParameters extends ServiceListParameter
 
         $company = (new Company())->setProperties($this->data);
 
-        $this->appendParameter(null, "Company","Name", $company->name);
-        $this->appendParameter(null, "Company","ChamberOfCommerce",  $company->chamberOfCommerce);
+        $this->appendParameter(null, $company->serviceParameterKeyOf('name'),"Name", $company->name);
+        $this->appendParameter(null, $company->serviceParameterKeyOf('chamberOfCommerce'),"ChamberOfCommerce",  $company->chamberOfCommerce);
 
         return $this->serviceList;
     }

@@ -37,6 +37,11 @@ abstract class Model implements Arrayable
         return $this;
     }
 
+    public function serviceParameterKeyOf($propertyName)
+    {
+        return ucfirst($propertyName);
+    }
+
     public function toArray() : array
     {
         return $this->recursiveToArray(get_object_vars($this));
