@@ -16,7 +16,6 @@ class IdealQR extends PaymentMethod
     public function generate($payload)
     {
         $this->payload = (new PayloadService($payload))->toArray();
-        $this->request->setPayload($this->getPaymentPayload());
 
         $serviceList =  new ServiceList(
             $this->paymentName(),
@@ -24,8 +23,7 @@ class IdealQR extends PaymentMethod
             'Generate'
         );
 
-        $parametersService = new DefaultParameters($serviceList);
-        $parametersService = new iDealQRParameters($parametersService, $this->payload['serviceParameters']['ideal_qr'] ?? []);
+        $parametersService = new iDealQRParameters(new DefaultParameters($serviceList), $this->payload['serviceParameters']['ideal_qr'] ?? []);
         $parametersService->data();
 
         $this->request->getServices()->pushServiceList($serviceList);

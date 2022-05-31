@@ -37,8 +37,13 @@ class TinkaTest extends BuckarooTestCase
 //                        'color'             => 'Red',
 //                        'size'              => 'Small',
 //                        'quantity'          => '1',
-                        'grossUnitPrice'    => function($test){
-                            return 'aiosdf';
+                        'grossUnitPrice'    => function(int $groupId, string $groupType){
+                            return [
+                                "Name"              => "UnitGrossPrice",
+                                "Value"             => 3.5,
+                                "GroupType"         => $groupType,
+                                "GroupID"           => $groupId
+                            ];
                         },
 //                        'unitCode'         => 'test'
                     ]

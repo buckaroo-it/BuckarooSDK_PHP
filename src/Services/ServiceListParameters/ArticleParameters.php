@@ -5,22 +5,10 @@ namespace Buckaroo\Services\ServiceListParameters;
 use Buckaroo\Model\Article;
 use Buckaroo\Model\ServiceList;
 
-class ArticleParameters implements ServiceListParameter
+class ArticleParameters extends ServiceListParameter
 {
-    protected $serviceListParameter;
-    protected ServiceList $serviceList;
-    protected array $data;
-
-    public function __construct(ServiceListParameter $serviceListParameter, array $data)
-    {
-        $this->data = $data;
-        $this->serviceListParameter = $serviceListParameter;
-    }
-
     public function data(): ServiceList
     {
-        $this->serviceList = $this->serviceListParameter->data();
-
         $this->process();
 
         return $this->serviceList;
@@ -40,37 +28,22 @@ class ArticleParameters implements ServiceListParameter
 
     private function attachArticle(int $groupKey, Article $article)
     {
-        dd($article->grossUnitPrice);
-        $this->appendParameter($groupKey,"ArticleId", $article->articleId);
-        $this->appendParameter($groupKey,"ArticleDescription", $article->articleDescription);
-        $this->appendParameter($groupKey,"ArticleUnitprice", $article->articleUnitprice);
-        $this->appendParameter($groupKey,"ArticleQuantity", $article->articleQuantity);
-        $this->appendParameter($groupKey,"ArticleVatcategory", $article->articleVatcategory);
-        $this->appendParameter($groupKey,"Identifier", $article->identifier);
-        $this->appendParameter($groupKey,"Color", $article->color);
-        $this->appendParameter($groupKey,"UnitCode", $article->unitCode);
-        $this->appendParameter($groupKey,"Brand", $article->brand);
-        $this->appendParameter($groupKey,"Manufacturer", $article->manufacturer);
-        $this->appendParameter($groupKey,"Size", $article->size);
-        $this->appendParameter($groupKey,"Description", $article->description);
-        $this->appendParameter($groupKey,"VatPercentage", $article->vatPercentage);
-        $this->appendParameter($groupKey,"Quantity",  $article->quantity);
-        $this->appendParameter($groupKey,"GrossUnitPrice", $article->grossUnitPrice);
-        $this->appendParameter($groupKey,"GrossUnitPriceIncl", $article->grossUnitPriceIncl);
-        $this->appendParameter($groupKey,"GrossUnitPriceExcl", $article->grossUnitPriceExcl);
-    }
-
-    private function appendParameter(int $groupKey, string $name, $value)
-    {
-        if($value) {
-            $this->serviceList->appendParameter([
-                "Name"              => $name,
-                "Value"             => $value,
-                "GroupType"         => "Article",
-                "GroupID"           => $groupKey
-            ]);
-        }
-
-        return $this;
+        $this->appendParameter($groupKey, "Article","ArticleId", $article->articleId);
+        $this->appendParameter($groupKey, "Article","ArticleDescription", $article->articleDescription);
+        $this->appendParameter($groupKey, "Article","ArticleUnitprice", $article->articleUnitprice);
+        $this->appendParameter($groupKey, "Article","ArticleQuantity", $article->articleQuantity);
+        $this->appendParameter($groupKey, "Article","ArticleVatcategory", $article->articleVatcategory);
+        $this->appendParameter($groupKey, "Article","Identifier", $article->identifier);
+        $this->appendParameter($groupKey, "Article","Color", $article->color);
+        $this->appendParameter($groupKey, "Article","UnitCode", $article->unitCode);
+        $this->appendParameter($groupKey, "Article","Brand", $article->brand);
+        $this->appendParameter($groupKey, "Article","Manufacturer", $article->manufacturer);
+        $this->appendParameter($groupKey, "Article","Size", $article->size);
+        $this->appendParameter($groupKey, "Article","Description", $article->description);
+        $this->appendParameter($groupKey, "Article","VatPercentage", $article->vatPercentage);
+        $this->appendParameter($groupKey, "Article","Quantity",  $article->quantity);
+        $this->appendParameter($groupKey, "Article","GrossUnitPrice", $article->grossUnitPrice);
+        $this->appendParameter($groupKey, "Article","GrossUnitPriceIncl", $article->grossUnitPriceIncl);
+        $this->appendParameter($groupKey, "Article","GrossUnitPriceExcl", $article->grossUnitPriceExcl);
     }
 }
