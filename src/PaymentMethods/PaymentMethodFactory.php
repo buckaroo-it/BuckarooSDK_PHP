@@ -9,7 +9,7 @@ class PaymentMethodFactory
 {
     private static array $payments = [
         ApplePay::class                 => ['applepay'],
-//        Alipay::class                   => ['alipay'],
+        Alipay::class                   => ['alipay'],
         Afterpay::class                 => ['afterpay'],
         AfterpayDigiAccept::class       => ['afterpaydigiaccept'],
         Bancontact::class               => ['bancontactmrcash'],
