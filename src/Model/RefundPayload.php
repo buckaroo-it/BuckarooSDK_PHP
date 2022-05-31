@@ -9,6 +9,7 @@ class RefundPayload extends Payload
         $amountCredit,
         $invoice,
         $pushURL,
+        $description,
         $originalTransactionKey;
 
     public function __construct(?array $payload)

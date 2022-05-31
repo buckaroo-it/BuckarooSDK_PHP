@@ -8,10 +8,12 @@ abstract class Model implements Arrayable
 {
     public function __get($property)
     {
-        if (property_exists($this, $property))
+        if (property_exists($this, $property) && isset($this->$property))
         {
             return $this->$property;
         }
+
+        return null;
     }
 
     public function __set($property, $value)
@@ -35,6 +37,11 @@ abstract class Model implements Arrayable
         }
 
         return $this;
+    }
+
+    public function serviceParameterKeyOf($propertyName)
+    {
+        return ucfirst($propertyName);
     }
 
     public function toArray() : array

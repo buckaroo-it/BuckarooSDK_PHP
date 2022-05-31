@@ -6,6 +6,7 @@ use Buckaroo\Client;
 use Buckaroo\Handlers\Reply\ReplyHandler;
 use Buckaroo\Model\PaymentPayload;
 use Buckaroo\Model\RefundPayload;
+use Buckaroo\Model\ServiceList;
 use Buckaroo\Services\PayloadService;
 use Buckaroo\Transaction\Request\Adapters\PaymentPayloadAdapter;
 use Buckaroo\Transaction\Request\Adapters\RefundPayloadAdapter;
@@ -22,38 +23,15 @@ abstract class PaymentMethod implements PaymentInterface
     protected TransactionRequest $request;
     protected array $payload;
 
-    public const AFTERPAY = 'afterpay';
-    public const AFTERPAYDIGIACCEPT = 'afterpaydigiaccept';
-    public const KLARNAKP = 'klarnakp';
-    public const KLARNA = 'klarna';
-    public const SEPA = 'sepadirectdebit';
-    public const KBC = 'kbcpaymentbutton';
-    public const PAYPAL = 'paypal';
-    public const EPS = 'eps';
-    public const SOFORT = 'sofortueberweisung';
-    public const PAYCONIQ = 'payconiq';
-    public const P24 = 'przelewy24';
-    public const IDEAL = 'ideal';
-    public const IDEALPROCESSING = 'idealprocessing';
-    public const CAPAYABLE = 'capayable';
-    public const GIROPAY = 'giropay';
-    public const GIFTCARD = 'giftcard';
-    public const TRANSFER = 'transfer';
-    public const RTP = 'requesttopay';
-    public const APPLEPAY = 'applepay';
-    public const ALIPAY = 'alipay';
-    public const WECHATPAY = 'wechatpay';
-    public const BILLINK = 'billink';
-    public const BELFIUS = 'belfius';
-    public const BANCONTACT = 'bancontactmrcash';
-
     public function __construct(
-        Client $client
+        Client $client,
+        ?string $serviceCode
     ) {
         $this->client = $client;
         $this->logger = $client->getLogger();
 
         $this->request = new TransactionRequest;
+        $this->serviceCode = $serviceCode;
     }
 
     public function pay($payload): TransactionResponse
@@ -76,9 +54,35 @@ abstract class PaymentMethod implements PaymentInterface
 
         $this->request->setPayload($this->getRefundPayload());
 
-        $this->setRefundServiceList();
+        $this->setRefundServiceList($this->payload['serviceParameters'] ?? []);
 
         return $this->postRequest();
+    }
+
+    public function setPayServiceList(array $serviceParameters = [])
+    {
+        $serviceList =  new ServiceList(
+            $this->paymentName(),
+            $this->serviceVersion(),
+            'Pay'
+        );
+
+        $this->request->getServices()->pushServiceList($serviceList);
+
+        return $this;
+    }
+
+    public function setRefundServiceList(array $serviceParameters = [])
+    {
+        $serviceList =  new ServiceList(
+            $this->paymentName(),
+            $this->serviceVersion(),
+            'Refund'
+        );
+
+        $this->request->getServices()->pushServiceList($serviceList);
+
+        return $this;
     }
 
     public function getPaymentPayload(): array

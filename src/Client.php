@@ -100,6 +100,14 @@ class Client
         ;
     }
 
+    public function getDataRequestUrl()
+    {
+        return ($this->getMode() == self::MODE_LIVE ?
+                self::ENDPOINT_LIVE :
+                self::ENDPOINT_TEST) . '/' . ltrim('json/DataRequest', '/')
+            ;
+    }
+
     protected function getHeaders(string $url, string $data, string $method): array
     {
         return [
@@ -121,6 +129,11 @@ class Client
         return $this->call(self::METHOD_POST, $data, $responseClass);
     }
 
+    public function dataRequest(Request $data = null, $responseClass = 'Buckaroo\Transaction\Response\TransactionResponse')
+    {
+        return $this->call(self::METHOD_POST, $data, $responseClass, $this->getDataRequestUrl());
+    }
+
     protected function call(
         $method = self::METHOD_GET,
         Request $data = null,
@@ -135,13 +148,11 @@ class Client
             $url = $this->getTransactionUrl();
         }
 
-        $json = json_encode($data->toArray());
-
         // all headers have to be set at once
-        $headers = $this->getHeaders($url, $json, $method);
+        $headers = $this->getHeaders($url, $data->toJson(), $method);
         $headers = array_merge($headers, $data->getHeaders());
 
-        $decodedResult = $this->httpClient->call($url, $headers, $method, $json, $responseClass);
+        $decodedResult = $this->httpClient->call($url, $headers, $method, $data->toJson(), $responseClass);
 
         $response = new $responseClass($decodedResult);
 

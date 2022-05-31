@@ -10,11 +10,12 @@ use Buckaroo\Services\ServiceListParameters\DefaultParameters;
 class KlarnaPay extends PaymentMethod
 {
     public const SERVICE_VERSION = 0;
+    public const PAYMENT_NAME = 'klarna';
 
     public function setPayServiceList(array $serviceParameters = [])
     {
         $serviceList =  new ServiceList(
-            self::AFTERPAY,
+            self::PAYMENT_NAME,
             self::SERVICE_VERSION,
             'Pay'
         );
@@ -29,16 +30,13 @@ class KlarnaPay extends PaymentMethod
         return $this;
     }
 
-    public function setRefundServiceList()
+    public function paymentName(): string
     {
-        $serviceList =  new ServiceList(
-            self::KLARNA,
-            self::SERVICE_VERSION,
-            'Refund'
-        );
+        return self::PAYMENT_NAME;
+    }
 
-        $this->request->getServices()->pushServiceList($serviceList);
-
-        return $this;
+    public function serviceVersion(): int
+    {
+        return self::SERVICE_VERSION;
     }
 }

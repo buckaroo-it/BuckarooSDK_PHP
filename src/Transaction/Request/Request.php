@@ -88,6 +88,11 @@ class Request implements JsonSerializable, ArrayAccess, Arrayable
         return $this->data;
     }
 
+    public function toJson(): string
+    {
+        return json_encode($this->toArray());
+    }
+
     /**
      * @param string $name
      * @param string $value

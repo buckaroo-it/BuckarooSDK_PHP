@@ -4,115 +4,65 @@ namespace Buckaroo\Services\ServiceListParameters;
 
 use Buckaroo\Model\Address;
 use Buckaroo\Model\Customer;
+use Buckaroo\Model\Model;
 use Buckaroo\Model\ServiceList;
 
-class CustomerParameters implements ServiceListParameter
+class CustomerParameters extends ServiceListParameter
 {
-    protected $serviceListParameter;
-    protected ServiceList $serviceList;
-    protected array $data;
-
-    public function __construct(ServiceListParameter $serviceListParameter, array $data)
-    {
-        $this->data = $data;
-        $this->serviceListParameter = $serviceListParameter;
-    }
-
     public function data(): ServiceList
     {
-        $this->serviceList = $this->serviceListParameter->data();
+        $customer = $this->data['customer'];
 
-        $this->process();
+        $this->attachCustomer('Customer', $customer);
+
+        if($customer->address) {
+            $this->attachCustomerAddress('Address', $customer->address);
+        }
+
+        if($customer->billing) {
+            $this->attachCustomerAddress('BillingCustomer', $customer->billing);
+        }
+
+        if($customer->shipping) {
+            $this->attachCustomerAddress('ShippingCustomer', $customer->shipping);
+        }
 
         return $this->serviceList;
     }
 
-    private function process()
+    protected function attachCustomer(?string $groupType, Model $customer)
     {
-        $customer = (new Customer())->setProperties($this->data);
-
-        $this->attachCustomerAddress('BillingCustomer', $customer->billing);
-        $this->attachCustomerAddress('ShippingCustomer', $customer->shipping);
+        $this->appendParameter(null, $groupType, $customer->serviceParameterKeyOf('gender'), $customer->gender);
+        $this->appendParameter(null, $groupType, $customer->serviceParameterKeyOf('initials'), $customer->initials);
+        $this->appendParameter(null, $groupType, $customer->serviceParameterKeyOf('firstName'), $customer->firstName);
+        $this->appendParameter(null, $groupType, $customer->serviceParameterKeyOf('lastName'), $customer->lastName);
+        $this->appendParameter(null, $groupType, $customer->serviceParameterKeyOf('birthDate'), $customer->birthDate);
+        $this->appendParameter(null, $groupType, $customer->serviceParameterKeyOf('email'), $customer->email);
+        $this->appendParameter(null, $groupType, $customer->serviceParameterKeyOf('phone'), $customer->phone);
+        $this->appendParameter(null, $groupType, $customer->serviceParameterKeyOf('country'), $customer->country);
     }
 
-    private function attachCustomerAddress(string $groupType, Address $address)
+    protected function attachCustomerAddress(string $groupType, Address $address)
     {
-        $this->serviceList->appendParameter([
-            "Name"              => "Category",
-            "Value"             => "Person",
-            "GroupType"         => $groupType
-        ]);
-
-        $this->serviceList->appendParameter([
-            "Name"              => "FirstName",
-            "Value"             => $address->firstName,
-            "GroupType"         => $groupType
-        ]);
-
-        $this->serviceList->appendParameter([
-            "Name"              => "LastName",
-            "Value"             => $address->lastName,
-            "GroupType"         => $groupType
-        ]);
-
-        $this->serviceList->appendParameter([
-            "Name"              => "Email",
-            "Value"             => $address->email,
-            "GroupType"         => $groupType
-        ]);
-
-        $this->serviceList->appendParameter([
-            "Name"              => "Phone",
-            "Value"             => $address->phone,
-            "GroupType"         => $groupType
-        ]);
-
-        $this->serviceList->appendParameter([
-            "Name"              => "Street",
-            "Value"             => $address->street,
-            "GroupType"         => $groupType
-        ]);
-
-        $this->serviceList->appendParameter([
-            "Name"              => "StreetNumber",
-            "Value"             => $address->streetNumber,
-            "GroupType"         => $groupType
-        ]);
-
-        $this->serviceList->appendParameter([
-            "Name"              => "StreetNumberAdditional",
-            "Value"             => $address->streetNumber,
-            "GroupType"         => $groupType
-        ]);
-
-        $this->serviceList->appendParameter([
-            "Name"              => "PostalCode",
-            "Value"             => $address->postalCode,
-            "GroupType"         => $groupType
-        ]);
-
-        $this->serviceList->appendParameter([
-            "Name"              => "City",
-            "Value"             => $address->city,
-            "GroupType"         => $groupType
-        ]);
-
-        $this->serviceList->appendParameter([
-            "Name"              => "Country",
-            "Value"             => $address->country,
-            "GroupType"         => $groupType
-        ]);
-
-        $this->serviceList->appendParameter([
-            "Name"              => "Salutation",
-            "Value"             => $address->salutation,
-            "GroupType"         => $groupType
-        ]);
-
-        $this->serviceList->appendParameter([
-            "Name"              => "BirthDate",
-            "Value"             => $address->birthDate,
-            "GroupType"         => $groupType
-        ]);
+        $this->appendParameter(null, $groupType, $address->serviceParameterKeyOf('category'), $address->category);
+        $this->appendParameter(null, $groupType, $address->serviceParameterKeyOf('gender'), $address->gender);
+        $this->appendParameter(null, $groupType, $address->serviceParameterKeyOf('careOf'), $address->careOf);
+        $this->appendParameter(null, $groupType, $address->serviceParameterKeyOf('initials'), $address->initials);
+        $this->appendParameter(null, $groupType, $address->serviceParameterKeyOf('salutation'), $address->salutation);
+        $this->appendParameter(null, $groupType, $address->serviceParameterKeyOf('firstName'), $address->firstName);
+        $this->appendParameter(null, $groupType, $address->serviceParameterKeyOf('prefixLastName'), $address->prefixLastName);
+        $this->appendParameter(null, $groupType, $address->serviceParameterKeyOf('lastName'), $address->lastName);
+        $this->appendParameter(null, $groupType, $address->serviceParameterKeyOf('externalName'), $address->externalName);
+        $this->appendParameter(null, $groupType, $address->serviceParameterKeyOf('chamberOfCommerce'), $address->chamberOfCommerce);
+        $this->appendParameter(null, $groupType, $address->serviceParameterKeyOf('email'), $address->email);
+        $this->appendParameter(null, $groupType, $address->serviceParameterKeyOf('phone'), $address->phone);
+        $this->appendParameter(null, $groupType, $address->serviceParameterKeyOf('mobilePhone'), $address->mobilePhone);
+        $this->appendParameter(null, $groupType, $address->serviceParameterKeyOf('street'), $address->street);
+        $this->appendParameter(null, $groupType, $address->serviceParameterKeyOf('streetNumber'), $address->streetNumber);
+        $this->appendParameter(null, $groupType, $address->serviceParameterKeyOf('streetNumberAdditional'), $address->streetNumberAdditional);
+        $this->appendParameter(null, $groupType, $address->serviceParameterKeyOf('postalCode'), $address->postalCode);
+        $this->appendParameter(null, $groupType, $address->serviceParameterKeyOf('city'), $address->city);
+        $this->appendParameter(null, $groupType, $address->serviceParameterKeyOf('country'), $address->country);
+        $this->appendParameter(null, $groupType, $address->serviceParameterKeyOf('birthDate'), $address->birthDate);
     }
 }

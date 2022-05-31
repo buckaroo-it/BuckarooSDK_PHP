@@ -8,6 +8,7 @@ class PaymentPayload extends Payload
     protected
         $invoice,
         $order,
+        $description,
         $currency,
         $returnURL,
         $returnURLCancel,
@@ -22,7 +23,10 @@ class PaymentPayload extends Payload
         $saveToken,
         $method,
         $serviceVersion,
-        $serviceAction;
+        $serviceAction,
+        $paymentData,
+        $customerCardName,
+        $originalTransactionKey;
 
     public function __construct(?array $payload)
     {

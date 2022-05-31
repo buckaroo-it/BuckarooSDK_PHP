@@ -3,7 +3,7 @@
 namespace Buckaroo\Transaction\Response;
 
 use Buckaroo\Helpers\Base;
-use Buckaroo\Helpers\Constants\ResponseStatus;
+use Buckaroo\Resources\Constants\ResponseStatus;
 
 class PaymentResult
 {
