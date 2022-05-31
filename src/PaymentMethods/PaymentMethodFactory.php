@@ -32,6 +32,7 @@ class PaymentMethodFactory
         //P24::class                      => ['przelewy24'],
         Giropay::class                  => ['giropay'],
         GiftCard::class                 => ['giftcard'],
+        Trustly::class                  => ['trustly'],
 //        Transfer::class                 => ['transfer'],
 //        RTP::class                      => ['requesttopay'],
         WeChatPay::class                => ['wechatpay'],

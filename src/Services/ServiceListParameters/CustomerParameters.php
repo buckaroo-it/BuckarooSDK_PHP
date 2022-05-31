@@ -39,6 +39,7 @@ class CustomerParameters extends ServiceListParameter
         $this->appendParameter(null, $groupType, $customer->serviceParameterKeyOf('birthDate'), $customer->birthDate);
         $this->appendParameter(null, $groupType, $customer->serviceParameterKeyOf('email'), $customer->email);
         $this->appendParameter(null, $groupType, $customer->serviceParameterKeyOf('phone'), $customer->phone);
+        $this->appendParameter(null, $groupType, $customer->serviceParameterKeyOf('country'), $customer->country);
     }
 
     protected function attachCustomerAddress(string $groupType, Address $address)

@@ -18,7 +18,8 @@ class Customer extends Model
         $lastName,
         $birthDate,
         $email,
-        $phone;
+        $phone,
+        $country;
 
     public function setProperties(array $data)
     {

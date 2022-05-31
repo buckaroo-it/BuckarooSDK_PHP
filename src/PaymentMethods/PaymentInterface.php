@@ -3,10 +3,6 @@
 namespace Buckaroo\PaymentMethods;
 
 use Buckaroo\Handlers\Reply\ReplyHandler;
-use Buckaroo\Model\PaymentPayload;
-use Buckaroo\Model\RefundPayload;
-use Buckaroo\Model\ServiceList;
-use Buckaroo\Transaction\Request\TransactionRequest;
 use Buckaroo\Transaction\Response\TransactionResponse;
 
 interface PaymentInterface

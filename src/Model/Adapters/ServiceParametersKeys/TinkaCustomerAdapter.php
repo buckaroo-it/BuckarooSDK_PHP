@@ -2,7 +2,7 @@
 
 namespace Buckaroo\Model\Adapters\ServiceParametersKeys;
 
-class TinkaAdapter extends Adapter
+class TinkaCustomerAdapter extends Adapter
 {
     protected array $keys = [
         'birthDate'        => 'DateOfBirth'

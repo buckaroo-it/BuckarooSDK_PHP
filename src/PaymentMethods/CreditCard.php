@@ -4,8 +4,6 @@ namespace Buckaroo\PaymentMethods;
 use Buckaroo\Model\CapturePayload;
 use Buckaroo\Model\ServiceList;
 use Buckaroo\Services\PayloadService;
-use Buckaroo\Services\ServiceListParameters\ArticleParameters;
-use Buckaroo\Services\ServiceListParameters\DefaultParameters;
 use Buckaroo\Transaction\Request\Adapters\CapturePayloadAdapter;
 use Buckaroo\Transaction\Response\TransactionResponse;
 

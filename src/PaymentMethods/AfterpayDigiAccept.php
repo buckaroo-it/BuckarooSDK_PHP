@@ -5,7 +5,6 @@ namespace Buckaroo\PaymentMethods;
 use Buckaroo\Model\ServiceList;
 use Buckaroo\Services\ServiceListParameters\AfterpayDigiAcceptCustomerParameters;
 use Buckaroo\Services\ServiceListParameters\ArticleParameters;
-use Buckaroo\Services\ServiceListParameters\CustomerParameters;
 use Buckaroo\Services\ServiceListParameters\DefaultParameters;
 
 class AfterpayDigiAccept extends PaymentMethod

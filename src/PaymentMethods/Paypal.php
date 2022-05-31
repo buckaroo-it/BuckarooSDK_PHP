@@ -2,8 +2,6 @@
 
 namespace Buckaroo\PaymentMethods;
 
-use Buckaroo\Model\ServiceList;
-
 class Paypal extends PaymentMethod
 {
     public const SERVICE_VERSION = 0;

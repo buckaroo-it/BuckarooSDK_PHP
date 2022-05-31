@@ -2,7 +2,6 @@
 
 namespace Buckaroo\PaymentMethods;
 
-use Buckaroo\Model\PaymentPayload;
 use Buckaroo\Model\ServiceList;
 
 class GiftCard extends PaymentMethod

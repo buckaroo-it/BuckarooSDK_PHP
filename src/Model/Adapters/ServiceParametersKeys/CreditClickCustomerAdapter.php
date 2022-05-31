@@ -2,7 +2,7 @@
 
 namespace Buckaroo\Model\Adapters\ServiceParametersKeys;
 
-class CreditClickAdapter extends Adapter
+class CreditClickCustomerAdapter extends Adapter
 {
     protected array $keys = [
         'firstName'        => 'firstname',
