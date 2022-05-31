@@ -4,44 +4,18 @@ declare(strict_types=1);
 
 namespace Buckaroo\PaymentMethods;
 
-use Buckaroo\Model\PaymentPayload;
-use Buckaroo\Model\RefundPayload;
-use Buckaroo\Model\ServiceList;
-
 class Eps extends PaymentMethod
 {
     public const SERVICE_VERSION = 1;
+    public const PAYMENT_NAME = 'eps';
 
-    public function getCode(): string
+    public function paymentName(): string
     {
-        return PaymentMethod::EPS;
+        return self::PAYMENT_NAME;
     }
 
-    public function setPayServiceList(array $serviceParameters = []): self
+    public function serviceVersion(): int
     {
-        $paymentModel = new PaymentPayload($this->payload);
-
-        $serviceList = new ServiceList(
-            self::EPS,
-            self::SERVICE_VERSION,
-            'Pay'
-        );
-
-        $this->request->getServices()->pushServiceList($serviceList);
-
-        return $this;
-    }
-
-    public function setRefundServiceList(): self
-    {
-        $serviceList =  new ServiceList(
-            self::EPS,
-            self::SERVICE_VERSION,
-            'Refund'
-        );
-
-        $this->request->getServices()->pushServiceList($serviceList);
-
-        return $this;
+        return self::SERVICE_VERSION;
     }
 }

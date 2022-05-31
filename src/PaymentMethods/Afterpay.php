@@ -21,6 +21,7 @@ use Buckaroo\Transaction\Response\TransactionResponse;
 class Afterpay extends PaymentMethod
 {
     public const SERVICE_VERSION = 1;
+    public const PAYMENT_NAME = 'afterpay';
 
     public function authorize($payload): TransactionResponse
     {
@@ -28,14 +29,14 @@ class Afterpay extends PaymentMethod
         $this->request->setPayload($this->getPaymentPayload());
 
         $serviceList = new ServiceList(
-            self::AFTERPAY,
-            self::SERVICE_VERSION,
+            $this->paymentName(),
+            $this->serviceVersion(),
             'Authorize'
         );
 
         $parametersService = new DefaultParameters($serviceList);
-        $parametersService = new ArticleParameters($parametersService, $serviceParameters['articles'] ?? []);
-        $parametersService = new CustomerParameters($parametersService, $serviceParameters['customer'] ?? []);
+        $parametersService = new ArticleParameters($parametersService, $this->payload['serviceParameters']['articles'] ?? []);
+        $parametersService = new CustomerParameters($parametersService, $this->payload['serviceParameters']['customer'] ?? []);
         $parametersService->data();
 
         $this->request->getServices()->pushServiceList($serviceList);
@@ -52,8 +53,8 @@ class Afterpay extends PaymentMethod
         $this->request->setPayload($capturePayload);
 
         $serviceList = new ServiceList(
-            self::AFTERPAY,
-            self::SERVICE_VERSION,
+            $this->paymentName(),
+            $this->serviceVersion(),
             'Capture'
         );
 
@@ -68,8 +69,8 @@ class Afterpay extends PaymentMethod
     public function setPayServiceList(array $serviceParameters = [])
     {
         $serviceList =  new ServiceList(
-            self::AFTERPAY,
-            self::SERVICE_VERSION,
+            $this->paymentName(),
+            $this->serviceVersion(),
             'Pay'
         );
 
@@ -83,12 +84,13 @@ class Afterpay extends PaymentMethod
         return $this;
     }
 
-    public function setRefundServiceList(): ServiceList
+    public function paymentName(): string
     {
-        return new ServiceList(
-            self::AFTERPAY,
-            self::SERVICE_VERSION,
-            'Refund'
-        );
+        return self::PAYMENT_NAME;
+    }
+
+    public function serviceVersion(): int
+    {
+        return self::SERVICE_VERSION;
     }
 }

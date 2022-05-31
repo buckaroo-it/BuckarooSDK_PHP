@@ -7,31 +7,35 @@ use Buckaroo\Exceptions\SdkException;
 
 class PaymentMethodFactory
 {
-    private static array $classes = [
-        PaymentMethod::AFTERPAY => 'Afterpay',
-        PaymentMethod::AFTERPAYDIGIACCEPT => 'Afterpay',
-        PaymentMethod::KLARNAKP => 'Klarna',
-        PaymentMethod::KLARNA => 'KlarnaPay',
-        PaymentMethod::SEPA => 'Sepa',
-        PaymentMethod::KBC => 'Kbc',
-        PaymentMethod::PAYPAL => 'Paypal',
-        PaymentMethod::EPS => 'Eps',
-        PaymentMethod::SOFORT => 'Sofort',
-        PaymentMethod::PAYCONIQ => 'Payconiq',
-        PaymentMethod::P24 => 'P24',
-        PaymentMethod::IDEAL => 'Ideal',
-        PaymentMethod::IDEALPROCESSING => 'Ideal',
-        PaymentMethod::CAPAYABLE => 'Capayable',
-        PaymentMethod::GIROPAY => 'Giropay',
-        PaymentMethod::GIFTCARD => 'GiftCard',
-        PaymentMethod::TRANSFER => 'Transfer',
-        PaymentMethod::RTP => 'RequestToPay',
-        PaymentMethod::APPLEPAY => 'ApplePay',
-        PaymentMethod::ALIPAY => 'Alipay',
-        PaymentMethod::WECHATPAY => 'WeChatPay',
-        PaymentMethod::BILLINK => 'Billink',
-        PaymentMethod::BELFIUS => 'Belfius',
-        PaymentMethod::BANCONTACT => 'Bancontact',
+    private static array $payments = [
+        ApplePay::class                 => ['applepay'],
+        Alipay::class                   => ['alipay'],
+        Afterpay::class                 => ['afterpay'],
+        AfterpayDigiAccept::class       => ['afterpaydigiaccept'],
+        Bancontact::class               => ['bancontactmrcash'],
+        Billink::class                  => ['billink'],
+        Belfius::class                  => ['belfius'],
+        CreditCard::class               => ['creditcard', 'mastercard', 'visa', 'amex', 'vpay', 'maestro', 'visaelectron', 'cartebleuevisa', 'cartebancaire', 'dankort', 'nexi', 'postepay'],
+        CreditClick::class              => ['creditclick'],
+        Ideal::class                    => ['ideal', 'idealprocessing'],
+        IdealQR::class                  => ['ideal_qr'],
+        In3::class                      => ['in3'],
+        KlarnaPay::class                => ['klarna'],
+        KlarnaKP::class                 => ['klarnakp'],
+        Sepa::class                     => ['sepadirectdebit'],
+        Kbc::class                      => ['kbcpaymentbutton'],
+        Paypal::class                   => ['paypal'],
+        Eps::class                      => ['eps'],
+        Sofort::class                   => ['sofort'],
+        Tinka::class                    => ['tinka'],
+        Payconiq::class                 => ['payconiq'],
+        //P24::class                      => ['przelewy24'],
+        Giropay::class                  => ['giropay'],
+        GiftCard::class                 => ['giftcard'],
+        Trustly::class                  => ['trustly'],
+//        Transfer::class                 => ['transfer'],
+//        RTP::class                      => ['requesttopay'],
+        WeChatPay::class                => ['wechatpay'],
     ];
 
     private Client $client;
@@ -42,33 +46,15 @@ class PaymentMethodFactory
         string $paymentMethod
     ) {
         $this->client = $client;
-        $this->paymentMethodRequest = $paymentMethod;
+        $this->paymentMethod = strtolower($paymentMethod);
     }
 
     public function getPaymentMethod() : PaymentMethod
     {
-        $class = $this->determinePaymentClass();
-
-        $paymentMethodObject = new $class($this->client);
-
-        return $paymentMethodObject;
-    }
-
-    private function determinePaymentClass()
-    {
-        $bankCards = CreditCard::getCards();
-
-        $paymentMethod = strtolower($this->paymentMethodRequest);
-
-        $matches = self::$classes;
-
-        if(isset($matches[$paymentMethod]))
-        {
-            return '\Buckaroo\PaymentMethods\\' . $matches[$paymentMethod];
-        }
-
-        if (in_array($paymentMethod, $bankCards)) {
-            return CreditCard::class;
+        foreach(self::$payments as $class => $alias) {
+            if(in_array($this->paymentMethod, $alias)) {
+                return new $class($this->client, $this->paymentMethod);
+            }
         }
 
         throw new SdkException($this->client->getLogger(), __METHOD__, "Wrong payment method code has been given");
@@ -80,10 +66,5 @@ class PaymentMethodFactory
     ): PaymentMethod {
         $factory = new self($client, $paymentMethod);
         return $factory->getPaymentMethod();
-    }
-
-    public static function getMethods(): array
-    {
-        return array_keys(self::$classes);
     }
 }

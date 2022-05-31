@@ -4,13 +4,18 @@ declare(strict_types=1);
 
 namespace Buckaroo\Transaction\Response;
 
-use Buckaroo\Helpers\Constants\ResponseStatus;
+use Buckaroo\Resources\Constants\ResponseStatus;
 
 class TransactionResponse extends Response
 {
     public function isSuccess(): bool
     {
         return $this->getStatusCode() == ResponseStatus::BUCKAROO_STATUSCODE_SUCCESS;
+    }
+
+    public function isFailed(): bool
+    {
+        return $this->getStatusCode() == ResponseStatus::BUCKAROO_STATUSCODE_FAILED;
     }
 
     public function isCanceled(): bool
@@ -32,6 +37,16 @@ class TransactionResponse extends Response
     public function isWaitingOnUserInput(): bool
     {
         return $this->getStatusCode() == ResponseStatus::BUCKAROO_STATUSCODE_WAITING_ON_USER_INPUT;
+    }
+
+    public function isRejected(): bool
+    {
+        return $this->getStatusCode() == ResponseStatus::BUCKAROO_STATUSCODE_REJECTED;
+    }
+
+    public function isValidationFailure(): bool
+    {
+        return $this->getStatusCode() == ResponseStatus::BUCKAROO_STATUSCODE_VALIDATION_FAILURE;
     }
 
     public function hasRedirect(): bool
