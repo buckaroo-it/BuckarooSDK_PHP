@@ -34,7 +34,7 @@ class PaymentMethodFactory
         GiftCard::class                 => ['giftcard'],
 //        Transfer::class                 => ['transfer'],
 //        RTP::class                      => ['requesttopay'],
-//        WechatPay::class                => ['wechatpay'],
+        WeChatPay::class                => ['wechatpay'],
     ];
 
     private Client $client;
