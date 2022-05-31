@@ -16,6 +16,7 @@ class PaymentMethodFactory
         Billink::class                  => ['billink'],
         Belfius::class                  => ['belfius'],
         CreditCard::class               => ['creditcard', 'mastercard', 'visa', 'amex', 'vpay', 'maestro', 'visaelectron', 'cartebleuevisa', 'cartebancaire', 'dankort', 'nexi', 'postepay'],
+        CreditClick::class              => ['creditclick'],
         Ideal::class                    => ['ideal', 'idealprocessing'],
         IdealQR::class                  => ['ideal_qr'],
         In3::class                      => ['in3'],

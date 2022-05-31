@@ -54,7 +54,7 @@ abstract class PaymentMethod implements PaymentInterface
 
         $this->request->setPayload($this->getRefundPayload());
 
-        $this->setRefundServiceList();
+        $this->setRefundServiceList($this->payload['serviceParameters'] ?? []);
 
         return $this->postRequest();
     }
@@ -72,7 +72,7 @@ abstract class PaymentMethod implements PaymentInterface
         return $this;
     }
 
-    public function setRefundServiceList()
+    public function setRefundServiceList(array $serviceParameters = [])
     {
         $serviceList =  new ServiceList(
             $this->paymentName(),

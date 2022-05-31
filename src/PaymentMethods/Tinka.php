@@ -3,7 +3,7 @@
 namespace Buckaroo\PaymentMethods;
 
 use Buckaroo\Model\Adapters\ServiceParametersKeys\TinkaArticleAdapter;
-use Buckaroo\Model\Adapters\ServiceParametersKeys\TinkaCustomerAdapter;
+use Buckaroo\Model\Adapters\ServiceParametersKeys\TinkaAdapter;
 use Buckaroo\Model\Article;
 use Buckaroo\Model\Customer;
 use Buckaroo\Model\ServiceList;
@@ -49,7 +49,7 @@ class Tinka extends PaymentMethod
             return new TinkaArticleAdapter((new Article())->setProperties($article));
         }, $serviceParameters['articles'] ?? []));
 
-        $parametersService = new TinkaCustomerParameters($parametersService, ['customer' => new TinkaCustomerAdapter((new Customer())->setProperties($serviceParameters['customer'] ?? []))]);
+        $parametersService = new TinkaCustomerParameters($parametersService, ['customer' => new TinkaAdapter((new Customer())->setProperties($serviceParameters['customer'] ?? []))]);
         $parametersService->data();
 
         $this->request->getServices()->pushServiceList($serviceList);

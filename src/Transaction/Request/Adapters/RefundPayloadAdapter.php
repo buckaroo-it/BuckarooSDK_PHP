@@ -10,9 +10,10 @@ class RefundPayloadAdapter extends TransactionAdapter
     {
         return [
             'Invoice'                   => $this->payload->invoice,
-            'AmountCredit'              =>  $this->payload->amountCredit,
+            'AmountCredit'              => $this->payload->amountCredit,
             'OriginalTransactionKey'    => $this->payload->originalTransactionKey,
-            'Currency'                  =>  $this->payload->currency,
+            'Description'               => $this->payload->description,
+            'Currency'                  => $this->payload->currency,
         ];
     }
 }
