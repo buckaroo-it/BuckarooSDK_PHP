@@ -7,7 +7,7 @@ use Buckaroo\Model\ServiceList;
 
 abstract class ServiceListParameter
 {
-    protected $serviceListParameter;
+    protected ServiceListParameter $serviceListParameter;
     protected ServiceList $serviceList;
     protected array $data;
 
@@ -37,8 +37,8 @@ abstract class ServiceListParameter
             $this->serviceList->appendParameter([
                 "Name"              => $name,
                 "Value"             => $value,
-                "GroupType"         => $groupType,
-                "GroupID"           => $groupKey
+                "GroupType"         => (is_null($groupType))? "" : $groupType,
+                "GroupID"           => (is_null($groupKey))? "" : $groupKey,
             ]);
         }
 

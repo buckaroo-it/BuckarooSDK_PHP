@@ -35,6 +35,7 @@ class ArticleParameters extends ServiceListParameter
         $this->appendParameter($groupKey, "Article", $article->serviceParameterKeyOf('description'), $article->description);
         $this->appendParameter($groupKey, "Article", $article->serviceParameterKeyOf('vatPercentage'), $article->vatPercentage);
         $this->appendParameter($groupKey, "Article", $article->serviceParameterKeyOf('quantity'),  $article->quantity);
+        $this->appendParameter($groupKey, "Article", $article->serviceParameterKeyOf('type'), $article->type);
         $this->appendParameter($groupKey, "Article", $article->serviceParameterKeyOf('grossUnitPrice'), $article->grossUnitPrice);
         $this->appendParameter($groupKey, "Article", $article->serviceParameterKeyOf('grossUnitPriceIncl'), $article->grossUnitPriceIncl);
         $this->appendParameter($groupKey, "Article", $article->serviceParameterKeyOf('grossUnitPriceExcl'), $article->grossUnitPriceExcl);

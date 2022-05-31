@@ -13,14 +13,27 @@ class TinkaTest extends BuckarooTestCase
     {
         $response = $this->buckaroo->payment('tinka')->pay($this->getPaymentPayload());
 
-        dd($response);
-        $this->assertTrue($response->isPendingProcessing());
+        $this->assertTrue($response->isFailed());
+    }
+
+    /**
+     * @test
+     */
+    public function it_creates_a_tinkal_refund()
+    {
+        $response = $this->buckaroo->payment('tinka')->refund([
+            'amountCredit' => 10,
+            'invoice'       => 'testinvoice 123',
+            'originalTransactionKey' => '2D04704995B74D679AACC59F87XXXXXX'
+        ]);
+
+        $this->assertTrue($response->isFailed());
     }
 
     private function getPaymentPayload(): array
     {
         return [
-            'amountDebit'       => 9.5,
+            'amountDebit'       => 3.5,
             'order'             => uniqid(),
             'invoice'           => uniqid(),
             'description'       => 'This is a test order',
@@ -30,22 +43,15 @@ class TinkaTest extends BuckarooTestCase
                 'deliveryDate'          => '09-12-2022',
                 'articles'      => [
                     [
-//                        'type'              => 1,
-//                        'description'       => 'Blue Toy Car',
-//                        'brand'             => 'Ford Focus',
-//                        'manufacturer'      => 'Ford',
-//                        'color'             => 'Red',
-//                        'size'              => 'Small',
-//                        'quantity'          => '1',
-                        'grossUnitPrice'    => function(int $groupId, string $groupType){
-                            return [
-                                "Name"              => "UnitGrossPrice",
-                                "Value"             => 3.5,
-                                "GroupType"         => $groupType,
-                                "GroupID"           => $groupId
-                            ];
-                        },
-//                        'unitCode'         => 'test'
+                        'type'              => 1,
+                        'description'       => 'Blue Toy Car',
+                        'brand'             => 'Ford Focus',
+                        'manufacturer'      => 'Ford',
+                        'color'             => 'Red',
+                        'size'              => 'Small',
+                        'quantity'          => '1',
+                        'grossUnitPrice'    => '3.5',
+                        'unitCode'         => 'test'
                     ]
                 ],
                 'customer'      => [
@@ -53,30 +59,27 @@ class TinkaTest extends BuckarooTestCase
                     'initials'      => 'J.S.',
                     'firstName' => 'Test',
                     'lastName' => 'Aflever',
-                    'email' => 'billingcustomer@buckaroo.nl',
-                    'phone' => '0610000000',
                     'birthDate' => '01-01-1990',
-                    'address'   => [
+                    'billing'                   => [
+                        'prefixLastName'    => 'the',
+                        'email' => 'billingcustomer@buckaroo.nl',
+                        'phone' => '0109876543',
                         'street' => 'Hoofdstraat',
-                        'housenumber'   => '2',
-                        'streetNumberAdditional' => 'a',
+                        'streetNumber' => '80',
+                        'streetNumberAdditional' => 'A',
                         'postalCode' => '8441EE',
                         'city' => 'Heerenveen',
-                        'country'=> 'NL'
-                    ]
-                ],
-                'subtotal'      => [
-                    [
-                        'name'      => 'Korting',
-                        'value'     => -2.00
+                        'country' => 'NL',
                     ],
-                    [
-                        'name'      => 'Betaaltoeslag',
-                        'value'     => 0.50
-                    ],
-                    [
-                        'name'      => 'Verzendkosten',
-                        'value'     => 1.00
+                    'shipping'                  => [
+                        'externalName' => 'Test',
+                        'phone' => '0109876543',
+                        'street' => 'Hoofdstraat',
+                        'streetNumber' => '80',
+                        'streetNumberAdditional' => 'A',
+                        'postalCode' => '8441EE',
+                        'city' => 'Heerenveen',
+                        'country' => 'NL',
                     ]
                 ]
             ]

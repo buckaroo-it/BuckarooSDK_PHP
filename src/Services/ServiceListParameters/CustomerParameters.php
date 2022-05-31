@@ -4,29 +4,54 @@ namespace Buckaroo\Services\ServiceListParameters;
 
 use Buckaroo\Model\Address;
 use Buckaroo\Model\Customer;
+use Buckaroo\Model\Model;
 use Buckaroo\Model\ServiceList;
 
 class CustomerParameters extends ServiceListParameter
 {
     public function data(): ServiceList
     {
-        $customer = (new Customer())->setProperties($this->data);
+        $customer = $this->data['customer'];
 
-        $this->attachCustomerAddress('BillingCustomer', $customer->billing);
-        $this->attachCustomerAddress('ShippingCustomer', $customer->shipping);
+        $this->attachCustomer('Customer', $customer);
+
+        if($customer->address) {
+            $this->attachCustomerAddress('Address', $customer->address);
+        }
+
+        if($customer->billing) {
+            $this->attachCustomerAddress('BillingCustomer', $customer->billing);
+        }
+
+        if($customer->shipping) {
+            $this->attachCustomerAddress('ShippingCustomer', $customer->shipping);
+        }
 
         return $this->serviceList;
     }
 
-    private function attachCustomerAddress(string $groupType, Address $address)
+    protected function attachCustomer(?string $groupType, Model $customer)
+    {
+        $this->appendParameter(null, $groupType, $customer->serviceParameterKeyOf('gender'), $customer->gender);
+        $this->appendParameter(null, $groupType, $customer->serviceParameterKeyOf('initials'), $customer->initials);
+        $this->appendParameter(null, $groupType, $customer->serviceParameterKeyOf('firstName'), $customer->firstName);
+        $this->appendParameter(null, $groupType, $customer->serviceParameterKeyOf('lastName'), $customer->lastName);
+        $this->appendParameter(null, $groupType, $customer->serviceParameterKeyOf('birthDate'), $customer->birthDate);
+        $this->appendParameter(null, $groupType, $customer->serviceParameterKeyOf('email'), $customer->email);
+        $this->appendParameter(null, $groupType, $customer->serviceParameterKeyOf('phone'), $customer->phone);
+    }
+
+    protected function attachCustomerAddress(string $groupType, Address $address)
     {
         $this->appendParameter(null, $groupType, $address->serviceParameterKeyOf('category'), $address->category);
-        $this->appendParameter(null, $groupType, $address->serviceParameterKeyOf('gender'), ($address->gender)? 'Male' : 'Female');
+        $this->appendParameter(null, $groupType, $address->serviceParameterKeyOf('gender'), $address->gender);
         $this->appendParameter(null, $groupType, $address->serviceParameterKeyOf('careOf'), $address->careOf);
         $this->appendParameter(null, $groupType, $address->serviceParameterKeyOf('initials'), $address->initials);
         $this->appendParameter(null, $groupType, $address->serviceParameterKeyOf('salutation'), $address->salutation);
         $this->appendParameter(null, $groupType, $address->serviceParameterKeyOf('firstName'), $address->firstName);
+        $this->appendParameter(null, $groupType, $address->serviceParameterKeyOf('prefixLastName'), $address->prefixLastName);
         $this->appendParameter(null, $groupType, $address->serviceParameterKeyOf('lastName'), $address->lastName);
+        $this->appendParameter(null, $groupType, $address->serviceParameterKeyOf('externalName'), $address->externalName);
         $this->appendParameter(null, $groupType, $address->serviceParameterKeyOf('chamberOfCommerce'), $address->chamberOfCommerce);
         $this->appendParameter(null, $groupType, $address->serviceParameterKeyOf('email'), $address->email);
         $this->appendParameter(null, $groupType, $address->serviceParameterKeyOf('phone'), $address->phone);
