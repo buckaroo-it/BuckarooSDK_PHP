@@ -23,6 +23,9 @@ abstract class PaymentMethod implements PaymentInterface
     protected TransactionRequest $request;
     protected array $payload;
 
+    protected string $paymentName = "";
+    protected int $serviceVersion = 0;
+
     public function __construct(
         Client $client,
         ?string $serviceCode
@@ -106,5 +109,15 @@ abstract class PaymentMethod implements PaymentInterface
     public function handleReply(array $data): ReplyHandler
     {
         return new ReplyHandler($this->client->config, $data);
+    }
+
+    public function paymentName(): string
+    {
+        return $this->paymentName;
+    }
+
+    public function serviceVersion(): int
+    {
+        return $this->serviceVersion;
     }
 }

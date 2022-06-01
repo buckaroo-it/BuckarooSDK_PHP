@@ -9,8 +9,6 @@ use Buckaroo\Transaction\Response\TransactionResponse;
 
 class CreditCard extends PaymentMethod
 {
-    public const SERVICE_VERSION = 0;
-
     public function payEncrypted($payload): TransactionResponse
     {
         $this->payload = (new PayloadService($payload))->toArray();
@@ -147,10 +145,5 @@ class CreditCard extends PaymentMethod
         }
 
         throw new \Exception('Missing creditcard name');
-    }
-
-    public function serviceVersion(): int
-    {
-        return self::SERVICE_VERSION;
     }
 }

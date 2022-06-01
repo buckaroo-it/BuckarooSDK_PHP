@@ -2,8 +2,11 @@
 
 namespace Buckaroo\PaymentMethods;
 
+use Buckaroo\Model\Article;
 use Buckaroo\Model\CapturePayload;
+use Buckaroo\Model\Customer;
 use Buckaroo\Model\ServiceList;
+use Buckaroo\PaymentMethods\Traits\HasArticleAndCustomerParameters;
 use Buckaroo\Services\PayloadService;
 use Buckaroo\Services\ServiceListParameters\ArticleParameters;
 use Buckaroo\Services\ServiceListParameters\CustomerParameters;
@@ -13,26 +16,9 @@ use Buckaroo\Transaction\Response\TransactionResponse;
 
 class Billink extends PaymentMethod
 {
-    public const SERVICE_VERSION = 0;
-    public const PAYMENT_NAME = 'billink';
+    use HasArticleAndCustomerParameters;
 
-    public function setPayServiceList(array $serviceParameters = [])
-    {
-        $serviceList =  new ServiceList(
-            self::PAYMENT_NAME,
-            self::SERVICE_VERSION,
-            'Pay'
-        );
-
-        $parametersService = new DefaultParameters($serviceList);
-        $parametersService = new ArticleParameters($parametersService, $serviceParameters['articles'] ?? []);
-        $parametersService = new CustomerParameters($parametersService, $serviceParameters['customer'] ?? []);
-        $parametersService->data();
-
-        $this->request->getServices()->pushServiceList($serviceList);
-
-        return $this;
-    }
+    protected string $paymentName = 'billink';
 
     public function authorize($payload): TransactionResponse
     {
@@ -40,14 +26,14 @@ class Billink extends PaymentMethod
         $this->request->setPayload($this->getPaymentPayload());
 
         $serviceList = new ServiceList(
-            self::PAYMENT_NAME,
-            self::SERVICE_VERSION,
+            $this->paymentName(),
+            $this->serviceVersion(),
             'Authorize'
         );
 
         $parametersService = new DefaultParameters($serviceList);
-        $parametersService = new ArticleParameters($parametersService, $this->payload['serviceParameters']['articles'] ?? []);
-        $parametersService = new CustomerParameters($parametersService, $this->payload['serviceParameters']['customer'] ?? []);
+        $parametersService = new ArticleParameters($parametersService, $this->articles($this->payload['serviceParameters']['articles'] ?? []));
+        $parametersService = new CustomerParameters($parametersService, ['customer' => (new Customer())->setProperties($this->payload['serviceParameters']['customer'] ?? [])]);
         $parametersService->data();
 
         $serviceList->appendParameter([
@@ -75,27 +61,17 @@ class Billink extends PaymentMethod
         $this->request->setPayload($capturePayload);
 
         $serviceList = new ServiceList(
-            self::PAYMENT_NAME,
-            self::SERVICE_VERSION,
+            $this->paymentName(),
+            $this->serviceVersion(),
             'Capture'
         );
 
         $parametersService = new DefaultParameters($serviceList);
-        $parametersService = new ArticleParameters($parametersService, $this->payload['serviceParameters']['articles'] ?? []);
+        $parametersService = new ArticleParameters($parametersService, $this->articles($this->payload['serviceParameters']['articles'] ?? []));
         $parametersService->data();
 
         $this->request->getServices()->pushServiceList($serviceList);
 
         return $this->postRequest();
-    }
-
-    public function paymentName(): string
-    {
-        return self::PAYMENT_NAME;
-    }
-
-    public function serviceVersion(): int
-    {
-        return self::SERVICE_VERSION;
     }
 }

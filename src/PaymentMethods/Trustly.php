@@ -10,8 +10,7 @@ use Buckaroo\Services\ServiceListParameters\DefaultParameters;
 
 class Trustly extends PaymentMethod
 {
-    public const SERVICE_VERSION = 0;
-    public const PAYMENT_NAME = 'Trustly';
+    protected string $paymentName = 'Trustly';
 
     public function setPayServiceList(array $serviceParameters = [])
     {
@@ -27,15 +26,5 @@ class Trustly extends PaymentMethod
         $this->request->getServices()->pushServiceList($serviceList);
 
         return $this;
-    }
-
-    public function paymentName(): string
-    {
-        return self::PAYMENT_NAME;
-    }
-
-    public function serviceVersion(): int
-    {
-        return self::SERVICE_VERSION;
     }
 }

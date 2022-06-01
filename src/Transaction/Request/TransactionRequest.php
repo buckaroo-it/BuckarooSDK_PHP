@@ -14,7 +14,6 @@ class TransactionRequest extends Request
     {
         parent::__construct(null);
 
-        //$this->data['ClientIP'] = new ClientIP; // Disabled for Trusly payment, need to remove this because not all payments requires this field.
         $this->data['ClientUserAgent'] =  Base::getRemoteUserAgent();
     }
 

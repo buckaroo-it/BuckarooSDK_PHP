@@ -11,8 +11,8 @@ use Buckaroo\Transaction\Response\TransactionResponse;
 
 class Bancontact extends PaymentMethod
 {
-    public const SERVICE_VERSION = 1;
-    public const PAYMENT_NAME = 'bancontactmrcash';
+    protected string $paymentName = 'bancontactmrcash';
+    protected int $serviceVersion = 1;
 
     public function payEncrypted($payload): TransactionResponse
     {
@@ -66,15 +66,5 @@ class Bancontact extends PaymentMethod
             0,
             $action
         );
-    }
-
-    public function paymentName(): string
-    {
-        return self::PAYMENT_NAME;
-    }
-
-    public function serviceVersion(): int
-    {
-        return self::SERVICE_VERSION;
     }
 }

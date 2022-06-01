@@ -2,15 +2,18 @@
 
 namespace Buckaroo\PaymentMethods;
 
+use Buckaroo\Model\Adapters\ServiceParametersKeys\TinkaCustomerAdapter;
+use Buckaroo\Model\Article;
+use Buckaroo\Model\Customer;
 use Buckaroo\Model\ServiceList;
 use Buckaroo\Services\ServiceListParameters\AfterpayDigiAcceptCustomerParameters;
 use Buckaroo\Services\ServiceListParameters\ArticleParameters;
 use Buckaroo\Services\ServiceListParameters\DefaultParameters;
+use Buckaroo\Services\ServiceListParameters\TinkaCustomerParameters;
 
 class AfterpayDigiAccept extends PaymentMethod
 {
-    public const SERVICE_VERSION = 0;
-    public const PAYMENT_NAME = 'afterpaydigiaccept';
+    protected string $paymentName = 'afterpaydigiaccept';
 
     public function setPayServiceList(array $serviceParameters = [])
     {
@@ -31,23 +34,16 @@ class AfterpayDigiAccept extends PaymentMethod
             ]
         ]);
 
-        $parametersService = new DefaultParameters($serviceList);
-        $parametersService = new ArticleParameters($parametersService, $serviceParameters['articles'] ?? []);
-        $parametersService = new AfterpayDigiAcceptCustomerParameters($parametersService, $serviceParameters['customer'] ?? []);
+        $parametersService = new ArticleParameters(new DefaultParameters($serviceList), array_map(function($article){
+            return(new Article())->setProperties($article);
+        }, $serviceParameters['articles'] ?? []));
+
+        $parametersService = new AfterpayDigiAcceptCustomerParameters($parametersService,  ['customer' => (new Customer())->setProperties($serviceParameters['customer'] ?? [])]);
+
         $parametersService->data();
 
         $this->request->getServices()->pushServiceList($serviceList);
 
         return $this;
-    }
-
-    public function paymentName(): string
-    {
-        return self::PAYMENT_NAME;
-    }
-
-    public function serviceVersion(): int
-    {
-        return self::SERVICE_VERSION;
     }
 }

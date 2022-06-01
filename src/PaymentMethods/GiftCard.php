@@ -6,8 +6,6 @@ use Buckaroo\Model\ServiceList;
 
 class GiftCard extends PaymentMethod
 {
-    public const SERVICE_VERSION = 0;
-
     public function setPayServiceList(array $serviceParameters = []): self
     {
         if(!isset($serviceParameters['voucher'])) {
@@ -42,10 +40,5 @@ class GiftCard extends PaymentMethod
         }
 
         throw new \Exception('Missing voucher name');
-    }
-
-    public function serviceVersion(): int
-    {
-        return self::SERVICE_VERSION;
     }
 }

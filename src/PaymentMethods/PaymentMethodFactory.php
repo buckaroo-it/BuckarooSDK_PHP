@@ -26,7 +26,7 @@ class PaymentMethodFactory
         Kbc::class                      => ['kbcpaymentbutton'],
         Paypal::class                   => ['paypal'],
         Eps::class                      => ['eps'],
-        Sofort::class                   => ['sofort'],
+        Sofort::class                   => ['sofort', 'sofortueberweisung'],
         Tinka::class                    => ['tinka'],
         Payconiq::class                 => ['payconiq'],
         Przelewy24::class               => ['przelewy24'],

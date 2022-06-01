@@ -10,14 +10,13 @@ use Buckaroo\Services\ServiceListParameters\DefaultParameters;
 
 class RequestToPay extends PaymentMethod
 {
-    public const SERVICE_VERSION = 0;
-    public const PAYMENT_NAME = 'RequestToPay';
+    protected string $paymentName = 'RequestToPay';
 
     public function setPayServiceList(array $serviceParameters = [])
     {
         $serviceList =  new ServiceList(
-            self::PAYMENT_NAME,
-            self::SERVICE_VERSION,
+            $this->paymentName(),
+            $this->serviceVersion(),
             'Pay'
         );
 
@@ -27,15 +26,5 @@ class RequestToPay extends PaymentMethod
         $this->request->getServices()->pushServiceList($serviceList);
 
         return $this;
-    }
-
-    public function paymentName(): string
-    {
-        return self::PAYMENT_NAME;
-    }
-
-    public function serviceVersion(): int
-    {
-        return self::SERVICE_VERSION;
     }
 }

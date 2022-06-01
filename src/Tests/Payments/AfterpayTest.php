@@ -13,10 +13,8 @@ class AfterpayTest extends BuckarooTestCase
     public function it_creates_a_afterpay_payment()
     {
         $response = $this->buckaroo->payment('afterpay')->pay($this->getPaymentPayload());
-        $this->assertTrue($response->isSuccess());
 
-        $response = $this->buckaroo->payment('afterpay')->pay(json_encode($this->getPaymentPayload()));
-        $this->assertTrue($response->isSuccess());
+        $this->assertTrue($response->isRejected());
     }
 
     private function getPaymentPayload(): array {

@@ -13,6 +13,7 @@ class AfterpayDigiAcceptTest extends BuckarooTestCase
     public function it_creates_a_afterpaydigiaccept_payment()
     {
         $response = $this->buckaroo->payment('afterpaydigiaccept')->pay($this->getPaymentPayload());
+
         $this->assertTrue($response->isRejected());
     }
 

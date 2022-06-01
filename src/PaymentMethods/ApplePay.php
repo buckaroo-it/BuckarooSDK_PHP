@@ -7,8 +7,7 @@ use Buckaroo\Model\ServiceList;
 
 class ApplePay extends PaymentMethod
 {
-    public const SERVICE_VERSION = 0;
-    public const PAYMENT_NAME = 'applepay';
+    protected string $paymentName = 'applepay';
 
     public function setPayServiceList(array $serviceParameters = []): self
     {
@@ -24,8 +23,8 @@ class ApplePay extends PaymentMethod
         ]);
 
         $serviceList = new ServiceList(
-            self::PAYMENT_NAME,
-            self::SERVICE_VERSION,
+            $this->paymentName(),
+            $this->serviceVersion(),
             'Pay',
             $parameters
         );
@@ -33,15 +32,5 @@ class ApplePay extends PaymentMethod
         $this->request->getServices()->pushServiceList($serviceList);
 
         return $this;
-    }
-
-    public function paymentName(): string
-    {
-        return self::PAYMENT_NAME;
-    }
-
-    public function serviceVersion(): int
-    {
-        return self::SERVICE_VERSION;
     }
 }

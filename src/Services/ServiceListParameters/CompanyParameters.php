@@ -11,10 +11,11 @@ class CompanyParameters extends ServiceListParameter
     {
         $this->serviceList = $this->serviceListParameter->data();
 
-        $company = (new Company())->setProperties($this->data);
+        $company = $this->data['company'];
 
-        $this->appendParameter(null, $company->serviceParameterKeyOf('name'),"Name", $company->name);
-        $this->appendParameter(null, $company->serviceParameterKeyOf('chamberOfCommerce'),"ChamberOfCommerce",  $company->chamberOfCommerce);
+        foreach($company->toArray() as $key => $value) {
+            $this->appendParameter(null, "Company", $company->serviceParameterKeyOf($key), $value);
+        }
 
         return $this->serviceList;
     }

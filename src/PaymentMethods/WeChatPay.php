@@ -6,8 +6,7 @@ use Buckaroo\Model\ServiceList;
 
 class WeChatPay extends PaymentMethod
 {
-    public const SERVICE_VERSION = 0;
-    public const PAYMENT_NAME = 'WeChatPay';
+    protected string $paymentName = 'WeChatPay';
 
     public function setPayServiceList(array $serviceParameters = [])
     {
@@ -25,15 +24,5 @@ class WeChatPay extends PaymentMethod
         $this->request->getServices()->pushServiceList($serviceList);
 
         return $this;
-    }
-
-    public function paymentName(): string
-    {
-        return self::PAYMENT_NAME;
-    }
-
-    public function serviceVersion(): int
-    {
-        return self::SERVICE_VERSION;
     }
 }

@@ -5,7 +5,7 @@ namespace Buckaroo\Services\ServiceListParameters;
 use Buckaroo\Model\Article;
 use Buckaroo\Model\ServiceList;
 
-class In3ArticleParameters extends ServiceListParameter
+class In3ArticleParameters extends ArticleParameters
 {
     public function data(): ServiceList
     {
@@ -13,19 +13,17 @@ class In3ArticleParameters extends ServiceListParameter
         {
             $groupKey += 1;
 
-            $article = (new Article())->setProperties($article);
-
-            $this->attachArticle($groupKey, $article);
+            $this->attachArticle($groupKey, 'ProductLine', $article);
         }
 
         return $this->serviceList;
     }
 
-    private function attachArticle(int $groupKey, Article $article)
-    {
-        $this->appendParameter($groupKey, "ProductLine", "Code", $article->identifier);
-        $this->appendParameter($groupKey, "ProductLine", "Name", $article->description);
-        $this->appendParameter($groupKey, "ProductLine", "Quantity", $article->quantity);
-        $this->appendParameter($groupKey, "ProductLine", "Price", $article->price);
-    }
+//    private function attachArticle(int $groupKey, Article $article)
+//    {
+//        $this->appendParameter($groupKey, "ProductLine", "Code", $article->identifier);
+//        $this->appendParameter($groupKey, "ProductLine", "Name", $article->description);
+//        $this->appendParameter($groupKey, "ProductLine", "Quantity", $article->quantity);
+//        $this->appendParameter($groupKey, "ProductLine", "Price", $article->price);
+//    }
 }

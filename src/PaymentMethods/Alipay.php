@@ -6,8 +6,7 @@ use Buckaroo\Model\ServiceList;
 
 class Alipay extends PaymentMethod
 {
-    public const SERVICE_VERSION = 0;
-    public const PAYMENT_NAME = 'alipay';
+    protected string $paymentName = 'alipay';
 
     public function setPayServiceList(array $serviceParameters = [])
     {
@@ -25,15 +24,5 @@ class Alipay extends PaymentMethod
         $this->request->getServices()->pushServiceList($serviceList);
 
         return $this;
-    }
-
-    public function paymentName(): string
-    {
-        return self::PAYMENT_NAME;
-    }
-
-    public function serviceVersion(): int
-    {
-        return self::SERVICE_VERSION;
     }
 }

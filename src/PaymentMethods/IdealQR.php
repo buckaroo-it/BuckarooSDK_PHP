@@ -10,8 +10,7 @@ use Buckaroo\Transaction\Response\TransactionResponse;
 
 class IdealQR extends PaymentMethod
 {
-    public const SERVICE_VERSION = 0;
-    public const PAYMENT_NAME = 'idealqr';
+    protected string $paymentName = 'idealqr';
 
     public function generate($payload)
     {
@@ -32,15 +31,5 @@ class IdealQR extends PaymentMethod
             $this->request,
             TransactionResponse::class
         );
-    }
-
-    public function paymentName(): string
-    {
-        return self::PAYMENT_NAME;
-    }
-
-    public function serviceVersion(): int
-    {
-        return self::SERVICE_VERSION;
     }
 }

@@ -13,8 +13,7 @@ use Buckaroo\Services\ServiceListParameters\TinkaCustomerParameters;
 
 class Tinka extends PaymentMethod
 {
-    public const SERVICE_VERSION = 0;
-    public const PAYMENT_NAME = 'Tinka';
+    protected string $paymentName = 'Tinka';
 
     public function setPayServiceList(array $serviceParameters = [])
     {
@@ -55,15 +54,5 @@ class Tinka extends PaymentMethod
         $this->request->getServices()->pushServiceList($serviceList);
 
         return $this;
-    }
-
-    public function paymentName(): string
-    {
-        return self::PAYMENT_NAME;
-    }
-
-    public function serviceVersion(): int
-    {
-        return self::SERVICE_VERSION;
     }
 }
