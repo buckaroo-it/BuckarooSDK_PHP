@@ -29,7 +29,7 @@ class PaymentMethodFactory
         Sofort::class                   => ['sofort'],
         Tinka::class                    => ['tinka'],
         Payconiq::class                 => ['payconiq'],
-        //P24::class                      => ['przelewy24'],
+        Przelewy24::class               => ['przelewy24'],
         Giropay::class                  => ['giropay'],
         GiftCard::class                 => ['giftcard'],
         Trustly::class                  => ['trustly'],
