@@ -34,6 +34,7 @@ class CustomerParameters extends ServiceListParameter
     {
         $this->appendParameter(null, $groupType, $customer->serviceParameterKeyOf('gender'), $customer->gender);
         $this->appendParameter(null, $groupType, $customer->serviceParameterKeyOf('initials'), $customer->initials);
+        $this->appendParameter(null, $groupType, $customer->serviceParameterKeyOf('name'), $customer->name);
         $this->appendParameter(null, $groupType, $customer->serviceParameterKeyOf('firstName'), $customer->firstName);
         $this->appendParameter(null, $groupType, $customer->serviceParameterKeyOf('lastName'), $customer->lastName);
         $this->appendParameter(null, $groupType, $customer->serviceParameterKeyOf('birthDate'), $customer->birthDate);

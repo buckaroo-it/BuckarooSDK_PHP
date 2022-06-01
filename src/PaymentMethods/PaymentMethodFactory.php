@@ -34,7 +34,7 @@ class PaymentMethodFactory
         GiftCard::class                 => ['giftcard'],
         Trustly::class                  => ['trustly'],
 //        Transfer::class                 => ['transfer'],
-//        RTP::class                      => ['requesttopay'],
+        RequestToPay::class             => ['requesttopay'],
         WeChatPay::class                => ['wechatpay'],
     ];
 
