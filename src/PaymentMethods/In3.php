@@ -2,18 +2,17 @@
 
 namespace Buckaroo\PaymentMethods;
 
-use Buckaroo\Client;
 use Buckaroo\Model\Adapters\ServiceParametersKeys\In3ArticleAdapter;
 use Buckaroo\Model\ClientIP;
 use Buckaroo\Model\Company;
 use Buckaroo\Model\Customer;
 use Buckaroo\Model\ServiceList;
 use Buckaroo\PaymentMethods\Traits\HasArticleAndCustomerParameters;
-use Buckaroo\Services\PayloadService;
 use Buckaroo\Services\ServiceListParameters\CompanyParameters;
 use Buckaroo\Services\ServiceListParameters\DefaultParameters;
 use Buckaroo\Services\ServiceListParameters\In3ArticleParameters;
 use Buckaroo\Services\ServiceListParameters\In3CustomerParameters;
+use Buckaroo\Transaction\Client;
 
 class In3 extends PaymentMethod
 {

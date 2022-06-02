@@ -2,8 +2,8 @@
 
 namespace Buckaroo\PaymentMethods;
 
-use Buckaroo\Client;
-use Buckaroo\Exceptions\SdkException;
+use Buckaroo\Exceptions\SDKException;
+use Buckaroo\Transaction\Client;
 
 class PaymentMethodFactory
 {
@@ -57,7 +57,7 @@ class PaymentMethodFactory
             }
         }
 
-        throw new SdkException($this->client->getLogger(), __METHOD__, "Wrong payment method code has been given");
+        throw new SDKException($this->client->getLogger(), __METHOD__, "Wrong payment method code has been given");
     }
 
     public static function get(

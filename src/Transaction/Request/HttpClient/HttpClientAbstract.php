@@ -21,12 +21,13 @@
 
 declare(strict_types=1);
 
-namespace Buckaroo\HttpClient;
+namespace Buckaroo\Transaction\Request\HttpClient;
 
+use Buckaroo\Handlers\Logging\Loggable;
+use Buckaroo\Handlers\Logging\Subject;
 use Psr\Log\LoggerInterface;
-use Buckaroo\Exceptions\TransferException;
 
-abstract class HttpClientAbstract implements HttpClientInterface
+abstract class HttpClientAbstract implements HttpClientInterface, Loggable
 {
     public const METHOD_GET  = 'GET';
     public const METHOD_POST = 'POST';
@@ -39,12 +40,12 @@ abstract class HttpClientAbstract implements HttpClientInterface
     protected const TIMEOUT = 30;
     protected const CONNECT_TIMEOUT = 5;
 
-    protected LoggerInterface $logger;
+    protected Subject $logger;
 
     public function __construct(
         ?LoggerInterface $logger = null
     ) {
-        $this->logger = $logger;
+        //$this->logger = $logger;
     }
 
     abstract public function call(string $url, array $headers, string $method, string $data = null);
@@ -52,11 +53,11 @@ abstract class HttpClientAbstract implements HttpClientInterface
     protected function checkMethod(string $method)
     {
         if (!in_array($method, self::VALID_METHODS)) {
-            throw new TransferException(
-                $this->logger,
-                __METHOD__ . '|3|',
-                'Invalid HTTP-Method: ' . $method
-            );
+//            throw new TransferException(
+//                $this->logger,
+//                __METHOD__ . '|3|',
+//                'Invalid HTTP-Method: ' . $method
+//            );
         }
     }
 
@@ -64,28 +65,28 @@ abstract class HttpClientAbstract implements HttpClientInterface
     {
         // check for curl errors
         if ($result === false) {
-            throw new TransferException(
-                $this->logger,
-                __METHOD__ . '|5|',
-                $error
-            );
+//            throw new TransferException(
+//                $this->logger,
+//                __METHOD__ . '|5|',
+//                $error
+//            );
         }
     }
 
     protected function checkStatusCode($result, bool $isError)
     {
         if ($isError) {
-            throw new TransferException(
-                $this->logger,
-                __METHOD__ . '|10|',
-                var_export($result, true)
-            );
+//            throw new TransferException(
+//                $this->logger,
+//                __METHOD__ . '|10|',
+//                var_export($result, true)
+//            );
         }
     }
 
     protected function getDecodedResult($result): array
     {
-        $this->logger->debug(__METHOD__ . '| start |');
+       // $this->logger->debug(__METHOD__ . '| start |');
 
         $decodedResult = json_decode($result, true);
 
@@ -102,14 +103,14 @@ abstract class HttpClientAbstract implements HttpClientInterface
                 (!empty($jsonErrors[json_last_error()]) ? $jsonErrors[json_last_error()] : '') .
                 ": " . print_r($result, true);
 
-            throw new TransferException(
-                $this->logger,
-                __METHOD__,
-                $decodingError
-            );
+//            throw new TransferException(
+//                $this->logger,
+//                __METHOD__,
+//                $decodingError
+//            );
         }
 
-        $this->logger->debug(__METHOD__ . '| end |', $decodedResult);
+       // $this->logger->debug(__METHOD__ . '| end |', $decodedResult);
 
         return $decodedResult;
     }
@@ -123,5 +124,12 @@ abstract class HttpClientAbstract implements HttpClientInterface
             $resultHeaders[$headerName] = $headerValue;
         }
         return $resultHeaders;
+    }
+
+    public function setLogger(Subject $logger)
+    {
+        $this->logger = $logger;
+
+        return $this;
     }
 }

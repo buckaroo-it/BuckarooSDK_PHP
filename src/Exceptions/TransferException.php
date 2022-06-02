@@ -23,7 +23,7 @@ declare(strict_types=1);
 
 namespace Buckaroo\Exceptions;
 
-class TransferException extends SdkException
+class TransferException extends SDKException
 {
     protected function getMsg(string $message): string
     {

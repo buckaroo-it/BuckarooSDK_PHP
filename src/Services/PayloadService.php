@@ -2,7 +2,7 @@
 
 namespace Buckaroo\Services;
 
-use Buckaroo\Helpers\Arrayable;
+use Buckaroo\Resources\Arrayable;
 
 class PayloadService implements Arrayable
 {

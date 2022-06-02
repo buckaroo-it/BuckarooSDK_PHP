@@ -2,19 +2,13 @@
 
 namespace Buckaroo\Transaction\Request;
 
-use Buckaroo\Helpers\Arrayable;
-use Buckaroo\Helpers\Base;
-use Buckaroo\Model\ClientIP;
 use Buckaroo\Model\Services;
-use Buckaroo\Transaction\Request\Adapters\TransactionAdapter;
+use Buckaroo\Resources\Arrayable;
 
 class TransactionRequest extends Request
 {
-    public function __construct()
-    {
-        parent::__construct(null);
-
-        $this->data['ClientUserAgent'] =  Base::getRemoteUserAgent();
+    public function __construct() {
+        $this->data['ClientUserAgent'] =  $_SERVER['HTTP_USER_AGENT'] ?? '';
     }
 
     public function setPayload(array $payload)

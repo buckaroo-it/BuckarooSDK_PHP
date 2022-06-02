@@ -2,12 +2,11 @@
 
 namespace Buckaroo\PaymentMethods;
 
-use Buckaroo\Client;
 use Buckaroo\Handlers\Reply\ReplyHandler;
 use Buckaroo\Model\PaymentPayload;
 use Buckaroo\Model\RefundPayload;
 use Buckaroo\Model\ServiceList;
-use Buckaroo\Services\PayloadService;
+use Buckaroo\Transaction\Client;
 use Buckaroo\Transaction\Request\Adapters\PaymentPayloadAdapter;
 use Buckaroo\Transaction\Request\Adapters\RefundPayloadAdapter;
 use Buckaroo\Transaction\Request\TransactionRequest;
@@ -31,7 +30,7 @@ abstract class PaymentMethod implements PaymentInterface
         ?string $serviceCode
     ) {
         $this->client = $client;
-        $this->logger = $client->getLogger();
+        //$this->logger = $client->getLogger();
 
         $this->request = new TransactionRequest;
         $this->serviceCode = $serviceCode;

@@ -2,7 +2,7 @@
 
 namespace Buckaroo\Model;
 
-use Buckaroo\Helpers\Arrayable;
+use Buckaroo\Resources\Arrayable;
 
 abstract class Model implements Arrayable
 {

@@ -2,6 +2,7 @@
 
 namespace Buckaroo\PaymentMethods;
 
+use Buckaroo\Exceptions\SDKException;
 use Buckaroo\Services\PayloadService;
 
 class PaymentFacade
@@ -22,6 +23,6 @@ class PaymentFacade
             return $this->paymentMethod->$name();
         }
 
-        throw new \Exception("Method you requested does not exist.");
+        throw new SDKException($name, "Payment method you requested does not exist.");
     }
 }

@@ -21,9 +21,8 @@
 
 declare(strict_types=1);
 
-namespace Buckaroo\HttpClient;
+namespace Buckaroo\Transaction\Request\HttpClient;
 
-use Buckaroo\Exceptions\TransferException;
 use Composer\CaBundle\CaBundle;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
@@ -35,14 +34,14 @@ class HttpClientGuzzle extends HttpClientAbstract
 {
     public function __construct(LoggerInterface $logger = null)
     {
-        parent::__construct($logger);
+//        parent::__construct($logger);
         $this->httpClient = new Client($this->getBaseOptions());
     }
 
     public function call(string $url, array $headers, string $method, string $data = null)
     {
         $headers = $this->convertHeadersFormat($headers);
-        $this->logger->debug(__METHOD__, [$url, $headers, $method, !empty($data) ? json_decode($data) : '']);
+        //$this->logger->debug(__METHOD__, [$url, $headers, $method, !empty($data) ? json_decode($data) : '']);
 
         $this->checkMethod($method);
 
@@ -52,11 +51,11 @@ class HttpClientGuzzle extends HttpClientAbstract
             $response = $this->httpClient->send($request, ['http_errors' => false]);
             $result = (string) $response->getBody();
         } catch (GuzzleException $e) {
-            throw new TransferException(
-                $this->logger,
-                __METHOD__,
-                $e->getMessage()
-            );
+//            throw new TransferException(
+//                $this->logger,
+//                __METHOD__,
+//                $e->getMessage()
+//            );
         }
 
         $this->checkEmptyResult($result, "empty response");
