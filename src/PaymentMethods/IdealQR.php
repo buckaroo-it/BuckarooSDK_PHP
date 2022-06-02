@@ -12,10 +12,8 @@ class IdealQR extends PaymentMethod
 {
     protected string $paymentName = 'idealqr';
 
-    public function generate($payload)
+    public function generate()
     {
-        $this->payload = (new PayloadService($payload))->toArray();
-
         $serviceList =  new ServiceList(
             $this->paymentName(),
             $this->serviceVersion(),

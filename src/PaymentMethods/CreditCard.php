@@ -9,10 +9,8 @@ use Buckaroo\Transaction\Response\TransactionResponse;
 
 class CreditCard extends PaymentMethod
 {
-    public function payEncrypted($payload): TransactionResponse
+    public function payEncrypted(): TransactionResponse
     {
-        $this->payload = (new PayloadService($payload))->toArray();
-
         $this->request->setPayload($this->getPaymentPayload());
 
         $serviceList =  $this->getServiceList('PayEncrypted');
@@ -29,10 +27,8 @@ class CreditCard extends PaymentMethod
         return $this->postRequest();
     }
 
-    public function authorizeEncrypted($payload): TransactionResponse
+    public function authorizeEncrypted(): TransactionResponse
     {
-        $this->payload = (new PayloadService($payload))->toArray();
-
         $this->request->setPayload($this->getPaymentPayload());
 
         $serviceList =  $this->getServiceList('AuthorizeEncrypted');
@@ -49,10 +45,8 @@ class CreditCard extends PaymentMethod
         return $this->postRequest();
     }
 
-    public function payWithSecurityCode($payload): TransactionResponse
+    public function payWithSecurityCode(): TransactionResponse
     {
-        $this->payload = (new PayloadService($payload))->toArray();
-
         $this->request->setPayload($this->getPaymentPayload());
 
         $serviceList =  $this->getServiceList('PayWithSecurityCode');
@@ -67,10 +61,8 @@ class CreditCard extends PaymentMethod
         return $this->postRequest();
     }
 
-    public function authorizeWithSecurityCode($payload): TransactionResponse
+    public function authorizeWithSecurityCode(): TransactionResponse
     {
-        $this->payload = (new PayloadService($payload))->toArray();
-
         $this->request->setPayload($this->getPaymentPayload());
 
         $serviceList =  $this->getServiceList('AuthorizeWithSecurityCode');
@@ -85,10 +77,8 @@ class CreditCard extends PaymentMethod
         return $this->postRequest();
     }
 
-    public function authorize($payload): TransactionResponse
+    public function authorize(): TransactionResponse
     {
-        $this->payload = (new PayloadService($payload))->toArray();
-
         $this->request->setPayload($this->getPaymentPayload());
 
         $serviceList =  $this->getServiceList('Authorize');
@@ -98,10 +88,8 @@ class CreditCard extends PaymentMethod
         return $this->postRequest();
     }
 
-    public function capture($payload): TransactionResponse
+    public function capture(): TransactionResponse
     {
-        $this->payload = (new PayloadService($payload))->toArray();
-
         $capturePayload = (new CapturePayloadAdapter(new CapturePayload($this->payload)))->getValues();
 
         $this->request->setPayload($capturePayload);
@@ -113,10 +101,8 @@ class CreditCard extends PaymentMethod
         return $this->postRequest();
     }
 
-    public function payRecurrent($payload): TransactionResponse
+    public function payRecurrent(): TransactionResponse
     {
-        $this->payload = (new PayloadService($payload))->toArray();
-
         $capturePayload = (new CapturePayloadAdapter(new CapturePayload($this->payload)))->getValues();
 
         $this->request->setPayload($capturePayload);

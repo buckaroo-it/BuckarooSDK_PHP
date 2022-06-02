@@ -30,9 +30,8 @@ class In3 extends PaymentMethod
         ]);
     }
 
-    public function payInInstallments($payload)
+    public function payInInstallments()
     {
-        $this->payload = (new PayloadService($payload))->toArray();
         $this->request->setPayload($this->getPaymentPayload());
 
         $serviceList =  new ServiceList(

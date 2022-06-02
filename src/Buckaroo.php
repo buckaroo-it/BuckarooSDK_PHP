@@ -21,6 +21,7 @@
 
 namespace Buckaroo;
 
+use Buckaroo\PaymentMethods\PaymentFacade;
 use Buckaroo\PaymentMethods\PaymentMethodFactory;
 
 class Buckaroo
@@ -51,6 +52,6 @@ class Buckaroo
 
     public function payment(string $method)
     {
-        return PaymentMethodFactory::get($this->client, $method);
+        return new PaymentFacade($this->client, $method);
     }
 }

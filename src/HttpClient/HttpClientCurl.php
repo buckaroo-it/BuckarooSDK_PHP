@@ -23,49 +23,49 @@ declare(strict_types=1);
 
 namespace Buckaroo\HttpClient;
 
-class HttpClientCurl extends HttpClientAbstract
-{
-    public function call(string $url, array $headers, string $method, string $data = null)
-    {
-        $this->logger->debug(__METHOD__, [$url, $headers, $method, !empty($data) ? json_decode($data) : '']);
-
-        $this->checkMethod($method);
-
-        $curl = curl_init();
-        $this->setupBaseOptions($curl);
-
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
-        if ($data) {
-            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-        }
-
-        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-
-        $result = curl_exec($curl);
-        $curlInfo = curl_getinfo($curl);
-
-        $this->checkEmptyResult($result, curl_error($curl));
-
-        $this->checkStatusCode(
-            $result,
-            (empty($curlInfo['http_code']) || $curlInfo['http_code'] != 200)
-        );
-
-        curl_close($curl);
-
-        return $this->getDecodedResult($result);
-    }
-
-    private function setupBaseOptions($curl)
-    {
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, false);
-        curl_setopt($curl, CURLOPT_USERAGENT, 'Buckaroo SDK');
-
-        curl_setopt($curl, CURLOPT_TIMEOUT, self::TIMEOUT);
-
-        //curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
-        //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-    }
-}
+//class HttpClientCurl extends HttpClientAbstract
+//{
+//    public function call(string $url, array $headers, string $method, string $data = null)
+//    {
+//        $this->logger->debug(__METHOD__, [$url, $headers, $method, !empty($data) ? json_decode($data) : '']);
+//
+//        $this->checkMethod($method);
+//
+//        $curl = curl_init();
+//        $this->setupBaseOptions($curl);
+//
+//        curl_setopt($curl, CURLOPT_URL, $url);
+//        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
+//        if ($data) {
+//            curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+//        }
+//
+//        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+//
+//        $result = curl_exec($curl);
+//        $curlInfo = curl_getinfo($curl);
+//
+//        $this->checkEmptyResult($result, curl_error($curl));
+//
+//        $this->checkStatusCode(
+//            $result,
+//            (empty($curlInfo['http_code']) || $curlInfo['http_code'] != 200)
+//        );
+//
+//        curl_close($curl);
+//
+//        return $this->getDecodedResult($result);
+//    }
+//
+//    private function setupBaseOptions($curl)
+//    {
+//        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+//        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, false);
+//        curl_setopt($curl, CURLOPT_USERAGENT, 'Buckaroo SDK');
+//
+//        curl_setopt($curl, CURLOPT_TIMEOUT, self::TIMEOUT);
+//
+//        //curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+//        //curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+//    }
+//}

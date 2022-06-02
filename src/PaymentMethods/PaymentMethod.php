@@ -37,10 +37,8 @@ abstract class PaymentMethod implements PaymentInterface
         $this->serviceCode = $serviceCode;
     }
 
-    public function pay($payload): TransactionResponse
+    public function pay(): TransactionResponse
     {
-        $this->payload = (new PayloadService($payload))->toArray();
-
         $this->request->setPayload($this->getPaymentPayload());
 
         $this->setPayServiceList($this->payload['serviceParameters'] ?? []);
@@ -51,15 +49,20 @@ abstract class PaymentMethod implements PaymentInterface
         return $this->postRequest();
     }
 
-    public function refund($payload): TransactionResponse
+    public function refund(): TransactionResponse
     {
-        $this->payload = (new PayloadService($payload))->toArray();
-
         $this->request->setPayload($this->getRefundPayload());
 
         $this->setRefundServiceList($this->payload['serviceParameters'] ?? []);
 
         return $this->postRequest();
+    }
+
+    public function setPayload(array $payload)
+    {
+        $this->payload = $payload;
+
+        return $this;
     }
 
     public function setPayServiceList(array $serviceParameters = [])

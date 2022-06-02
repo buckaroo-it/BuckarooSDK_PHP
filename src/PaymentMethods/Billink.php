@@ -2,12 +2,10 @@
 
 namespace Buckaroo\PaymentMethods;
 
-use Buckaroo\Model\Article;
 use Buckaroo\Model\CapturePayload;
 use Buckaroo\Model\Customer;
 use Buckaroo\Model\ServiceList;
 use Buckaroo\PaymentMethods\Traits\HasArticleAndCustomerParameters;
-use Buckaroo\Services\PayloadService;
 use Buckaroo\Services\ServiceListParameters\ArticleParameters;
 use Buckaroo\Services\ServiceListParameters\CustomerParameters;
 use Buckaroo\Services\ServiceListParameters\DefaultParameters;
@@ -20,9 +18,8 @@ class Billink extends PaymentMethod
 
     protected string $paymentName = 'billink';
 
-    public function authorize($payload): TransactionResponse
+    public function authorize(): TransactionResponse
     {
-        $this->payload = (new PayloadService($payload))->toArray();
         $this->request->setPayload($this->getPaymentPayload());
 
         $serviceList = new ServiceList(
@@ -52,10 +49,8 @@ class Billink extends PaymentMethod
         return $this->postRequest();
     }
 
-    public function capture($payload): TransactionResponse
+    public function capture(): TransactionResponse
     {
-        $this->payload = (new PayloadService($payload))->toArray();
-
         $capturePayload = (new CapturePayloadAdapter(new CapturePayload($this->payload)))->getValues();
 
         $this->request->setPayload($capturePayload);

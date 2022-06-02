@@ -20,9 +20,8 @@ class Afterpay extends PaymentMethod
     protected string $paymentName = 'afterpay';
     protected int $serviceVersion = 1;
 
-    public function authorize($payload): TransactionResponse
+    public function authorize(): TransactionResponse
     {
-        $this->payload = (new PayloadService($payload))->toArray();
         $this->request->setPayload($this->getPaymentPayload());
 
         $serviceList = new ServiceList(
@@ -40,10 +39,8 @@ class Afterpay extends PaymentMethod
         return $this->postRequest();
     }
 
-    public function capture($payload): TransactionResponse
+    public function capture(): TransactionResponse
     {
-        $this->payload = (new PayloadService($payload))->toArray();
-
         $capturePayload = (new CapturePayloadAdapter(new CapturePayload($this->payload)))->getValues();
 
         $this->request->setPayload($capturePayload);

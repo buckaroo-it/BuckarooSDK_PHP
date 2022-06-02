@@ -10,23 +10,21 @@ use Buckaroo\Model\ServiceList;
 class Ideal extends PaymentMethod
 {
     protected string $paymentName = 'ideal';
-    protected int $serviceVersion = 1;
 
     public function setPayServiceList(array $serviceParameters = []): self
     {
         $paymentModel = new PaymentPayload($this->payload);
 
-        $parameters = array([
-            'name' => 'issuer',
-            'Value' => $paymentModel->issuer
-        ]);
-
         $serviceList = new ServiceList(
             $this->paymentName(),
             $this->serviceVersion(),
-            'Pay',
-            $parameters
+            'Pay'
         );
+
+        $serviceList->appendParameter([
+            "Name"              => "issuer",
+            "Value"             => $serviceParameters['issuer']
+        ]);
 
         $this->request->getServices()->pushServiceList($serviceList);
 
