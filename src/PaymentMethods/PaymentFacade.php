@@ -11,6 +11,8 @@ class PaymentFacade
 
     public function __construct($client, $method)
     {
+        $this->client = $client;
+
         $this->paymentMethod = PaymentMethodFactory::get($client, $method);
     }
 
@@ -23,6 +25,6 @@ class PaymentFacade
             return $this->paymentMethod->$name();
         }
 
-        throw new SDKException($name, "Payment method you requested does not exist.");
+        throw new SDKException($this->client->getLogger(), "Payment method " . $name . " on payment " . $this->paymentMethod->paymentName() . " you requested does not exist.");
     }
 }

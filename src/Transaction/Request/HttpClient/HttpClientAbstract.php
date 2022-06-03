@@ -132,4 +132,9 @@ abstract class HttpClientAbstract implements HttpClientInterface, Loggable
 
         return $this;
     }
+
+    public function getLogger(): ?Subject
+    {
+        return $this->logger;
+    }
 }

@@ -23,38 +23,24 @@ declare(strict_types=1);
 
 namespace Buckaroo\Exceptions;
 
-use Buckaroo\Handlers\Logging\Loggable;
 use Buckaroo\Handlers\Logging\Subject;
 use Exception;
 use Throwable;
 
-class SDKException extends Exception implements Loggable
+class SDKException extends Exception
 {
     protected Subject $logger;
 
-    public function __construct(?Subject $logger, string $breakpoint, string $message = "", int $code = 0, Throwable $previous = null) {
-//        $this->logger = $logger;
-//
-//        $message = 'Buckaroo SDK error: ' . $message;
-//        $this->logger->error($breakpoint, [$this->getMsg($message)]);
+    public function __construct(?Subject $logger, string $message = "", int $code = 0, Throwable $previous = null) {
+        $this->logger = $logger;
+
+        $this->logger->error($this->message($message));
 
         parent::__construct($message, $code, $previous);
     }
 
-    protected function getMsg(string $message): string
+    protected function message(string $message): string
     {
-        return 'Buckaroo SDK error: ' . $message;
-    }
-
-    public function setLogger(Subject $logger)
-    {
-        $this->logger = $logger;
-
-        return $this;
-    }
-
-    public function getLogger(): ?Subject
-    {
-        return $this->logger;
+        return 'Buckaroo SDKExeption ' . $message;
     }
 }

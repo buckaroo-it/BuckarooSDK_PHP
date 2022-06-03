@@ -57,7 +57,7 @@ class PaymentMethodFactory
             }
         }
 
-        throw new SDKException($this->client->getLogger(), __METHOD__, "Wrong payment method code has been given");
+        throw new SDKException($this->client->getLogger(), "Wrong payment method code has been given");
     }
 
     public static function get(
