@@ -30,6 +30,7 @@ class PaymentMethodFactory
         Tinka::class                    => ['tinka'],
         Payconiq::class                 => ['payconiq'],
         //P24::class                      => ['przelewy24'],
+        Pos::class                      => ['pospayment'],
         Giropay::class                  => ['giropay'],
         GiftCard::class                 => ['giftcard'],
         Trustly::class                  => ['trustly'],
