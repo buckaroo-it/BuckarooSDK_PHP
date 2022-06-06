@@ -3,20 +3,25 @@
 require('../bootstrap.php');
 
 use Buckaroo\Buckaroo;
+use Buckaroo\Resources\Constants\Gender;
 
 $buckaroo = new Buckaroo($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
 //Also accepts json
 //Pay
 $response = $buckaroo->payment('transfer')->pay([
-    'customerGender' => 0, // 0 = unkinown / 1 = male / 2 = female
-    'customerFirstName' => 'John',
-    'customerLastName' => 'Smith',
-    'customerEmail' => 'your@email.com',
-    'customerCountry' => 'NL',
-    'dueData' => date(),
-    'sendMail' => true,
-    'amountDebit' => 10.10
+    'amountDebit' => 10.10,
+    'serviceParameters' => [
+        'customer' => [
+            'gender' => Gender::MALE, // 0 = unkinown / 1 = male / 2 = female
+            'firstName' => 'John',
+            'lastName' => 'Smith',
+            'email' => 'your@email.com',
+            'country' => 'NL',
+        ],
+        'dateDue' => date("Y-m-d"),
+        'sendMail' => true,
+    ]
 ]);
 
 //Refund
