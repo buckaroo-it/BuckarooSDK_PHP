@@ -43,13 +43,7 @@ class Transfer extends PaymentMethod
         $parametersService = new DefaultParameters($serviceList);
         $parametersService = new BankTransferCustomerParameters($parametersService, ['customer' => new BankTransferCustomerAdapter((new Customer())->setProperties($serviceParameters['customer'] ?? []))]);
         $parametersService->data();
-        /*
-        //$parametersService = new CustomerParameters(new DefaultParameters($serviceList), ['customer' => new BankTransferAdapter((new Customer())->setProperties($serviceParameters['customer'] ?? []))]);
-        print_r($parametersService->data());
-        //print_r(new Customer())->setProperties($serviceParameters['customer'] ?? []);
-        //print_r(new BankTransferAdapter((new Customer())->setProperties($serviceParameters['customer'] ?? [])));
-        exit;
-        */
+
         $this->request->getServices()->pushServiceList($serviceList);
 
         return $this;
