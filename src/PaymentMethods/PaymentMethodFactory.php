@@ -33,7 +33,7 @@ class PaymentMethodFactory
         Giropay::class                  => ['giropay'],
         GiftCard::class                 => ['giftcard'],
         Trustly::class                  => ['trustly'],
-//        Transfer::class                 => ['transfer'],
+        Transfer::class                 => ['transfer'],
 //        RTP::class                      => ['requesttopay'],
         WeChatPay::class                => ['wechatpay'],
     ];
