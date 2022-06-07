@@ -21,36 +21,34 @@
 
 namespace Buckaroo;
 
-use Buckaroo\PaymentMethods\PaymentMethodFactory;
+use Buckaroo\Handlers\Logging\DefaultLogger;
+use Buckaroo\Handlers\Logging\Observer as LoggingObserver;
+use Buckaroo\Handlers\Logging\Subject as LoggingSubject;
+use Buckaroo\PaymentMethods\PaymentFacade;
+use Buckaroo\Transaction\Client;
+use Buckaroo\Transaction\Config;
 
 class Buckaroo
-{   
-    private $websiteKey, $secretKey, $mode;
-
+{
     private Client $client;
+    private LoggingSubject $logger;
 
     public function __construct(string $websiteKey, string $secretKey, string $mode = null) {
-        $this->websiteKey = $websiteKey;
-        $this->secretKey = $secretKey;
-        $this->mode = ($mode) ? $mode : $_ENV['BPE_MODE'];
+        $this->logger = new DefaultLogger();
 
-        $this->setDefaultClient();
-    }
-
-    private function setDefaultClient() : self
-    {
-        $this->client = new Client(
-            $this->websiteKey,
-            $this->secretKey,
-        );
-
-        $this->client->setMode($this->mode);
-
-        return $this;
+        $this->client = new Client(new Config($websiteKey, $secretKey, $mode));
+        $this->client->setLogger($this->logger);
     }
 
     public function payment(string $method)
     {
-        return PaymentMethodFactory::get($this->client, $method);
+        return new PaymentFacade($this->client, $method);
+    }
+
+    public function attachLogger(LoggingObserver $observer)
+    {
+        $this->logger->attach($observer);
+
+        return $this;
     }
 }

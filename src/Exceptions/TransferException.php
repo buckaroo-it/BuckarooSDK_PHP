@@ -23,10 +23,10 @@ declare(strict_types=1);
 
 namespace Buckaroo\Exceptions;
 
-class TransferException extends SdkException
+class TransferException extends SDKException
 {
-    protected function getMsg(string $message): string
+    protected function message(string $message): string
     {
-        return 'Buckaroo API client error: ' . $message;
+        return 'Buckaroo TransferException ' . $message;
     }
 }

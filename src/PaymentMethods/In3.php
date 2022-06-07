@@ -2,21 +2,35 @@
 
 namespace Buckaroo\PaymentMethods;
 
+use Buckaroo\Model\Adapters\ServiceParametersKeys\In3ArticleAdapter;
+use Buckaroo\Model\ClientIP;
+use Buckaroo\Model\Company;
+use Buckaroo\Model\Customer;
 use Buckaroo\Model\ServiceList;
-use Buckaroo\Services\PayloadService;
+use Buckaroo\PaymentMethods\Traits\HasArticleAndCustomerParameters;
 use Buckaroo\Services\ServiceListParameters\CompanyParameters;
 use Buckaroo\Services\ServiceListParameters\DefaultParameters;
 use Buckaroo\Services\ServiceListParameters\In3ArticleParameters;
 use Buckaroo\Services\ServiceListParameters\In3CustomerParameters;
+use Buckaroo\Transaction\Client;
 
 class In3 extends PaymentMethod
 {
-    public const SERVICE_VERSION = 0;
-    public const PAYMENT_NAME = 'Capayable';
+    use HasArticleAndCustomerParameters;
 
-    public function payInInstallments($payload)
+    protected string $paymentName = 'Capayable';
+
+    public function __construct(Client $client, ?string $serviceCode)
     {
-        $this->payload = (new PayloadService($payload))->toArray();
+        parent::__construct($client, $serviceCode);
+
+        $this->request->setPayload([
+            'ClientIP'      => new ClientIP
+        ]);
+    }
+
+    public function payInInstallments()
+    {
         $this->request->setPayload($this->getPaymentPayload());
 
         $serviceList =  new ServiceList(
@@ -58,10 +72,10 @@ class In3 extends PaymentMethod
             ]);
         }
 
-        $parametersService = new DefaultParameters($serviceList);
-        $parametersService = new In3ArticleParameters($parametersService, $this->payload['serviceParameters']['articles'] ?? []);
-        $parametersService = new CompanyParameters($parametersService, $this->payload['serviceParameters']['company'] ?? []);
-        $parametersService = new In3CustomerParameters($parametersService, $this->payload['serviceParameters']['customer'] ?? []);
+        $parametersService = new In3ArticleParameters(new DefaultParameters($serviceList), $this->articles($this->payload['serviceParameters']['articles'] ?? [], In3ArticleAdapter::class));
+        $parametersService = new CompanyParameters($parametersService, ['company' => (new Company())->setProperties($this->payload['serviceParameters']['company'] ?? [])]);
+        $parametersService = new In3CustomerParameters($parametersService, ['customer' => (new Customer())->setProperties($this->payload['serviceParameters']['customer'] ?? [])]);
+
         $parametersService->data();
 
         $this->request->getServices()->pushServiceList($serviceList);
@@ -110,24 +124,14 @@ class In3 extends PaymentMethod
             ]);
         }
 
-        $parametersService = new DefaultParameters($serviceList);
-        $parametersService = new In3ArticleParameters($parametersService, $serviceParameters['articles'] ?? []);
-        $parametersService = new CompanyParameters($parametersService, $serviceParameters['company'] ?? []);
-        $parametersService = new In3CustomerParameters($parametersService, $serviceParameters['customer'] ?? []);
+        $parametersService = new In3ArticleParameters(new DefaultParameters($serviceList), $this->articles($serviceParameters['articles'] ?? [], In3ArticleAdapter::class));
+        $parametersService = new CompanyParameters($parametersService, ['company' => (new Company())->setProperties($serviceParameters['company'] ?? [])]);
+        $parametersService = new In3CustomerParameters($parametersService, ['customer' => (new Customer())->setProperties($serviceParameters['customer'] ?? [])]);
+
         $parametersService->data();
 
         $this->request->getServices()->pushServiceList($serviceList);
 
         return $this;
-    }
-
-    public function paymentName(): string
-    {
-        return self::PAYMENT_NAME;
-    }
-
-    public function serviceVersion(): int
-    {
-        return self::SERVICE_VERSION;
     }
 }

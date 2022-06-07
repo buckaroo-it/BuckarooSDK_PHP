@@ -21,31 +21,9 @@
 
 declare(strict_types=1);
 
-namespace Buckaroo\Exceptions;
+namespace Buckaroo\Transaction\Request\HttpClient;
 
-use Psr\Log\LoggerInterface;
-
-class SdkException extends \Exception
+interface HttpClientInterface
 {
-    protected LoggerInterface $logger;
-
-    public function __construct(
-        LoggerInterface $logger,
-        string $breakpoint,
-        string $message = "",
-        int $code = 0,
-        \Throwable $previous = null
-    ) {
-        $this->logger = $logger;
-
-        $message = 'Buckaroo SDK error: ' . $message;
-        $this->logger->error($breakpoint, [$this->getMsg($message)]);
-
-        parent::__construct($message, $code, $previous);
-    }
-
-    protected function getMsg(string $message): string
-    {
-        return 'Buckaroo SDK error: ' . $message;
-    }
+    public function call(string $url, array $headers, string $method, string $data = null);
 }

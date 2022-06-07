@@ -5,24 +5,21 @@ declare(strict_types=1);
 namespace Buckaroo\Transaction\Request;
 
 use ArrayAccess;
-use Buckaroo\Helpers\Arrayable;
-use Buckaroo\Helpers\Base;
-use Buckaroo\Helpers\DefaultFactory;
+use Buckaroo\Resources\Arrayable;
 use Exception;
 use JsonSerializable;
-use Psr\Log\LoggerInterface;
 
 class Request implements JsonSerializable, ArrayAccess, Arrayable
 {
     protected array $data = [];
     protected array $headers = [];
-    protected LoggerInterface $logger;
+//    protected LoggerInterface $logger;
 
-    public function __construct(
-        ?LoggerInterface $logger = null
-    ) {
-        $this->logger = $logger ?? DefaultFactory::getDefaultLogger();
-    }
+//    public function __construct(
+//        ?LoggerInterface $logger = null
+//    ) {
+//        $this->logger = $logger ?? DefaultFactory::getDefaultLogger();
+//    }
 
     /** Implement ArrayAccess */
     public function offsetSet($offset, $value): void
@@ -118,11 +115,11 @@ class Request implements JsonSerializable, ArrayAccess, Arrayable
     /**
      * @return array [ string ]
      */
-    public function getHeaders()
+    public function getHeaders(): array
     {
-        return Base::arrayMap($this->headers, function ($value, $key) {
+        return array_map(function ($value, $key) {
             return $key . ': ' . $value;
-        });
+        }, $this->headers);
     }
 
     public function getData(): array

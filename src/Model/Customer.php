@@ -14,6 +14,7 @@ class Customer extends Model
     protected
         $gender,
         $initials,
+        $name,
         $firstName,
         $lastName,
         $birthDate,

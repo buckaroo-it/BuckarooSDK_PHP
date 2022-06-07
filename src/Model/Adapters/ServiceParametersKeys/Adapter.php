@@ -27,4 +27,9 @@ abstract class Adapter extends Model implements ServiceParameterKeysAdapter
     {
         return (isset($this->keys[$propertyName]))? $this->keys[$propertyName] : ucfirst($propertyName);
     }
+
+    public function toArray(): array
+    {
+        return $this->model->toArray();
+    }
 }

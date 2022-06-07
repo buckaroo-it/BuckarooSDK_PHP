@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Buckaroo\Transaction\Response;
 
 use ArrayAccess;
-use Buckaroo\Helpers\Arrayable;
+use Buckaroo\Resources\Arrayable;
 use Exception;
 
 class Response implements ArrayAccess, Arrayable

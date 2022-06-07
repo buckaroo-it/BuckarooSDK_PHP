@@ -20,7 +20,8 @@ class BancontactTest extends BuckarooTestCase
     public function it_creates_a_bancontact_payment()
     {
         $response = $this->buckaroo->payment('bancontactmrcash')->pay($this->paymentPayload);
-        $this->assertTrue($response->isPendingProcessing());
+
+        $this->assertTrue($response->isWaitingOnUserInput());
     }
 
 }

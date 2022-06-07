@@ -2,7 +2,7 @@
 
 namespace Buckaroo\Handlers\Reply;
 
-use Buckaroo\Config;
+use Buckaroo\Transaction\Config;
 
 class ReplyHandler
 {

@@ -10,8 +10,7 @@ use Buckaroo\Services\ServiceListParameters\DefaultParameters;
 
 class CreditClick extends PaymentMethod
 {
-    public const SERVICE_VERSION = 0;
-    public const PAYMENT_NAME = 'creditclick';
+    protected string $paymentName = 'creditclick';
 
     public function setPayServiceList(array $serviceParameters = [])
     {
@@ -45,15 +44,5 @@ class CreditClick extends PaymentMethod
         $this->request->getServices()->pushServiceList($serviceList);
 
         return $this;
-    }
-
-    public function paymentName(): string
-    {
-        return self::PAYMENT_NAME;
-    }
-
-    public function serviceVersion(): int
-    {
-        return self::SERVICE_VERSION;
     }
 }

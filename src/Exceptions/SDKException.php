@@ -21,9 +21,26 @@
 
 declare(strict_types=1);
 
-namespace Buckaroo\HttpClient;
+namespace Buckaroo\Exceptions;
 
-interface HttpClientInterface
+use Buckaroo\Handlers\Logging\Subject;
+use Exception;
+use Throwable;
+
+class SDKException extends Exception
 {
-    public function call(string $url, array $headers, string $method, string $data = null);
+    protected Subject $logger;
+
+    public function __construct(?Subject $logger, string $message = "", int $code = 0, Throwable $previous = null) {
+        $this->logger = $logger;
+
+        $this->logger->error($this->message($message));
+
+        parent::__construct($message, $code, $previous);
+    }
+
+    protected function message(string $message): string
+    {
+        return 'Buckaroo SDKExeption ' . $message;
+    }
 }

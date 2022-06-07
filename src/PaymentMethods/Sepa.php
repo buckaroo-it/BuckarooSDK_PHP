@@ -9,8 +9,8 @@ use Buckaroo\Model\ServiceList;
 
 class Sepa extends PaymentMethod
 {
-    public const SERVICE_VERSION = 1;
-    public const PAYMENT_NAME = 'sepadirectdebit';
+    protected string $paymentName = 'sepadirectdebit';
+    protected int $serviceVersion = 1;
 
     public function setPayServiceList(array $serviceParameters = []): self
     {
@@ -23,8 +23,8 @@ class Sepa extends PaymentMethod
         ];
 
         $serviceList = new ServiceList(
-            self::PAYMENT_NAME,
-            self::SERVICE_VERSION,
+            $this->paymentName(),
+            $this->serviceVersion(),
             'Pay',
             $parameters
         );
@@ -32,15 +32,5 @@ class Sepa extends PaymentMethod
         $this->request->getServices()->pushServiceList($serviceList);
 
         return $this;
-    }
-
-    public function paymentName(): string
-    {
-        return self::PAYMENT_NAME;
-    }
-
-    public function serviceVersion(): int
-    {
-        return self::SERVICE_VERSION;
     }
 }

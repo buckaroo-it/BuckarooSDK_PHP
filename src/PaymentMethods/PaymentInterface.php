@@ -7,8 +7,8 @@ use Buckaroo\Transaction\Response\TransactionResponse;
 
 interface PaymentInterface
 {
-    public function pay($request) : TransactionResponse;
-    public function refund($request) : TransactionResponse;
+    public function pay() : TransactionResponse;
+    public function refund() : TransactionResponse;
 
     public function paymentName(): string;
     public function serviceVersion(): int;

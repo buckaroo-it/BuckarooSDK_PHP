@@ -9,8 +9,10 @@ class IdealTest extends BuckarooTestCase
     protected function setUp(): void
     {
         $this->paymentPayload = ([
-            'issuer' => 'ABNANL2A',
-            'amountDebit' => 10.10
+            'amountDebit' => 10.10,
+            'serviceParameters' => [
+                'issuer' => 'ABNANL2A',
+            ]
         ]);
 
         $this->refundPayload = [
