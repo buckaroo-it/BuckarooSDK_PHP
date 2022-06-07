@@ -27,7 +27,7 @@ class TransferTest extends BuckarooTestCase
                 'sendMail' => true,
             ]
         ]);
-        $this->assertTrue($response->isPendingProcessing());
+        $this->assertTrue($response->isAwaitingConsumer());
 
     }
 

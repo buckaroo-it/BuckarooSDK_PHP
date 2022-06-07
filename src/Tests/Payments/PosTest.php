@@ -18,7 +18,7 @@ class PosTest extends BuckarooTestCase
                 'terminalId' => '50000001',
             ]
         ]);
-        $this->assertTrue($response->isPendingProcessing());
+        $this->assertTrue($response->isSuccess());
 
     }
 }
