@@ -5,10 +5,19 @@
 # Buckaroo SDK Plugin
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/7081446/172533380-3696b74d-84d0-4e49-bf00-869008cbe3f6.png" position="center">
+  <img src="https://user-images.githubusercontent.com/7081446/172777838-61a340f0-eb38-46f8-84b6-bd02235dc68f.png" position="center">
 </p>
 
-## Requirements ##
+---
+
+- [Requirements](#requirements)
+- [Composer Installation](#composer-installation)
+- [Requirements](#requirements)
+- [Examples](#examples)
+
+---
+
+## Requirements
 To use the Buckaroo API client, the following things are required:
 
 + Get yourself a free [Buckaroo account](https://www.buckaroo.eu/solutions/request-form). No sign up costs.
@@ -16,7 +25,7 @@ To use the Buckaroo API client, the following things are required:
 + PHP >= 7.2
 + Up-to-date OpenSSL (or other SSL/TLS toolkit)
 
-## Composer Installation ##
+## Composer Installation
 
 By far the easiest way to install the Buckaroo API client is to require it with [Composer](http://getcomposer.org/doc/00-intro.md).
 
@@ -28,6 +37,31 @@ By far the easiest way to install the Buckaroo API client is to require it with 
         }
     }
 
+## Example
+Create and config the Buckaroo object
+
+```php
+require __DIR__ . '/vendor/autoload.php';
+
+# Get your website & secret key in your plaza.
+$buckaroo = new \Buckaroo('WEBSITE_KEY', 'SECRET_KEY');
+```
+
+Create a payment with all the available payment methods. In this example, we show how to create a credit card payment. Each payment has a slightly different payload.
+
+```php
+# Get your website & secret key in your plaza.
+    $buckaroo->payment('creditcard') // Input the desire payment method.
+        ->pay([
+            'amountDebit' => 10, // The amount we want to charge
+            'invoice' => 'UNIQUE-INVOICE-NO', // Each payment must contain a unique invoice number
+            'serviceParameters' => [
+                'name'          => 'visa' // When we request to pay with Visa
+            ]
+        ]);
+```
+
+Find our full documentation online on [dev.buckaroo.nl](https://dev.buckaroo.nl/).
 
 ## Versioning
 <p align="left">

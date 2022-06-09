@@ -23,6 +23,8 @@ declare(strict_types=1);
 
 namespace Buckaroo\Transaction;
 
+use Buckaroo\Config\Config;
+use Buckaroo\Exceptions\SDKException;
 use Buckaroo\Handlers\Logging\Loggable;
 use Buckaroo\Handlers\Logging\Subject;
 use Buckaroo\Resources\Constants\Endpoints;
@@ -43,27 +45,28 @@ class Client implements Loggable
 
     protected HttpClientInterface $httpClient;
     protected Subject $logger;
+    protected ?Config $config;
 
-    public function __construct(Config $config) {
+    public function __construct(?Config $config)
+    {
         $this->config = $config;
         $this->httpClient =  new HttpClientGuzzle();
     }
 
-    public function getTransactionUrl(): string {
+    public function getTransactionUrl(): string
+    {
         return $this->getEndpoint('json/Transaction/');
     }
 
-//    public function getDataRequestUrl(): string {
-//        return $this->getEndpoint('json/DataRequest/');
-//    }
-
-    private function getEndpoint($path): string {
-        $baseUrl = ($this->config->isLiveMode())? Endpoints::LIVE : Endpoints::TEST;
+    private function getEndpoint($path): string
+    {
+        $baseUrl = ($this->config()->isLiveMode())? Endpoints::LIVE : Endpoints::TEST;
 
         return $baseUrl . $path;
     }
 
-    protected function getHeaders(string $url, string $data, string $method): array {
+    protected function getHeaders(string $url, string $data, string $method): array
+    {
         $headers = new DefaultHeader([
             'Content-Type: application/json; charset=utf-8',
             'Accept: application/json'
@@ -76,24 +79,26 @@ class Client implements Loggable
         return $headers->getHeaders();
     }
 
-
     //WIP
-    public function get($responseClass = Response::class) {
+    public function get($responseClass = Response::class)
+    {
         return $this->call(self::METHOD_GET, null, $responseClass);
     }
 
-    public function post(Request $data = null, $responseClass = TransactionResponse::class) {
+    public function post(Request $data = null, $responseClass = TransactionResponse::class)
+    {
         return $this->call(self::METHOD_POST, $data, $responseClass);
     }
 
-    public function dataRequest(Request $data = null, $responseClass =  TransactionResponse::class) {
+    public function dataRequest(Request $data = null, $responseClass =  TransactionResponse::class)
+    {
         $endPoint = $this->getEndpoint('json/DataRequest/');
 
         return $this->call(self::METHOD_POST, $data, $responseClass, $endPoint);
     }
 
-    protected function call($method, Request $data, string $responseClass, string $endPoint = null) {
-
+    protected function call($method, Request $data, string $responseClass, string $endPoint = null)
+    {
         $endPoint = $endPoint ?? $this->getTransactionUrl();
 
         // all headers have to be set at once
@@ -105,6 +110,21 @@ class Client implements Loggable
         $response = new $responseClass($decodedResult);
 
         return $response;
+    }
+
+    public function config(?Config $config = null)
+    {
+        if($config)
+        {
+            $this->config = $config;
+        }
+
+        if(!$this->config)
+        {
+            throw new SDKException($this->getLogger(), "No config has been configured. Please pass your credentials to the constructor or set up a Config object.");
+        }
+
+        return $this->config;
     }
 
     public function setLogger(Subject $logger)

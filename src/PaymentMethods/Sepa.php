@@ -9,25 +9,45 @@ use Buckaroo\Model\ServiceList;
 
 class Sepa extends PaymentMethod
 {
-    protected string $paymentName = 'sepadirectdebit';
+    protected string $paymentName = 'SepaDirectDebit';
     protected int $serviceVersion = 1;
 
     public function setPayServiceList(array $serviceParameters = []): self
     {
         $paymentModel = new PaymentPayload($this->payload);
 
-        $parameters = [
-            ['name' => 'customeraccountname', 'Value' => $paymentModel->customerAccountName],
-            ['name' => 'CustomerBIC', 'Value' => $paymentModel->customerBic],
-            ['name' => 'CustomerIban', 'Value' => $paymentModel->customerIban]
-        ];
-
         $serviceList = new ServiceList(
             $this->paymentName(),
             $this->serviceVersion(),
-            'Pay',
-            $parameters
+            'Pay,ExtraInfo'
         );
+
+        $serviceList->appendParameter([
+            [
+                "Name"              => "CollectDate",
+                "Value"             => $this->payload['serviceParameters']['collectDate'] ?? null
+            ],
+            [
+                "Name"              => "CustomerIBAN",
+                "Value"             => $this->payload['serviceParameters']['iban'] ?? null
+            ],
+            [
+                "Name"              => "Customerbic",
+                "Value"             => $this->payload['serviceParameters']['bic'] ?? null
+            ],
+            [
+                "Name"              => "MandateReference",
+                "Value"             => $this->payload['serviceParameters']['mandateReference'] ?? null
+            ],
+            [
+                "Name"              => "MandateDate",
+                "Value"             => $this->payload['serviceParameters']['mandateDate'] ?? null
+            ],
+            [
+                "Name"              => "customeraccountname",
+                "Value"             => $this->payload['serviceParameters']['customer']['name'] ?? null
+            ]
+        ]);
 
         $this->request->getServices()->pushServiceList($serviceList);
 

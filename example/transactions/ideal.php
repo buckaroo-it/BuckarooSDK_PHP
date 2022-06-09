@@ -9,8 +9,10 @@ $buckaroo = new Buckaroo($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 //Also accepts json
 //Pay
 $response = $buckaroo->payment('idealprocessing')->pay([
-    'issuer' => 'ABNANL2A',
-    'amountDebit' => 10.10
+    'amountDebit' => 10.10,
+    'serviceParameters' => [
+        'issuer' => 'ABNANL2A',
+    ]
 ]);
 
 //Refund
