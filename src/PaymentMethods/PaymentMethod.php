@@ -22,6 +22,7 @@ abstract class PaymentMethod implements PaymentInterface
     protected TransactionRequest $request;
     protected array $payload;
 
+    protected array $requiredConfigFields = ['currency', 'pushURL'];
     protected string $paymentName = "";
     protected int $serviceVersion = 0;
 
@@ -30,7 +31,6 @@ abstract class PaymentMethod implements PaymentInterface
         ?string $serviceCode
     ) {
         $this->client = $client;
-        //$this->logger = $client->getLogger();
 
         $this->request = new TransactionRequest;
         $this->serviceCode = $serviceCode;
@@ -59,7 +59,10 @@ abstract class PaymentMethod implements PaymentInterface
 
     public function setPayload(array $payload)
     {
-        $this->payload = $payload;
+        //When custom config pass into the payload
+        $this->client->config()->merge($payload);
+
+        $this->payload = array_merge($this->client->config()->get($this->requiredConfigFields), $payload);
 
         return $this;
     }
@@ -110,7 +113,7 @@ abstract class PaymentMethod implements PaymentInterface
 
     public function handleReply(array $data): ReplyHandler
     {
-        return new ReplyHandler($this->client->config, $data);
+        return new ReplyHandler($this->client->config(), $data);
     }
 
     public function paymentName(): string

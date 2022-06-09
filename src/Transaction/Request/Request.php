@@ -13,15 +13,7 @@ class Request implements JsonSerializable, ArrayAccess, Arrayable
 {
     protected array $data = [];
     protected array $headers = [];
-//    protected LoggerInterface $logger;
 
-//    public function __construct(
-//        ?LoggerInterface $logger = null
-//    ) {
-//        $this->logger = $logger ?? DefaultFactory::getDefaultLogger();
-//    }
-
-    /** Implement ArrayAccess */
     public function offsetSet($offset, $value): void
     {
         if (is_null($offset)) {

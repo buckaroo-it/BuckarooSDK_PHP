@@ -2,7 +2,18 @@
 
 namespace Buckaroo\Tests\Payments;
 
+use Buckaroo\Config\Config;
 use Buckaroo\Tests\BuckarooTestCase;
+
+class CustomConfig extends Config{
+    public function __construct()
+    {
+        $websiteKey = 'Set Key';
+        $secretKey = 'From other resources like DB/ENV/Platform Config';
+
+        parent::__construct($websiteKey, $secretKey);
+    }
+}
 
 class IdealTest extends BuckarooTestCase
 {
@@ -31,8 +42,11 @@ class IdealTest extends BuckarooTestCase
         $response = $this->buckaroo->payment('idealprocessing')->pay($this->paymentPayload);
         $this->assertTrue($response->isPendingProcessing());
 
-        $response = $this->buckaroo->payment('ideal')->pay(json_encode($this->paymentPayload));
-        $this->assertTrue($response->isPendingProcessing());
+//        $customConfig = new CustomConfig();
+//        $customConfig->currency('AUD');
+//
+//        $response = $this->buckaroo->setConfig($customConfig)->payment('ideal')->pay(json_encode($this->paymentPayload));
+//        $this->assertTrue($response->isPendingProcessing());
     }
 
     /**

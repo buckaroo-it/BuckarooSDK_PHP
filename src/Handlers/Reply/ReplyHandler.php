@@ -2,7 +2,7 @@
 
 namespace Buckaroo\Handlers\Reply;
 
-use Buckaroo\Transaction\Config;
+use Buckaroo\Config\Config;
 
 class ReplyHandler
 {
@@ -29,7 +29,7 @@ class ReplyHandler
             return $key . '=' . $value;
         }, $data, array_keys($data));
 
-        $dataString = implode('',  $data) . trim($this->config->getSecretKey());
+        $dataString = implode('',  $data) . trim($this->config->secretKey());
 
         $this->isValid = hash_equals(sha1($dataString), trim($this->data['brq_signature'] ?? null));
 

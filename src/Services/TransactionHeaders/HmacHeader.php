@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Buckaroo\Services\TransactionHeaders;
 
+use Buckaroo\Config\Config;
 use Buckaroo\Helpers\Base;
-use Buckaroo\Transaction\Config;
 
 /**
  * Class to create the security header for Buckaroo

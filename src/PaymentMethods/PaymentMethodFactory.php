@@ -22,7 +22,7 @@ class PaymentMethodFactory
         In3::class                      => ['in3'],
         KlarnaPay::class                => ['klarna'],
         KlarnaKP::class                 => ['klarnakp'],
-        Sepa::class                     => ['sepadirectdebit'],
+        Sepa::class                     => ['sepadirectdebit', 'sepa'],
         Kbc::class                      => ['kbcpaymentbutton'],
         Paypal::class                   => ['paypal'],
         Eps::class                      => ['eps'],

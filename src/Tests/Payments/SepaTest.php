@@ -9,10 +9,17 @@ class SepaTest extends BuckarooTestCase
     protected function setUp(): void
     {
         $this->paymentPayload = ([
-            'customerAccountName' => 'TEST BANK USED BY IBAN SERVICE',
-            'customerBic' => 'TESTNL2A',
-            'customerIban' => 'NL13TEST0123456789',
-            'amountDebit' => 10.10
+            'amountDebit' => 10.10,
+            'serviceParameters' => [
+                'iban'              => 'NL13TEST0123456789',
+                'bic'               => 'TESTNL2A',
+                'collectDate'       => '2022-08-01',
+                'mandateReference'  => '1DCtestreference',
+                'mandateDate'       => '2022-07-03',
+                'customer'      => [
+                    'name'          => 'John Smith'
+                ]
+            ]
         ]);
     }
 
@@ -23,6 +30,7 @@ class SepaTest extends BuckarooTestCase
     public function it_creates_a_sepa_payment()
     {
         $response = $this->buckaroo->payment('sepadirectdebit')->pay($this->paymentPayload);
+
         $this->assertTrue($response->isPendingProcessing());
     }
 

@@ -10,6 +10,7 @@ use Buckaroo\Model\ServiceList;
 class Ideal extends PaymentMethod
 {
     protected string $paymentName = 'ideal';
+    protected array $requiredConfigFields = ['currency', 'returnURL', 'returnURLCancel', 'pushURL'];
 
     public function setPayServiceList(array $serviceParameters = []): self
     {
