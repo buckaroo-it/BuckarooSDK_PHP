@@ -9,12 +9,11 @@
 </p>
 
 ---
-
 - [Requirements](#requirements)
 - [Composer Installation](#composer-installation)
 - [Requirements](#requirements)
-- [Examples](#examples)
-
+- [Example](#example)
+- [Versioning](#versioning)
 ---
 
 ## Requirements
@@ -50,15 +49,15 @@ $buckaroo = new \Buckaroo('WEBSITE_KEY', 'SECRET_KEY');
 Create a payment with all the available payment methods. In this example, we show how to create a credit card payment. Each payment has a slightly different payload.
 
 ```php
-# Get your website & secret key in your plaza.
-    $buckaroo->payment('creditcard') // Input the desire payment method.
-        ->pay([
-            'amountDebit' => 10, // The amount we want to charge
-            'invoice' => 'UNIQUE-INVOICE-NO', // Each payment must contain a unique invoice number
-            'serviceParameters' => [
-                'name'          => 'visa' // When we request to pay with Visa
-            ]
-        ]);
+# Create a new payment
+$buckaroo->payment('creditcard') // Input the desire payment method.
+    ->pay([
+        'amountDebit' => 10, // The amount we want to charge
+        'invoice' => 'UNIQUE-INVOICE-NO', // Each payment must contain a unique invoice number
+        'serviceParameters' => [
+            'name'          => 'visa' // Request to pay with Visa
+        ]
+    ]);
 ```
 
 Find our full documentation online on [dev.buckaroo.nl](https://dev.buckaroo.nl/).
