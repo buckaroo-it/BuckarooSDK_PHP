@@ -2,7 +2,6 @@
 
 namespace Buckaroo\PaymentMethods\Traits;
 
-use Buckaroo\Models\Adapters\ServiceParametersKeys\Adapter;
 use Buckaroo\Models\Article;
 use Buckaroo\Models\Person;
 use Buckaroo\Models\ServiceList;

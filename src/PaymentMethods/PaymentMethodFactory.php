@@ -30,7 +30,7 @@ use Buckaroo\PaymentMethods\RequestToPay\RequestToPay;
 use Buckaroo\PaymentMethods\SEPA\SEPA;
 use Buckaroo\PaymentMethods\Sofort\Sofort;
 use Buckaroo\PaymentMethods\Tinka\Tinka;
-use Buckaroo\PaymentMethods\Transfer\Transfer;
+use Buckaroo\PaymentMethods\BankTransfer\BankTransfer;
 use Buckaroo\PaymentMethods\Trustly\Trustly;
 use Buckaroo\PaymentMethods\WeChatPay\WeChatPay;
 use Buckaroo\Transaction\Client;
@@ -65,7 +65,7 @@ class PaymentMethodFactory
         Giropay::class                  => ['giropay'],
         GiftCard::class                 => ['giftcard'],
         Trustly::class                  => ['trustly'],
-        Transfer::class                 => ['transfer'],
+        BankTransfer::class                 => ['transfer'],
         RequestToPay::class             => ['requesttopay'],
         WeChatPay::class                => ['wechatpay'],
     ];

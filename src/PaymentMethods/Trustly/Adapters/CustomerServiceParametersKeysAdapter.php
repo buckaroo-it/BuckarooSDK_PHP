@@ -1,8 +1,10 @@
 <?php
 
-namespace Buckaroo\Models\Adapters\ServiceParametersKeys;
+namespace Buckaroo\PaymentMethods\Trustly\Adapters;
 
-class TrustlyCustomerAdapter extends Adapter
+use Buckaroo\Models\Adapters\ServiceParametersKeysAdapter;
+
+class CustomerServiceParametersKeysAdapter extends ServiceParametersKeysAdapter
 {
     protected array $keys = [
         'firstName'        => 'CustomerFirstName',

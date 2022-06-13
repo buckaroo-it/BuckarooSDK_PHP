@@ -1,10 +1,11 @@
 <?php
 
-namespace Buckaroo\Models\Adapters\ServiceParametersKeys;
+namespace Buckaroo\PaymentMethods\AfterpayDigiAccept\Adapters;
 
+use Buckaroo\Models\Adapters\ServiceParametersKeysAdapter;
 use Buckaroo\Models\Address;
 
-class AfterpayDigiAcceptAddressAdapter extends Adapter
+class AddressServiceParametersKeysAdapter extends ServiceParametersKeysAdapter
 {
     protected $prefix = '';
 

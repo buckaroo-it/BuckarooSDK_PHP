@@ -2,10 +2,10 @@
 
 namespace Buckaroo\PaymentMethods\RequestToPay;
 
-use Buckaroo\Models\Adapters\ServiceParametersKeys\RequestToPayCustomerAdapter;
 use Buckaroo\Models\Person;
 use Buckaroo\Models\ServiceList;
 use Buckaroo\PaymentMethods\PaymentMethod;
+use Buckaroo\PaymentMethods\RequestToPay\Adapters\CustomerServiceParametersKeysAdapter;
 use Buckaroo\Services\ServiceListParameters\CustomerParameters;
 use Buckaroo\Services\ServiceListParameters\DefaultParameters;
 
@@ -21,7 +21,7 @@ class RequestToPay extends PaymentMethod
             'Pay'
         );
 
-        $parametersService = new CustomerParameters(new DefaultParameters($serviceList), ['customer' => new RequestToPayCustomerAdapter((new Person())->setProperties($serviceParameters['customer'] ?? []))]);
+        $parametersService = new CustomerParameters(new DefaultParameters($serviceList), ['customer' => new CustomerServiceParametersKeysAdapter((new Person())->setProperties($serviceParameters['customer'] ?? []))]);
         $parametersService->data();
 
         $this->request->getServices()->pushServiceList($serviceList);

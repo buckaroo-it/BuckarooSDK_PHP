@@ -2,8 +2,8 @@
 
 namespace Buckaroo\Services\ServiceListParameters;
 
-use Buckaroo\Models\Adapters\ServiceParametersKeys\AfterpayDigiAcceptAddressAdapter;
 use Buckaroo\Models\ServiceList;
+use Buckaroo\PaymentMethods\AfterpayDigiAccept\Adapters\AddressServiceParametersKeysAdapter;
 
 class AfterpayDigiAcceptCustomerParameters extends CustomerParameters
 {
@@ -11,8 +11,8 @@ class AfterpayDigiAcceptCustomerParameters extends CustomerParameters
     {
         $customer = $this->data['customer'];
 
-        $this->attachCustomerAddress('Billing', new AfterpayDigiAcceptAddressAdapter($customer->billing, 'Billing'));
-        $this->attachCustomerAddress('Shipping', new AfterpayDigiAcceptAddressAdapter($customer->shipping, 'Shipping'));
+        $this->attachCustomerAddress('Billing', new AddressServiceParametersKeysAdapter($customer->billing, 'Billing'));
+        $this->attachCustomerAddress('Shipping', new AddressServiceParametersKeysAdapter($customer->shipping, 'Shipping'));
 
         $this->appendParameter(null, null, "AddressesDiffer", ($customer->useBillingInfoForShipping)? 'FALSE' : 'TRUE');
 

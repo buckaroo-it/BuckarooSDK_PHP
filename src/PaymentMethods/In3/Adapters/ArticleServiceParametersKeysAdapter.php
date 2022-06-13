@@ -1,8 +1,10 @@
 <?php
 
-namespace Buckaroo\Models\Adapters\ServiceParametersKeys;
+namespace Buckaroo\PaymentMethods\In3\Adapters;
 
-class In3ArticleAdapter extends Adapter
+use Buckaroo\Models\Adapters\ServiceParametersKeysAdapter;
+
+class ArticleServiceParametersKeysAdapter extends ServiceParametersKeysAdapter
 {
     protected array $keys = [
         'identifier'        => 'Code',

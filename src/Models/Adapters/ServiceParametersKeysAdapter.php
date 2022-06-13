@@ -1,10 +1,10 @@
 <?php
 
-namespace Buckaroo\Models\Adapters\ServiceParametersKeys;
+namespace Buckaroo\Models\Adapters;
 
 use Buckaroo\Models\Model;
 
-abstract class Adapter extends Model implements ServiceParameterKeysAdapter
+abstract class ServiceParametersKeysAdapter extends Model
 {
     private Model $model;
     protected array $keys;

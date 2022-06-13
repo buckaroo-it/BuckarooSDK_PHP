@@ -1,8 +1,10 @@
 <?php
 
-namespace Buckaroo\Models\Adapters\ServiceParametersKeys;
+namespace Buckaroo\PaymentMethods\BankTransfer\Adapters;
 
-class BankTransferCustomerAdapter extends Adapter
+use Buckaroo\Models\Adapters\ServiceParametersKeysAdapter;
+
+class CustomerServiceParametersKeysAdapter extends ServiceParametersKeysAdapter
 {
     protected array $keys = [
         'gender' => 'CustomerGender',

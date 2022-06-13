@@ -2,8 +2,8 @@
 
 namespace Buckaroo\Services\ServiceListParameters;
 
-use Buckaroo\Models\iDealQR;
 use Buckaroo\Models\ServiceList;
+use Buckaroo\PaymentMethods\iDealQR\Models\generate;
 
 class iDealQRParameters extends ServiceListParameter
 {
@@ -11,7 +11,7 @@ class iDealQRParameters extends ServiceListParameter
     {
         $this->serviceList = $this->serviceListParameter->data();
 
-        $ideal_qr = (new iDealQR())->setProperties($this->data);
+        $ideal_qr = (new generate())->setProperties($this->data);
 
         $this->appendParameter(null, null, $ideal_qr->serviceParameterKeyOf('amount'), $ideal_qr->amount);
         $this->appendParameter(null, null, $ideal_qr->serviceParameterKeyOf('description'), $ideal_qr->description);

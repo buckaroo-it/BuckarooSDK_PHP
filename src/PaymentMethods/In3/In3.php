@@ -2,11 +2,11 @@
 
 namespace Buckaroo\PaymentMethods\In3;
 
-use Buckaroo\Models\Adapters\ServiceParametersKeys\In3ArticleAdapter;
 use Buckaroo\Models\ClientIP;
 use Buckaroo\Models\Company;
 use Buckaroo\Models\Person;
 use Buckaroo\Models\ServiceList;
+use Buckaroo\PaymentMethods\In3\Adapters\ArticleServiceParametersKeysAdapter;
 use Buckaroo\PaymentMethods\PaymentMethod;
 use Buckaroo\PaymentMethods\Traits\HasArticleAndCustomerParameters;
 use Buckaroo\Services\ServiceListParameters\CompanyParameters;
@@ -73,7 +73,7 @@ class In3 extends PaymentMethod
             ]);
         }
 
-        $parametersService = new In3ArticleParameters(new DefaultParameters($serviceList), $this->articles($this->payload['serviceParameters']['articles'] ?? [], In3ArticleAdapter::class));
+        $parametersService = new In3ArticleParameters(new DefaultParameters($serviceList), $this->articles($this->payload['serviceParameters']['articles'] ?? [], ArticleServiceParametersKeysAdapter::class));
         $parametersService = new CompanyParameters($parametersService, ['company' => (new Company())->setProperties($this->payload['serviceParameters']['company'] ?? [])]);
         $parametersService = new In3CustomerParameters($parametersService, ['customer' => (new Person())->setProperties($this->payload['serviceParameters']['customer'] ?? [])]);
 
@@ -125,7 +125,7 @@ class In3 extends PaymentMethod
             ]);
         }
 
-        $parametersService = new In3ArticleParameters(new DefaultParameters($serviceList), $this->articles($serviceParameters['articles'] ?? [], In3ArticleAdapter::class));
+        $parametersService = new In3ArticleParameters(new DefaultParameters($serviceList), $this->articles($serviceParameters['articles'] ?? [], ArticleServiceParametersKeysAdapter::class));
         $parametersService = new CompanyParameters($parametersService, ['company' => (new Company())->setProperties($serviceParameters['company'] ?? [])]);
         $parametersService = new In3CustomerParameters($parametersService, ['customer' => (new Person())->setProperties($serviceParameters['customer'] ?? [])]);
 

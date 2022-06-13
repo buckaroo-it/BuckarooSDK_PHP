@@ -2,8 +2,6 @@
 
 namespace Buckaroo\Models;
 
-use Buckaroo\Helpers\Base;
-use Buckaroo\Helpers\Validate;
 use Buckaroo\Resources\Constants\IPProtocolVersion;
 
 class ClientIP extends Model

@@ -1,8 +1,10 @@
 <?php
 
-namespace Buckaroo\Models;
+namespace Buckaroo\PaymentMethods\iDealQR\Models;
 
-class iDealQR extends Model
+use Buckaroo\Models\Model;
+
+class Generate extends Model
 {
     protected float $amount;
     protected bool $amountIsChangeable;
