@@ -7,8 +7,8 @@ namespace Buckaroo\PaymentMethods\BankTransfer;
 use Buckaroo\Models\Person;
 use Buckaroo\Models\ServiceList;
 use Buckaroo\PaymentMethods\BankTransfer\Adapters\CustomerServiceParametersKeysAdapter;
+use Buckaroo\PaymentMethods\BankTransfer\ServiceListParameters\Customer;
 use Buckaroo\PaymentMethods\PaymentMethod;
-use Buckaroo\Services\ServiceListParameters\BankTransferCustomerParameters;
 use Buckaroo\Services\ServiceListParameters\DefaultParameters;
 
 
@@ -39,9 +39,11 @@ class BankTransfer extends PaymentMethod
                 "GroupID"           => ""
             ]
         ]);
-        
+
+        $person = new Person($serviceParameters['customer'] ?? []);
+
         $parametersService = new DefaultParameters($serviceList);
-        $parametersService = new BankTransferCustomerParameters($parametersService, ['customer' => new CustomerServiceParametersKeysAdapter((new Person())->setProperties($serviceParameters['customer'] ?? []))]);
+        $parametersService = new Customer($parametersService, ['customer' => new CustomerServiceParametersKeysAdapter($person)]);
         $parametersService->data();
 
         $this->request->getServices()->pushServiceList($serviceList);

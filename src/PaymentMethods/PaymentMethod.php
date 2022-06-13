@@ -111,6 +111,11 @@ abstract class PaymentMethod implements PaymentInterface
         );
     }
 
+    protected function getServiceList(string $action): ServiceList
+    {
+        return new ServiceList($this->paymentName(),  $this->serviceVersion(), $action);
+    }
+
     public function handleReply(array $data): ReplyHandler
     {
         return new ReplyHandler($this->client->config(), $data);

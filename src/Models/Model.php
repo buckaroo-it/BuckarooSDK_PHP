@@ -6,6 +6,11 @@ use Buckaroo\Resources\Arrayable;
 
 abstract class Model implements Arrayable
 {
+    public function __construct(?array $values = null)
+    {
+        $this->setProperties($values);
+    }
+
     public function __get($property)
     {
         if (property_exists($this, $property) && isset($this->$property))
@@ -26,7 +31,7 @@ abstract class Model implements Arrayable
         return $this;
     }
 
-    public function setProperties(array $data)
+    public function setProperties(?array $data)
     {
         if($data)
         {

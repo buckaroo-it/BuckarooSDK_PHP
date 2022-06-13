@@ -1,6 +1,9 @@
 <?php
 
-if(! function_exists('str_random')){
+use Carbon\Carbon;
+
+if(! function_exists('str_random'))
+{
     function str_random(int $length = 16): string {
         $chars = str_split('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789');
         $str   = "";
@@ -11,5 +14,13 @@ if(! function_exists('str_random')){
         }
 
         return $str;
+    }
+}
+
+if(! function_exists('carbon'))
+{
+    function carbon($params = null): Carbon
+    {
+        return new Carbon($params);
     }
 }

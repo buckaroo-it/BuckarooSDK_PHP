@@ -10,9 +10,8 @@ abstract class ServiceListParameter
     protected ServiceList $serviceList;
     protected array $data;
 
-    public function __construct(ServiceListParameter $serviceListParameter, array $data)
+    public function __construct(ServiceListParameter $serviceListParameter)
     {
-        $this->data = $data;
         $this->serviceListParameter = $serviceListParameter;
         $this->serviceList = $this->serviceListParameter->data();
     }

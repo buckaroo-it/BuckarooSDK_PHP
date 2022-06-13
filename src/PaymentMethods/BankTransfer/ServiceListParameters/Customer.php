@@ -1,11 +1,11 @@
 <?php
 
-namespace Buckaroo\Services\ServiceListParameters;
+namespace Buckaroo\PaymentMethods\BankTransfer\ServiceListParameters;
 
-use Buckaroo\Models\Person;
 use Buckaroo\Models\ServiceList;
+use Buckaroo\Services\ServiceListParameters\CustomerParameters;
 
-class BankTransferCustomerParameters extends CustomerParameters
+class Customer extends CustomerParameters
 {
     public function data(): ServiceList
     {
