@@ -2,8 +2,8 @@
 
 namespace Buckaroo\Services\ServiceListParameters;
 
-use Buckaroo\Model\Article;
-use Buckaroo\Model\ServiceList;
+use Buckaroo\Models\Article;
+use Buckaroo\Models\ServiceList;
 
 class KlarnaKPArticleParameters extends ServiceListParameter
 {

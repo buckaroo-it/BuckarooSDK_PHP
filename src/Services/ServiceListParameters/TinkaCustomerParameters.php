@@ -2,8 +2,8 @@
 
 namespace Buckaroo\Services\ServiceListParameters;
 
-use Buckaroo\Model\Customer;
-use Buckaroo\Model\ServiceList;
+use Buckaroo\Models\Person;
+use Buckaroo\Models\ServiceList;
 
 class TinkaCustomerParameters extends CustomerParameters
 {

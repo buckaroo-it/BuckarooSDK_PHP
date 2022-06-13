@@ -2,7 +2,7 @@
 
 namespace Buckaroo\Transaction\Request;
 
-use Buckaroo\Model\Services;
+use Buckaroo\Models\Services;
 use Buckaroo\Resources\Arrayable;
 
 class TransactionRequest extends Request

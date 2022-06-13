@@ -2,8 +2,8 @@
 
 namespace Buckaroo\Services\ServiceListParameters;
 
-use Buckaroo\Model\iDealQR;
-use Buckaroo\Model\ServiceList;
+use Buckaroo\Models\iDealQR;
+use Buckaroo\Models\ServiceList;
 
 class iDealQRParameters extends ServiceListParameter
 {

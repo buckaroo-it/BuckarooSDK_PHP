@@ -3,9 +3,9 @@
 namespace Buckaroo\PaymentMethods;
 
 use Buckaroo\Handlers\Reply\ReplyHandler;
-use Buckaroo\Model\PaymentPayload;
-use Buckaroo\Model\RefundPayload;
-use Buckaroo\Model\ServiceList;
+use Buckaroo\Models\PaymentPayload;
+use Buckaroo\Models\RefundPayload;
+use Buckaroo\Models\ServiceList;
 use Buckaroo\Transaction\Client;
 use Buckaroo\Transaction\Request\Adapters\PaymentPayloadAdapter;
 use Buckaroo\Transaction\Request\Adapters\RefundPayloadAdapter;

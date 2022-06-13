@@ -2,7 +2,7 @@
 
 namespace Buckaroo\Transaction\Request\Adapters;
 
-use Buckaroo\Model\Payload;
+use Buckaroo\Models\Payload;
 
 abstract class TransactionAdapter
 {

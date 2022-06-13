@@ -2,8 +2,8 @@
 
 namespace Buckaroo\Services\ServiceListParameters;
 
-use Buckaroo\Model\Model;
-use Buckaroo\Model\ServiceList;
+use Buckaroo\Models\Model;
+use Buckaroo\Models\ServiceList;
 
 class ArticleParameters extends ServiceListParameter
 {

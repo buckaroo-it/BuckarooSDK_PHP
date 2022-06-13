@@ -2,8 +2,8 @@
 
 namespace Buckaroo\Services\ServiceListParameters;
 
-use Buckaroo\Model\Adapters\ServiceParametersKeys\ServiceParameterKeysAdapter;
-use Buckaroo\Model\ServiceList;
+use Buckaroo\Models\Adapters\ServiceParametersKeys\ServiceParameterKeysAdapter;
+use Buckaroo\Models\ServiceList;
 
 abstract class ServiceListParameter
 {

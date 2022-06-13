@@ -2,10 +2,10 @@
 
 namespace Buckaroo\Services\ServiceListParameters;
 
-use Buckaroo\Model\Address;
-use Buckaroo\Model\Customer;
-use Buckaroo\Model\Model;
-use Buckaroo\Model\ServiceList;
+use Buckaroo\Models\Address;
+use Buckaroo\Models\Person;
+use Buckaroo\Models\Model;
+use Buckaroo\Models\ServiceList;
 
 class CustomerParameters extends ServiceListParameter
 {

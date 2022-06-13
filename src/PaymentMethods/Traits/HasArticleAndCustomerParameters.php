@@ -2,10 +2,10 @@
 
 namespace Buckaroo\PaymentMethods\Traits;
 
-use Buckaroo\Model\Adapters\ServiceParametersKeys\Adapter;
-use Buckaroo\Model\Article;
-use Buckaroo\Model\Customer;
-use Buckaroo\Model\ServiceList;
+use Buckaroo\Models\Adapters\ServiceParametersKeys\Adapter;
+use Buckaroo\Models\Article;
+use Buckaroo\Models\Person;
+use Buckaroo\Models\ServiceList;
 use Buckaroo\Services\ServiceListParameters\ArticleParameters;
 use Buckaroo\Services\ServiceListParameters\CustomerParameters;
 use Buckaroo\Services\ServiceListParameters\DefaultParameters;
@@ -21,7 +21,7 @@ trait HasArticleAndCustomerParameters
         );
 
         $parametersService = new ArticleParameters(new DefaultParameters($serviceList), $this->articles($serviceParameters['articles'] ?? []));
-        $parametersService = new CustomerParameters($parametersService, ['customer' => (new Customer())->setProperties($serviceParameters['customer'] ?? [])]);
+        $parametersService = new CustomerParameters($parametersService, ['customer' => (new Person())->setProperties($serviceParameters['customer'] ?? [])]);
         $parametersService->data();
 
         $this->request->getServices()->pushServiceList($serviceList);

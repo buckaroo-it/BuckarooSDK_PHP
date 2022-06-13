@@ -2,8 +2,8 @@
 
 namespace Buckaroo\Services\ServiceListParameters;
 
-use Buckaroo\Model\Adapters\ServiceParametersKeys\AfterpayDigiAcceptAddressAdapter;
-use Buckaroo\Model\ServiceList;
+use Buckaroo\Models\Adapters\ServiceParametersKeys\AfterpayDigiAcceptAddressAdapter;
+use Buckaroo\Models\ServiceList;
 
 class AfterpayDigiAcceptCustomerParameters extends CustomerParameters
 {
