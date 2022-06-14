@@ -2,6 +2,7 @@
 
 namespace Buckaroo\Tests\Payments;
 
+use Buckaroo\Resources\Constants\Gender;
 use Buckaroo\Tests\BuckarooTestCase;
 
 class AfterpayDigiAcceptTest extends BuckarooTestCase
@@ -14,7 +15,7 @@ class AfterpayDigiAcceptTest extends BuckarooTestCase
     {
         $response = $this->buckaroo->payment('afterpaydigiaccept')->pay($this->getPaymentPayload());
 
-        $this->assertTrue($response->isRejected());
+        $this->assertTrue($response->isSuccess());
     }
 
     /**
@@ -34,52 +35,58 @@ class AfterpayDigiAcceptTest extends BuckarooTestCase
 
     private function getPaymentPayload(): array {
         return [
-            'amountDebit'       => 40,
-            'order'             => uniqid(),
-            'invoice'           => uniqid(),
-            'serviceParameters' => [
-                'b2b'                       => false,
-                'articles'      => [
-                    [
-                        'articleId' => uniqid(),
-                        'articleDescription' => 'Blue Toy Car',
-                        'articleUnitprice' => '10.00',
-                        'articleQuantity' => '2',
-                        'articleVatcategory' => '1'
-                    ],
-                    [
-                        'articleId' => uniqid(),
-                        'articleDescription' => 'Blue Toy Car',
-                        'articleUnitprice' => '10.00',
-                        'articleQuantity' => '2',
-                        'articleVatcategory' => '1'
-                    ],
+            'amountDebit'                   => 40.50,
+            'order'                         => uniqid(),
+            'invoice'                       => uniqid(),
+            'b2b'                           => true,
+            'billingGender'                 => Gender::FEMALE,
+            'billingInitials'               => 'AB',
+            'billingLastName'               => 'Test',
+            'billingBirthDate'              => carbon()->subYear(18)->format('d-m-Y'),
+            'billingStreet'                 => 'Hoofdstraat',
+            'billingHouseNumber'            => '1',
+            'billingPostalCode'             => '8441ER',
+            'billingCity'                   => 'Heerenveen',
+            'billingCountry'                => 'NL',
+            'billingEmail'                  => 'xxxxx@xxx.nl',
+            'billingPhoneNumber'            => '0612345678',
+            'billingLanguage'               => 'NL',
+            'addressesDiffer'               => true,
+            'shippingGender'                => Gender::MALE,
+            'shippingInitials'              => 'YJ',
+            'shippingLastName'              => 'Jansen',
+            'shippingBirthDate'             => carbon()->subYear(20)->format('d-m-Y'),
+            'shippingStreet'                => 'Hoofdstraat',
+            'shippingHouseNumber'           => '2',
+            'shippingPostalCode'            => '8441ER',
+            'shippingCity'                  => 'Heerenveen',
+            'shippingCountryCode'           => 'NL',
+            'shippingEmail'                 => 'xxxxx@xxx.nl',
+            'shippingPhoneNumber'           => '0612345678',
+            'shippingLanguage'              => 'NL',
+            'shippingCosts'                 => 0.5,
+            'customerIPAddress'             => '0.0.0.0',
+            'companyCOCRegistration'        => '12356',
+            'companyName'                   => 'Buckaroo BV',
+            'costCentre'                    => 'Test',
+            'department'                    => 'Test',
+            'establishmentNumber'           => '123456',
+            'vatNumber'                     => 'NL12345678',
+            'articles'      => [
+                [
+                    'identifier' => uniqid(),
+                    'description' => 'Blue Toy Car',
+                    'unitPrice' => '10.00',
+                    'quantity' => '2',
+                    'vatCategory' => '1'
                 ],
-                'customer'      => [
-                    'useBillingInfoForShipping' => false,
-                    'billing'                   => [
-                        'firstName' => 'Test',
-                        'lastName' => 'Acceptatie',
-                        'email' => 'billingcustomer@buckaroo.nl',
-                        'street' => 'Hoofdstraat',
-                        'housenumber'   => '2',
-                        'postalCode' => '8441EE',
-                        'city' => 'Heerenveen',
-                        'phone' => '0610000000',
-                        'birthDate' => '01-01-1990'
-                    ],
-                    'shipping'                  => [
-                        'firstName' => 'Test',
-                        'lastName' => 'Aflever',
-                        'email' => 'billingcustomer@buckaroo.nl',
-                        'street' => 'Hoofdstraat',
-                        'housenumber'   => '2',
-                        'postalCode' => '8441EE',
-                        'city' => 'Heerenveen',
-                        'phone' => '0610000000',
-                        'birthDate' => '01-01-1990'
-                    ]
-                ]
+                [
+                    'identifier' => uniqid(),
+                    'description' => 'Red Toy Car',
+                    'unitPrice' => '10.00',
+                    'quantity' => '2',
+                    'vatCategory' => '1'
+                ],
             ]
         ];
     }

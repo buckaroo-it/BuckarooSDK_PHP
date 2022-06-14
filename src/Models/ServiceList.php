@@ -3,6 +3,7 @@
 namespace Buckaroo\Models;
 
 use Buckaroo\Services\ServiceListParameters\{DefaultParameters, ModelParameters, ServiceListParameter};
+use function PHPUnit\Framework\isEmpty;
 
 class ServiceList extends Model
 {
@@ -37,7 +38,8 @@ class ServiceList extends Model
     public function appendParameter($value, $key = null)
     {
         /* Check value pass multiple, iterate through it*/
-        if(is_array($value) && is_array(current($value))) {
+        if(is_array($value) && is_array(current($value)))
+        {
             foreach($value as $singleValue)
             {
                 $this->appendParameter($singleValue, $key);
@@ -46,7 +48,8 @@ class ServiceList extends Model
             return $this;
         }
 
-        if($key) {
+        if($key)
+        {
             $this->parameters[$key] = $value;
 
             return $this;
@@ -61,11 +64,25 @@ class ServiceList extends Model
     {
         $this->parameterService = new ModelParameters($this->parameterService, $model, $groupType, $groupKey);
 
-        foreach($model->get_object_vars() as $key => $value)
+        $this->iterateThroughObject($model, $model->get_object_vars());
+
+        return $this;
+    }
+
+    protected function iterateThroughObject(Model $model, array $array, ?string $keyName = null)
+    {
+        foreach($array as $key => $value)
         {
             if($value instanceof Model)
             {
-                $this->decorateParameters($value, $model->getGroupType($key), $model->getGroupKey($key));
+                $this->decorateParameters($value, $model->getGroupType($keyName ?? $key), $model->getGroupKey($keyName ?? $key, $key));
+
+                continue;
+            }
+
+            if(is_array($value) && count($value))
+            {
+                $this->iterateThroughObject($model, $value, $key);
             }
         }
 

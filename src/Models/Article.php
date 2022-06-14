@@ -6,26 +6,22 @@ namespace Buckaroo\Models;
 
 class Article extends Model
 {
-    protected
-        $identifier,
-        $type,
-        $articleId,
-        $articleNumber,
-        $articleDescription,
-        $articleUnitprice,
-        $articleQuantity,
-        $articleVatcategory,
-        $brand,
-        $manufacturer,
-        $color,
-        $size,
-        $unitCode,
-        $description,
-        $vatPercentage,
-        $quantity,
-        $price,
-        $grossUnitPrice,
-        $grossUnitPriceIncl,
-        $grossUnitPriceExcl,
-        $reservationNumber;
+    protected string $identifier;
+    protected string $type;
+    protected string $articleNumber;
+    protected string $brand;
+    protected string $manufacturer;
+    protected string $color;
+    protected string $size;
+    protected string $unitCode;
+    protected float $unitPrice;
+    protected string $description;
+    protected string $vatPercentage;
+    protected string $vatCategory;
+    protected int $quantity;
+    protected float $price;
+    protected float $grossUnitPrice;
+    protected float $grossUnitPriceIncl;
+    protected float $grossUnitPriceExcl;
+    protected string $reservationNumber;
 }

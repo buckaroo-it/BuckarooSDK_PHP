@@ -11,7 +11,7 @@ class ServiceParameter extends Model
         return $this->groupData[$key]['groupType'] ?? null;
     }
 
-    public function getGroupKey(string $key): ?int
+    public function getGroupKey(string $key, ?int $keyCount = 0): ?int
     {
         return $this->groupData[$key]['groupKey'] ?? null;
     }
