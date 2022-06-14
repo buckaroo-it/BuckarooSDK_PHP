@@ -8,10 +8,10 @@ use Buckaroo\Models\ServiceList;
 class ModelParameters extends ServiceListParameter
 {
     protected Model $model;
-    protected string $groupType;
+    protected ?string $groupType;
     protected ?int $groupKey;
 
-    public function __construct(ServiceListParameter $serviceListParameter, Model $model, string $groupType = '', ?int $groupKey = null)
+    public function __construct(ServiceListParameter $serviceListParameter, Model $model, ?string $groupType = '', ?int $groupKey = null)
     {
         $this->model = $model;
         $this->groupType = $groupType;

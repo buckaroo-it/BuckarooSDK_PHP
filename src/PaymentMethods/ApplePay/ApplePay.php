@@ -2,7 +2,7 @@
 
 namespace Buckaroo\PaymentMethods\ApplePay;
 
-use Buckaroo\Models\PaymentPayload;
+use Buckaroo\Models\PayPayload;
 use Buckaroo\Models\ServiceList;
 use Buckaroo\PaymentMethods\PaymentMethod;
 
@@ -12,7 +12,7 @@ class ApplePay extends PaymentMethod
 
     public function setPayServiceList(array $serviceParameters = []): self
     {
-        $paymentModel = new PaymentPayload($this->payload);
+        $paymentModel = new PayPayload($this->payload);
 
         $parameters = array([
             'name' => 'PaymentData',

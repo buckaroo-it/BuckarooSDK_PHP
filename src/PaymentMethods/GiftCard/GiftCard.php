@@ -2,42 +2,23 @@
 
 namespace Buckaroo\PaymentMethods\GiftCard;
 
-use Buckaroo\Models\ServiceList;
+use Buckaroo\Models\Model;
+use Buckaroo\PaymentMethods\GiftCard\Models\Pay;
 use Buckaroo\PaymentMethods\PaymentMethod;
+use Buckaroo\Transaction\Response\TransactionResponse;
 
 class GiftCard extends PaymentMethod
 {
-    public function setPayServiceList(array $serviceParameters = []): self
+    public function pay(?Model $model = null): TransactionResponse
     {
-        if(!isset($serviceParameters['voucher'])) {
-            throw new \Exception("Missing voucher payload in serviceParameters.");
-        }
-
-        $parameters = array([
-            'Name' => 'IntersolveCardnumber',
-            'Value' => $serviceParameters['voucher']['intersolveCardnumber'] ?? ''
-        ],[
-            'Name' => 'IntersolvePin',
-            'Value' => $serviceParameters['voucher']['intersolvePin'] ?? ''
-        ]);
-
-        $serviceList = new ServiceList(
-            $this->paymentName(),
-            $this->serviceVersion(),
-            'Pay',
-            $parameters
-        );
-
-        $this->request->getServices()->pushServiceList($serviceList);
-
-        return $this;
+        return parent::pay(new Pay($this->payload));
     }
 
     public function paymentName(): string
     {
-        if(isset($this->payload['serviceParameters']['name']))
+        if(isset($this->payload['name']))
         {
-            return $this->payload['serviceParameters']['name'];
+            return $this->payload['name'];
         }
 
         throw new \Exception('Missing voucher name');

@@ -20,8 +20,8 @@ class CreditManagementTest extends BuckarooTestCase
             'invoiceAmountVAT'      => 1.00,
             'invoiceDate'           => carbon()->format('Y-m-d'),
             'dueDate'           => carbon()->addDay(30)->format('Y-m-d'),
-            'schemeKey'         => str_random(12),
-            'maxStepIndex'      => 2,
+            'schemeKey'         => '2amq34',
+            'maxStepIndex'      => 1,
             'allowedServices'   => 'ideal,mastercard',
             'debtor'        => [
                 'code'  => 'johnsmith4'

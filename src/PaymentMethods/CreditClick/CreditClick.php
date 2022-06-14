@@ -4,7 +4,7 @@ namespace Buckaroo\PaymentMethods\CreditClick;
 
 use Buckaroo\Models\Person;
 use Buckaroo\Models\ServiceList;
-use Buckaroo\PaymentMethods\CreditClick\Adapters\CustomerServiceParametersKeysAdapter;
+use Buckaroo\PaymentMethods\CreditClick\Adapters\CustomerKeysAdapter;
 use Buckaroo\PaymentMethods\PaymentMethod;
 use Buckaroo\Services\ServiceListParameters\CustomerParameters;
 use Buckaroo\Services\ServiceListParameters\DefaultParameters;
@@ -21,7 +21,7 @@ class CreditClick extends PaymentMethod
             'Pay'
         );
 
-        $parametersService = new CustomerParameters(new DefaultParameters($serviceList), ['customer' => new CustomerServiceParametersKeysAdapter((new Person())->setProperties($serviceParameters['customer'] ?? []))]);
+        $parametersService = new CustomerParameters(new DefaultParameters($serviceList), ['customer' => new CustomerKeysAdapter((new Person())->setProperties($serviceParameters['customer'] ?? []))]);
         $parametersService->data();
 
         $this->request->getServices()->pushServiceList($serviceList);

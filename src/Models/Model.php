@@ -31,6 +31,11 @@ abstract class Model implements Arrayable
         return $this;
     }
 
+    public function get_object_vars()
+    {
+        return get_object_vars($this);
+    }
+
     public function setProperties(?array $data)
     {
         if($data)

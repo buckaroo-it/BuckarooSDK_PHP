@@ -3,9 +3,12 @@
 namespace Buckaroo\PaymentMethods;
 
 use Buckaroo\Handlers\Reply\ReplyHandler;
-use Buckaroo\Models\PaymentPayload;
+use Buckaroo\Models\Model;
+use Buckaroo\Models\PayPayload;
 use Buckaroo\Models\RefundPayload;
 use Buckaroo\Models\ServiceList;
+use Buckaroo\Services\ServiceListParameters\DefaultParameters;
+use Buckaroo\Services\ServiceListParameters\ModelParameters;
 use Buckaroo\Transaction\Client;
 use Buckaroo\Transaction\Request\Adapters\PaymentPayloadAdapter;
 use Buckaroo\Transaction\Request\Adapters\RefundPayloadAdapter;
@@ -26,6 +29,9 @@ abstract class PaymentMethod implements PaymentInterface
     protected string $paymentName = "";
     protected int $serviceVersion = 0;
 
+    protected string $payModel = PayPayload::class;
+    protected string $refundModel = RefundPayload::class;
+
     public function __construct(
         Client $client,
         ?string $serviceCode
@@ -36,11 +42,11 @@ abstract class PaymentMethod implements PaymentInterface
         $this->serviceCode = $serviceCode;
     }
 
-    public function pay(): TransactionResponse
+    public function pay(?Model $model = null): TransactionResponse
     {
-        $this->request->setPayload($this->getPaymentPayload());
+        $this->setPayPayload();
 
-        $this->setPayServiceList($this->payload['serviceParameters'] ?? []);
+        $this->setServiceList('Pay', $model);
 
         //TODO
         //Create validator class that validates specific request
@@ -48,11 +54,13 @@ abstract class PaymentMethod implements PaymentInterface
         return $this->postRequest();
     }
 
-    public function refund(): TransactionResponse
+    public function refund(?Model $model = null): TransactionResponse
     {
-        $this->request->setPayload($this->getRefundPayload());
+        $this->setRefundPayload();
 
-        $this->setRefundServiceList($this->payload['serviceParameters'] ?? []);
+        $this->request->setRefundPayload();
+
+        $this->setServiceList('Refund', $model);
 
         return $this->postRequest();
     }
@@ -67,41 +75,36 @@ abstract class PaymentMethod implements PaymentInterface
         return $this;
     }
 
-    public function setPayServiceList(array $serviceParameters = [])
-    {
-        $serviceList =  new ServiceList(
-            $this->paymentName(),
-            $this->serviceVersion(),
-            'Pay'
-        );
+//    public function setPayServiceList(array $serviceParameters = [])
+//    {
+//        $serviceList =  new ServiceList(
+//            $this->paymentName(),
+//            $this->serviceVersion(),
+//            'Pay'
+//        );
+//
+//        $this->request->getServices()->pushServiceList($serviceList);
+//
+//        return $this;
+//    }
+//
+//    public function setRefundServiceList(array $serviceParameters = [])
+//    {
+//        $serviceList =  new ServiceList(
+//            $this->paymentName(),
+//            $this->serviceVersion(),
+//            'Refund'
+//        );
+//
+//        $this->request->getServices()->pushServiceList($serviceList);
+//
+//        return $this;
+//    }
 
-        $this->request->getServices()->pushServiceList($serviceList);
-
-        return $this;
-    }
-
-    public function setRefundServiceList(array $serviceParameters = [])
-    {
-        $serviceList =  new ServiceList(
-            $this->paymentName(),
-            $this->serviceVersion(),
-            'Refund'
-        );
-
-        $this->request->getServices()->pushServiceList($serviceList);
-
-        return $this;
-    }
-
-    public function getPaymentPayload(): array
-    {
-        return (new PaymentPayloadAdapter(new PaymentPayload($this->payload)))->getValues();
-    }
-
-    public function getRefundPayload(): array
-    {
-        return (new RefundPayloadAdapter(new RefundPayload($this->payload)))->getValues();
-    }
+//    public function getRefundPayload(): array
+//    {
+//        return (new RefundPayloadAdapter(new RefundPayload($this->payload)))->getValues();
+//    }
 
     protected function postRequest(): TransactionResponse
     {
@@ -111,9 +114,31 @@ abstract class PaymentMethod implements PaymentInterface
         );
     }
 
-    protected function getServiceList(string $action): ServiceList
+    protected function setPayPayload()
     {
-        return new ServiceList($this->paymentName(),  $this->serviceVersion(), $action);
+        $payPayload = new $this->payModel($this->payload);
+
+        $this->request->setPayload($payPayload);
+
+        return $this;
+    }
+
+    protected function setRefundPayload()
+    {
+        $refundPayload = new $this->refundModel($this->payload);
+
+        $this->request->setPayload($refundPayload);
+
+        return $this;
+    }
+
+    protected function setServiceList(string $action, ?Model $model = null)
+    {
+        $serviceList = new ServiceList($this->paymentName(),  $this->serviceVersion(), $action, $model);
+
+        $this->request->getServices()->pushServiceList($serviceList);
+
+        return $this;
     }
 
     public function handleReply(array $data): ReplyHandler

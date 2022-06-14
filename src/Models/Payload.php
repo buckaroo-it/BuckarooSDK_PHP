@@ -17,5 +17,7 @@ class Payload extends Model
         $this->invoice = uniqid($_ENV['BPE_WEBSITE'] . '_INVOICE_NO_');
 
         $this->setProperties($payload);
+
+        parent::__construct();
     }
 }

@@ -21,7 +21,7 @@ class Address extends Model
     protected string $streetNumber;
     protected string $housenumber;
     protected string $streetNumberAdditional;
-    protected string $postalCode;
+    protected string $zipcode;
     protected string $city;
     protected string $country;
     protected string $birthDate;

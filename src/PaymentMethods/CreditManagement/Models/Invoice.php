@@ -2,9 +2,9 @@
 
 namespace Buckaroo\PaymentMethods\CreditManagement\Models;
 
-use Buckaroo\Models\{Address, Company, Debtor, Email, Model, Person, Phone};
+use Buckaroo\Models\{Address, Company, Debtor, Email, Person, Phone, ServiceParameter};
 
-class Invoice extends Model
+class Invoice extends ServiceParameter
 {
     protected float $invoiceAmount;
     protected float $invoiceAmountVat;
@@ -24,6 +24,27 @@ class Invoice extends Model
     protected Debtor $debtor;
     protected Email $email;
     protected Phone $phone;
+
+    protected array $groupData = [
+        'address'   => [
+            'groupType' => 'Address'
+        ],
+        'company'   => [
+            'groupType' => 'Company'
+        ],
+        'person'   => [
+            'groupType' => 'Person'
+        ],
+        'debtor'   => [
+            'groupType' => 'Debtor'
+        ],
+        'email'   => [
+            'groupType' => 'Email'
+        ],
+        'phone'   => [
+            'groupType' => 'Phone'
+        ],
+    ];
 
     public function setProperties(?array $data)
     {

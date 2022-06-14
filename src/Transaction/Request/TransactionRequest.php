@@ -2,6 +2,7 @@
 
 namespace Buckaroo\Transaction\Request;
 
+use Buckaroo\Models\Model;
 use Buckaroo\Models\Services;
 use Buckaroo\Resources\Arrayable;
 
@@ -12,11 +13,11 @@ class TransactionRequest extends Request
         $this->data['ClientUserAgent'] =  $_SERVER['HTTP_USER_AGENT'] ?? '';
     }
 
-    public function setPayload(array $payload)
+    public function setPayload(Model $model)
     {
-        foreach($payload as $property => $value)
+        foreach($model->toArray() as $key => $value)
         {
-            $this->data[$property] = $value;
+            $this->data[$model->serviceParameterKeyOf($key)] = $value;
         }
 
         return $this;

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Buckaroo\Models;
 
-class PaymentPayload extends Payload
+class PayPayload extends Payload
 {
     protected string $order;
     protected float $amountDebit;
