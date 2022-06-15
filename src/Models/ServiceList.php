@@ -75,7 +75,11 @@ class ServiceList extends Model
         {
             if($value instanceof Model)
             {
-                $this->decorateParameters($value, $model->getGroupType($keyName ?? $key), $model->getGroupKey($keyName ?? $key, $key));
+                $this->decorateParameters(
+                    $value,
+                    $model->getGroupType($keyName ?? $key),
+                    $model->getGroupKey($keyName ?? $key, is_int($key)? $key : null)
+                );
 
                 continue;
             }
