@@ -9,7 +9,7 @@ class ArticleServiceParametersKeysAdapter extends ServiceParametersKeysAdapter
     protected array $keys = [
         'identifier'        => 'ArticleId',
         'quantity'          => 'ArticleQuantity',
-        'unitPrice'         => 'ArticleUnitprice',
+        'price'             => 'ArticleUnitprice',
         'vatCategory'       => 'ArticleVatcategory',
         'description'       => 'ArticleDescription'
     ];

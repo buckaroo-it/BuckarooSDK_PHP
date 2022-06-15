@@ -14,47 +14,17 @@ class Pay extends ServiceParameter
         ]
     ];
 
-    protected string $billingTitle;
-    protected int $billingGender;
-    protected string $billingInitials;
-    protected string $billingLastNamePrefix;
-    protected string $billingLastName;
-    protected string $billingBirthDate;
-    protected string $billingStreet;
-    protected string $billingHouseNumber;
-    protected string $billingHouseNumberSuffix;
-    protected string $billingPostalCode;
-    protected string $billingCity;
-    protected string $billingCountry;
-    protected string $billingEmail;
-    protected string $billingPhoneNumber;
-    protected string $billingLanguage;
+    protected Recipient $billingRecipient;
+    protected Recipient $shippingRecipient;
+
+    protected bool $b2B;
     protected bool $addressesDiffer;
-    protected string $shippingTitle;
-    protected string $shippingGender;
-    protected string $shippingInitials;
-    protected string $shippingLastNamePrefix;
-    protected string $shippingLastName;
-    protected string $shippingBirthDate;
-    protected string $shippingStreet;
-    protected string $shippingHouseNumber;
-    protected string $shippingHouseNumberSuffix;
-    protected string $shippingPostalCode;
-    protected string $shippingCity;
-    protected string $shippingCountryCode;
-    protected string $shippingEmail;
-    protected string $shippingPhoneNumber;
-    protected string $shippingLanguage;
-    protected float $shippingCosts;
-    protected string $customerAccountNumber;
     protected string $customerIPAddress;
-    protected bool $b2b;
-    protected string $companyCOCRegistration;
-    protected string $companyName;
+    protected float $shippingCosts;
     protected string $costCentre;
     protected string $department;
     protected string $establishmentNumber;
-    protected string $vatNumber;
+
     protected bool $accept = true;
     protected array $articles = [];
 
@@ -62,12 +32,9 @@ class Pay extends ServiceParameter
     {
         foreach($data ?? array() as $property => $value)
         {
-            if($property == 'articles')
+            if(in_array($property, ['billing', 'shipping', 'articles']))
             {
-                foreach($value as $article)
-                {
-                    $this->articles[] = new ArticleServiceParametersKeysAdapter(new Article($article));
-                }
+                $this->$property($value);
 
                 continue;
             }
@@ -76,6 +43,42 @@ class Pay extends ServiceParameter
         }
 
         return $this;
+    }
+
+    public function billing($billing = null)
+    {
+        if(is_array($billing))
+        {
+            $this->billingRecipient =  new Recipient('Billing', $billing);
+            $this->shippingRecipient = new Recipient('Shipping', $billing);
+        }
+
+        return $this->billingRecipient;
+    }
+
+    public function shipping($shipping = null)
+    {
+        if(is_array($shipping))
+        {
+            $this->addressesDiffer = true;
+
+            $this->shippingRecipient = new Recipient('Shipping', $shipping);
+        }
+
+        return $this->shippingRecipient;
+    }
+
+    public function articles(?array $articles = null)
+    {
+        if(is_array($articles))
+        {
+            foreach($articles as $article)
+            {
+                $this->articles[] = new ArticleServiceParametersKeysAdapter(new Article($article));
+            }
+        }
+
+        return $this->articles;
     }
 
     public function getGroupKey(string $key, ?int $keyCount = 0): ?int
@@ -87,15 +90,4 @@ class Pay extends ServiceParameter
 
         return $this->groupData[$key]['groupKey'] ?? null;
     }
-
-//    public function getGroupKey(string $key, ?int $keyCount = 0): ?int
-//    {
-//        dd("sjdiofjsdf");
-//        if($key == 'articles')
-//        {
-//            dd("here");
-//        }
-//
-//        return $this->groupData[$key]['groupKey'] ?? null;
-//    }
 }

@@ -3,6 +3,7 @@
 namespace Buckaroo\Tests\Payments;
 
 use Buckaroo\Resources\Constants\Gender;
+use Buckaroo\Resources\Constants\RecipientCategory;
 use Buckaroo\Tests\BuckarooTestCase;
 
 class AfterpayDigiAcceptTest extends BuckarooTestCase
@@ -39,51 +40,69 @@ class AfterpayDigiAcceptTest extends BuckarooTestCase
             'order'                         => uniqid(),
             'invoice'                       => uniqid(),
             'b2b'                           => true,
-            'billingGender'                 => Gender::FEMALE,
-            'billingInitials'               => 'AB',
-            'billingLastName'               => 'Test',
-            'billingBirthDate'              => carbon()->subYear(18)->format('d-m-Y'),
-            'billingStreet'                 => 'Hoofdstraat',
-            'billingHouseNumber'            => '1',
-            'billingPostalCode'             => '8441ER',
-            'billingCity'                   => 'Heerenveen',
-            'billingCountry'                => 'NL',
-            'billingEmail'                  => 'xxxxx@xxx.nl',
-            'billingPhoneNumber'            => '0612345678',
-            'billingLanguage'               => 'NL',
             'addressesDiffer'               => true,
-            'shippingGender'                => Gender::MALE,
-            'shippingInitials'              => 'YJ',
-            'shippingLastName'              => 'Jansen',
-            'shippingBirthDate'             => carbon()->subYear(20)->format('d-m-Y'),
-            'shippingStreet'                => 'Hoofdstraat',
-            'shippingHouseNumber'           => '2',
-            'shippingPostalCode'            => '8441ER',
-            'shippingCity'                  => 'Heerenveen',
-            'shippingCountryCode'           => 'NL',
-            'shippingEmail'                 => 'xxxxx@xxx.nl',
-            'shippingPhoneNumber'           => '0612345678',
-            'shippingLanguage'              => 'NL',
-            'shippingCosts'                 => 0.5,
             'customerIPAddress'             => '0.0.0.0',
-            'companyCOCRegistration'        => '12356',
-            'companyName'                   => 'Buckaroo BV',
+            'shippingCosts'                 => 0.5,
             'costCentre'                    => 'Test',
             'department'                    => 'Test',
             'establishmentNumber'           => '123456',
-            'vatNumber'                     => 'NL12345678',
+            'billing'       => [
+                'recipient'        => [
+                    'gender'                => Gender::FEMALE,
+                    'initials'               => 'AB',
+                    'lastName'              => 'Do',
+                    'birthDate'             => carbon()->subYears(18)->format('Y-m-d'),
+                    'culture'               => 'NL'
+                ],
+                'address'       => [
+                    'street'                => 'Hoofdstraat',
+                    'houseNumber'           => '13',
+                    'houseNumberAdditional' => 'a',
+                    'zipcode'               => '1234AB',
+                    'city'                  => 'Heerenveen',
+                    'country'               => 'NL'
+                ],
+                'phone'         => [
+                    'mobile'        => '0698765433'
+                ],
+                'email'         => 'test@buckaroo.nl'
+            ],
+            'shipping'      => [
+                'recipient'        => [
+                    'culture'               => 'NL',
+                    'gender'                => Gender::MALE,
+                    'initials'              => 'YJ',
+                    'lastName'              => 'Jansen',
+                    'companyName'           => 'Buckaroo B.V.',
+                    'birthDate'             => carbon()->subYear(20)->format('d-m-Y'),
+                    'chamberOfCommerce'     => '12345678',
+                    'vatNumber'              => 'NL12345678',
+                ],
+                'address'       => [
+                    'street'                => 'Kalverstraat',
+                    'houseNumber'           => '13',
+                    'houseNumberAdditional' => 'b',
+                    'zipcode'               => '4321EB',
+                    'city'                  => 'Amsterdam',
+                    'country'               => 'NL'
+                ],
+                'phone'         => [
+                    'mobile'        => '0698765433'
+                ],
+                'email'         => 'test@buckaroo.nl',
+            ],
             'articles'      => [
                 [
                     'identifier' => uniqid(),
                     'description' => 'Blue Toy Car',
-                    'unitPrice' => '10.00',
+                    'price' => '10.00',
                     'quantity' => '2',
                     'vatCategory' => '1'
                 ],
                 [
                     'identifier' => uniqid(),
                     'description' => 'Red Toy Car',
-                    'unitPrice' => '10.00',
+                    'price' => '10.00',
                     'quantity' => '2',
                     'vatCategory' => '1'
                 ],

@@ -7,7 +7,8 @@ use Buckaroo\Models\Model;
 abstract class ServiceParametersKeysAdapter extends Model
 {
     private Model $model;
-    protected array $keys;
+    protected array $hidden = [];
+    protected array $keys = [];
 
     public function __construct(Model $model) {
         $this->model = $model;

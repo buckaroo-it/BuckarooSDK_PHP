@@ -2,28 +2,17 @@
 
 namespace Buckaroo\PaymentMethods\Alipay;
 
-use Buckaroo\Models\ServiceList;
+use Buckaroo\Models\Model;
+use Buckaroo\PaymentMethods\Alipay\Models\Pay;
 use Buckaroo\PaymentMethods\PaymentMethod;
+use Buckaroo\Transaction\Response\TransactionResponse;
 
 class Alipay extends PaymentMethod
 {
     protected string $paymentName = 'alipay';
 
-    public function setPayServiceList(array $serviceParameters = [])
+    public function pay(?Model $model = null): TransactionResponse
     {
-        $serviceList =  new ServiceList(
-            $this->paymentName(),
-            $this->serviceVersion(),
-            'Pay'
-        );
-
-        $serviceList->appendParameter([
-            "Name"              => "UseMobileView",
-            "Value"             => $serviceParameters['useMobileView']
-        ]);
-
-        $this->request->getServices()->pushServiceList($serviceList);
-
-        return $this;
+        return parent::pay(new Pay($this->payload));
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace Buckaroo\PaymentMethods\Afterpay\Models;
+namespace Buckaroo\PaymentMethods\AfterpayDigiAccept\Models;
 
-use Buckaroo\PaymentMethods\Afterpay\Adapters\{AddressServiceParametersKeysAdapter, PhoneServiceParametersKeysAdapter, RecipientServiceParametersKeysAdapter};
+use Buckaroo\PaymentMethods\AfterpayDigiAccept\Adapters\{AddressServiceParametersKeysAdapter, EmailServiceParametersKeysAdapter, PhoneServiceParametersKeysAdapter, RecipientServiceParametersKeysAdapter};
 
 use Buckaroo\Models\Address;
 use Buckaroo\Models\Company;
@@ -10,16 +10,17 @@ use Buckaroo\Models\Email;
 use Buckaroo\Models\Interfaces\Recipient as RecipientInterface;
 use Buckaroo\Models\Phone;
 use Buckaroo\Models\ServiceParameter;
+use Buckaroo\PaymentMethods\Afterpay\Models\Person;
 use Buckaroo\Resources\Constants\RecipientCategory;
 
 class Recipient extends ServiceParameter
 {
-    protected string $type;
+    private string $type;
 
-    protected RecipientInterface $recipient;
+    protected RecipientServiceParametersKeysAdapter $recipient;
     protected AddressServiceParametersKeysAdapter $address;
     protected PhoneServiceParametersKeysAdapter $phone;
-    protected Email $email;
+    protected EmailServiceParametersKeysAdapter $email;
 
     public function __construct(string $type, ?array $values = null)
     {
@@ -52,7 +53,7 @@ class Recipient extends ServiceParameter
             return $this->recipient($this->getRecipientObject($recipient));
         }
 
-        if($recipient instanceof RecipientInterface)
+        if($recipient instanceof RecipientServiceParametersKeysAdapter)
         {
             $this->recipient = $recipient;
         }
@@ -64,7 +65,7 @@ class Recipient extends ServiceParameter
     {
         if(is_array($address))
         {
-            return $this->address(new AddressServiceParametersKeysAdapter(new Address($address)));
+            return $this->address(new AddressServiceParametersKeysAdapter($this->type, new Address($address)));
         }
 
         if($address instanceof AddressServiceParametersKeysAdapter)
@@ -79,7 +80,7 @@ class Recipient extends ServiceParameter
     {
         if(is_array($phone))
         {
-            return $this->phone(new PhoneServiceParametersKeysAdapter(new Phone($phone)));
+            return $this->phone(new PhoneServiceParametersKeysAdapter($this->type, new Phone($phone)));
         }
 
         if($phone instanceof PhoneServiceParametersKeysAdapter)
@@ -94,10 +95,10 @@ class Recipient extends ServiceParameter
     {
         if(is_string($email))
         {
-            return $this->email(new Email($email));
+            return $this->email(new EmailServiceParametersKeysAdapter($this->type, new Email($email)));
         }
 
-        if($email instanceof Email)
+        if($email instanceof EmailServiceParametersKeysAdapter)
         {
             $this->email = $email;
         }
@@ -105,20 +106,13 @@ class Recipient extends ServiceParameter
         return $this->email;
     }
 
-    private function getRecipientObject(array $recipient) : RecipientInterface
+    private function getRecipientObject(array $recipient) : RecipientServiceParametersKeysAdapter
     {
-        switch ($recipient['category']) {
-            case RecipientCategory::COMPANY:
-                return new RecipientServiceParametersKeysAdapter(new Company($recipient));
-            case RecipientCategory::PERSON:
-                return new RecipientServiceParametersKeysAdapter(new Person($recipient));
+        if(($recipient['companyName'] ?? null) || ( $recipient['chamberOfCommerce'] ?? null) || ($recipient['vatNumber'] ?? null))
+        {
+            return new RecipientServiceParametersKeysAdapter($this->type, new Company($recipient));
         }
 
-        throw new \Exception('No recipient category found.');
-    }
-
-    public function getGroupType(string $key): ?string
-    {
-        return $this->type . 'Customer';
+        return new RecipientServiceParametersKeysAdapter($this->type, new Person($recipient));
     }
 }
