@@ -2,7 +2,11 @@
 namespace Buckaroo\PaymentMethods\CreditCard;
 
 use Buckaroo\Models\CapturePayload;
+use Buckaroo\Models\Model;
 use Buckaroo\Models\ServiceList;
+use Buckaroo\PaymentMethods\Billink\Models\Pay;
+use Buckaroo\PaymentMethods\CreditCard\Models\CardData;
+use Buckaroo\PaymentMethods\CreditCard\Models\SecurityCode;
 use Buckaroo\PaymentMethods\PaymentMethod;
 use Buckaroo\Transaction\Request\Adapters\CapturePayloadAdapter;
 use Buckaroo\Transaction\Response\TransactionResponse;
@@ -11,123 +15,80 @@ class CreditCard extends PaymentMethod
 {
     public function payEncrypted(): TransactionResponse
     {
-        $this->request->setPayload($this->getPaymentPayload());
+        $cardData = new CardData($this->payload);
 
-        $serviceList =  $this->getServiceList('PayEncrypted');
+        $this->setPayPayload();
 
-        $serviceList->appendParameter([
-            "Name"              => "EncryptedCardData",
-            "GroupType"         => "",
-            "GroupID"           => "",
-            "Value"             => $this->payload['serviceParameters']['cardData'] ?? null
-        ]);
-
-        $this->request->getServices()->pushServiceList($serviceList);
+        $this->setServiceList('PayEncrypted', $cardData);
 
         return $this->postRequest();
     }
 
     public function authorizeEncrypted(): TransactionResponse
     {
-        $this->request->setPayload($this->getPaymentPayload());
+        $cardData = new CardData($this->payload);
 
-        $serviceList =  $this->getServiceList('AuthorizeEncrypted');
+        $this->setPayPayload();
 
-        $serviceList->appendParameter([
-            "Name"              => "EncryptedCardData",
-            "GroupType"         => "",
-            "GroupID"           => "",
-            "Value"             => $this->payload['serviceParameters']['cardData'] ?? null
-        ]);
-
-        $this->request->getServices()->pushServiceList($serviceList);
+        $this->setServiceList('AuthorizeEncrypted', $cardData);
 
         return $this->postRequest();
     }
 
     public function payWithSecurityCode(): TransactionResponse
     {
-        $this->request->setPayload($this->getPaymentPayload());
+        $securityCode = new SecurityCode($this->payload);
 
-        $serviceList =  $this->getServiceList('PayWithSecurityCode');
+        $this->setPayPayload();
 
-        $serviceList->appendParameter([
-            "Name"              => "EncryptedSecurityCode",
-            "Value"             => $this->payload['serviceParameters']['securityCode'] ?? null
-        ]);
-
-        $this->request->getServices()->pushServiceList($serviceList);
+        $this->setServiceList('PayWithSecurityCode', $securityCode);
 
         return $this->postRequest();
     }
 
     public function authorizeWithSecurityCode(): TransactionResponse
     {
-        $this->request->setPayload($this->getPaymentPayload());
+        $securityCode = new SecurityCode($this->payload);
 
-        $serviceList =  $this->getServiceList('AuthorizeWithSecurityCode');
+        $this->setPayPayload();
 
-        $serviceList->appendParameter([
-            "Name"              => "EncryptedSecurityCode",
-            "Value"             => $this->payload['serviceParameters']['securityCode'] ?? null
-        ]);
-
-        $this->request->getServices()->pushServiceList($serviceList);
+        $this->setServiceList('AuthorizeWithSecurityCode', $securityCode);
 
         return $this->postRequest();
     }
 
     public function authorize(): TransactionResponse
     {
-        $this->request->setPayload($this->getPaymentPayload());
+        $this->setPayPayload();
 
-        $serviceList =  $this->getServiceList('Authorize');
-
-        $this->request->getServices()->pushServiceList($serviceList);
+        $this->setServiceList('Authorize');
 
         return $this->postRequest();
     }
 
     public function capture(): TransactionResponse
     {
-        $capturePayload = (new CapturePayloadAdapter(new CapturePayload($this->payload)))->getValues();
+        $this->setPayPayload();
 
-        $this->request->setPayload($capturePayload);
-
-        $serviceList =  $this->getServiceList('Capture');
-
-        $this->request->getServices()->pushServiceList($serviceList);
+        $this->setServiceList('Capture');
 
         return $this->postRequest();
     }
 
     public function payRecurrent(): TransactionResponse
     {
-        $capturePayload = (new CapturePayloadAdapter(new CapturePayload($this->payload)))->getValues();
+        $this->setPayPayload();
 
-        $this->request->setPayload($capturePayload);
-
-        $serviceList =  $this->getServiceList('PayRecurrent');
-
-        $this->request->getServices()->pushServiceList($serviceList);
+        $this->setServiceList('PayRecurrent');
 
         return $this->postRequest();
     }
 
-    private function getServiceList(string $action = ''): ServiceList
-    {
-        return new ServiceList(
-            $this->paymentName(),
-            $this->serviceVersion(),
-            $action
-        );
-    }
-
     public function paymentName(): string
     {
-        if(isset($this->payload['serviceParameters']['name']))
+        if(isset($this->payload['name']))
         {
-            return $this->payload['serviceParameters']['name'];
+            return $this->payload['name'];
         }
 
         throw new \Exception('Missing creditcard name');

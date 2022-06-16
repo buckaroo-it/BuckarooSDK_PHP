@@ -22,20 +22,18 @@ class GiftcardsTest extends BuckarooTestCase
         $this->assertTrue($response->isSuccess());
     }
 
-//    /**
-//     * @test
-//     */
-//    public function it_creates_a_giftcards_refund()
-//    {
-//        $response = $this->buckaroo->payment('giftcard')->refund([
-//            'amountCredit' => 10,
-//            'invoice'       => 'testinvoice 123',
-//            'originalTransactionKey' => '2D04704995B74D679AACC59F87XXXXXX',
-//            'serviceParameters' => [
-//                'name'          => 'boekenbon'
-//            ]
-//        ]);
-//
-//        $this->assertTrue($response->isFailed());
-//    }
+    /**
+     * @test
+     */
+    public function it_creates_a_giftcards_refund()
+    {
+        $response = $this->buckaroo->payment('giftcard')->refund([
+            'amountCredit'              => 10,
+            'invoice'                   => 'testinvoice 123',
+            'originalTransactionKey'    => '2D04704995B74D679AACC59F87XXXXXX',
+            'name'                      => 'boekenbon'
+        ]);
+
+        $this->assertTrue($response->isFailed());
+    }
 }

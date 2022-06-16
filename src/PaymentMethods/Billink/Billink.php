@@ -2,71 +2,42 @@
 
 namespace Buckaroo\PaymentMethods\Billink;
 
-use Buckaroo\Models\CapturePayload;
-use Buckaroo\Models\Person;
-use Buckaroo\Models\ServiceList;
+use Buckaroo\Models\Model;
+use Buckaroo\PaymentMethods\Billink\Models\Capture;
+use Buckaroo\PaymentMethods\Billink\Models\Pay;
 use Buckaroo\PaymentMethods\PaymentMethod;
 use Buckaroo\PaymentMethods\Traits\HasArticleAndCustomerParameters;
-use Buckaroo\Services\ServiceListParameters\ArticleParameters;
-use Buckaroo\Services\ServiceListParameters\CustomerParameters;
-use Buckaroo\Services\ServiceListParameters\DefaultParameters;
-use Buckaroo\Transaction\Request\Adapters\CapturePayloadAdapter;
 use Buckaroo\Transaction\Response\TransactionResponse;
 
 class Billink extends PaymentMethod
 {
     use HasArticleAndCustomerParameters;
 
-    protected string $paymentName = 'billink';
+    protected string $paymentName = 'Billink';
+
+    public function pay(?Model $model = null): TransactionResponse
+    {
+        return parent::pay(new Pay($this->payload));
+    }
 
     public function authorize(): TransactionResponse
     {
-        $this->request->setPayload($this->getPaymentPayload());
+        $pay = new Pay($this->payload);
 
-        $serviceList = new ServiceList(
-            $this->paymentName(),
-            $this->serviceVersion(),
-            'Authorize'
-        );
+        $this->setPayPayload();
 
-        $parametersService = new DefaultParameters($serviceList);
-        $parametersService = new ArticleParameters($parametersService, $this->articles($this->payload['serviceParameters']['articles'] ?? []));
-        $parametersService = new CustomerParameters($parametersService, ['customer' => (new Person())->setProperties($this->payload['serviceParameters']['customer'] ?? [])]);
-        $parametersService->data();
-
-        $serviceList->appendParameter([
-            [
-                "Name"              => "Trackandtrace",
-                "Value"             => $this->payload['serviceParameters']['trackAndTrace'] ?? null
-            ],
-            [
-                "Name"              => "VATNumber",
-                "Value"             => $this->payload['serviceParameters']['vatNumber'] ?? null
-            ]
-        ]);
-
-        $this->request->getServices()->pushServiceList($serviceList);
+        $this->setServiceList('Authorize', $pay);
 
         return $this->postRequest();
     }
 
     public function capture(): TransactionResponse
     {
-        $capturePayload = (new CapturePayloadAdapter(new CapturePayload($this->payload)))->getValues();
+        $capture = new Capture($this->payload);
 
-        $this->request->setPayload($capturePayload);
+        $this->setPayPayload();
 
-        $serviceList = new ServiceList(
-            $this->paymentName(),
-            $this->serviceVersion(),
-            'Capture'
-        );
-
-        $parametersService = new DefaultParameters($serviceList);
-        $parametersService = new ArticleParameters($parametersService, $this->articles($this->payload['serviceParameters']['articles'] ?? []));
-        $parametersService->data();
-
-        $this->request->getServices()->pushServiceList($serviceList);
+        $this->setServiceList('Capture', $capture);
 
         return $this->postRequest();
     }

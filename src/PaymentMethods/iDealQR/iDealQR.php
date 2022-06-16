@@ -3,6 +3,7 @@
 namespace Buckaroo\PaymentMethods\iDealQR;
 
 use Buckaroo\Models\ServiceList;
+use Buckaroo\PaymentMethods\iDealQR\Models\Generate;
 use Buckaroo\PaymentMethods\PaymentMethod;
 use Buckaroo\Services\ServiceListParameters\DefaultParameters;
 use Buckaroo\Services\ServiceListParameters\iDealQRParameters;
@@ -14,16 +15,9 @@ class iDealQR extends PaymentMethod
 
     public function generate()
     {
-        $serviceList =  new ServiceList(
-            $this->paymentName(),
-            $this->serviceVersion(),
-            'Generate'
-        );
+        $generate = new Generate($this->payload);
 
-        $parametersService = new iDealQRParameters(new DefaultParameters($serviceList), $this->payload['serviceParameters']['ideal_qr'] ?? []);
-        $parametersService->data();
-
-        $this->request->getServices()->pushServiceList($serviceList);
+        $this->setServiceList('Generate', $generate);
 
         return $this->client->dataRequest(
             $this->request,

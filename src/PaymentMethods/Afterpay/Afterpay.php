@@ -2,17 +2,10 @@
 
 namespace Buckaroo\PaymentMethods\Afterpay;
 
-use Buckaroo\Models\CapturePayload;
 use Buckaroo\Models\Model;
-use Buckaroo\Models\Person;
-use Buckaroo\Models\ServiceList;
 use Buckaroo\PaymentMethods\Afterpay\Models\Pay;
 use Buckaroo\PaymentMethods\PaymentMethod;
 use Buckaroo\PaymentMethods\Traits\HasArticleAndCustomerParameters;
-use Buckaroo\Services\ServiceListParameters\ArticleParameters;
-use Buckaroo\Services\ServiceListParameters\CustomerParameters;
-use Buckaroo\Services\ServiceListParameters\DefaultParameters;
-use Buckaroo\Transaction\Request\Adapters\CapturePayloadAdapter;
 use Buckaroo\Transaction\Response\TransactionResponse;
 
 class Afterpay extends PaymentMethod

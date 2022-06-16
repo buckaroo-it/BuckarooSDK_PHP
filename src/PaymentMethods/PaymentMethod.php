@@ -7,11 +7,7 @@ use Buckaroo\Models\Model;
 use Buckaroo\Models\PayPayload;
 use Buckaroo\Models\RefundPayload;
 use Buckaroo\Models\ServiceList;
-use Buckaroo\Services\ServiceListParameters\DefaultParameters;
-use Buckaroo\Services\ServiceListParameters\ModelParameters;
 use Buckaroo\Transaction\Client;
-use Buckaroo\Transaction\Request\Adapters\PaymentPayloadAdapter;
-use Buckaroo\Transaction\Request\Adapters\RefundPayloadAdapter;
 use Buckaroo\Transaction\Request\TransactionRequest;
 use Buckaroo\Transaction\Response\TransactionResponse;
 use Psr\Log\LoggerInterface;
@@ -47,7 +43,7 @@ abstract class PaymentMethod implements PaymentInterface
         $this->setPayPayload();
 
         $this->setServiceList('Pay', $model);
-
+        dd($this->request->toJson());
         //TODO
         //Create validator class that validates specific request
         //$request->validate();
@@ -57,8 +53,6 @@ abstract class PaymentMethod implements PaymentInterface
     public function refund(?Model $model = null): TransactionResponse
     {
         $this->setRefundPayload();
-
-        $this->request->setRefundPayload();
 
         $this->setServiceList('Refund', $model);
 
@@ -74,37 +68,6 @@ abstract class PaymentMethod implements PaymentInterface
 
         return $this;
     }
-
-//    public function setPayServiceList(array $serviceParameters = [])
-//    {
-//        $serviceList =  new ServiceList(
-//            $this->paymentName(),
-//            $this->serviceVersion(),
-//            'Pay'
-//        );
-//
-//        $this->request->getServices()->pushServiceList($serviceList);
-//
-//        return $this;
-//    }
-//
-//    public function setRefundServiceList(array $serviceParameters = [])
-//    {
-//        $serviceList =  new ServiceList(
-//            $this->paymentName(),
-//            $this->serviceVersion(),
-//            'Refund'
-//        );
-//
-//        $this->request->getServices()->pushServiceList($serviceList);
-//
-//        return $this;
-//    }
-
-//    public function getRefundPayload(): array
-//    {
-//        return (new RefundPayloadAdapter(new RefundPayload($this->payload)))->getValues();
-//    }
 
     protected function postRequest(): TransactionResponse
     {

@@ -4,29 +4,27 @@ namespace Buckaroo\Tests\Payments;
 
 use Buckaroo\Tests\BuckarooTestCase;
 
-class GiropayTest extends BuckarooTestCase
+class EPSTest extends BuckarooTestCase
 {
     /**
      * @return void
      * @test
      */
-    public function it_creates_a_giropay_payment()
+    public function it_creates_a_eps_payment()
     {
-        $response = $this->buckaroo->payment('giropay')->pay([
-            'bic'           => 'GENODETT488',
-            'amountDebit'   => 10.10
+        $response = $this->buckaroo->payment('eps')->pay([
+            'amountDebit' => 10.10
         ]);
 
-        $this->assertTrue($response->isPendingProcessing());
+        $this->assertTrue($response->isSuccess());
     }
 
     /**
-     * @return void
      * @test
      */
-    public function it_creates_a_giropay_refund()
+    public function it_creates_a_eps_refund()
     {
-        $response = $this->buckaroo->payment('giropay')->refund([
+        $response = $this->buckaroo->payment('eps')->refund([
             'amountCredit'              => 10,
             'invoice'                   => 'testinvoice 123',
             'description'               => 'refund',

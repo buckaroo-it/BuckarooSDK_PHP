@@ -4,33 +4,18 @@ declare(strict_types=1);
 
 namespace Buckaroo\PaymentMethods\Giropay;
 
-use Buckaroo\Models\PayPayload;
-use Buckaroo\Models\ServiceList;
+use Buckaroo\Models\Model;
+use Buckaroo\PaymentMethods\GiftCard\Models\Pay;
 use Buckaroo\PaymentMethods\PaymentMethod;
+use Buckaroo\Transaction\Response\TransactionResponse;
 
 class Giropay extends PaymentMethod
 {
     protected int $serviceVersion = 2;
     protected string $paymentName = 'giropay';
 
-    public function setPayServiceList(array $serviceParameters = []): self
+    public function pay(?Model $model = null): TransactionResponse
     {
-        $paymentModel = new PayPayload($this->payload);
-
-        $parameters = array([
-            'name' => 'bic',
-            'Value' => $paymentModel->bic
-        ]);
-
-        $serviceList = new ServiceList(
-            $this->paymentName(),
-            $this->serviceVersion(),
-            'Pay',
-            $parameters
-        );
-
-        $this->request->getServices()->pushServiceList($serviceList);
-
-        return $this;
+        return parent::pay(new Pay($this->payload));
     }
 }
