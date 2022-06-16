@@ -1,21 +1,15 @@
 <?php
 
-namespace Buckaroo\PaymentMethods\Afterpay\Models;
+namespace Buckaroo\PaymentMethods\KlarnaPay\Models;
 
+use Buckaroo\Models\Article;
 use Buckaroo\Models\ServiceParameter;
-use Buckaroo\PaymentMethods\Afterpay\Adapters\ArticleServiceParametersKeysAdapter;
+use Buckaroo\PaymentMethods\KlarnaPay\Adapters\ArticleServiceParametersKeysAdapter;
 
 class Pay extends ServiceParameter
 {
     protected Recipient $billingRecipient;
     protected Recipient $shippingRecipient;
-
-    protected string $merchantImageUrl;
-    protected string $summaryImageUrl;
-    protected string $bankAccount;
-    protected string $bankCode;
-    protected string $yourReference;
-    protected string $ourReference;
 
     protected array $articles = [];
 

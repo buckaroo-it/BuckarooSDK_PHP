@@ -12,7 +12,24 @@ class KlarnaKPTest extends BuckarooTestCase
      */
     public function it_creates_a_klarnakp_payment()
     {
-        $response = $this->buckaroo->payment('klarnakp')->pay($this->getPaymentPayload());
+        $response = $this->buckaroo->payment('klarnakp')->pay([
+            'amountDebit'       => 50.30,
+            'order'             => uniqid(),
+            'invoice'           => uniqid(),
+            'reservationNumber' => '2377577452',
+            'serviceParameters' => [
+                'articles'      => [
+                    [
+                        'identifier' => uniqid(),
+                        'quantity' => '2'
+                    ],
+                    [
+                        'identifier' => uniqid(),
+                        'quantity' => '2'
+                    ],
+                ]
+            ]
+        ]);
 
         $this->assertTrue($response->isValidationFailure());
     }
@@ -30,27 +47,5 @@ class KlarnaKPTest extends BuckarooTestCase
         ]);
 
         $this->assertTrue($response->isValidationFailure());
-    }
-
-    private function getPaymentPayload(): array {
-        return [
-            'amountDebit'       => 50.30,
-            'order'             => uniqid(),
-            'invoice'           => uniqid(),
-            'serviceParameters' => [
-                'articles'      => [
-                    [
-                        'articleNumber' => uniqid(),
-                        'reservationNumber' => '2377577452',
-                        'articleQuantity' => '2'
-                    ],
-                    [
-                        'articleNumber' => uniqid(),
-                        'reservationNumber' => '2377577353',
-                        'articleQuantity' => '2'
-                    ],
-                ]
-            ]
-        ];
     }
 }

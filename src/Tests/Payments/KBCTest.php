@@ -4,7 +4,7 @@ namespace Buckaroo\Tests\Payments;
 
 use Buckaroo\Tests\BuckarooTestCase;
 
-class KbcTest extends BuckarooTestCase
+class KBCTest extends BuckarooTestCase
 {
     protected function setUp(): void
     {

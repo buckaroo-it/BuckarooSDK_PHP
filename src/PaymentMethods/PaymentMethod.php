@@ -43,7 +43,7 @@ abstract class PaymentMethod implements PaymentInterface
         $this->setPayPayload();
 
         $this->setServiceList('Pay', $model);
-        dd($this->request->toJson());
+
         //TODO
         //Create validator class that validates specific request
         //$request->validate();

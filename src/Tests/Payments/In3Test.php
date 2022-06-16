@@ -26,7 +26,7 @@ class In3Test extends BuckarooTestCase
     {
         $response = $this->buckaroo->payment('in3')->payInInstallments($this->getPaymentPayload());
 
-        $this->assertTrue($response->isSuccess());
+        $this->assertTrue($response->isPendingProcessing());
     }
 
     /**
@@ -75,15 +75,16 @@ class In3Test extends BuckarooTestCase
                 'lastName'              => 'Aflever',
                 'email'                 => 'billingcustomer@buckaroo.nl',
                 'phone'                 => '0610000000',
+                'culture'               => 'nl-NL',
                 'birthDate'             => carbon()->subYears(20)->format('Y-m-d'),
             ],
             'address'   => [
-                'street' => 'Hoofdstraat',
-                'housenumber'   => '2',
-                'streetNumberAdditional' => 'a',
-                'postalCode' => '8441EE',
-                'city' => 'Heerenveen',
-                'country'=> 'NL'
+                'street'                => 'Hoofdstraat',
+                'houseNumber'           => '2',
+                'houseNumberAdditional' => 'a',
+                'zipcode'               => '8441EE',
+                'city'                  => 'Heerenveen',
+                'country'               => 'NL'
             ],
             'subtotals'      => [
                 [

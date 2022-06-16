@@ -9,7 +9,7 @@ use Buckaroo\Models\Interfaces\Recipient;
 class Person extends Model implements Recipient
 {
     protected string $category;
-    protected int $gender;
+    protected string $gender;
     protected string $culture;
     protected string $careOf;
     protected string $title;
