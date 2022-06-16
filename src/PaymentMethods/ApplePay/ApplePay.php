@@ -2,36 +2,17 @@
 
 namespace Buckaroo\PaymentMethods\ApplePay;
 
-use Buckaroo\Models\PayPayload;
-use Buckaroo\Models\ServiceList;
+use Buckaroo\Models\Model;
+use Buckaroo\PaymentMethods\ApplePay\Models\Pay;
 use Buckaroo\PaymentMethods\PaymentMethod;
+use Buckaroo\Transaction\Response\TransactionResponse;
 
 class ApplePay extends PaymentMethod
 {
     protected string $paymentName = 'applepay';
 
-    public function setPayServiceList(array $serviceParameters = []): self
+    public function pay(?Model $model = null): TransactionResponse
     {
-        $paymentModel = new PayPayload($this->payload);
-
-        $parameters = array([
-            'name' => 'PaymentData',
-            'Value' => $paymentModel->paymentData
-        ],
-        [
-            'name' => 'CustomerCardName',
-            'Value' => $paymentModel->customerCardName
-        ]);
-
-        $serviceList = new ServiceList(
-            $this->paymentName(),
-            $this->serviceVersion(),
-            'Pay',
-            $parameters
-        );
-
-        $this->request->getServices()->pushServiceList($serviceList);
-
-        return $this;
+        return parent::pay(new Pay($this->payload));
     }
 }

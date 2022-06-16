@@ -14,11 +14,11 @@ class ApplepayTest extends BuckarooTestCase
 //        $response = $this->buckaroo->payment('applepay')->pay([
 //            'amountDebit' => 10,
 //            'invoice' => uniqid(),
-//            'paymentData' => uniqid(),
-//            'customerCardName'  => 'Buck Aroo'
+//            'paymentData' => 'XXXXXXXXXXXXX',
+//            'customerCardName'  => 'XXXXXXXXXXXXX'
 //        ]);
 //
-////        $this->assertTrue($response->isPendingProcessing());
+//        $this->assertTrue($response->isPendingProcessing());
 //    }
 
     /**

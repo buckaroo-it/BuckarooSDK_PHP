@@ -4,67 +4,51 @@ declare(strict_types=1);
 
 namespace Buckaroo\PaymentMethods\Bancontact;
 
-use Buckaroo\Models\ServiceList;
+use Buckaroo\Models\Model;
+use Buckaroo\PaymentMethods\Bancontact\Models\Authenticate;
+use Buckaroo\PaymentMethods\Bancontact\Models\Pay;
+use Buckaroo\PaymentMethods\Bancontact\Models\PayEncrypted;
 use Buckaroo\PaymentMethods\PaymentMethod;
-use Buckaroo\Services\PayloadService;
 use Buckaroo\Transaction\Response\TransactionResponse;
 
 class Bancontact extends PaymentMethod
 {
     protected string $paymentName = 'bancontactmrcash';
-    protected int $serviceVersion = 1;
+    protected int $serviceVersion = 0;
 
-    public function payEncrypted($payload): TransactionResponse
+    public function pay(?Model $model = null): TransactionResponse
     {
-        $this->payload = (new PayloadService($payload))->toArray();
+        return parent::pay(new Pay($this->payload));
+    }
 
-        $this->request->setPayload($this->getPaymentPayload());
+    public function payEncrypted(): TransactionResponse
+    {
+        $payEncrypted = new PayEncrypted($this->payload);
 
-        $serviceList =  $this->getServiceList('PayEncrypted');
+        $this->setPayPayload();
 
-        $serviceList->appendParameter([
-            "Name"              => "EncryptedCardData",
-            "GroupType"         => "",
-            "GroupID"           => "",
-            "Value"             => $this->payload['serviceParameters']['cardData'] ?? null
-        ]);
-
-        $this->request->getServices()->pushServiceList($serviceList);
+        $this->setServiceList('PayEncrypted', $payEncrypted);
 
         return $this->postRequest();
     }
-    
-    public function setPayServiceList(array $serviceParameters = []): self
+
+    public function payRecurrent(): TransactionResponse
     {
-        $serviceList = new ServiceList(
-            $this->paymentName(),
-            $this->serviceVersion(),
-            'Pay'
-        );
+        $this->setPayPayload();
 
-        if (isset($serviceParameters['saveToken'])) {
-                $serviceList->appendParameter(
-                    [
-                        "Name"              => "SaveToken",
-                        "Value"             => $serviceParameters['saveToken'],
-                        "GroupType"         => "",
-                        "GroupID"           => ""
-                    ]
-                );
-        }
+        $this->setServiceList('PayRecurrent');
 
-
-        $this->request->getServices()->pushServiceList($serviceList);
-
-        return $this;
+        return $this->postRequest();
     }
 
-    private function getServiceList(string $action = ''): ServiceList
+    public function authenticate(): TransactionResponse
     {
-        return new ServiceList(
-            $this->paymentName(),
-            0,
-            $action
-        );
+        $authenticate = new Authenticate($this->payload);
+
+        $this->setPayPayload();
+
+        $this->setServiceList('Authenticate', $authenticate);
+
+        return $this->postRequest();
     }
 }
