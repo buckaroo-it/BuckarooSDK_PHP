@@ -14,7 +14,7 @@ class KlarnaTest extends BuckarooTestCase
     public function it_creates_a_klarna_payment()
     {
         $response = $this->buckaroo->payment('klarna')->pay($this->getPaymentPayload());
-        dd($response);
+
         $this->assertTrue($response->isPendingProcessing());
     }
 

@@ -2,39 +2,17 @@
 
 namespace Buckaroo\PaymentMethods\PointOfSale;
 
-use Buckaroo\Models\ServiceList;
+use Buckaroo\Models\Model;
 use Buckaroo\PaymentMethods\PaymentMethod;
+use Buckaroo\PaymentMethods\PointOfSale\Models\Pay;
+use Buckaroo\Transaction\Response\TransactionResponse;
 
 class PointOfSale extends PaymentMethod
 {
-    public const SERVICE_VERSION = 0;
-    public const PAYMENT_NAME = 'pospayment';
+    protected string $paymentName = 'pospayment';
 
-    public function setPayServiceList(array $serviceParameters = [])
+    public function pay(?Model $model = null): TransactionResponse
     {
-        $serviceList =  new ServiceList(
-            $this->paymentName(),
-            $this->serviceVersion(),
-            'Pay'
-        );
-
-        $serviceList->appendParameter([
-            "Name"              => "TerminalID",
-            "Value"             => $serviceParameters['terminalId']
-        ]);
-
-        $this->request->getServices()->pushServiceList($serviceList);
-
-        return $this;
-    }
-
-    public function paymentName(): string
-    {
-        return self::PAYMENT_NAME;
-    }
-
-    public function serviceVersion(): int
-    {
-        return self::SERVICE_VERSION;
+        return parent::pay(new Pay($this->payload));
     }
 }

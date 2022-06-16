@@ -14,10 +14,9 @@ class PosTest extends BuckarooTestCase
     {
         $response = $this->buckaroo->payment('pospayment')->pay([
             'amountDebit' => 10.10,
-            'serviceParameters' => [
-                'terminalId' => '50000001',
-            ]
+            'terminalID' => '50000001',
         ]);
+
         $this->assertTrue($response->isSuccess());
 
     }
