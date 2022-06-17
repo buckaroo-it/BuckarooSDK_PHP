@@ -4,6 +4,7 @@ namespace Buckaroo\Services\ServiceListParameters;
 
 use Buckaroo\Models\Model;
 use Buckaroo\Models\ServiceList;
+use Buckaroo\Models\ServiceParameter;
 
 class ModelParameters extends ServiceListParameter
 {
@@ -26,10 +27,30 @@ class ModelParameters extends ServiceListParameter
         {
             if(!is_array($value))
             {
-                $this->appendParameter($this->groupKey, $this->groupType, $this->model->serviceParameterKeyOf($key), $value);
+                $this->appendParameter($this->groupKey($key), $this->groupType($key), $this->model->serviceParameterKeyOf($key), $value);
             }
         }
 
         return $this->serviceList;
+    }
+
+    private function groupKey($key)
+    {
+        if($this->model instanceof ServiceParameter && !$this->groupKey)
+        {
+            return $this->model->getGroupKey($key);
+        }
+
+        return $this->groupKey;
+    }
+
+    private function groupType($key)
+    {
+        if($this->model instanceof ServiceParameter && !$this->groupType)
+        {
+            return $this->model->getGroupType($key);
+        }
+
+        return $this->groupType;
     }
 }

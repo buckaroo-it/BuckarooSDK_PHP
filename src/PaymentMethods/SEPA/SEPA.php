@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace Buckaroo\PaymentMethods\SEPA;
 
 use Buckaroo\Models\Model;
-use Buckaroo\PaymentMethods\PaymentMethod;
+use Buckaroo\PaymentMethods\CreditManagementInvoiceablePaymentMethod;
 use Buckaroo\PaymentMethods\SEPA\Adapters\PayServiceParametersKeysAdapter;
 use Buckaroo\PaymentMethods\SEPA\Models\ExtraInfo;
 use Buckaroo\PaymentMethods\SEPA\Models\Pay;
 use Buckaroo\Transaction\Response\TransactionResponse;
 
-class SEPA extends PaymentMethod
+class SEPA extends CreditManagementInvoiceablePaymentMethod
 {
     protected string $paymentName = 'SepaDirectDebit';
     protected int $serviceVersion = 1;
 
-    public function pay(?Model $model = null): TransactionResponse
+    public function pay(?Model $model = null)
     {
         return parent::pay(new PayServiceParametersKeysAdapter(new Pay($this->payload)));
     }

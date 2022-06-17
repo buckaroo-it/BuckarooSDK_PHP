@@ -6,6 +6,7 @@ use Buckaroo\Models\{Address, Company, Debtor, Email, Person, Phone, ServicePara
 
 class Invoice extends ServiceParameter
 {
+    protected string $invoiceNumber;
     protected float $invoiceAmount;
     protected float $invoiceAmountVat;
     protected string $invoiceDate;
@@ -125,7 +126,7 @@ class Invoice extends ServiceParameter
 
     public function email($email = null)
     {
-        if(is_array($email))
+        if(is_string($email))
         {
             return $this->email(new Email($email));
         }

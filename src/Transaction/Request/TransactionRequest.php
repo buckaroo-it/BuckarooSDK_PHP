@@ -23,6 +23,13 @@ class TransactionRequest extends Request
         return $this;
     }
 
+    public function setData($key, $value)
+    {
+        $this->data[$key] = $value;
+
+        return $this;
+    }
+
     public function getServices() : Services
     {
         $this->data['Services'] = $this->data['Services'] ?? new Services;

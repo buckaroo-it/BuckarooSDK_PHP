@@ -16,6 +16,16 @@ class PaymentFacade
         $this->paymentMethod = PaymentMethodFactory::get($client, $method);
     }
 
+    public function attachCreditManagementInvoice(array $payload)
+    {
+        if($this->paymentMethod instanceof CreditManagementInvoiceablePaymentMethod)
+        {
+            $this->paymentMethod->attachCreditManagementInvoice((new PayloadService($payload))->toArray());
+        }
+
+        return $this;
+    }
+
     public function __call(string $name , array $arguments)
     {
         if(method_exists($this->paymentMethod, $name))

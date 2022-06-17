@@ -38,7 +38,7 @@ abstract class PaymentMethod implements PaymentInterface
         $this->serviceCode = $serviceCode;
     }
 
-    public function pay(?Model $model = null): TransactionResponse
+    public function pay(?Model $model = null)
     {
         $this->setPayPayload();
 
@@ -50,7 +50,7 @@ abstract class PaymentMethod implements PaymentInterface
         return $this->postRequest();
     }
 
-    public function refund(?Model $model = null): TransactionResponse
+    public function refund(?Model $model = null)
     {
         $this->setRefundPayload();
 
@@ -69,9 +69,17 @@ abstract class PaymentMethod implements PaymentInterface
         return $this;
     }
 
-    protected function postRequest(): TransactionResponse
+    protected function postRequest()
     {
         return $this->client->post(
+            $this->request,
+            TransactionResponse::class
+        );
+    }
+
+    protected function dataRequest()
+    {
+        return $this->client->dataRequest(
             $this->request,
             TransactionResponse::class
         );
