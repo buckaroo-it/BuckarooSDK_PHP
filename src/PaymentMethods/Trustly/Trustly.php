@@ -2,30 +2,20 @@
 
 namespace Buckaroo\PaymentMethods\Trustly;
 
-use Buckaroo\Models\Person;
-use Buckaroo\Models\ServiceList;
+use Buckaroo\Models\Model;
 use Buckaroo\PaymentMethods\PaymentMethod;
-use Buckaroo\PaymentMethods\Trustly\Adapters\CustomerServiceParametersKeysAdapter;
-use Buckaroo\Services\ServiceListParameters\CustomerParameters;
-use Buckaroo\Services\ServiceListParameters\DefaultParameters;
+use Buckaroo\PaymentMethods\Trustly\Adapters\PayServiceParametersKeysAdapter;
+use Buckaroo\PaymentMethods\Trustly\Models\Pay;
+use Buckaroo\Transaction\Response\TransactionResponse;
 
 class Trustly extends PaymentMethod
 {
     protected string $paymentName = 'Trustly';
 
-    public function setPayServiceList(array $serviceParameters = [])
+    public function pay(?Model $model = null): TransactionResponse
     {
-        $serviceList =  new ServiceList(
-            $this->paymentName(),
-            $this->serviceVersion(),
-            'Pay'
-        );
+        $pay = new PayServiceParametersKeysAdapter(new Pay($this->payload));
 
-        $parametersService = new CustomerParameters(new DefaultParameters($serviceList), ['customer' => new CustomerServiceParametersKeysAdapter((new Person())->setProperties($serviceParameters['customer'] ?? []))]);
-        $parametersService->data();
-
-        $this->request->getServices()->pushServiceList($serviceList);
-
-        return $this;
+        return parent::pay($pay);
     }
 }

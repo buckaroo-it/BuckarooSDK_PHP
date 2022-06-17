@@ -16,12 +16,4 @@ class Article extends Model
     protected float $vatPercentage;
     protected string $vatCategory;
     protected string $description;
-
-//    protected string $color;
-//    protected string $size;
-//    protected float $unitPrice;
-//    protected string $reservationNumber;
-//    protected int $quantity;
-//    protected float $price;
-//    protected string $marketPlaceSellerId;
 }

@@ -61,11 +61,11 @@ class PaymentMethodFactory
         Tinka::class                    => ['tinka'],
         Payconiq::class                 => ['payconiq'],
         Przelewy24::class               => ['przelewy24'],
-        PointOfSale::class                      => ['pospayment'],
+        PointOfSale::class              => ['pospayment'],
         Giropay::class                  => ['giropay'],
         GiftCard::class                 => ['giftcard'],
         Trustly::class                  => ['trustly'],
-        BankTransfer::class                 => ['transfer'],
+        BankTransfer::class             => ['transfer'],
         RequestToPay::class             => ['requesttopay'],
         WeChatPay::class                => ['wechatpay'],
     ];

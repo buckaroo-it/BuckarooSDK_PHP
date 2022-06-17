@@ -6,13 +6,10 @@ use Buckaroo\Models\Model;
 use Buckaroo\PaymentMethods\Billink\Models\Capture;
 use Buckaroo\PaymentMethods\Billink\Models\Pay;
 use Buckaroo\PaymentMethods\PaymentMethod;
-use Buckaroo\PaymentMethods\Traits\HasArticleAndCustomerParameters;
 use Buckaroo\Transaction\Response\TransactionResponse;
 
 class Billink extends PaymentMethod
 {
-    use HasArticleAndCustomerParameters;
-
     protected string $paymentName = 'Billink';
 
     public function pay(?Model $model = null): TransactionResponse

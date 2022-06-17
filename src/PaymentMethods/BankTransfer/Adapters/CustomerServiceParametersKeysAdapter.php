@@ -7,10 +7,9 @@ use Buckaroo\Models\Adapters\ServiceParametersKeysAdapter;
 class CustomerServiceParametersKeysAdapter extends ServiceParametersKeysAdapter
 {
     protected array $keys = [
-        'gender' => 'CustomerGender',
-        'firstName' => 'CustomerFirstName',
-        'lastName' => 'CustomerLastName',
-        'email' => 'CustomerEmail',
-        'country' => 'CustomerCountry'
+        'gender'        => 'CustomerGender',
+        'firstName'     => 'CustomerFirstName',
+        'lastName'      => 'CustomerLastName',
+        'email'         => 'CustomerEmail',
     ];
 }

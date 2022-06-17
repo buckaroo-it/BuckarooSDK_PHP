@@ -14,12 +14,10 @@ class Przelewy24Test extends BuckarooTestCase
         $response = $this->buckaroo->payment("przelewy24")->pay([
             'amountDebit'       => 3.5,
             'invoice'           => uniqid(),
-            'serviceParameters' => [
-                'customer'      => [
-                    'firstName'     => 'John',
-                    'lastName'      => 'Smith',
-                    'email'         => 'test@test.nl'
-                ]
+            'email'         => 'test@test.nl',
+            'customer'      => [
+                'firstName'     => 'John',
+                'lastName'      => 'Smith'
             ]
         ]);
 

@@ -4,9 +4,9 @@ namespace Buckaroo\PaymentMethods\Tinka\Adapters;
 
 use Buckaroo\Models\Adapters\ServiceParametersKeysAdapter;
 
-class ArticleServiceParametersKeysAdapter extends ServiceParametersKeysAdapter
+class PhoneServiceParametersKeysAdapter extends ServiceParametersKeysAdapter
 {
     protected array $keys = [
-        'price'        => 'UnitGrossPrice'
+        'mobile'    => 'Phone'
     ];
 }

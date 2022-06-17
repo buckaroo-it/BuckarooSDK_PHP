@@ -1,13 +1,12 @@
 <?php
 
-namespace Buckaroo\PaymentMethods\Trustly\Adapters;
+namespace Buckaroo\PaymentMethods\SEPA\Adapters;
 
 use Buckaroo\Models\Adapters\ServiceParametersKeysAdapter;
 
 class CustomerServiceParametersKeysAdapter extends ServiceParametersKeysAdapter
 {
     protected array $keys = [
-        'firstName'         => 'CustomerFirstName',
-        'lastName'          => 'CustomerLastName',
+        'name'        => 'customeraccountname'
     ];
 }

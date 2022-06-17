@@ -3,8 +3,9 @@
 namespace Buckaroo\Models\Adapters;
 
 use Buckaroo\Models\Model;
+use Buckaroo\Models\ServiceParameter;
 
-abstract class ServiceParametersKeysAdapter extends Model
+abstract class ServiceParametersKeysAdapter extends ServiceParameter
 {
     private Model $model;
     protected array $hidden = [];
@@ -32,5 +33,10 @@ abstract class ServiceParametersKeysAdapter extends Model
     public function toArray(): array
     {
         return $this->model->toArray();
+    }
+
+    public function get_object_vars(): array
+    {
+        return $this->model->get_object_vars();
     }
 }

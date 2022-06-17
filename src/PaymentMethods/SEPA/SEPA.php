@@ -4,54 +4,64 @@ declare(strict_types=1);
 
 namespace Buckaroo\PaymentMethods\SEPA;
 
-use Buckaroo\Models\PayPayload;
-use Buckaroo\Models\ServiceList;
+use Buckaroo\Models\Model;
 use Buckaroo\PaymentMethods\PaymentMethod;
+use Buckaroo\PaymentMethods\SEPA\Adapters\PayServiceParametersKeysAdapter;
+use Buckaroo\PaymentMethods\SEPA\Models\ExtraInfo;
+use Buckaroo\PaymentMethods\SEPA\Models\Pay;
+use Buckaroo\Transaction\Response\TransactionResponse;
 
 class SEPA extends PaymentMethod
 {
     protected string $paymentName = 'SepaDirectDebit';
     protected int $serviceVersion = 1;
 
-    public function setPayServiceList(array $serviceParameters = []): self
+    public function pay(?Model $model = null): TransactionResponse
     {
-        $paymentModel = new PayPayload($this->payload);
+        return parent::pay(new PayServiceParametersKeysAdapter(new Pay($this->payload)));
+    }
 
-        $serviceList = new ServiceList(
-            $this->paymentName(),
-            $this->serviceVersion(),
-            'Pay,ExtraInfo'
-        );
+    public function authorize(): TransactionResponse
+    {
+        $pay = new PayServiceParametersKeysAdapter(new Pay($this->payload));
 
-        $serviceList->appendParameter([
-            [
-                "Name"              => "CollectDate",
-                "Value"             => $this->payload['serviceParameters']['collectDate'] ?? null
-            ],
-            [
-                "Name"              => "CustomerIBAN",
-                "Value"             => $this->payload['serviceParameters']['iban'] ?? null
-            ],
-            [
-                "Name"              => "Customerbic",
-                "Value"             => $this->payload['serviceParameters']['bic'] ?? null
-            ],
-            [
-                "Name"              => "MandateReference",
-                "Value"             => $this->payload['serviceParameters']['mandateReference'] ?? null
-            ],
-            [
-                "Name"              => "MandateDate",
-                "Value"             => $this->payload['serviceParameters']['mandateDate'] ?? null
-            ],
-            [
-                "Name"              => "customeraccountname",
-                "Value"             => $this->payload['serviceParameters']['customer']['name'] ?? null
-            ]
-        ]);
+        $this->setPayPayload();
 
-        $this->request->getServices()->pushServiceList($serviceList);
+        $this->setServiceList('Authorize', $pay);
 
-        return $this;
+        return $this->postRequest();
+    }
+
+    public function payRecurrent()
+    {
+        $pay = new PayServiceParametersKeysAdapter(new Pay($this->payload));
+
+        $this->setPayPayload();
+
+        $this->setServiceList('PayRecurrent', $pay);
+
+        return $this->postRequest();
+    }
+
+    public function extraInfo()
+    {
+        $extraInfo = new PayServiceParametersKeysAdapter(new ExtraInfo($this->payload));
+
+        $this->setPayPayload();
+
+        $this->setServiceList('Pay,ExtraInfo', $extraInfo);
+
+        return $this->postRequest();
+    }
+
+    public function payWithEmandate()
+    {
+        $pay = new Pay($this->payload);
+
+        $this->setPayPayload();
+
+        $this->setServiceList('PayWithEmandate', $pay);
+
+        return $this->postRequest();
     }
 }

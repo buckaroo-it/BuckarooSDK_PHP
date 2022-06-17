@@ -12,11 +12,9 @@ class WeChatPayTest extends BuckarooTestCase
     public function it_creates_a_wechat_payment()
     {
         $response = $this->buckaroo->payment('wechatpay')->pay([
-            'amountDebit' => 10,
-            'invoice' => uniqid(),
-            'serviceParameters' => [
-                'locale' => 'en-US'
-            ]
+            'amountDebit'   => 10,
+            'invoice'       => uniqid(),
+            'locale'        => 'en-US'
         ]);
 
         $this->assertTrue($response->isPendingProcessing());
