@@ -10,6 +10,7 @@ use Buckaroo\PaymentMethods\ApplePay\ApplePay;
 use Buckaroo\PaymentMethods\Bancontact\Bancontact;
 use Buckaroo\PaymentMethods\Belfius\Belfius;
 use Buckaroo\PaymentMethods\Billink\Billink;
+use Buckaroo\PaymentMethods\BuckarooWallet\BuckarooWallet;
 use Buckaroo\PaymentMethods\CreditCard\CreditCard;
 use Buckaroo\PaymentMethods\CreditClick\CreditClick;
 use Buckaroo\PaymentMethods\CreditManagement\CreditManagement;
@@ -45,6 +46,7 @@ class PaymentMethodFactory
         Bancontact::class               => ['bancontactmrcash'],
         Billink::class                  => ['billink'],
         Belfius::class                  => ['belfius'],
+        BuckarooWallet::class           => ['buckaroo_wallet'],
         CreditCard::class               => ['creditcard', 'mastercard', 'visa', 'amex', 'vpay', 'maestro', 'visaelectron', 'cartebleuevisa', 'cartebancaire', 'dankort', 'nexi', 'postepay'],
         CreditClick::class              => ['creditclick'],
         CreditManagement::class         => ['credit_management'],
