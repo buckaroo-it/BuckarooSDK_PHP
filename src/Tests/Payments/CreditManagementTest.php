@@ -170,7 +170,66 @@ class CreditManagementTest extends BuckarooTestCase
         $this->assertTrue($response->isFailed());
     }
 
+    /**
+     * @return void
+     * @test
+     */
+    public function it_creates_a_credit_management_add_or_update_product_lines()
+    {
+        $response = $this->buckaroo->payment('credit_management')->addOrUpdateProductLines([
+            'invoiceKey'      => 'xxxxxxxxxxxxxxxxxxxxxxxx',
+            'articles'      => [
+                [
+                    'type'          => 'Regular',
+                    'identifier' => 'Articlenumber1',
+                    'description' => 'Blue Toy Car',
+                    'vatPercentage' => '21',
+                    'totalVat'       => 12,
+                    'totalAmount'   => 123,
+                    'quantity' => '2',
+                    'price' => '20.10'
+                ],
+                [
+                    'type'          => 'Regular',
+                    'identifier' => 'Articlenumber2',
+                    'description' => 'Red Toy Car',
+                    'vatPercentage' => '21',
+                    'totalVat'       => 12,
+                    'totalAmount'   => 123,
+                    'quantity' => '1',
+                    'price' => '10.10'
+                ],
+            ]
+        ]);
 
+        $this->assertTrue($response->isValidationFailure());
+    }
+
+    /**
+     * @return void
+     * @test
+     */
+    public function it_creates_a_credit_management_resume_debtor_file()
+    {
+        $response = $this->buckaroo->payment('credit_management')->resumeDebtorFile([
+            'debtorFileGuid'    => 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+        ]);
+
+        $this->assertTrue($response->isValidationFailure());
+    }
+
+    /**
+     * @return void
+     * @test
+     */
+    public function it_creates_a_credit_management_pause_debtor_file()
+    {
+        $response = $this->buckaroo->payment('credit_management')->pauseDebtorFile([
+            'debtorFileGuid'    => 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+        ]);
+
+        $this->assertTrue($response->isValidationFailure());
+    }
 
     private function invoice(array $append = []): array
     {

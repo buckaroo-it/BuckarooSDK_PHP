@@ -2,8 +2,10 @@
 
 namespace Buckaroo\PaymentMethods\CreditManagement;
 
+use Buckaroo\PaymentMethods\CreditManagement\Models\AddOrUpdateProductLines;
 use Buckaroo\PaymentMethods\CreditManagement\Models\CreditNote;
 use Buckaroo\PaymentMethods\CreditManagement\Models\Debtor;
+use Buckaroo\PaymentMethods\CreditManagement\Models\DebtorFile;
 use Buckaroo\PaymentMethods\CreditManagement\Models\DebtorInfo;
 use Buckaroo\PaymentMethods\CreditManagement\Models\Invoice;
 use Buckaroo\PaymentMethods\CreditManagement\Models\MultipleInvoiceInfo;
@@ -100,6 +102,33 @@ class CreditManagement extends PaymentMethod
         $debtorInfo = new DebtorInfo($this->payload);
 
         $this->setServiceList('DebtorInfo', $debtorInfo);
+
+        return $this->dataRequest();
+    }
+
+    public function addOrUpdateProductLines()
+    {
+        $addOrUpdateProductLines = new AddOrUpdateProductLines($this->payload);
+
+        $this->setServiceList('AddOrUpdateProductLines', $addOrUpdateProductLines);
+
+        return $this->dataRequest();
+    }
+
+    public function resumeDebtorFile()
+    {
+        $debtor_file = new DebtorFile($this->payload);
+
+        $this->setServiceList('ResumeDebtorFile', $debtor_file);
+
+        return $this->dataRequest();
+    }
+
+    public function pauseDebtorFile()
+    {
+        $debtor_file = new DebtorFile($this->payload);
+
+        $this->setServiceList('PauseDebtorFile', $debtor_file);
 
         return $this->dataRequest();
     }
