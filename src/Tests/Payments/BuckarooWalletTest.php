@@ -108,4 +108,67 @@ class BuckarooWalletTest extends BuckarooTestCase
 
         $this->assertTrue($response->isValidationFailure());
     }
+
+    /**
+     * @return void
+     * @test
+     */
+    public function it_withdrawal_from_buckaroo_wallet()
+    {
+        $response = $this->buckaroo->payment('buckaroo_wallet')->withdrawal([
+            'invoice'                   => 'BuckarooWalletInvoiceId',
+            'originalTransactionKey'    => '46FB241693914AA4AE7A8B6DB33DE',
+            'amountDebit'          => 1,
+            'walletId'              => 10
+        ]);
+
+        $this->assertTrue($response->isValidationFailure());
+    }
+
+    /**
+     * @return void
+     * @test
+     */
+    public function it_cancel_from_buckaroo_wallet()
+    {
+        $response = $this->buckaroo->payment('buckaroo_wallet')->cancel([
+            'invoice'                   => 'BuckarooWalletInvoiceId',
+            'originalTransactionKey'    => '46FB241693914AA4AE7A8B6DB33DE',
+            'amountDebit'               => 1,
+            'walletMutationGuid'        => '49B018248ECE4346AC20B902'
+        ]);
+
+        $this->assertTrue($response->isValidationFailure());
+    }
+
+    /**
+     * @return void
+     * @test
+     */
+    public function it_creates_a_payment_on_buckaroo_wallet()
+    {
+        $response = $this->buckaroo->payment('buckaroo_wallet')->pay([
+            'invoice'                   => 'BuckarooWalletInvoiceId',
+            'description'               => 'Test',
+            'amountDebit'               => 1,
+            'walletId'                  => 10
+        ]);
+
+        $this->assertTrue($response->isValidationFailure());
+    }
+
+    /**
+     * @return void
+     * @test
+     */
+    public function it_creates_a_refund_on_buckaroo_wallet()
+    {
+        $response = $this->buckaroo->payment('buckaroo_wallet')->refund([
+            'amountCredit' => 10,
+            'invoice'       => 'testinvoice 123',
+            'originalTransactionKey' => '2D04704995B74D679AACC59F87XXXXXX',
+        ]);
+
+        $this->assertTrue($response->isFailed());
+    }
 }

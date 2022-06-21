@@ -2,10 +2,12 @@
 
 namespace Buckaroo\PaymentMethods\BuckarooWallet;
 
+use Buckaroo\Models\Model;
 use Buckaroo\PaymentMethods\BuckarooWallet\Models\DepositReservePayload;
 use Buckaroo\PaymentMethods\BuckarooWallet\Models\ReleasePayload;
 use Buckaroo\PaymentMethods\BuckarooWallet\Models\Wallet;
 use Buckaroo\PaymentMethods\PaymentMethod;
+use Buckaroo\Transaction\Response\TransactionResponse;
 
 class BuckarooWallet extends PaymentMethod
 {
@@ -65,7 +67,7 @@ class BuckarooWallet extends PaymentMethod
 
         $this->setServiceList('Deposit', $wallet);
 
-        return $this->dataRequest();
+        return $this->postRequest();
     }
 
     public function reserve()
@@ -78,11 +80,34 @@ class BuckarooWallet extends PaymentMethod
 
         $this->setServiceList('Reserve', $wallet);
 
-        return $this->dataRequest();
+        return $this->postRequest();
     }
 
+    public function withdrawal()
+    {
+        $wallet = new Wallet($this->payload);
 
+        $this->setPayPayload();
 
+        $this->setServiceList('Withdrawal', $wallet);
 
+        return $this->postRequest();
+    }
+
+    public function cancel()
+    {
+        $wallet = new Wallet($this->payload);
+
+        $this->setPayPayload();
+
+        $this->setServiceList('Cancel', $wallet);
+
+        return $this->postRequest();
+    }
+
+    public function pay(?Model $model = null): TransactionResponse
+    {
+        return parent::pay(new Wallet($this->payload));
+    }
 
 }
