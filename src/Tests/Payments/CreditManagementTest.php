@@ -23,6 +23,64 @@ class CreditManagementTest extends BuckarooTestCase
      * @return void
      * @test
      */
+    public function it_creates_a_credit_management_invoice_with_product_lines()
+    {
+        $response = $this->buckaroo->payment('credit_management')->createInvoice([
+            'invoice'           => 'Billingtest101',
+            'description'       => 'buckaroo_schema_test_PDF',
+            'invoiceAmount'     => 217.80,
+            'invoiceDate'       => carbon()->format('Y-m-d'),
+            'dueDate'           => carbon()->addDays(30)->format('Y-m-d'),
+            'schemeKey'         => '2amq34',
+            'poNumber'          => 'PO-12345',
+            'debtor'        => [
+                'code'  => 'johnsmith4'
+            ],
+            'articles'      => [
+                [
+                    'productGroupName'          => 'Toys',
+                    'productGroupOrderIndex'    => 1,
+                    'productOrderIndex'         => 1,
+                    'type'                      => 'Regular',
+                    'identifier'                => 'ART12',
+                    'description'               => 'Blue Toy Car',
+                    'quantity'                  => 3,
+                    'unitOfMeasurement'         => 'piece(s)',
+                    'price'                     => 10,
+                    'discountPercentage'        => 20,
+                    'totalDiscount'             => 6,
+                    'vatPercentage'             => 21,
+                    'totalVat'                  => 0.6,
+                    'totalAmountExVat'          => 8.40,
+                    'totalAmount'               => 123
+                ],
+                [
+                    'productGroupName'          => 'Toys',
+                    'productGroupOrderIndex'    => 1,
+                    'productOrderIndex'         => 2,
+                    'type'                      => 'Regular',
+                    'identifier'                => 'ART12',
+                    'description'               => 'Blue Toy Car',
+                    'quantity'                  => 3,
+                    'unitOfMeasurement'         => 'piece(s)',
+                    'price'                     => 10,
+                    'discountPercentage'        => 20,
+                    'totalDiscount'             => 6,
+                    'vatPercentage'             => 21,
+                    'totalVat'                  => 0.6,
+                    'totalAmountExVat'          => 8.40,
+                    'totalAmount'               => 123
+                ],
+            ]
+        ]);
+
+        $this->assertTrue($response->isValidationFailure());
+    }
+
+    /**
+     * @return void
+     * @test
+     */
     public function it_creates_a_credit_management_combined_invoice()
     {
         $response = $this->buckaroo->payment('sepadirectdebit')->attachCreditManagementInvoice($this->invoice())
