@@ -25,6 +25,7 @@ use Buckaroo\PaymentMethods\KlarnaKP\KlarnaKP;
 use Buckaroo\PaymentMethods\KlarnaPay\KlarnaPay;
 use Buckaroo\PaymentMethods\Payconiq\Payconiq;
 use Buckaroo\PaymentMethods\Paypal\Paypal;
+use Buckaroo\PaymentMethods\PayPerEmail\PayPerEmail;
 use Buckaroo\PaymentMethods\PointOfSale\PointOfSale;
 use Buckaroo\PaymentMethods\Przelewy24\Przelewy24;
 use Buckaroo\PaymentMethods\RequestToPay\RequestToPay;
@@ -58,6 +59,7 @@ class PaymentMethodFactory
         SEPA::class                     => ['sepadirectdebit', 'sepa'],
         KBC::class                      => ['kbcpaymentbutton'],
         Paypal::class                   => ['paypal'],
+        PayPerEmail::class              => ['payperemail'],
         EPS::class                      => ['eps'],
         Sofort::class                   => ['sofort', 'sofortueberweisung'],
         Tinka::class                    => ['tinka'],

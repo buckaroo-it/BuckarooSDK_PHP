@@ -3,6 +3,7 @@
 namespace Buckaroo\PaymentMethods\CreditManagement\Models;
 
 use Buckaroo\Models\{Address, Company, Debtor, Email, Person, Phone, ServiceParameter};
+use Buckaroo\PaymentMethods\CreditManagement\Adapters\ArticleServiceParametersKeysAdapter;
 
 class Invoice extends ServiceParameter
 {
@@ -14,10 +15,13 @@ class Invoice extends ServiceParameter
     protected string $schemeKey;
     protected int $maxStepIndex;
     protected string $allowedServices;
+    protected string $code;
     protected string $disallowedServices;
     protected string $allowedServicesAfterDueDate;
     protected string $disallowedServicesAfterDueDate;
     protected string $applyStartRecurrent;
+    protected string $poNumber;
+    protected array $articles = [];
 
     protected Address $address;
     protected Company $company;
@@ -27,6 +31,9 @@ class Invoice extends ServiceParameter
     protected Phone $phone;
 
     protected array $groupData = [
+        'articles'   => [
+            'groupType' => 'ProductLine'
+        ],
         'address'   => [
             'groupType' => 'Address'
         ],
@@ -51,7 +58,7 @@ class Invoice extends ServiceParameter
     {
         foreach($data ?? array() as $property => $value)
         {
-            if(in_array($property, ['address', 'company', 'person', 'debtor', 'email', 'phone']))
+            if(in_array($property, ['address', 'articles', 'company', 'person', 'debtor', 'email', 'phone']))
             {
                 $this->$property($value);
 
@@ -152,5 +159,28 @@ class Invoice extends ServiceParameter
         }
 
         return $this->phone;
+    }
+
+    public function articles(?array $articles = null)
+    {
+        if(is_array($articles))
+        {
+            foreach($articles as $article)
+            {
+                $this->articles[] = new ArticleServiceParametersKeysAdapter(new Article($article));
+            }
+        }
+
+        return $this->articles;
+    }
+
+    public function getGroupKey(string $key, ?int $keyCount = 0): ?int
+    {
+        if($key == 'articles' && is_numeric($keyCount))
+        {
+            return intval($keyCount) + 1;
+        }
+
+        return $this->groupData[$key]['groupKey'] ?? null;
     }
 }
