@@ -19,6 +19,7 @@ use Buckaroo\PaymentMethods\GiftCard\GiftCard;
 use Buckaroo\PaymentMethods\Giropay\Giropay;
 use Buckaroo\PaymentMethods\iDeal\iDeal;
 use Buckaroo\PaymentMethods\iDealQR\iDealQR;
+use Buckaroo\PaymentMethods\iDin\iDin;
 use Buckaroo\PaymentMethods\In3\In3;
 use Buckaroo\PaymentMethods\KBC\KBC;
 use Buckaroo\PaymentMethods\KlarnaKP\KlarnaKP;
@@ -54,6 +55,7 @@ class PaymentMethodFactory
         CreditManagement::class         => ['credit_management'],
         iDeal::class                    => ['ideal', 'idealprocessing'],
         iDealQR::class                  => ['ideal_qr'],
+        iDin::class                     => ['idin'],
         In3::class                      => ['in3'],
         KlarnaPay::class                => ['klarna'],
         KlarnaKP::class                 => ['klarnakp'],
