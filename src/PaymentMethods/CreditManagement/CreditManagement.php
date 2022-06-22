@@ -10,9 +10,10 @@ use Buckaroo\PaymentMethods\CreditManagement\Models\DebtorInfo;
 use Buckaroo\PaymentMethods\CreditManagement\Models\Invoice;
 use Buckaroo\PaymentMethods\CreditManagement\Models\MultipleInvoiceInfo;
 use Buckaroo\PaymentMethods\CreditManagement\Models\PaymentPlan;
+use Buckaroo\PaymentMethods\Interfaces\Combinable;
 use Buckaroo\PaymentMethods\PaymentMethod;
 
-class CreditManagement extends PaymentMethod
+class CreditManagement extends PaymentMethod implements Combinable
 {
     protected string $paymentName = 'CreditManagement3';
     protected array $requiredConfigFields = ['currency'];
@@ -24,6 +25,17 @@ class CreditManagement extends PaymentMethod
         $this->setPayPayload();
 
         $this->setServiceList('CreateInvoice', $invoice);
+
+        return $this->dataRequest();
+    }
+
+    public function createCombinedInvoice()
+    {
+        $invoice = new Invoice($this->payload);
+
+        $this->setPayPayload();
+
+        $this->setServiceList('CreateCombinedInvoice', $invoice);
 
         return $this->dataRequest();
     }

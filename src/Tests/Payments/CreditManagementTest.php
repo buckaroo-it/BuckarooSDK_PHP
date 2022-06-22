@@ -83,8 +83,11 @@ class CreditManagementTest extends BuckarooTestCase
      */
     public function it_creates_a_credit_management_combined_invoice()
     {
-        $response = $this->buckaroo->payment('sepadirectdebit')->attachCreditManagementInvoice($this->invoice())
+        $invoice = $this->buckaroo->payment('credit_management')->manually()->createCombinedInvoice($this->invoice());
+
+        $response = $this->buckaroo->payment('sepadirectdebit')->combine($invoice)
                 ->pay([
+                    'invoice'           => uniqid(),
                     'amountDebit'       => 10.10,
                     'iban'              => 'NL13TEST0123456789',
                     'bic'               => 'TESTNL2A',

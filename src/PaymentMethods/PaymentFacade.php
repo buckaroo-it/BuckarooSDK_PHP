@@ -3,11 +3,14 @@
 namespace Buckaroo\PaymentMethods;
 
 use Buckaroo\Exceptions\SDKException;
+use Buckaroo\PaymentMethods\Interfaces\Combinable;
 use Buckaroo\Services\PayloadService;
 
 class PaymentFacade
 {
     private PaymentMethod $paymentMethod;
+
+    private bool $isManually = false;
 
     public function __construct($client, $method)
     {
@@ -16,12 +19,27 @@ class PaymentFacade
         $this->paymentMethod = PaymentMethodFactory::get($client, $method);
     }
 
-    public function attachCreditManagementInvoice(array $payload)
+//    public function attachCreditManagementInvoice(array $payload)
+//    {
+//        if($this->paymentMethod instanceof CreditManagementInvoiceablePaymentMethod)
+//        {
+//            $this->paymentMethod->attachCreditManagementInvoice((new PayloadService($payload))->toArray());
+//        }
+//
+//        return $this;
+//    }
+
+
+    public function manually()
     {
-        if($this->paymentMethod instanceof CreditManagementInvoiceablePaymentMethod)
-        {
-            $this->paymentMethod->attachCreditManagementInvoice((new PayloadService($payload))->toArray());
-        }
+        $this->isManually = true;
+
+        return $this;
+    }
+
+    public function combine(Combinable $combinablePayment)
+    {
+        $this->paymentMethod->combinePayment($combinablePayment);
 
         return $this;
     }
@@ -32,7 +50,7 @@ class PaymentFacade
         {
             $this->paymentMethod->setPayload((new PayloadService($arguments[0]))->toArray());
 
-            return $this->paymentMethod->$name();
+            return $this->paymentMethod->manually($this->isManually)->$name();
         }
 
         throw new SDKException($this->client->getLogger(), "Payment method " . $name . " on payment " . $this->paymentMethod->paymentName() . " you requested does not exist.");

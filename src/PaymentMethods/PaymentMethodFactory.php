@@ -31,6 +31,7 @@ use Buckaroo\PaymentMethods\Przelewy24\Przelewy24;
 use Buckaroo\PaymentMethods\RequestToPay\RequestToPay;
 use Buckaroo\PaymentMethods\SEPA\SEPA;
 use Buckaroo\PaymentMethods\Sofort\Sofort;
+use Buckaroo\PaymentMethods\Subscriptions\Subscriptions;
 use Buckaroo\PaymentMethods\Tinka\Tinka;
 use Buckaroo\PaymentMethods\BankTransfer\BankTransfer;
 use Buckaroo\PaymentMethods\Trustly\Trustly;
@@ -56,6 +57,7 @@ class PaymentMethodFactory
         In3::class                      => ['in3'],
         KlarnaPay::class                => ['klarna'],
         KlarnaKP::class                 => ['klarnakp'],
+        Subscriptions::class            => ['subscriptions'],
         SEPA::class                     => ['sepadirectdebit', 'sepa'],
         KBC::class                      => ['kbcpaymentbutton'],
         Paypal::class                   => ['paypal'],

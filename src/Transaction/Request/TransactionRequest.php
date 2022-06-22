@@ -30,6 +30,11 @@ class TransactionRequest extends Request
         return $this;
     }
 
+    public function data(): array
+    {
+        return $this->data;
+    }
+
     public function getServices() : Services
     {
         $this->data['Services'] = $this->data['Services'] ?? new Services;

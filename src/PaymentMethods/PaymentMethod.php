@@ -7,6 +7,7 @@ use Buckaroo\Models\Model;
 use Buckaroo\Models\PayPayload;
 use Buckaroo\Models\RefundPayload;
 use Buckaroo\Models\ServiceList;
+use Buckaroo\PaymentMethods\Interfaces\Combinable;
 use Buckaroo\Transaction\Client;
 use Buckaroo\Transaction\Request\TransactionRequest;
 use Buckaroo\Transaction\Response\TransactionResponse;
@@ -28,6 +29,9 @@ abstract class PaymentMethod implements PaymentInterface
     protected string $payModel = PayPayload::class;
     protected string $refundModel = RefundPayload::class;
 
+    protected Combinable $combinablePayment;
+    protected bool $isManually = false;
+
     public function __construct(
         Client $client,
         ?string $serviceCode
@@ -47,6 +51,7 @@ abstract class PaymentMethod implements PaymentInterface
         //TODO
         //Create validator class that validates specific request
         //$request->validate();
+
         return $this->postRequest();
     }
 
@@ -71,6 +76,11 @@ abstract class PaymentMethod implements PaymentInterface
 
     protected function postRequest()
     {
+        if($this->isManually)
+        {
+            return $this;
+        }
+
         return $this->client->post(
             $this->request,
             TransactionResponse::class
@@ -79,6 +89,11 @@ abstract class PaymentMethod implements PaymentInterface
 
     protected function dataRequest()
     {
+        if($this->isManually)
+        {
+            return $this;
+        }
+
         return $this->client->dataRequest(
             $this->request,
             TransactionResponse::class
@@ -125,5 +140,36 @@ abstract class PaymentMethod implements PaymentInterface
     public function serviceVersion(): int
     {
         return $this->serviceVersion;
+    }
+
+    public function manually(?bool $isManually = null)
+    {
+        if($isManually !== null)
+        {
+            $this->isManually = $isManually;
+        }
+
+        return $this;
+    }
+
+    public function combinePayment(Combinable $combinablePayment)
+    {
+        $this->combinablePayment = $combinablePayment;
+
+        $payload_data = array_filter($combinablePayment->request->data(), function($key){
+            return !in_array($key, ['Services']);
+        }, ARRAY_FILTER_USE_KEY );
+
+        foreach($payload_data as $key => $value)
+        {
+            $this->request->setData($key, $value);
+        }
+
+        foreach($this->combinablePayment->request->getServices()->serviceList() as $serviceList)
+        {
+            $this->request->getServices()->pushServiceList($serviceList);
+        }
+
+        return $this;
     }
 }
