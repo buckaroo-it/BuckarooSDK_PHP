@@ -14,6 +14,7 @@ use Buckaroo\PaymentMethods\BuckarooWallet\BuckarooWallet;
 use Buckaroo\PaymentMethods\CreditCard\CreditCard;
 use Buckaroo\PaymentMethods\CreditClick\CreditClick;
 use Buckaroo\PaymentMethods\CreditManagement\CreditManagement;
+use Buckaroo\PaymentMethods\Emandates\Emandates;
 use Buckaroo\PaymentMethods\EPS\EPS;
 use Buckaroo\PaymentMethods\GiftCard\GiftCard;
 use Buckaroo\PaymentMethods\Giropay\Giropay;
@@ -67,6 +68,7 @@ class PaymentMethodFactory
         Paypal::class                   => ['paypal'],
         PayPerEmail::class              => ['payperemail'],
         EPS::class                      => ['eps'],
+        Emandates::class                => ['emandates'],
         Sofort::class                   => ['sofort', 'sofortueberweisung'],
         Tinka::class                    => ['tinka'],
         Payconiq::class                 => ['payconiq'],

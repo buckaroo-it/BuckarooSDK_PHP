@@ -48,7 +48,7 @@ class PaymentFacade
     {
         if(method_exists($this->paymentMethod, $name))
         {
-            $this->paymentMethod->setPayload((new PayloadService($arguments[0]))->toArray());
+            $this->paymentMethod->setPayload((new PayloadService($arguments[0] ?? []))->toArray());
 
             return $this->paymentMethod->manually($this->isManually)->$name();
         }
