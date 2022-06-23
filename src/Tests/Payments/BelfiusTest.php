@@ -13,7 +13,8 @@ class BelfiusTest extends BuckarooTestCase
     public function it_creates_a_belfius_payment()
     {
         $response = $this->buckaroo->payment('belfius')->pay([
-            'amountDebit' => 10.10
+            'amountDebit' => 10.10,
+            'invoice' => uniqid(),
         ]);
 
         $this->assertTrue($response->isPendingProcessing());

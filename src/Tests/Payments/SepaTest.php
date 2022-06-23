@@ -9,6 +9,7 @@ class SepaTest extends BuckarooTestCase
     protected function setUp(): void
     {
         $this->paymentPayload = ([
+            'invoice' => uniqid(),
             'amountDebit' => 10.10,
             'iban'              => 'NL13TEST0123456789',
             'bic'               => 'TESTNL2A',

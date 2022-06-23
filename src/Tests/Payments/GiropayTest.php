@@ -13,6 +13,7 @@ class GiropayTest extends BuckarooTestCase
     public function it_creates_a_giropay_payment()
     {
         $response = $this->buckaroo->payment('giropay')->pay([
+            'invoice' => uniqid(),
             'bic'           => 'GENODETT488',
             'amountDebit'   => 10.10
         ]);

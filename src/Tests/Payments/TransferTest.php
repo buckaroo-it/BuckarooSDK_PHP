@@ -14,6 +14,7 @@ class TransferTest extends BuckarooTestCase
     public function it_creates_a_transfer_payment()
     {
         $response = $this->buckaroo->payment('transfer')->pay([
+            'invoice' => uniqid(),
             'amountDebit' => 10.10,
             'email' => 'your@email.com',
             'country' => 'NL',

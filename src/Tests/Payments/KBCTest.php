@@ -9,6 +9,7 @@ class KBCTest extends BuckarooTestCase
     protected function setUp(): void
     {
         $this->paymentPayload = ([
+            'invoice' => uniqid(),
             'amountDebit' => 10.10
         ]);
     }

@@ -21,6 +21,7 @@ class IdealTest extends BuckarooTestCase
     protected function setUp(): void
     {
         $this->paymentPayload = ([
+            'invoice' => uniqid(),
             'amountDebit' => 10.10,
             'issuer' => 'ABNANL2A'
         ]);

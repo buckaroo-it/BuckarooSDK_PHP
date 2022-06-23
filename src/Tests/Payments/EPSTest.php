@@ -13,6 +13,7 @@ class EPSTest extends BuckarooTestCase
     public function it_creates_a_eps_payment()
     {
         $response = $this->buckaroo->payment('eps')->pay([
+            'invoice' => uniqid(),
             'amountDebit' => 10.10
         ]);
 
