@@ -25,6 +25,7 @@ use Buckaroo\PaymentMethods\In3\In3;
 use Buckaroo\PaymentMethods\KBC\KBC;
 use Buckaroo\PaymentMethods\KlarnaKP\KlarnaKP;
 use Buckaroo\PaymentMethods\KlarnaPay\KlarnaPay;
+use Buckaroo\PaymentMethods\Marketplaces\Marketplaces;
 use Buckaroo\PaymentMethods\Payconiq\Payconiq;
 use Buckaroo\PaymentMethods\Paypal\Paypal;
 use Buckaroo\PaymentMethods\PayPerEmail\PayPerEmail;
@@ -71,6 +72,7 @@ class PaymentMethodFactory
         Emandates::class                => ['emandates'],
         Sofort::class                   => ['sofort', 'sofortueberweisung'],
         Tinka::class                    => ['tinka'],
+        Marketplaces::class             => ['marketplaces'],
         Payconiq::class                 => ['payconiq'],
         Przelewy24::class               => ['przelewy24'],
         PointOfSale::class              => ['pospayment'],
