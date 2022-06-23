@@ -4,10 +4,10 @@ namespace Buckaroo\PaymentMethods\Afterpay;
 
 use Buckaroo\Models\Model;
 use Buckaroo\PaymentMethods\Afterpay\Models\Pay;
-use Buckaroo\PaymentMethods\PaymentMethod;
+use Buckaroo\PaymentMethods\PayablePaymentMethod;
 use Buckaroo\Transaction\Response\TransactionResponse;
 
-class Afterpay extends PaymentMethod
+class Afterpay extends PayablePaymentMethod
 {
     protected string $paymentName = 'afterpay';
     protected int $serviceVersion = 1;

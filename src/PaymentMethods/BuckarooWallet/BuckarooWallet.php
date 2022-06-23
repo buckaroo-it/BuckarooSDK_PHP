@@ -6,10 +6,10 @@ use Buckaroo\Models\Model;
 use Buckaroo\PaymentMethods\BuckarooWallet\Models\DepositReservePayload;
 use Buckaroo\PaymentMethods\BuckarooWallet\Models\ReleasePayload;
 use Buckaroo\PaymentMethods\BuckarooWallet\Models\Wallet;
-use Buckaroo\PaymentMethods\PaymentMethod;
+use Buckaroo\PaymentMethods\PayablePaymentMethod;
 use Buckaroo\Transaction\Response\TransactionResponse;
 
-class BuckarooWallet extends PaymentMethod
+class BuckarooWallet extends PayablePaymentMethod
 {
     protected string $paymentName = 'BuckarooWalletCollecting';
 

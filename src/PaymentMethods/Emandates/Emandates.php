@@ -2,6 +2,7 @@
 
 namespace Buckaroo\PaymentMethods\Emandates;
 
+use Buckaroo\Models\PayPayload;
 use Buckaroo\PaymentMethods\Emandates\Models\Mandate;
 use Buckaroo\PaymentMethods\PaymentMethod;
 
@@ -21,7 +22,9 @@ class Emandates extends PaymentMethod
     {
         $mandate = new Mandate($this->payload);
 
-        $this->setPayPayload();
+        $payPayload = new PayPayload($this->payload);
+
+        $this->request->setPayload($payPayload);
 
         $this->setServiceList('CreateMandate', $mandate);
 
@@ -41,7 +44,9 @@ class Emandates extends PaymentMethod
     {
         $mandate = new Mandate($this->payload);
 
-        $this->setPayPayload();
+        $payPayload = new PayPayload($this->payload);
+
+        $this->request->setPayload($payPayload);
 
         $this->setServiceList('ModifyMandate', $mandate);
 
@@ -52,7 +57,9 @@ class Emandates extends PaymentMethod
     {
         $mandate = new Mandate($this->payload);
 
-        $this->setPayPayload();
+        $payPayload = new PayPayload($this->payload);
+
+        $this->request->setPayload($payPayload);
 
         $this->setServiceList('CancelMandate', $mandate);
 

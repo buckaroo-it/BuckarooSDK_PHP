@@ -2,6 +2,7 @@
 
 namespace Buckaroo\PaymentMethods\PayPerEmail;
 
+use Buckaroo\Models\PayPayload;
 use Buckaroo\PaymentMethods\PaymentMethod;
 use Buckaroo\PaymentMethods\PayPerEmail\Models\PaymentInvitation;
 
@@ -13,7 +14,9 @@ class PayPerEmail extends PaymentMethod
     {
         $paymentInvitation = new PaymentInvitation($this->payload);
 
-        $this->setPayPayload();
+        $payPayload = new PayPayload($this->payload);
+
+        $this->request->setPayload($payPayload);
 
         $this->setServiceList('PaymentInvitation', $paymentInvitation);
 

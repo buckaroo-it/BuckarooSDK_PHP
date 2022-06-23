@@ -1,17 +1,12 @@
 <?php
 namespace Buckaroo\PaymentMethods\CreditCard;
 
-use Buckaroo\Models\CapturePayload;
-use Buckaroo\Models\Model;
-use Buckaroo\Models\ServiceList;
-use Buckaroo\PaymentMethods\Billink\Models\Pay;
 use Buckaroo\PaymentMethods\CreditCard\Models\CardData;
 use Buckaroo\PaymentMethods\CreditCard\Models\SecurityCode;
-use Buckaroo\PaymentMethods\PaymentMethod;
-use Buckaroo\Transaction\Request\Adapters\CapturePayloadAdapter;
+use Buckaroo\PaymentMethods\PayablePaymentMethod;
 use Buckaroo\Transaction\Response\TransactionResponse;
 
-class CreditCard extends PaymentMethod
+class CreditCard extends PayablePaymentMethod
 {
     public function payEncrypted(): TransactionResponse
     {

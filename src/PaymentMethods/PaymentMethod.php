@@ -4,8 +4,6 @@ namespace Buckaroo\PaymentMethods;
 
 use Buckaroo\Handlers\Reply\ReplyHandler;
 use Buckaroo\Models\Model;
-use Buckaroo\Models\PayPayload;
-use Buckaroo\Models\RefundPayload;
 use Buckaroo\Models\ServiceList;
 use Buckaroo\PaymentMethods\Interfaces\Combinable;
 use Buckaroo\Transaction\Client;
@@ -26,9 +24,6 @@ abstract class PaymentMethod implements PaymentInterface
     protected string $paymentName = "";
     protected int $serviceVersion = 0;
 
-    protected string $payModel = PayPayload::class;
-    protected string $refundModel = RefundPayload::class;
-
     protected Combinable $combinablePayment;
     protected bool $isManually = false;
 
@@ -40,28 +35,6 @@ abstract class PaymentMethod implements PaymentInterface
 
         $this->request = new TransactionRequest;
         $this->serviceCode = $serviceCode;
-    }
-
-    public function pay(?Model $model = null)
-    {
-        $this->setPayPayload();
-
-        $this->setServiceList('Pay', $model);
-
-        //TODO
-        //Create validator class that validates specific request
-        //$request->validate();
-
-        return $this->postRequest();
-    }
-
-    public function refund(?Model $model = null)
-    {
-        $this->setRefundPayload();
-
-        $this->setServiceList('Refund', $model);
-
-        return $this->postRequest();
     }
 
     public function setPayload(array $payload)
@@ -98,24 +71,6 @@ abstract class PaymentMethod implements PaymentInterface
             $this->request,
             TransactionResponse::class
         );
-    }
-
-    protected function setPayPayload()
-    {
-        $payPayload = new $this->payModel($this->payload);
-
-        $this->request->setPayload($payPayload);
-
-        return $this;
-    }
-
-    protected function setRefundPayload()
-    {
-        $refundPayload = new $this->refundModel($this->payload);
-
-        $this->request->setPayload($refundPayload);
-
-        return $this;
     }
 
     protected function setServiceList(string $action, ?Model $model = null)

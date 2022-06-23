@@ -2,6 +2,7 @@
 
 namespace Buckaroo\PaymentMethods\Marketplaces;
 
+use Buckaroo\Models\PayPayload;
 use Buckaroo\PaymentMethods\Interfaces\Combinable;
 use Buckaroo\PaymentMethods\Marketplaces\Models\ServiceList;
 use Buckaroo\PaymentMethods\PaymentMethod;
@@ -23,7 +24,9 @@ class Marketplaces extends PaymentMethod implements Combinable
     {
         $serviceList = new ServiceList($this->payload);
 
-        $this->setPayPayload();
+        $payPayload = new PayPayload($this->payload);
+
+        $this->request->setPayload($payPayload);
 
         $this->setServiceList('Transfer', $serviceList);
 

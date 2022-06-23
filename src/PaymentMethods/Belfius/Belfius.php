@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Buckaroo\PaymentMethods\Belfius;
 
-use Buckaroo\PaymentMethods\PaymentMethod;
+use Buckaroo\PaymentMethods\PayablePaymentMethod;
 
-class Belfius extends PaymentMethod
+class Belfius extends PayablePaymentMethod
 {
     protected string $paymentName = 'belfius';
 }

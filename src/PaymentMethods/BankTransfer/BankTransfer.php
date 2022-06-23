@@ -7,10 +7,10 @@ namespace Buckaroo\PaymentMethods\BankTransfer;
 use Buckaroo\Models\Model;
 use Buckaroo\PaymentMethods\BankTransfer\Adapters\PayServiceParametersKeysAdapter;
 use Buckaroo\PaymentMethods\BankTransfer\Models\Pay;
-use Buckaroo\PaymentMethods\PaymentMethod;
+use Buckaroo\PaymentMethods\PayablePaymentMethod;
 use Buckaroo\Transaction\Response\TransactionResponse;
 
-class BankTransfer extends PaymentMethod
+class BankTransfer extends PayablePaymentMethod
 {
     protected string $paymentName = 'transfer';
     protected int $serviceVersion = 1;

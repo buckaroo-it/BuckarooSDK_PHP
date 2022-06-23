@@ -3,11 +3,11 @@
 namespace Buckaroo\PaymentMethods\PointOfSale;
 
 use Buckaroo\Models\Model;
-use Buckaroo\PaymentMethods\PaymentMethod;
+use Buckaroo\PaymentMethods\PayablePaymentMethod;
 use Buckaroo\PaymentMethods\PointOfSale\Models\Pay;
 use Buckaroo\Transaction\Response\TransactionResponse;
 
-class PointOfSale extends PaymentMethod
+class PointOfSale extends PayablePaymentMethod
 {
     protected string $paymentName = 'pospayment';
 

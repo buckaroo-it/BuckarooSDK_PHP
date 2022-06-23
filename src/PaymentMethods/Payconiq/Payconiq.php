@@ -2,9 +2,9 @@
 
 namespace Buckaroo\PaymentMethods\Payconiq;
 
-use Buckaroo\PaymentMethods\PaymentMethod;
+use Buckaroo\PaymentMethods\PayablePaymentMethod;
 
-class Payconiq extends PaymentMethod
+class Payconiq extends PayablePaymentMethod
 {
     protected string $paymentName = 'payconiq';
 }

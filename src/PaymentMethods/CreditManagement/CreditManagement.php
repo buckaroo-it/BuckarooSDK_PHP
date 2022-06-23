@@ -2,6 +2,7 @@
 
 namespace Buckaroo\PaymentMethods\CreditManagement;
 
+use Buckaroo\Models\PayPayload;
 use Buckaroo\PaymentMethods\CreditManagement\Models\AddOrUpdateProductLines;
 use Buckaroo\PaymentMethods\CreditManagement\Models\CreditNote;
 use Buckaroo\PaymentMethods\CreditManagement\Models\Debtor;
@@ -22,7 +23,9 @@ class CreditManagement extends PaymentMethod implements Combinable
     {
         $invoice = new Invoice($this->payload);
 
-        $this->setPayPayload();
+        $payPayload = new PayPayload($this->payload);
+
+        $this->request->setPayload($payPayload);
 
         $this->setServiceList('CreateInvoice', $invoice);
 
@@ -33,7 +36,9 @@ class CreditManagement extends PaymentMethod implements Combinable
     {
         $invoice = new Invoice($this->payload);
 
-        $this->setPayPayload();
+        $payPayload = new PayPayload($this->payload);
+
+        $this->request->setPayload($payPayload);
 
         $this->setServiceList('CreateCombinedInvoice', $invoice);
 
@@ -44,7 +49,9 @@ class CreditManagement extends PaymentMethod implements Combinable
     {
         $creditNote = new CreditNote($this->payload);
 
-        $this->setPayPayload();
+        $payPayload = new PayPayload($this->payload);
+
+        $this->request->setPayload($payPayload);
 
         $this->setServiceList('CreateCreditNote', $creditNote);
 

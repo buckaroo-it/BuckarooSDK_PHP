@@ -2,6 +2,7 @@
 
 namespace Buckaroo\PaymentMethods\iDin;
 
+use Buckaroo\Models\PayPayload;
 use Buckaroo\PaymentMethods\iDin\Adapters\IssuerServiceParametersKeysAdapter;
 use Buckaroo\PaymentMethods\iDin\Models\Issuer;
 use Buckaroo\PaymentMethods\PaymentMethod;
@@ -15,7 +16,9 @@ class iDin extends PaymentMethod
     {
         $issuer = new IssuerServiceParametersKeysAdapter(new Issuer($this->payload));
 
-        $this->setPayPayload();
+        $payPayload = new PayPayload($this->payload);
+
+        $this->request->setPayload($payPayload);
 
         $this->setServiceList('identify', $issuer);
 
@@ -26,7 +29,9 @@ class iDin extends PaymentMethod
     {
         $issuer = new IssuerServiceParametersKeysAdapter(new Issuer($this->payload));
 
-        $this->setPayPayload();
+        $payPayload = new PayPayload($this->payload);
+
+        $this->request->setPayload($payPayload);
 
         $this->setServiceList('verify', $issuer);
 
@@ -37,7 +42,9 @@ class iDin extends PaymentMethod
     {
         $issuer = new IssuerServiceParametersKeysAdapter(new Issuer($this->payload));
 
-        $this->setPayPayload();
+        $payPayload = new PayPayload($this->payload);
+
+        $this->request->setPayload($payPayload);
 
         $this->setServiceList('login', $issuer);
 

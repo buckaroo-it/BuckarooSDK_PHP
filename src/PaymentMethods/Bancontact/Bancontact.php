@@ -8,10 +8,10 @@ use Buckaroo\Models\Model;
 use Buckaroo\PaymentMethods\Bancontact\Models\Authenticate;
 use Buckaroo\PaymentMethods\Bancontact\Models\Pay;
 use Buckaroo\PaymentMethods\Bancontact\Models\PayEncrypted;
-use Buckaroo\PaymentMethods\PaymentMethod;
+use Buckaroo\PaymentMethods\PayablePaymentMethod;
 use Buckaroo\Transaction\Response\TransactionResponse;
 
-class Bancontact extends PaymentMethod
+class Bancontact extends PayablePaymentMethod
 {
     protected string $paymentName = 'bancontactmrcash';
     protected int $serviceVersion = 0;

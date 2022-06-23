@@ -49,6 +49,16 @@ class TransactionResponse extends Response
         return $this->getStatusCode() == ResponseStatus::BUCKAROO_STATUSCODE_VALIDATION_FAILURE;
     }
 
+    public function data(?string $key = null)
+    {
+        if($key && isset($this->data[$key]))
+        {
+            return $this->data[$key];
+        }
+
+        return $this->data;
+    }
+
     public function hasRedirect(): bool
     {
         return !empty($this->data['RequiredAction']['RedirectURL'])

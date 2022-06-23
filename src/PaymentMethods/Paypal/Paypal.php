@@ -3,12 +3,12 @@
 namespace Buckaroo\PaymentMethods\Paypal;
 
 use Buckaroo\Models\Model;
-use Buckaroo\PaymentMethods\PaymentMethod;
+use Buckaroo\PaymentMethods\PayablePaymentMethod;
 use Buckaroo\PaymentMethods\Paypal\Models\ExtraInfo;
 use Buckaroo\PaymentMethods\Paypal\Models\Pay;
 use Buckaroo\Transaction\Response\TransactionResponse;
 
-class Paypal extends PaymentMethod
+class Paypal extends PayablePaymentMethod
 {
     protected string $paymentName = 'paypal';
 
