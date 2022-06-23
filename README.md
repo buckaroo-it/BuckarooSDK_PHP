@@ -21,7 +21,7 @@ To use the Buckaroo API client, the following things are required:
 
 + Get yourself a free [Buckaroo account](https://www.buckaroo.eu/solutions/request-form). No sign up costs.
 + Now you're ready to use the Buckaroo API client in test mode.
-+ PHP >= 7.2
++ PHP >= 7.4
 + Up-to-date OpenSSL (or other SSL/TLS toolkit)
 
 ## Composer Installation
