@@ -18,8 +18,62 @@ class AfterpayTest extends BuckarooTestCase
         $this->assertTrue($response->isRejected());
     }
 
-    private function getPaymentPayload(): array {
-        return [
+    /**
+     * @return void
+     * @test
+     */
+    public function it_creates_a_afterpay_authorize()
+    {
+        $response = $this->buckaroo->payment('afterpay')->authorize($this->getPaymentPayload());
+
+        $this->assertTrue($response->isRejected());
+    }
+
+//    /**
+//     * @return void
+//     * @test
+//     */
+//    public function it_creates_a_afterpay_cancel_authorize()
+//    {
+//        $response = $this->buckaroo->payment('afterpay')->cancelAuthorize([
+//            'amountCredit'              => 10,
+//            'originalTransactionKey'    => 'F86579ECED1D493887ECAE7C287BXXXX',
+//            'invoice'                   => 'testinvoice12345cvx'
+//        ]);
+//
+//        $this->assertTrue($response->isRejected());
+//    }
+
+    /**
+     * @return void
+     * @test
+     */
+    public function it_creates_a_afterpay_capture()
+    {
+        $response = $this->buckaroo->payment('afterpay')->capture($this->getPaymentPayload([
+            'originalTransactionKey'    => 'D5127080BA1D4644856FECDC560FXXXX'
+        ]));
+
+        $this->assertTrue($response->isValidationFailure());
+    }
+
+    /**
+     * @return void
+     * @test
+     */
+    public function it_creates_a_afterpay_refund()
+    {
+        $response = $this->buckaroo->payment('afterpay')->refund([
+            'invoice'   => 'testinvoice 123', //Set invoice number of the transaction to refund
+            'originalTransactionKey' => '4E8BD922192746C3918BF4077CXXXXXX', //Set transaction key of the transaction to refund
+            'amountCredit' => 1.23
+        ]);
+
+        $this->assertTrue($response->isValidationFailure());
+    }
+
+    private function getPaymentPayload(?array $additional = null): array {
+        $payload = [
             'amountDebit'       => 50.30,
             'order'             => uniqid(),
             'invoice'           => uniqid(),
@@ -84,5 +138,12 @@ class AfterpayTest extends BuckarooTestCase
                 ],
             ]
         ];
+
+        if($additional)
+        {
+            return array_merge($additional, $payload);
+        }
+
+        return $payload;
     }
 }

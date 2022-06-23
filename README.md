@@ -5,7 +5,7 @@
 # Buckaroo SDK Plugin
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/7081446/172777838-61a340f0-eb38-46f8-84b6-bd02235dc68f.png" position="center">
+  <img src="https://user-images.githubusercontent.com/7081446/175256338-d51b139b-80db-44a1-a0b1-a96abda3878c.png" position="center">
 </p>
 
 ---
@@ -52,11 +52,9 @@ Create a payment with all the available payment methods. In this example, we sho
 # Create a new payment
 $buckaroo->payment('creditcard') // Input the desire payment method.
     ->pay([
-        'amountDebit' => 10, // The amount we want to charge
-        'invoice' => 'UNIQUE-INVOICE-NO', // Each payment must contain a unique invoice number
-        'serviceParameters' => [
-            'name'          => 'visa' // Request to pay with Visa
-        ]
+        'name'          => 'visa' // Request to pay with Visa
+        'amountDebit'   => 10, // The amount we want to charge
+        'invoice'       => 'UNIQUE-INVOICE-NO', // Each payment must contain a unique invoice number
     ]);
 ```
 
