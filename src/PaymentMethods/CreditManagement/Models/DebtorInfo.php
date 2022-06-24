@@ -2,13 +2,13 @@
 
 namespace Buckaroo\PaymentMethods\CreditManagement\Models;
 
-use Buckaroo\Models\ServiceParameter;
 use Buckaroo\Models\Debtor;
-use Buckaroo\PaymentMethods\CreditManagement\Adapters\DebtorInfoServiceParametersKeysAdapter;
+use Buckaroo\Models\ServiceParameter;
+use Buckaroo\PaymentMethods\CreditManagement\Service\ParameterKeys\DebtorInfoAdapter;
 
 class DebtorInfo extends ServiceParameter
 {
-    protected DebtorInfoServiceParametersKeysAdapter $debtor;
+    protected DebtorInfoAdapter $debtor;
 
     protected array $groupData = [
         'debtor'   => [
@@ -37,10 +37,10 @@ class DebtorInfo extends ServiceParameter
     {
         if(is_array($debtor))
         {
-            return $this->debtor(new DebtorInfoServiceParametersKeysAdapter(new Debtor($debtor)));
+            return $this->debtor(new DebtorInfoAdapter(new Debtor($debtor)));
         }
 
-        if($debtor instanceof DebtorInfoServiceParametersKeysAdapter)
+        if($debtor instanceof DebtorInfoAdapter)
         {
             $this->debtor = $debtor;
         }

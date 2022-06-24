@@ -5,14 +5,14 @@ namespace Buckaroo\PaymentMethods\PayPerEmail\Models;
 use Buckaroo\Models\Email;
 use Buckaroo\Models\Person;
 use Buckaroo\Models\ServiceParameter;
-use Buckaroo\PaymentMethods\PayPerEmail\Adapters\AttachmentServiceParametersKeysAdapter;
-use Buckaroo\PaymentMethods\PayPerEmail\Adapters\CustomerServiceParametersKeysAdapter;
-use Buckaroo\PaymentMethods\PayPerEmail\Adapters\EmailServiceParametersKeysAdapter;
+use Buckaroo\PaymentMethods\PayPerEmail\Service\ParameterKeys\AttachmentAdapter;
+use Buckaroo\PaymentMethods\PayPerEmail\Service\ParameterKeys\CustomerAdapter;
+use Buckaroo\PaymentMethods\PayPerEmail\Service\ParameterKeys\EmailAdapter;
 
 class PaymentInvitation extends ServiceParameter
 {
-    protected CustomerServiceParametersKeysAdapter $customer;
-    protected EmailServiceParametersKeysAdapter $email;
+    protected CustomerAdapter $customer;
+    protected EmailAdapter $email;
 
     protected bool $merchantSendsEmail;
     protected string $expirationDate;
@@ -42,10 +42,10 @@ class PaymentInvitation extends ServiceParameter
     {
         if(is_array($customer))
         {
-            return $this->customer(new CustomerServiceParametersKeysAdapter(new Person($customer)));
+            return $this->customer(new CustomerAdapter(new Person($customer)));
         }
 
-        if($customer instanceof CustomerServiceParametersKeysAdapter)
+        if($customer instanceof CustomerAdapter)
         {
             $this->customer = $customer;
         }
@@ -57,10 +57,10 @@ class PaymentInvitation extends ServiceParameter
     {
         if(is_string($email))
         {
-            return $this->email(new EmailServiceParametersKeysAdapter(new Email($email)));
+            return $this->email(new EmailAdapter(new Email($email)));
         }
 
-        if($email instanceof EmailServiceParametersKeysAdapter)
+        if($email instanceof EmailAdapter)
         {
             $this->email = $email;
         }
@@ -74,7 +74,7 @@ class PaymentInvitation extends ServiceParameter
         {
             foreach($attachments as $attachment)
             {
-                $this->attachments[] = new AttachmentServiceParametersKeysAdapter(new Attachment($attachment));
+                $this->attachments[] = new AttachmentAdapter(new Attachment($attachment));
             }
         }
 

@@ -9,10 +9,10 @@ use Buckaroo\Models\Person;
 use Buckaroo\Models\Phone;
 use Buckaroo\Models\ServiceParameter;
 use Buckaroo\PaymentMethods\Billink\Models\Article;
-use Buckaroo\PaymentMethods\In3\Adapters\{AddressServiceParametersKeysAdapter,
-    ArticleServiceParametersKeysAdapter,
-    CompanyServiceParametersKeysAdapter,
-    PhoneServiceParametersKeysAdapter};
+use Buckaroo\PaymentMethods\In3\Service\ParameterKeys\{ArticleAdapter};
+use Buckaroo\PaymentMethods\In3\Service\ParameterKeys\AddressAdapter;
+use Buckaroo\PaymentMethods\In3\Service\ParameterKeys\CompanyAdapter;
+use Buckaroo\PaymentMethods\In3\Service\ParameterKeys\PhoneAdapter;
 
 class Pay extends ServiceParameter
 {
@@ -20,10 +20,10 @@ class Pay extends ServiceParameter
     protected string $invoiceDate;
 
     protected Person $customer;
-    protected CompanyServiceParametersKeysAdapter $company;
-    protected AddressServiceParametersKeysAdapter $address;
+    protected CompanyAdapter $company;
+    protected AddressAdapter $address;
     protected Email $email;
-    protected PhoneServiceParametersKeysAdapter $phone;
+    protected PhoneAdapter $phone;
 
     protected array $articles = [];
     protected array $subtotals = [];
@@ -72,7 +72,7 @@ class Pay extends ServiceParameter
         {
             foreach($articles as $article)
             {
-                $this->articles[] = new ArticleServiceParametersKeysAdapter(new Article($article));
+                $this->articles[] = new ArticleAdapter(new Article($article));
             }
         }
 
@@ -83,10 +83,10 @@ class Pay extends ServiceParameter
     {
         if(is_array($company))
         {
-            return $this->company(new CompanyServiceParametersKeysAdapter(new Company($company)));
+            return $this->company(new CompanyAdapter(new Company($company)));
         }
 
-        if($company instanceof CompanyServiceParametersKeysAdapter)
+        if($company instanceof CompanyAdapter)
         {
             $this->company = $company;
         }
@@ -113,10 +113,10 @@ class Pay extends ServiceParameter
     {
         if(is_array($address))
         {
-            return $this->address(new AddressServiceParametersKeysAdapter(new Address($address)));
+            return $this->address(new AddressAdapter(new Address($address)));
         }
 
-        if($address instanceof AddressServiceParametersKeysAdapter)
+        if($address instanceof AddressAdapter)
         {
             $this->address = $address;
         }
@@ -143,10 +143,10 @@ class Pay extends ServiceParameter
     {
         if(is_array($phone))
         {
-            return $this->phone(new PhoneServiceParametersKeysAdapter(new Phone($phone)));
+            return $this->phone(new PhoneAdapter(new Phone($phone)));
         }
 
-        if($phone instanceof PhoneServiceParametersKeysAdapter)
+        if($phone instanceof PhoneAdapter)
         {
             $this->phone = $phone;
         }

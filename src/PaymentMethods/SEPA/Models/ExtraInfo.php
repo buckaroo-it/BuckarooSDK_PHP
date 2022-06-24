@@ -3,11 +3,11 @@
 namespace Buckaroo\PaymentMethods\SEPA\Models;
 
 use Buckaroo\PaymentMethods\Paypal\Models\Address;
-use Buckaroo\PaymentMethods\SEPA\Adapters\AddressServiceParametersKeysAdapter;
+use Buckaroo\PaymentMethods\SEPA\Service\ParameterKeys\AddressAdapter;
 
 class ExtraInfo extends Pay
 {
-    protected AddressServiceParametersKeysAdapter $address;
+    protected AddressAdapter $address;
 
     protected string $customerReferencePartyName;
     protected string $customerReferencePartyCode;
@@ -35,10 +35,10 @@ class ExtraInfo extends Pay
     {
         if(is_array($address))
         {
-            return $this->address(new AddressServiceParametersKeysAdapter(new Address($address)));
+            return $this->address(new AddressAdapter(new Address($address)));
         }
 
-        if($address instanceof AddressServiceParametersKeysAdapter)
+        if($address instanceof AddressAdapter)
         {
             $this->address = $address;
         }

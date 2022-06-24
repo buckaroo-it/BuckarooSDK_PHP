@@ -2,14 +2,15 @@
 
 namespace Buckaroo\PaymentMethods\Afterpay\Models;
 
-use Buckaroo\PaymentMethods\Afterpay\Adapters\{AddressServiceParametersKeysAdapter, PhoneServiceParametersKeysAdapter, RecipientServiceParametersKeysAdapter};
-
 use Buckaroo\Models\Address;
 use Buckaroo\Models\Company;
 use Buckaroo\Models\Email;
 use Buckaroo\Models\Interfaces\Recipient as RecipientInterface;
 use Buckaroo\Models\Phone;
 use Buckaroo\Models\ServiceParameter;
+use Buckaroo\PaymentMethods\Afterpay\Service\ParameterKeys\{AddressAdapter};
+use Buckaroo\PaymentMethods\Afterpay\Service\ParameterKeys\PhoneAdapter;
+use Buckaroo\PaymentMethods\Afterpay\Service\ParameterKeys\RecipientAdapter;
 use Buckaroo\Resources\Constants\RecipientCategory;
 
 class Recipient extends ServiceParameter
@@ -17,8 +18,8 @@ class Recipient extends ServiceParameter
     protected string $type;
 
     protected RecipientInterface $recipient;
-    protected AddressServiceParametersKeysAdapter $address;
-    protected PhoneServiceParametersKeysAdapter $phone;
+    protected AddressAdapter $address;
+    protected PhoneAdapter $phone;
     protected Email $email;
 
     public function __construct(string $type, ?array $values = null)
@@ -64,10 +65,10 @@ class Recipient extends ServiceParameter
     {
         if(is_array($address))
         {
-            return $this->address(new AddressServiceParametersKeysAdapter(new Address($address)));
+            return $this->address(new AddressAdapter(new Address($address)));
         }
 
-        if($address instanceof AddressServiceParametersKeysAdapter)
+        if($address instanceof AddressAdapter)
         {
             $this->address = $address;
         }
@@ -79,10 +80,10 @@ class Recipient extends ServiceParameter
     {
         if(is_array($phone))
         {
-            return $this->phone(new PhoneServiceParametersKeysAdapter(new Phone($phone)));
+            return $this->phone(new PhoneAdapter(new Phone($phone)));
         }
 
-        if($phone instanceof PhoneServiceParametersKeysAdapter)
+        if($phone instanceof PhoneAdapter)
         {
             $this->phone = $phone;
         }
@@ -109,9 +110,9 @@ class Recipient extends ServiceParameter
     {
         switch ($recipient['category']) {
             case RecipientCategory::COMPANY:
-                return new RecipientServiceParametersKeysAdapter(new Company($recipient));
+                return new RecipientAdapter(new Company($recipient));
             case RecipientCategory::PERSON:
-                return new RecipientServiceParametersKeysAdapter(new Person($recipient));
+                return new RecipientAdapter(new Person($recipient));
         }
 
         throw new \Exception('No recipient category found.');

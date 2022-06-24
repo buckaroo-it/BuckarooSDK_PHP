@@ -6,9 +6,9 @@ use Buckaroo\Models\BankAccount;
 use Buckaroo\Models\Email;
 use Buckaroo\Models\Person;
 use Buckaroo\Models\ServiceParameter;
-use Buckaroo\PaymentMethods\BuckarooWallet\Adapters\BankAccountServiceParametersKeysAdapter;
-use Buckaroo\PaymentMethods\BuckarooWallet\Adapters\CustomerServiceParametersKeysAdapter;
-use Buckaroo\PaymentMethods\BuckarooWallet\Adapters\EmailServiceParametersKeysAdapter;
+use Buckaroo\PaymentMethods\BuckarooWallet\Service\ParameterKeys\BankAccountAdapter;
+use Buckaroo\PaymentMethods\BuckarooWallet\Service\ParameterKeys\CustomerAdapter;
+use Buckaroo\PaymentMethods\BuckarooWallet\Service\ParameterKeys\EmailAdapter;
 
 class Wallet extends ServiceParameter
 {
@@ -16,9 +16,9 @@ class Wallet extends ServiceParameter
     protected string $status;
     protected string $walletMutationGuid;
 
-    protected CustomerServiceParametersKeysAdapter $customer;
-    protected EmailServiceParametersKeysAdapter $email;
-    protected BankAccountServiceParametersKeysAdapter $bankAccount;
+    protected CustomerAdapter $customer;
+    protected EmailAdapter $email;
+    protected BankAccountAdapter $bankAccount;
 
     public function setProperties(?array $data)
     {
@@ -41,10 +41,10 @@ class Wallet extends ServiceParameter
     {
         if(is_array($customer))
         {
-            return $this->customer(new CustomerServiceParametersKeysAdapter(new Person($customer)));
+            return $this->customer(new CustomerAdapter(new Person($customer)));
         }
 
-        if($customer instanceof CustomerServiceParametersKeysAdapter)
+        if($customer instanceof CustomerAdapter)
         {
             $this->customer = $customer;
         }
@@ -56,10 +56,10 @@ class Wallet extends ServiceParameter
     {
         if(is_string($email))
         {
-            return $this->email(new EmailServiceParametersKeysAdapter(new Email($email)));
+            return $this->email(new EmailAdapter(new Email($email)));
         }
 
-        if($email instanceof EmailServiceParametersKeysAdapter)
+        if($email instanceof EmailAdapter)
         {
             $this->email = $email;
         }
@@ -71,10 +71,10 @@ class Wallet extends ServiceParameter
     {
         if(is_array($bankAccount))
         {
-            return $this->bankAccount(new BankAccountServiceParametersKeysAdapter(new BankAccount($bankAccount)));
+            return $this->bankAccount(new BankAccountAdapter(new BankAccount($bankAccount)));
         }
 
-        if($bankAccount instanceof BankAccountServiceParametersKeysAdapter)
+        if($bankAccount instanceof BankAccountAdapter)
         {
             $this->bankAccount = $bankAccount;
         }

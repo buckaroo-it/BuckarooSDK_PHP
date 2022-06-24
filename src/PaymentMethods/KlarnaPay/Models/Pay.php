@@ -4,7 +4,7 @@ namespace Buckaroo\PaymentMethods\KlarnaPay\Models;
 
 use Buckaroo\Models\Article;
 use Buckaroo\Models\ServiceParameter;
-use Buckaroo\PaymentMethods\KlarnaPay\Adapters\ArticleServiceParametersKeysAdapter;
+use Buckaroo\PaymentMethods\KlarnaPay\Service\ParameterKeys\ArticleAdapter;
 
 class Pay extends ServiceParameter
 {
@@ -63,7 +63,7 @@ class Pay extends ServiceParameter
         {
             foreach($articles as $article)
             {
-                $this->articles[] = new ArticleServiceParametersKeysAdapter(new Article($article));
+                $this->articles[] = new ArticleAdapter(new Article($article));
             }
         }
 

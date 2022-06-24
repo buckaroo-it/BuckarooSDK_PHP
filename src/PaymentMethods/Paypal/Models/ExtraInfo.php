@@ -5,12 +5,13 @@ namespace Buckaroo\PaymentMethods\Paypal\Models;
 use Buckaroo\Models\Person;
 use Buckaroo\Models\Phone;
 use Buckaroo\Models\ServiceParameter;
-use Buckaroo\PaymentMethods\Paypal\Adapters\{AddressServiceParametersKeysAdapter, PhoneServiceParametersKeysAdapter};
+use Buckaroo\PaymentMethods\Paypal\Service\ParameterKeys\{AddressAdapter};
+use Buckaroo\PaymentMethods\Paypal\Service\ParameterKeys\PhoneAdapter;
 
 class ExtraInfo extends ServiceParameter
 {
-    protected AddressServiceParametersKeysAdapter $address;
-    protected PhoneServiceParametersKeysAdapter $phone;
+    protected AddressAdapter $address;
+    protected PhoneAdapter $phone;
     protected Person $customer;
 
     protected string $noShipping;
@@ -37,10 +38,10 @@ class ExtraInfo extends ServiceParameter
     {
         if(is_array($address))
         {
-            return $this->address(new AddressServiceParametersKeysAdapter(new Address($address)));
+            return $this->address(new AddressAdapter(new Address($address)));
         }
 
-        if($address instanceof AddressServiceParametersKeysAdapter)
+        if($address instanceof AddressAdapter)
         {
             $this->address = $address;
         }
@@ -67,10 +68,10 @@ class ExtraInfo extends ServiceParameter
     {
         if(is_array($phone))
         {
-            return $this->phone(new PhoneServiceParametersKeysAdapter(new Phone($phone)));
+            return $this->phone(new PhoneAdapter(new Phone($phone)));
         }
 
-        if($phone instanceof PhoneServiceParametersKeysAdapter)
+        if($phone instanceof PhoneAdapter)
         {
             $this->phone = $phone;
         }

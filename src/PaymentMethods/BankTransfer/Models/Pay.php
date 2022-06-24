@@ -5,13 +5,13 @@ namespace Buckaroo\PaymentMethods\BankTransfer\Models;
 use Buckaroo\Models\Email;
 use Buckaroo\Models\Person;
 use Buckaroo\Models\ServiceParameter;
-use Buckaroo\PaymentMethods\BankTransfer\Adapters\CustomerServiceParametersKeysAdapter;
-use Buckaroo\PaymentMethods\BankTransfer\Adapters\EmailServiceParametersKeysAdapter;
+use Buckaroo\PaymentMethods\BankTransfer\Service\ParameterKeys\CustomerAdapter;
+use Buckaroo\PaymentMethods\BankTransfer\Service\ParameterKeys\EmailAdapter;
 
 class Pay extends ServiceParameter
 {
-    protected CustomerServiceParametersKeysAdapter $customer;
-    protected EmailServiceParametersKeysAdapter $email;
+    protected CustomerAdapter $customer;
+    protected EmailAdapter $email;
 
     protected bool $sendMail;
     protected string $dateDue;
@@ -38,10 +38,10 @@ class Pay extends ServiceParameter
     {
         if(is_array($customer))
         {
-            return $this->customer(new CustomerServiceParametersKeysAdapter(new Person($customer)));
+            return $this->customer(new CustomerAdapter(new Person($customer)));
         }
 
-        if($customer instanceof CustomerServiceParametersKeysAdapter)
+        if($customer instanceof CustomerAdapter)
         {
             $this->customer = $customer;
         }
@@ -53,10 +53,10 @@ class Pay extends ServiceParameter
     {
         if(is_string($email))
         {
-            return $this->email(new EmailServiceParametersKeysAdapter(new Email($email)));
+            return $this->email(new EmailAdapter(new Email($email)));
         }
 
-        if($email instanceof EmailServiceParametersKeysAdapter)
+        if($email instanceof EmailAdapter)
         {
             $this->email = $email;
         }

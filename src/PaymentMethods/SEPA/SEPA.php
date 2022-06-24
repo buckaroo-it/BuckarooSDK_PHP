@@ -6,9 +6,9 @@ namespace Buckaroo\PaymentMethods\SEPA;
 
 use Buckaroo\Models\Model;
 use Buckaroo\PaymentMethods\PayablePaymentMethod;
-use Buckaroo\PaymentMethods\SEPA\Adapters\PayServiceParametersKeysAdapter;
 use Buckaroo\PaymentMethods\SEPA\Models\ExtraInfo;
 use Buckaroo\PaymentMethods\SEPA\Models\Pay;
+use Buckaroo\PaymentMethods\SEPA\Service\ParameterKeys\PayAdapter;
 use Buckaroo\Transaction\Response\TransactionResponse;
 
 class SEPA extends PayablePaymentMethod
@@ -18,12 +18,12 @@ class SEPA extends PayablePaymentMethod
 
     public function pay(?Model $model = null)
     {
-        return parent::pay(new PayServiceParametersKeysAdapter(new Pay($this->payload)));
+        return parent::pay(new PayAdapter(new Pay($this->payload)));
     }
 
     public function authorize(): TransactionResponse
     {
-        $pay = new PayServiceParametersKeysAdapter(new Pay($this->payload));
+        $pay = new PayAdapter(new Pay($this->payload));
 
         $this->setPayPayload();
 
@@ -34,7 +34,7 @@ class SEPA extends PayablePaymentMethod
 
     public function payRecurrent()
     {
-        $pay = new PayServiceParametersKeysAdapter(new Pay($this->payload));
+        $pay = new PayAdapter(new Pay($this->payload));
 
         $this->setPayPayload();
 
@@ -45,7 +45,7 @@ class SEPA extends PayablePaymentMethod
 
     public function extraInfo()
     {
-        $extraInfo = new PayServiceParametersKeysAdapter(new ExtraInfo($this->payload));
+        $extraInfo = new PayAdapter(new ExtraInfo($this->payload));
 
         $this->setPayPayload();
 

@@ -5,13 +5,13 @@ namespace Buckaroo\PaymentMethods\Przelewy24\Models;
 use Buckaroo\Models\Email;
 use Buckaroo\Models\Person;
 use Buckaroo\Models\ServiceParameter;
-use Buckaroo\PaymentMethods\Przelewy24\Adapters\CustomerServiceParametersKeysAdapter;
-use Buckaroo\PaymentMethods\Przelewy24\Adapters\EmailServiceParametersKeysAdapter;
+use Buckaroo\PaymentMethods\Przelewy24\Service\ParameterKeys\CustomerAdapter;
+use Buckaroo\PaymentMethods\Przelewy24\Service\ParameterKeys\EmailAdapter;
 
 class Pay extends ServiceParameter
 {
-    protected CustomerServiceParametersKeysAdapter $customer;
-    protected EmailServiceParametersKeysAdapter $email;
+    protected CustomerAdapter $customer;
+    protected EmailAdapter $email;
 
     public function setProperties(?array $data)
     {
@@ -34,10 +34,10 @@ class Pay extends ServiceParameter
     {
         if(is_array($customer))
         {
-            return $this->customer(new CustomerServiceParametersKeysAdapter(new Person($customer)));
+            return $this->customer(new CustomerAdapter(new Person($customer)));
         }
 
-        if($customer instanceof CustomerServiceParametersKeysAdapter)
+        if($customer instanceof CustomerAdapter)
         {
             $this->customer = $customer;
         }
@@ -49,10 +49,10 @@ class Pay extends ServiceParameter
     {
         if(is_string($email))
         {
-            return $this->email(new EmailServiceParametersKeysAdapter(new Email($email)));
+            return $this->email(new EmailAdapter(new Email($email)));
         }
 
-        if($email instanceof EmailServiceParametersKeysAdapter)
+        if($email instanceof EmailAdapter)
         {
             $this->email = $email;
         }

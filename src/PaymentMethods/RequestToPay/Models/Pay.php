@@ -4,11 +4,11 @@ namespace Buckaroo\PaymentMethods\RequestToPay\Models;
 
 use Buckaroo\Models\Person;
 use Buckaroo\Models\ServiceParameter;
-use Buckaroo\PaymentMethods\RequestToPay\Adapters\CustomerServiceParametersKeysAdapter;
+use Buckaroo\PaymentMethods\RequestToPay\Service\ParameterKeys\CustomerAdapter;
 
 class Pay extends ServiceParameter
 {
-    protected CustomerServiceParametersKeysAdapter $customer;
+    protected CustomerAdapter $customer;
 
     public function setProperties(?array $data)
     {
@@ -31,10 +31,10 @@ class Pay extends ServiceParameter
     {
         if(is_array($customer))
         {
-            return $this->customer(new CustomerServiceParametersKeysAdapter(new Person($customer)));
+            return $this->customer(new CustomerAdapter(new Person($customer)));
         }
 
-        if($customer instanceof CustomerServiceParametersKeysAdapter)
+        if($customer instanceof CustomerAdapter)
         {
             $this->customer = $customer;
         }

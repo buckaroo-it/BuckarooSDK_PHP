@@ -4,11 +4,11 @@ namespace Buckaroo\PaymentMethods\SEPA\Models;
 
 use Buckaroo\Models\Person;
 use Buckaroo\Models\ServiceParameter;
-use Buckaroo\PaymentMethods\SEPA\Adapters\CustomerServiceParametersKeysAdapter;
+use Buckaroo\PaymentMethods\SEPA\Service\ParameterKeys\CustomerAdapter;
 
 class Pay extends ServiceParameter
 {
-    protected CustomerServiceParametersKeysAdapter $customer;
+    protected CustomerAdapter $customer;
 
     protected string $bic;
     protected string $iban;
@@ -38,10 +38,10 @@ class Pay extends ServiceParameter
     {
         if(is_array($customer))
         {
-            return $this->customer(new CustomerServiceParametersKeysAdapter(new Person($customer)));
+            return $this->customer(new CustomerAdapter(new Person($customer)));
         }
 
-        if($customer instanceof CustomerServiceParametersKeysAdapter)
+        if($customer instanceof CustomerAdapter)
         {
             $this->customer = $customer;
         }

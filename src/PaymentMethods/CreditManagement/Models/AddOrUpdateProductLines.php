@@ -3,7 +3,7 @@
 namespace Buckaroo\PaymentMethods\CreditManagement\Models;
 
 use Buckaroo\Models\ServiceParameter;
-use Buckaroo\PaymentMethods\CreditManagement\Adapters\ArticleServiceParametersKeysAdapter;
+use Buckaroo\PaymentMethods\CreditManagement\Service\ParameterKeys\ArticleAdapter;
 
 class AddOrUpdateProductLines extends ServiceParameter
 {
@@ -39,7 +39,7 @@ class AddOrUpdateProductLines extends ServiceParameter
         {
             foreach($articles as $article)
             {
-                $this->articles[] = new ArticleServiceParametersKeysAdapter(new Article($article));
+                $this->articles[] = new ArticleAdapter(new Article($article));
             }
         }
 

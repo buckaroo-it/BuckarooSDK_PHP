@@ -4,11 +4,11 @@ namespace Buckaroo\PaymentMethods\Surepay\Models;
 
 use Buckaroo\Models\BankAccount;
 use Buckaroo\Models\ServiceParameter;
-use Buckaroo\PaymentMethods\Surepay\Adapters\BankAccountServiceParametersKeysAdapter;
+use Buckaroo\PaymentMethods\Surepay\Service\ParameterKeys\BankAccountAdapter;
 
 class Verify extends ServiceParameter
 {
-    protected BankAccountServiceParametersKeysAdapter $bankAccount;
+    protected BankAccountAdapter $bankAccount;
 
     public function setProperties(?array $data)
     {
@@ -31,10 +31,10 @@ class Verify extends ServiceParameter
     {
         if(is_array($bankAccount))
         {
-            return $this->bankAccount(new BankAccountServiceParametersKeysAdapter(new BankAccount($bankAccount)));
+            return $this->bankAccount(new BankAccountAdapter(new BankAccount($bankAccount)));
         }
 
-        if($bankAccount instanceof BankAccountServiceParametersKeysAdapter)
+        if($bankAccount instanceof BankAccountAdapter)
         {
             $this->bankAccount = $bankAccount;
         }

@@ -2,25 +2,25 @@
 
 namespace Buckaroo\PaymentMethods\AfterpayDigiAccept\Models;
 
-use Buckaroo\PaymentMethods\AfterpayDigiAccept\Adapters\{AddressServiceParametersKeysAdapter, EmailServiceParametersKeysAdapter, PhoneServiceParametersKeysAdapter, RecipientServiceParametersKeysAdapter};
-
 use Buckaroo\Models\Address;
 use Buckaroo\Models\Company;
 use Buckaroo\Models\Email;
-use Buckaroo\Models\Interfaces\Recipient as RecipientInterface;
 use Buckaroo\Models\Phone;
 use Buckaroo\Models\ServiceParameter;
 use Buckaroo\PaymentMethods\Afterpay\Models\Person;
-use Buckaroo\Resources\Constants\RecipientCategory;
+use Buckaroo\PaymentMethods\AfterpayDigiAccept\Service\ParameterKeys\{PhoneAdapter};
+use Buckaroo\PaymentMethods\AfterpayDigiAccept\Service\ParameterKeys\AddressAdapter;
+use Buckaroo\PaymentMethods\AfterpayDigiAccept\Service\ParameterKeys\EmailAdapter;
+use Buckaroo\PaymentMethods\AfterpayDigiAccept\Service\ParameterKeys\RecipientAdapter;
 
 class Recipient extends ServiceParameter
 {
     private string $type;
 
-    protected RecipientServiceParametersKeysAdapter $recipient;
-    protected AddressServiceParametersKeysAdapter $address;
-    protected PhoneServiceParametersKeysAdapter $phone;
-    protected EmailServiceParametersKeysAdapter $email;
+    protected RecipientAdapter $recipient;
+    protected AddressAdapter $address;
+    protected PhoneAdapter $phone;
+    protected EmailAdapter $email;
 
     public function __construct(string $type, ?array $values = null)
     {
@@ -53,7 +53,7 @@ class Recipient extends ServiceParameter
             return $this->recipient($this->getRecipientObject($recipient));
         }
 
-        if($recipient instanceof RecipientServiceParametersKeysAdapter)
+        if($recipient instanceof RecipientAdapter)
         {
             $this->recipient = $recipient;
         }
@@ -65,10 +65,10 @@ class Recipient extends ServiceParameter
     {
         if(is_array($address))
         {
-            return $this->address(new AddressServiceParametersKeysAdapter($this->type, new Address($address)));
+            return $this->address(new AddressAdapter($this->type, new Address($address)));
         }
 
-        if($address instanceof AddressServiceParametersKeysAdapter)
+        if($address instanceof AddressAdapter)
         {
             $this->address = $address;
         }
@@ -80,10 +80,10 @@ class Recipient extends ServiceParameter
     {
         if(is_array($phone))
         {
-            return $this->phone(new PhoneServiceParametersKeysAdapter($this->type, new Phone($phone)));
+            return $this->phone(new PhoneAdapter($this->type, new Phone($phone)));
         }
 
-        if($phone instanceof PhoneServiceParametersKeysAdapter)
+        if($phone instanceof PhoneAdapter)
         {
             $this->phone = $phone;
         }
@@ -95,10 +95,10 @@ class Recipient extends ServiceParameter
     {
         if(is_string($email))
         {
-            return $this->email(new EmailServiceParametersKeysAdapter($this->type, new Email($email)));
+            return $this->email(new EmailAdapter($this->type, new Email($email)));
         }
 
-        if($email instanceof EmailServiceParametersKeysAdapter)
+        if($email instanceof EmailAdapter)
         {
             $this->email = $email;
         }
@@ -106,13 +106,13 @@ class Recipient extends ServiceParameter
         return $this->email;
     }
 
-    private function getRecipientObject(array $recipient) : RecipientServiceParametersKeysAdapter
+    private function getRecipientObject(array $recipient) : RecipientAdapter
     {
         if(($recipient['companyName'] ?? null) || ( $recipient['chamberOfCommerce'] ?? null) || ($recipient['vatNumber'] ?? null))
         {
-            return new RecipientServiceParametersKeysAdapter($this->type, new Company($recipient));
+            return new RecipientAdapter($this->type, new Company($recipient));
         }
 
-        return new RecipientServiceParametersKeysAdapter($this->type, new Person($recipient));
+        return new RecipientAdapter($this->type, new Person($recipient));
     }
 }

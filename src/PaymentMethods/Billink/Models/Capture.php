@@ -3,7 +3,7 @@
 namespace Buckaroo\PaymentMethods\Billink\Models;
 
 use Buckaroo\Models\ServiceParameter;
-use Buckaroo\PaymentMethods\Billink\Adapters\ArticleServiceParametersKeysAdapter;
+use Buckaroo\PaymentMethods\Billink\Service\ParameterKeys\ArticleAdapter;
 
 class Capture extends ServiceParameter
 {
@@ -32,7 +32,7 @@ class Capture extends ServiceParameter
         {
             foreach($articles as $article)
             {
-                $this->articles[] = new ArticleServiceParametersKeysAdapter(new Article($article));
+                $this->articles[] = new ArticleAdapter(new Article($article));
             }
         }
 

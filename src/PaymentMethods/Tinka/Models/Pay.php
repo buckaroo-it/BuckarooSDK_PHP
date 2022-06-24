@@ -4,12 +4,12 @@ namespace Buckaroo\PaymentMethods\Tinka\Models;
 
 use Buckaroo\Models\Person;
 use Buckaroo\Models\ServiceParameter;
-use Buckaroo\PaymentMethods\Tinka\Adapters\ArticleServiceParametersKeysAdapter;
-use Buckaroo\PaymentMethods\Tinka\Adapters\CustomerServiceParametersKeysAdapter;
+use Buckaroo\PaymentMethods\Tinka\Service\ParameterKeys\ArticleAdapter;
+use Buckaroo\PaymentMethods\Tinka\Service\ParameterKeys\CustomerAdapter;
 
 class Pay extends ServiceParameter
 {
-    protected CustomerServiceParametersKeysAdapter $customer;
+    protected CustomerAdapter $customer;
     protected Recipient $billingRecipient;
     protected Recipient $shippingRecipient;
 
@@ -67,10 +67,10 @@ class Pay extends ServiceParameter
     {
         if(is_array($customer))
         {
-            return $this->customer(new CustomerServiceParametersKeysAdapter(new Person($customer)));
+            return $this->customer(new CustomerAdapter(new Person($customer)));
         }
 
-        if($customer instanceof CustomerServiceParametersKeysAdapter)
+        if($customer instanceof CustomerAdapter)
         {
             $this->customer = $customer;
         }
@@ -84,7 +84,7 @@ class Pay extends ServiceParameter
         {
             foreach($articles as $article)
             {
-                $this->articles[] = new ArticleServiceParametersKeysAdapter(new Article($article));
+                $this->articles[] = new ArticleAdapter(new Article($article));
             }
         }
 

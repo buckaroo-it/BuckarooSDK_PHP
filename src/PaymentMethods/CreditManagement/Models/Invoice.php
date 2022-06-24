@@ -3,7 +3,7 @@
 namespace Buckaroo\PaymentMethods\CreditManagement\Models;
 
 use Buckaroo\Models\{Address, Company, Debtor, Email, Person, Phone, ServiceParameter};
-use Buckaroo\PaymentMethods\CreditManagement\Adapters\ArticleServiceParametersKeysAdapter;
+use Buckaroo\PaymentMethods\CreditManagement\Service\ParameterKeys\ArticleAdapter;
 
 class Invoice extends ServiceParameter
 {
@@ -167,7 +167,7 @@ class Invoice extends ServiceParameter
         {
             foreach($articles as $article)
             {
-                $this->articles[] = new ArticleServiceParametersKeysAdapter(new Article($article));
+                $this->articles[] = new ArticleAdapter(new Article($article));
             }
         }
 

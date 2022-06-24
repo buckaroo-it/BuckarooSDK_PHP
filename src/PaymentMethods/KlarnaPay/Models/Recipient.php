@@ -3,16 +3,17 @@
 namespace Buckaroo\PaymentMethods\KlarnaPay\Models;
 
 use Buckaroo\Models\{Address, Company, Email, Person, Phone, ServiceParameter};
-use Buckaroo\PaymentMethods\KlarnaPay\Adapters\{AddressServiceParametersKeysAdapter, PhoneServiceParametersKeysAdapter};
 use Buckaroo\Models\Interfaces\Recipient as RecipientInterface;
+use Buckaroo\PaymentMethods\KlarnaPay\Service\ParameterKeys\{AddressAdapter};
+use Buckaroo\PaymentMethods\KlarnaPay\Service\ParameterKeys\PhoneAdapter;
 
 class Recipient extends ServiceParameter
 {
     private string $type;
 
     protected RecipientInterface $recipient;
-    protected AddressServiceParametersKeysAdapter $address;
-    protected PhoneServiceParametersKeysAdapter $phone;
+    protected AddressAdapter $address;
+    protected PhoneAdapter $phone;
     protected Email $email;
 
     public function __construct(string $type, ?array $values = null)
@@ -58,10 +59,10 @@ class Recipient extends ServiceParameter
     {
         if(is_array($address))
         {
-            return $this->address(new AddressServiceParametersKeysAdapter(new Address($address)));
+            return $this->address(new AddressAdapter(new Address($address)));
         }
 
-        if($address instanceof AddressServiceParametersKeysAdapter)
+        if($address instanceof AddressAdapter)
         {
             $this->address = $address;
         }
@@ -73,10 +74,10 @@ class Recipient extends ServiceParameter
     {
         if(is_array($phone))
         {
-            return $this->phone(new PhoneServiceParametersKeysAdapter(new Phone($phone)));
+            return $this->phone(new PhoneAdapter(new Phone($phone)));
         }
 
-        if($phone instanceof PhoneServiceParametersKeysAdapter)
+        if($phone instanceof PhoneAdapter)
         {
             $this->phone = $phone;
         }

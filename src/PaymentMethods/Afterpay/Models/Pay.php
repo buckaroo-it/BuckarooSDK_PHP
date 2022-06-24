@@ -3,7 +3,7 @@
 namespace Buckaroo\PaymentMethods\Afterpay\Models;
 
 use Buckaroo\Models\ServiceParameter;
-use Buckaroo\PaymentMethods\Afterpay\Adapters\ArticleServiceParametersKeysAdapter;
+use Buckaroo\PaymentMethods\Afterpay\Service\ParameterKeys\ArticleAdapter;
 
 class Pay extends ServiceParameter
 {
@@ -69,7 +69,7 @@ class Pay extends ServiceParameter
         {
             foreach($articles as $article)
             {
-                $this->articles[] = new ArticleServiceParametersKeysAdapter(new Article($article));
+                $this->articles[] = new ArticleAdapter(new Article($article));
             }
         }
 

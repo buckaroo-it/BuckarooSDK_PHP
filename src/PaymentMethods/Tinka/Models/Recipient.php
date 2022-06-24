@@ -2,17 +2,19 @@
 
 namespace Buckaroo\PaymentMethods\Tinka\Models;
 
-use Buckaroo\PaymentMethods\Tinka\Adapters\{AddressServiceParametersKeysAdapter, CustomerServiceParametersKeysAdapter, PhoneServiceParametersKeysAdapter};
 use Buckaroo\Models\{Address, Email, Person, Phone, ServiceParameter};
+use Buckaroo\PaymentMethods\Tinka\Service\ParameterKeys\{CustomerAdapter};
+use Buckaroo\PaymentMethods\Tinka\Service\ParameterKeys\AddressAdapter;
+use Buckaroo\PaymentMethods\Tinka\Service\ParameterKeys\PhoneAdapter;
 
 class Recipient extends ServiceParameter
 {
     private string $type;
 
-    protected CustomerServiceParametersKeysAdapter $recipient;
+    protected CustomerAdapter $recipient;
 
-    protected AddressServiceParametersKeysAdapter $address;
-    protected PhoneServiceParametersKeysAdapter $phone;
+    protected AddressAdapter $address;
+    protected PhoneAdapter $phone;
     protected Email $email;
 
     public function __construct(string $type, ?array $values = null)
@@ -43,10 +45,10 @@ class Recipient extends ServiceParameter
     {
         if(is_array($recipient))
         {
-            return $this->recipient(new CustomerServiceParametersKeysAdapter(new Person($recipient)));
+            return $this->recipient(new CustomerAdapter(new Person($recipient)));
         }
 
-        if($recipient instanceof CustomerServiceParametersKeysAdapter)
+        if($recipient instanceof CustomerAdapter)
         {
             $this->recipient = $recipient;
         }
@@ -58,10 +60,10 @@ class Recipient extends ServiceParameter
     {
         if(is_array($address))
         {
-            return $this->address(new AddressServiceParametersKeysAdapter(new Address($address)));
+            return $this->address(new AddressAdapter(new Address($address)));
         }
 
-        if($address instanceof AddressServiceParametersKeysAdapter)
+        if($address instanceof AddressAdapter)
         {
             $this->address = $address;
         }
@@ -73,10 +75,10 @@ class Recipient extends ServiceParameter
     {
         if(is_array($phone))
         {
-            return $this->phone(new PhoneServiceParametersKeysAdapter(new Phone($phone)));
+            return $this->phone(new PhoneAdapter(new Phone($phone)));
         }
 
-        if($phone instanceof PhoneServiceParametersKeysAdapter)
+        if($phone instanceof PhoneAdapter)
         {
             $this->phone = $phone;
         }
