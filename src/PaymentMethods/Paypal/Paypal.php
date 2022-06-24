@@ -14,7 +14,7 @@ class Paypal extends PayablePaymentMethod
 
     public function pay(?Model $model = null): TransactionResponse
     {
-        return parent::pay(new Pay($this->payload));
+        return parent::pay($model ?? new Pay($this->payload));
     }
 
     public function payRecurrent(): TransactionResponse

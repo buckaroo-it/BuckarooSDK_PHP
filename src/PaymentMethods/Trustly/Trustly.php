@@ -14,8 +14,6 @@ class Trustly extends PayablePaymentMethod
 
     public function pay(?Model $model = null): TransactionResponse
     {
-        $pay = new PayAdapter(new Pay($this->payload));
-
-        return parent::pay($pay);
+        return parent::pay($model ?? new PayAdapter(new Pay($this->payload)));
     }
 }

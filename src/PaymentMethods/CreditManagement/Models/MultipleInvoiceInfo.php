@@ -13,23 +13,6 @@ class MultipleInvoiceInfo extends ServiceParameter
 
     protected array $invoices = [];
 
-    public function setProperties(?array $data)
-    {
-        foreach($data ?? array() as $property => $value)
-        {
-            if(in_array($property, ['invoices']))
-            {
-                $this->$property($value);
-
-                continue;
-            }
-
-            $this->$property = $value;
-        }
-
-        return $this;
-    }
-
     public function invoices(?array $invoices = null)
     {
         if(is_array($invoices))

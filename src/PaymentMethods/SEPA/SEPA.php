@@ -18,7 +18,7 @@ class SEPA extends PayablePaymentMethod
 
     public function pay(?Model $model = null)
     {
-        return parent::pay(new PayAdapter(new Pay($this->payload)));
+        return parent::pay($model ?? new PayAdapter(new Pay($this->payload)));
     }
 
     public function authorize(): TransactionResponse

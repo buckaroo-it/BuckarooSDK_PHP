@@ -14,11 +14,11 @@ class CreditClick extends PayablePaymentMethod
 
     public function pay(?Model $model = null): TransactionResponse
     {
-        return parent::pay(new Pay($this->payload));
+        return parent::pay($model ?? new Pay($this->payload));
     }
 
     public function refund(?Model $model = null): TransactionResponse
     {
-        return parent::refund(new Refund($this->payload));
+        return parent::refund($model ?? new Refund($this->payload));
     }
 }

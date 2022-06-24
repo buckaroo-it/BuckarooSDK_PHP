@@ -24,33 +24,11 @@ class Recipient extends ServiceParameter
         parent::__construct($values);
     }
 
-    public function setProperties(?array $data)
-    {
-        foreach($data ?? array() as $property => $value)
-        {
-            if(in_array($property, ['recipient', 'address', 'phone', 'email']))
-            {
-                $this->$property($value);
-
-                continue;
-            }
-
-            $this->$property = $value;
-        }
-
-        return $this;
-    }
-
     public function recipient($recipient = null)
     {
         if(is_array($recipient))
         {
-            return $this->recipient(new RecipientAdapter(new Person($recipient)));
-        }
-
-        if($recipient instanceof RecipientInterface)
-        {
-            $this->recipient = $recipient;
+            $this->recipient = new RecipientAdapter(new Person($recipient));
         }
 
         return $this->recipient;
@@ -60,12 +38,7 @@ class Recipient extends ServiceParameter
     {
         if(is_array($address))
         {
-            return $this->address(new AddressAdapter(new Address($address)));
-        }
-
-        if($address instanceof AddressAdapter)
-        {
-            $this->address = $address;
+            $this->address = new AddressAdapter(new Address($address));
         }
 
         return $this->address;
@@ -75,12 +48,7 @@ class Recipient extends ServiceParameter
     {
         if(is_array($phone))
         {
-            return $this->phone(new PhoneAdapter(new Phone($phone)));
-        }
-
-        if($phone instanceof PhoneAdapter)
-        {
-            $this->phone = $phone;
+            $this->phone = new PhoneAdapter(new Phone($phone));
         }
 
         return $this->phone;
@@ -90,12 +58,7 @@ class Recipient extends ServiceParameter
     {
         if(is_string($email))
         {
-            return $this->email(new Email($email));
-        }
-
-        if($email instanceof Email)
-        {
-            $this->email = $email;
+            $this->email = new Email($email);
         }
 
         return $this->email;

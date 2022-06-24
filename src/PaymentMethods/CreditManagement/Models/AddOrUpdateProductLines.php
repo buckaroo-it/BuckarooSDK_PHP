@@ -21,23 +21,6 @@ class AddOrUpdateProductLines extends ServiceParameter
         ]
     ];
 
-    public function setProperties(?array $data)
-    {
-        foreach($data ?? array() as $property => $value)
-        {
-            if(in_array($property, ['articles']))
-            {
-                $this->$property($value);
-
-                continue;
-            }
-
-            $this->$property = $value;
-        }
-
-        return $this;
-    }
-
     public function articles(?array $articles = null)
     {
         if(is_array($articles))

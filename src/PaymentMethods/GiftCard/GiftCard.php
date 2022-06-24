@@ -13,9 +13,11 @@ class GiftCard extends PayablePaymentMethod
     {
         $this->setPayPayload();
 
-        $this->setServiceList('Pay', new Pay($this->payload));
+        $pay = new Pay($this->payload);
 
-        return parent::pay(new Pay($this->payload));
+        $this->setServiceList('Pay', $pay);
+
+        return parent::pay($model ?? $pay);
     }
 
     public function paymentName(): string

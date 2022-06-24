@@ -3,7 +3,6 @@
 namespace Buckaroo\Tests\Payments;
 
 use Buckaroo\Resources\Constants\Gender;
-use Buckaroo\Resources\Constants\RecipientCategory;
 use Buckaroo\Tests\BuckarooTestCase;
 
 class AfterpayDigiAcceptTest extends BuckarooTestCase

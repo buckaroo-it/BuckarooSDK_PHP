@@ -10,33 +10,11 @@ class Verify extends ServiceParameter
 {
     protected BankAccountAdapter $bankAccount;
 
-    public function setProperties(?array $data)
-    {
-        foreach($data ?? array() as $property => $value)
-        {
-            if(in_array($property, ['bankAccount']))
-            {
-                $this->$property($value);
-
-                continue;
-            }
-
-            $this->$property = $value;
-        }
-
-        return $this;
-    }
-
     public function bankAccount($bankAccount = null)
     {
         if(is_array($bankAccount))
         {
-            return $this->bankAccount(new BankAccountAdapter(new BankAccount($bankAccount)));
-        }
-
-        if($bankAccount instanceof BankAccountAdapter)
-        {
-            $this->bankAccount = $bankAccount;
+            $this->bankAccount =  new BankAccountAdapter(new BankAccount($bankAccount));
         }
 
         return $this->bankAccount;

@@ -12,6 +12,8 @@ use Buckaroo\PaymentMethods\BuckarooWallet\Service\ParameterKeys\EmailAdapter;
 
 class Wallet extends ServiceParameter
 {
+    protected array $propertiesAsMethods = ['customer', 'email', 'bankAccount'];
+
     protected string $walletId;
     protected string $status;
     protected string $walletMutationGuid;
@@ -20,33 +22,11 @@ class Wallet extends ServiceParameter
     protected EmailAdapter $email;
     protected BankAccountAdapter $bankAccount;
 
-    public function setProperties(?array $data)
-    {
-        foreach($data ?? array() as $property => $value)
-        {
-            if(in_array($property, ['customer', 'email', 'bankAccount']))
-            {
-                $this->$property($value);
-
-                continue;
-            }
-
-            $this->$property = $value;
-        }
-
-        return $this;
-    }
-
     public function customer($customer = null)
     {
         if(is_array($customer))
         {
-            return $this->customer(new CustomerAdapter(new Person($customer)));
-        }
-
-        if($customer instanceof CustomerAdapter)
-        {
-            $this->customer = $customer;
+            $this->customer = new CustomerAdapter(new Person($customer));
         }
 
         return $this->customer;
@@ -56,12 +36,7 @@ class Wallet extends ServiceParameter
     {
         if(is_string($email))
         {
-            return $this->email(new EmailAdapter(new Email($email)));
-        }
-
-        if($email instanceof EmailAdapter)
-        {
-            $this->email = $email;
+            $this->email = new EmailAdapter(new Email($email));
         }
 
         return $this->email;
@@ -71,12 +46,7 @@ class Wallet extends ServiceParameter
     {
         if(is_array($bankAccount))
         {
-            return $this->bankAccount(new BankAccountAdapter(new BankAccount($bankAccount)));
-        }
-
-        if($bankAccount instanceof BankAccountAdapter)
-        {
-            $this->bankAccount = $bankAccount;
+            $this->bankAccount = new BankAccountAdapter(new BankAccount($bankAccount));
         }
 
         return $this->bankAccount;

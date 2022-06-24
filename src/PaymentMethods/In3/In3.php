@@ -6,7 +6,6 @@ use Buckaroo\Models\Model;
 use Buckaroo\PaymentMethods\In3\Models\Pay;
 use Buckaroo\PaymentMethods\In3\Models\PayPayload;
 use Buckaroo\PaymentMethods\PayablePaymentMethod;
-use Buckaroo\PaymentMethods\PaymentMethod;
 use Buckaroo\Transaction\Response\TransactionResponse;
 
 class In3 extends PayablePaymentMethod
@@ -17,7 +16,7 @@ class In3 extends PayablePaymentMethod
 
     public function pay(?Model $model = null): TransactionResponse
     {
-        return parent::pay(new Pay($this->payload));
+        return parent::pay($model ?? new Pay($this->payload));
     }
 
     public function payInInstallments()

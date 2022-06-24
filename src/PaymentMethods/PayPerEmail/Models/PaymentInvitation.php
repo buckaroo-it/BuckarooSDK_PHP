@@ -26,33 +26,11 @@ class PaymentInvitation extends ServiceParameter
 
     protected array $attachments = [];
 
-    public function setProperties(?array $data)
-    {
-        foreach($data ?? array() as $property => $value)
-        {
-            if(in_array($property, ['customer', 'email', 'attachments']))
-            {
-                $this->$property($value);
-
-                continue;
-            }
-
-            $this->$property = $value;
-        }
-
-        return $this;
-    }
-
     public function customer($customer = null)
     {
         if(is_array($customer))
         {
-            return $this->customer(new CustomerAdapter(new Person($customer)));
-        }
-
-        if($customer instanceof CustomerAdapter)
-        {
-            $this->customer = $customer;
+            $this->customer = new CustomerAdapter(new Person($customer));
         }
 
         return $this->customer;
@@ -62,12 +40,7 @@ class PaymentInvitation extends ServiceParameter
     {
         if(is_string($email))
         {
-            return $this->email(new EmailAdapter(new Email($email)));
-        }
-
-        if($email instanceof EmailAdapter)
-        {
-            $this->email = $email;
+            $this->email = new EmailAdapter(new Email($email));
         }
 
         return $this->email;

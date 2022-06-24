@@ -51,33 +51,11 @@ class Subscription extends ServiceParameter
         ],
     ];
 
-    public function setProperties(?array $data)
-    {
-        foreach($data ?? array() as $property => $value)
-        {
-            if(in_array($property, ['debtor', 'bankAccount', 'email', 'phone', 'address', 'person', 'rate_plans']))
-            {
-                $this->$property($value);
-
-                continue;
-            }
-
-            $this->$property = $value;
-        }
-
-        return $this;
-    }
-
     public function debtor($debtor = null)
     {
         if(is_array($debtor))
         {
-            return $this->debtor(new Debtor($debtor));
-        }
-
-        if($debtor instanceof Debtor)
-        {
-            $this->debtor = $debtor;
+            $this->debtor = new Debtor($debtor);
         }
 
         return $this->debtor;
@@ -87,12 +65,7 @@ class Subscription extends ServiceParameter
     {
         if(is_array($bankAccount))
         {
-            return $this->bankAccount(new BankAccount($bankAccount));
-        }
-
-        if($bankAccount instanceof BankAccount)
-        {
-            $this->bankAccount = $bankAccount;
+            $this->bankAccount = new BankAccount($bankAccount);
         }
 
         return $this->bankAccount;
@@ -102,12 +75,7 @@ class Subscription extends ServiceParameter
     {
         if(is_string($email))
         {
-            return $this->email(new Email($email));
-        }
-
-        if($email instanceof Email)
-        {
-            $this->email = $email;
+            $this->email = new Email($email);
         }
 
         return $this->email;
@@ -117,12 +85,7 @@ class Subscription extends ServiceParameter
     {
         if(is_array($phone))
         {
-            return $this->phone(new Phone($phone));
-        }
-
-        if($phone instanceof Phone)
-        {
-            $this->phone = $phone;
+            $this->phone = new Phone($phone);
         }
 
         return $this->phone;
@@ -132,12 +95,7 @@ class Subscription extends ServiceParameter
     {
         if(is_array($address))
         {
-            return $this->address(new Address($address));
-        }
-
-        if($address instanceof Address)
-        {
-            $this->address = $address;
+            $this->address = new Address($address);
         }
 
         return $this->address;
@@ -147,12 +105,7 @@ class Subscription extends ServiceParameter
     {
         if(is_array($person))
         {
-            return $this->person(new Person($person));
-        }
-
-        if($person instanceof Person)
-        {
-            $this->person = $person;
+            $this->person = new Person($person);
         }
 
         return $this->person;
@@ -169,7 +122,6 @@ class Subscription extends ServiceParameter
                 $this->$property = new RatePlan(ucfirst($type), $rate_plan);
             }
         }
-
 
         return $this;
     }

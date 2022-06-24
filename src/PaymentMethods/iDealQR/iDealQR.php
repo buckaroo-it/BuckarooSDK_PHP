@@ -19,9 +19,6 @@ class iDealQR extends PaymentMethod
 
         $this->setServiceList('Generate', $generate);
 
-        return $this->client->dataRequest(
-            $this->request,
-            TransactionResponse::class
-        );
+        return $this->dataRequest();
     }
 }

@@ -54,23 +54,6 @@ class Pay extends ServiceParameter
         ]
     ];
 
-    public function setProperties(?array $data)
-    {
-        foreach($data ?? array() as $property => $value)
-        {
-            if(in_array($property, ['company', 'customer', 'address', 'email', 'phone', 'articles', 'subtotals']))
-            {
-                $this->$property($value);
-
-                continue;
-            }
-
-            $this->$property = $value;
-        }
-
-        return $this;
-    }
-
     public function articles(?array $articles = null)
     {
         if(is_array($articles))
@@ -88,12 +71,7 @@ class Pay extends ServiceParameter
     {
         if(is_array($company))
         {
-            return $this->company(new CompanyAdapter(new Company($company)));
-        }
-
-        if($company instanceof CompanyAdapter)
-        {
-            $this->company = $company;
+            $this->company = new CompanyAdapter(new Company($company));
         }
 
         return $this->company;
@@ -103,12 +81,7 @@ class Pay extends ServiceParameter
     {
         if(is_array($customer))
         {
-            return $this->customer(new Person($customer));
-        }
-
-        if($customer instanceof Person)
-        {
-            $this->customer = $customer;
+            $this->customer = new Person($customer);
         }
 
         return $this->customer;
@@ -118,12 +91,7 @@ class Pay extends ServiceParameter
     {
         if(is_array($address))
         {
-            return $this->address(new AddressAdapter(new Address($address)));
-        }
-
-        if($address instanceof AddressAdapter)
-        {
-            $this->address = $address;
+            $this->address = new AddressAdapter(new Address($address));
         }
 
         return $this->address;
@@ -133,12 +101,7 @@ class Pay extends ServiceParameter
     {
         if(is_string($email))
         {
-            return $this->email(new Email($email));
-        }
-
-        if($email instanceof Email)
-        {
-            $this->email = $email;
+            $this->email = new Email($email);
         }
 
         return $this->email;
@@ -148,12 +111,7 @@ class Pay extends ServiceParameter
     {
         if(is_array($phone))
         {
-            return $this->phone(new PhoneAdapter(new Phone($phone)));
-        }
-
-        if($phone instanceof PhoneAdapter)
-        {
-            $this->phone = $phone;
+            $this->phone = new PhoneAdapter(new Phone($phone));
         }
 
         return $this->phone;

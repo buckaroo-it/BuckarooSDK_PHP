@@ -12,33 +12,11 @@ class Pay extends ServiceParameter
 
     protected string $country;
 
-    public function setProperties(?array $data)
-    {
-        foreach($data ?? array() as $property => $value)
-        {
-            if(in_array($property, ['customer']))
-            {
-                $this->$property($value);
-
-                continue;
-            }
-
-            $this->$property = $value;
-        }
-
-        return $this;
-    }
-
     public function customer($customer = null)
     {
         if(is_array($customer))
         {
-            return $this->customer(new CustomerAdapter(new Person($customer)));
-        }
-
-        if($customer instanceof CustomerAdapter)
-        {
-            $this->customer = $customer;
+            $this->customer = new CustomerAdapter(new Person($customer));
         }
 
         return $this->customer;

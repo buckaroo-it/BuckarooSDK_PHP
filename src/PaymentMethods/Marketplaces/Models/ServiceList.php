@@ -25,33 +25,11 @@ class ServiceList extends ServiceParameter
         ]
     ];
 
-    public function setProperties(?array $data)
-    {
-        foreach($data ?? array() as $property => $value)
-        {
-            if(in_array($property, ['marketplace', 'sellers']))
-            {
-                $this->$property($value);
-
-                continue;
-            }
-
-            $this->$property = $value;
-        }
-
-        return $this;
-    }
-
     public function marketplace($marketplace = null)
     {
         if(is_array($marketplace))
         {
-            return $this->marketplace(new Marketplace($marketplace));
-        }
-
-        if($marketplace instanceof Marketplace)
-        {
-            $this->marketplace = $marketplace;
+            $this->marketplace = new Marketplace($marketplace);
         }
 
         return $this->marketplace;

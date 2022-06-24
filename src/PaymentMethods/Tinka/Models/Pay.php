@@ -30,23 +30,6 @@ class Pay extends ServiceParameter
         ]
     ];
 
-    public function setProperties(?array $data)
-    {
-        foreach($data ?? array() as $property => $value)
-        {
-            if(in_array($property, ['customer', 'billing', 'shipping', 'articles']))
-            {
-                $this->$property($value);
-
-                continue;
-            }
-
-            $this->$property = $value;
-        }
-
-        return $this;
-    }
-
     public function billing($billing = null)
     {
         if(is_array($billing))
@@ -72,12 +55,7 @@ class Pay extends ServiceParameter
     {
         if(is_array($customer))
         {
-            return $this->customer(new CustomerAdapter(new Person($customer)));
-        }
-
-        if($customer instanceof CustomerAdapter)
-        {
-            $this->customer = $customer;
+            $this->customer = new CustomerAdapter(new Person($customer));
         }
 
         return $this->customer;

@@ -16,33 +16,11 @@ class DebtorInfo extends ServiceParameter
         ]
     ];
 
-    public function setProperties(?array $data)
-    {
-        foreach($data ?? array() as $property => $value)
-        {
-            if(in_array($property, ['debtor']))
-            {
-                $this->$property($value);
-
-                continue;
-            }
-
-            $this->$property = $value;
-        }
-
-        return $this;
-    }
-
     public function debtor($debtor = null)
     {
         if(is_array($debtor))
         {
-            return $this->debtor(new DebtorInfoAdapter(new Debtor($debtor)));
-        }
-
-        if($debtor instanceof DebtorInfoAdapter)
-        {
-            $this->debtor = $debtor;
+            $this->debtor = new DebtorInfoAdapter(new Debtor($debtor));
         }
 
         return $this->debtor;

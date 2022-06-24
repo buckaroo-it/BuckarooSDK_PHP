@@ -29,33 +29,11 @@ class Recipient extends ServiceParameter
         parent::__construct($values);
     }
 
-    public function setProperties(?array $data)
-    {
-        foreach($data ?? array() as $property => $value)
-        {
-            if(in_array($property, ['recipient', 'address', 'phone', 'email']))
-            {
-                $this->$property($value);
-
-                continue;
-            }
-
-            $this->$property = $value;
-        }
-
-        return $this;
-    }
-
     public function recipient($recipient = null)
     {
         if(is_array($recipient))
         {
-            return $this->recipient($this->getRecipientObject($recipient));
-        }
-
-        if($recipient instanceof RecipientAdapter)
-        {
-            $this->recipient = $recipient;
+            $this->recipient = $this->getRecipientObject($recipient);
         }
 
         return $this->recipient;
@@ -65,12 +43,7 @@ class Recipient extends ServiceParameter
     {
         if(is_array($address))
         {
-            return $this->address(new AddressAdapter($this->type, new Address($address)));
-        }
-
-        if($address instanceof AddressAdapter)
-        {
-            $this->address = $address;
+            $this->address = new AddressAdapter($this->type, new Address($address));
         }
 
         return $this->address;
@@ -80,12 +53,7 @@ class Recipient extends ServiceParameter
     {
         if(is_array($phone))
         {
-            return $this->phone(new PhoneAdapter($this->type, new Phone($phone)));
-        }
-
-        if($phone instanceof PhoneAdapter)
-        {
-            $this->phone = $phone;
+            $this->phone = new PhoneAdapter($this->type, new Phone($phone));
         }
 
         return $this->phone;
@@ -95,12 +63,7 @@ class Recipient extends ServiceParameter
     {
         if(is_string($email))
         {
-            return $this->email(new EmailAdapter($this->type, new Email($email)));
-        }
-
-        if($email instanceof EmailAdapter)
-        {
-            $this->email = $email;
+            $this->email = new EmailAdapter($this->type, new Email($email));
         }
 
         return $this->email;
@@ -108,11 +71,13 @@ class Recipient extends ServiceParameter
 
     private function getRecipientObject(array $recipient) : RecipientAdapter
     {
+        $model = new Person($recipient);
+
         if(($recipient['companyName'] ?? null) || ( $recipient['chamberOfCommerce'] ?? null) || ($recipient['vatNumber'] ?? null))
         {
-            return new RecipientAdapter($this->type, new Company($recipient));
+            $model = new Company($recipient);
         }
 
-        return new RecipientAdapter($this->type, new Person($recipient));
+        return new RecipientAdapter($this->type, $model);
     }
 }
