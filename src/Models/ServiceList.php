@@ -3,7 +3,6 @@
 namespace Buckaroo\Models;
 
 use Buckaroo\Services\ServiceListParameters\{DefaultParameters, ModelParameters, ServiceListParameter};
-use function PHPUnit\Framework\isEmpty;
 
 class ServiceList extends Model
 {
@@ -73,7 +72,7 @@ class ServiceList extends Model
     {
         foreach($array as $key => $value)
         {
-            if($value instanceof Model)
+            if($model instanceof ServiceParameter && $value instanceof Model)
             {
                 $this->decorateParameters(
                     $value,

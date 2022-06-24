@@ -3,9 +3,14 @@
 namespace Buckaroo\PaymentMethods\CreditManagement\Models;
 
 use Buckaroo\Models\ServiceParameter;
+use Buckaroo\PaymentMethods\Traits\CountableGroupKey;
 
 class MultipleInvoiceInfo extends ServiceParameter
 {
+    use CountableGroupKey;
+
+    private array $countableProperties = ['invoices'];
+
     protected array $invoices = [];
 
     public function setProperties(?array $data)
@@ -36,15 +41,5 @@ class MultipleInvoiceInfo extends ServiceParameter
         }
 
         return $this->invoices;
-    }
-
-    public function getGroupKey(string $key, ?int $keyCount = 0): ?int
-    {
-        if($key == 'invoices' && is_numeric($keyCount))
-        {
-            return intval($keyCount) + 1;
-        }
-
-        return $this->groupData[$key]['groupKey'] ?? null;
     }
 }

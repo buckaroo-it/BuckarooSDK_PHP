@@ -8,9 +8,14 @@ use Buckaroo\Models\ServiceParameter;
 use Buckaroo\PaymentMethods\PayPerEmail\Service\ParameterKeys\AttachmentAdapter;
 use Buckaroo\PaymentMethods\PayPerEmail\Service\ParameterKeys\CustomerAdapter;
 use Buckaroo\PaymentMethods\PayPerEmail\Service\ParameterKeys\EmailAdapter;
+use Buckaroo\PaymentMethods\Traits\CountableGroupKey;
 
 class PaymentInvitation extends ServiceParameter
 {
+    use CountableGroupKey;
+
+    private array $countableProperties = ['attachments'];
+
     protected CustomerAdapter $customer;
     protected EmailAdapter $email;
 
@@ -79,15 +84,5 @@ class PaymentInvitation extends ServiceParameter
         }
 
         return $this->attachments;
-    }
-
-    public function getGroupKey(string $key, ?int $keyCount = 0): ?int
-    {
-        if($key == 'attachments' && is_numeric($keyCount))
-        {
-            return intval($keyCount) + 1;
-        }
-
-        return $this->groupData[$key]['groupKey'] ?? null;
     }
 }

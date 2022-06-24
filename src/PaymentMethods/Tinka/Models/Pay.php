@@ -6,9 +6,14 @@ use Buckaroo\Models\Person;
 use Buckaroo\Models\ServiceParameter;
 use Buckaroo\PaymentMethods\Tinka\Service\ParameterKeys\ArticleAdapter;
 use Buckaroo\PaymentMethods\Tinka\Service\ParameterKeys\CustomerAdapter;
+use Buckaroo\PaymentMethods\Traits\CountableGroupKey;
 
 class Pay extends ServiceParameter
 {
+    use CountableGroupKey;
+
+    private array $countableProperties = ['articles'];
+
     protected CustomerAdapter $customer;
     protected Recipient $billingRecipient;
     protected Recipient $shippingRecipient;
@@ -89,15 +94,5 @@ class Pay extends ServiceParameter
         }
 
         return $this->articles;
-    }
-
-    public function getGroupKey(string $key, ?int $keyCount = 0): ?int
-    {
-        if($key == 'articles' && is_numeric($keyCount))
-        {
-            return intval($keyCount) + 1;
-        }
-
-        return $this->groupData[$key]['groupKey'] ?? null;
     }
 }

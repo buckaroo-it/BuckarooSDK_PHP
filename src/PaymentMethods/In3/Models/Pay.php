@@ -13,9 +13,14 @@ use Buckaroo\PaymentMethods\In3\Service\ParameterKeys\{ArticleAdapter};
 use Buckaroo\PaymentMethods\In3\Service\ParameterKeys\AddressAdapter;
 use Buckaroo\PaymentMethods\In3\Service\ParameterKeys\CompanyAdapter;
 use Buckaroo\PaymentMethods\In3\Service\ParameterKeys\PhoneAdapter;
+use Buckaroo\PaymentMethods\Traits\CountableGroupKey;
 
 class Pay extends ServiceParameter
 {
+    use CountableGroupKey;
+
+    private array $countableProperties = ['articles', 'subtotals'];
+
     protected string $customerType;
     protected string $invoiceDate;
 
@@ -165,15 +170,5 @@ class Pay extends ServiceParameter
         }
 
         return $this->subtotals;
-    }
-
-    public function getGroupKey(string $key, ?int $keyCount = 0): ?int
-    {
-        if(in_array($key, ['articles', 'subtotals']) && is_numeric($keyCount))
-        {
-            return intval($keyCount) + 1;
-        }
-
-        return $this->groupData[$key]['groupKey'] ?? null;
     }
 }

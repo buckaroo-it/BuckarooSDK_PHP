@@ -4,9 +4,14 @@ namespace Buckaroo\PaymentMethods\CreditManagement\Models;
 
 use Buckaroo\Models\ServiceParameter;
 use Buckaroo\PaymentMethods\CreditManagement\Service\ParameterKeys\ArticleAdapter;
+use Buckaroo\PaymentMethods\Traits\CountableGroupKey;
 
 class AddOrUpdateProductLines extends ServiceParameter
 {
+    use CountableGroupKey;
+
+    private array $countableProperties = ['articles'];
+
     protected string $invoiceKey;
     protected array $articles = [];
 
@@ -44,15 +49,5 @@ class AddOrUpdateProductLines extends ServiceParameter
         }
 
         return $this->articles;
-    }
-
-    public function getGroupKey(string $key, ?int $keyCount = 0): ?int
-    {
-        if($key == 'articles' && is_numeric($keyCount))
-        {
-            return intval($keyCount) + 1;
-        }
-
-        return $this->groupData[$key]['groupKey'] ?? null;
     }
 }

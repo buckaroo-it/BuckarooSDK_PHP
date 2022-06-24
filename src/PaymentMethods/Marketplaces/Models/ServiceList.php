@@ -3,9 +3,14 @@
 namespace Buckaroo\PaymentMethods\Marketplaces\Models;
 
 use Buckaroo\Models\ServiceParameter;
+use Buckaroo\PaymentMethods\Traits\CountableGroupKey;
 
 class ServiceList extends ServiceParameter
 {
+    use CountableGroupKey;
+
+    private array $countableProperties = ['sellers'];
+
     protected string $daysUntilTransfer;
 
     protected Marketplace $marketplace;
@@ -63,15 +68,5 @@ class ServiceList extends ServiceParameter
         }
 
         return $this->sellers;
-    }
-
-    public function getGroupKey(string $key, ?int $keyCount = 0): ?int
-    {
-        if($key == 'sellers' && is_numeric($keyCount))
-        {
-            return intval($keyCount) + 1;
-        }
-
-        return $this->groupData[$key]['groupKey'] ?? null;
     }
 }
