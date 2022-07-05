@@ -44,6 +44,10 @@ class iDeal extends PayablePaymentMethod
                 'name' => 'ING'
             ],
             [
+                'id'    => 'KNABNL2H',
+                'name'  => 'Knab'
+            ],
+            [
                 'id' => 'RABONL2U',
                 'name' => 'Rabobank'
             ],
@@ -52,12 +56,24 @@ class iDeal extends PayablePaymentMethod
                 'name' => 'RegioBank'
             ],
             [
+                'id' => 'REVOLT21',
+                'name' => 'Revolut'
+            ],
+            [
                 'id' => 'SNSBNL2A',
                 'name' => 'SNS Bank'
             ],
             [
                 'id' => 'TRIONL2U',
                 'name' => 'Triodos Bank'
+            ],
+            [
+                'id' => 'HANDNL2A',
+                'name' => 'Svenska Handelsbanken'
+            ],
+            [
+                'id' => 'FVLBNL22',
+                'name' => 'Van Lanschot'
             ]
         ];
 
