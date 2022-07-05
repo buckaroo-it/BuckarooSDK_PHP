@@ -33,6 +33,11 @@ class PaymentFacade
         return $this;
     }
 
+    public function paymentMethod(): PaymentMethod
+    {
+        return $this->paymentMethod;
+    }
+
     public function __call(string $name , array $arguments)
     {
         if(method_exists($this->paymentMethod, $name))

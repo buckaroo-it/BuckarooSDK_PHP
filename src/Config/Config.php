@@ -21,7 +21,7 @@ abstract class Config
     {
         $this->websiteKey = $websiteKey;
         $this->secretKey = $secretKey;
-        $this->mode = ($mode? $mode : ($_ENV['BPE_MODE'] ?? 'testing'));
+        $this->mode = ($mode? $mode : ($_ENV['BPE_MODE'] ?? 'test'));
 
         $this->currency = $_ENV['BPE_EXAMPLE_CURRENCY_CODE'] ?? 'EUR';
         $this->returnURL = $_ENV['BPE_EXAMPLE_RETURN_URL'] ?? '';
