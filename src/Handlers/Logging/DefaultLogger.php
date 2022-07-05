@@ -43,49 +43,49 @@ class DefaultLogger implements Subject
         return $this;
     }
 
-    public function emergency($message, array $context = array())
+    public function emergency(\Stringable|string $message, array $context = []): void
     {
         $this->notify('emergency', $message, $context);
     }
 
-    public function alert($message, array $context = array())
+    public function alert(\Stringable|string $message, array $context = []): void
     {
         $this->notify('alert', $message, $context);
     }
 
-    public function critical($message, array $context = array())
+    public function critical(\Stringable|string $message, array $context = []): void
     {
         $this->notify('critical', $message, $context);
     }
 
-    public function error($message, array $context = array())
+    public function error(\Stringable|string $message, array $context = []): void
     {
         $this->notify('error', $message, $context);
     }
 
-    public function warning($message, array $context = array())
+    public function warning(\Stringable|string $message, array $context = []): void
     {
         $this->notify('warning', $message, $context);
     }
 
-    public function notice($message, array $context = array())
+    public function notice(\Stringable|string $message, array $context = []): void
     {
         $this->notify('notice', $message, $context);
     }
 
-    public function info($message, array $context = array())
+    public function info(\Stringable|string $message, array $context = []): void
     {
         $this->notify('info', $message, $context);
     }
 
-    public function debug($message, array $context = array())
+    public function debug(\Stringable|string $message, array $context = []): void
     {
         if($_ENV['BPE_DEBUG'] ?? false) {
             $this->notify('debug', $message, $context);
         }
     }
 
-    public function log($level, $message, array $context = array())
+    public function log($level, \Stringable|string $message, array $context = array()): void
     {
         $this->notify('log', $message, $context);
     }
