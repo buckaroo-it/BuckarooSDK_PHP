@@ -37,55 +37,55 @@ class DefaultLogger implements Subject
     public function detach(Observer $observer)
     {
         $this->observers = array_filter($this->observers, function($value) use ($observer){
-           return get_class($value) != get_class($observer);
+            return get_class($value) != get_class($observer);
         });
 
         return $this;
     }
 
-    public function emergency(\Stringable|string $message, array $context = []): void
+    public function emergency($message, array $context = array())
     {
         $this->notify('emergency', $message, $context);
     }
 
-    public function alert(\Stringable|string $message, array $context = []): void
+    public function alert($message, array $context = array())
     {
         $this->notify('alert', $message, $context);
     }
 
-    public function critical(\Stringable|string $message, array $context = []): void
+    public function critical($message, array $context = array())
     {
         $this->notify('critical', $message, $context);
     }
 
-    public function error(\Stringable|string $message, array $context = []): void
+    public function error($message, array $context = array())
     {
         $this->notify('error', $message, $context);
     }
 
-    public function warning(\Stringable|string $message, array $context = []): void
+    public function warning($message, array $context = array())
     {
         $this->notify('warning', $message, $context);
     }
 
-    public function notice(\Stringable|string $message, array $context = []): void
+    public function notice($message, array $context = array())
     {
         $this->notify('notice', $message, $context);
     }
 
-    public function info(\Stringable|string $message, array $context = []): void
+    public function info($message, array $context = array())
     {
         $this->notify('info', $message, $context);
     }
 
-    public function debug(\Stringable|string $message, array $context = []): void
+    public function debug($message, array $context = array())
     {
         if($_ENV['BPE_DEBUG'] ?? false) {
             $this->notify('debug', $message, $context);
         }
     }
 
-    public function log($level, \Stringable|string $message, array $context = array()): void
+    public function log($level, $message, array $context = array())
     {
         $this->notify('log', $message, $context);
     }
