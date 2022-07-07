@@ -10,7 +10,7 @@ class PayPayload extends Payload
 
     public function __construct(?array $payload)
     {
-        $this->order = uniqid($_ENV['BPE_WEBSITE'] . '_ORDER_NO_');
+        $this->order = uniqid('ORDER_NO_');
 
         parent::__construct($payload);
     }
