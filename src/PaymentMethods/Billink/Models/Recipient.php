@@ -44,9 +44,9 @@ class Recipient extends ServiceParameter
         return $this->address;
     }
 
-    public function phone(array $phone = null)
+    public function phone($phone = null)
     {
-        if($phone)
+        if(is_array($phone))
         {
             $this->phone = new PhoneAdapter(new Phone($phone));
         }

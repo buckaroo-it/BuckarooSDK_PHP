@@ -71,7 +71,7 @@ class HttpClientGuzzle extends HttpClientAbstract
     protected function getBaseOptions(): array
     {
         return [
-            RequestOptions::VERIFY => CaBundle::getBundledCaBundlePath(),
+            //RequestOptions::VERIFY => CaBundle::getBundledCaBundlePath(),
             RequestOptions::TIMEOUT => self::TIMEOUT,
             RequestOptions::CONNECT_TIMEOUT => self::CONNECT_TIMEOUT
         ];
