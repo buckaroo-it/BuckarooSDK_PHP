@@ -23,4 +23,68 @@ class iDeal extends PayablePaymentMethod
     {
         return parent::payRemainder($model ?? new Pay($this->payload));
     }
+
+    public function issuers(): array
+    {
+        $issuers = [
+            [
+                'id' => 'ABNANL2A',
+                'name' => 'ABN AMRO'
+            ],
+            [
+                'id' => 'ASNBNL21',
+                'name' => 'ASN Bank'
+            ],
+            [
+                'id' => 'BUNQNL2A',
+                'name' => 'bunq'
+            ],
+            [
+                'id' => 'INGBNL2A',
+                'name' => 'ING'
+            ],
+            [
+                'id'    => 'KNABNL2H',
+                'name'  => 'Knab'
+            ],
+            [
+                'id' => 'RABONL2U',
+                'name' => 'Rabobank'
+            ],
+            [
+                'id' => 'RBRBNL21',
+                'name' => 'RegioBank'
+            ],
+            [
+                'id' => 'REVOLT21',
+                'name' => 'Revolut'
+            ],
+            [
+                'id' => 'SNSBNL2A',
+                'name' => 'SNS Bank'
+            ],
+            [
+                'id' => 'TRIONL2U',
+                'name' => 'Triodos Bank'
+            ],
+            [
+                'id' => 'HANDNL2A',
+                'name' => 'Svenska Handelsbanken'
+            ],
+            [
+                'id' => 'FVLBNL22',
+                'name' => 'Van Lanschot'
+            ]
+        ];
+
+        if(!$this->client->config()->isLiveMode())
+        {
+            $issuers[] = [
+                'id'    => 'BANKNL2Y',
+                'name' => 'TEST BANK'
+            ];
+        }
+
+        return $issuers;
+    }
 }
