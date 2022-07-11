@@ -29,7 +29,6 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 use Psr\Log\LoggerInterface;
-use TheSeer\Tokenizer\Exception;
 
 class HttpClientGuzzle extends HttpClientAbstract
 {
@@ -52,7 +51,7 @@ class HttpClientGuzzle extends HttpClientAbstract
             $response = $this->httpClient->send($request, ['http_errors' => false]);
             $result = (string) $response->getBody();
         } catch (GuzzleException $e) {
-            throw new Exception("Transfer failed");
+            throw new \Exception("Transfer failed");
         }
 
         $this->checkEmptyResult($result, "empty response");
