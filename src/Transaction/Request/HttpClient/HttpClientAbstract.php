@@ -64,12 +64,9 @@ abstract class HttpClientAbstract implements HttpClientInterface, Loggable
     protected function checkEmptyResult($result, $error)
     {
         // check for curl errors
-        if ($result === false) {
-//            throw new TransferException(
-//                $this->logger,
-//                __METHOD__ . '|5|',
-//                $error
-//            );
+        if ($result === false)
+        {
+            throw new \Exception("The result that came back was empty.");
         }
     }
 

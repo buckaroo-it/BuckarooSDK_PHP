@@ -29,6 +29,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 use Psr\Log\LoggerInterface;
+use TheSeer\Tokenizer\Exception;
 
 class HttpClientGuzzle extends HttpClientAbstract
 {
@@ -43,7 +44,7 @@ class HttpClientGuzzle extends HttpClientAbstract
         $headers = $this->convertHeadersFormat($headers);
         //$this->logger->debug(__METHOD__, [$url, $headers, $method, !empty($data) ? json_decode($data) : '']);
 
-        $this->checkMethod($method);
+//        $this->checkMethod($method);
 
         $request = new Request($method, $url, $headers, $data);
 
@@ -51,11 +52,7 @@ class HttpClientGuzzle extends HttpClientAbstract
             $response = $this->httpClient->send($request, ['http_errors' => false]);
             $result = (string) $response->getBody();
         } catch (GuzzleException $e) {
-//            throw new TransferException(
-//                $this->logger,
-//                __METHOD__,
-//                $e->getMessage()
-//            );
+            throw new Exception("Transfer failed");
         }
 
         $this->checkEmptyResult($result, "empty response");
