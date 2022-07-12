@@ -13,11 +13,11 @@ class Person extends Model implements Recipient
     protected string $culture;
     protected string $careOf;
     protected string $title;
-    protected string $initials;
+    protected ?string $initials;
     protected string $name;
     protected string $firstName;
     protected string $lastNamePrefix;
     protected string $lastName;
-    protected string $birthDate;
+    protected ?string $birthDate;
     protected string $placeOfBirth;
 }

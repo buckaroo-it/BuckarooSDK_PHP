@@ -2,7 +2,6 @@
 
 namespace Buckaroo\Tests\Payments;
 
-use Buckaroo\Resources\Constants\RecipientCategory;
 use Buckaroo\Tests\BuckarooTestCase;
 
 class BillinkTest extends BuckarooTestCase
