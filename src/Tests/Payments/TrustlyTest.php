@@ -14,12 +14,10 @@ class TrustlyTest extends BuckarooTestCase
         $response = $this->buckaroo->payment('trustly')->pay([
             'amountDebit' => 10,
             'invoice' => uniqid(),
-            'serviceParameters' => [
-                'customer'      => [
-                    'firstName' => 'Test',
-                    'lastName' => 'Aflever',
-                    'country' => 'DE'
-                ]
+            'country' => 'DE',
+            'customer'      => [
+                'firstName' => 'Test',
+                'lastName' => 'Aflever'
             ]
         ]);
 

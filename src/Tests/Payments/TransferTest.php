@@ -14,21 +14,20 @@ class TransferTest extends BuckarooTestCase
     public function it_creates_a_transfer_payment()
     {
         $response = $this->buckaroo->payment('transfer')->pay([
+            'invoice' => uniqid(),
             'amountDebit' => 10.10,
-            'serviceParameters' => [
-                'customer' => [
-                    'gender' => Gender::MALE, // 0 = unkinown / 1 = male / 2 = female
-                    'firstName' => 'John',
-                    'lastName' => 'Smith',
-                    'email' => 'your@email.com',
-                    'country' => 'NL',
-                ],
-                'dateDue' => date("Y-m-d"),
-                'sendMail' => true,
+            'email' => 'your@email.com',
+            'country' => 'NL',
+            'dateDue' => date("Y-m-d"),
+            'sendMail' => true,
+            'customer' => [
+                'gender' => Gender::MALE,
+                'firstName' => 'John',
+                'lastName' => 'Smith'
             ]
         ]);
-        $this->assertTrue($response->isAwaitingConsumer());
 
+        $this->assertTrue($response->isAwaitingConsumer());
     }
 
     /**

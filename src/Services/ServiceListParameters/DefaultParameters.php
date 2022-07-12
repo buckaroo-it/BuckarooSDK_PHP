@@ -2,7 +2,7 @@
 
 namespace Buckaroo\Services\ServiceListParameters;
 
-use Buckaroo\Model\ServiceList;
+use Buckaroo\Models\ServiceList;
 
 class DefaultParameters extends ServiceListParameter
 {

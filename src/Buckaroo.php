@@ -88,6 +88,11 @@ class Buckaroo
         return $this;
     }
 
+    public function client()
+    {
+        return $this->client;
+    }
+
     /**
      * @param string $websiteKey
      * @param string $secretKey

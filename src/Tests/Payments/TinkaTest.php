@@ -2,6 +2,7 @@
 
 namespace Buckaroo\Tests\Payments;
 
+use Buckaroo\Resources\Constants\Gender;
 use Buckaroo\Tests\BuckarooTestCase;
 
 class TinkaTest extends BuckarooTestCase
@@ -13,7 +14,7 @@ class TinkaTest extends BuckarooTestCase
     {
         $response = $this->buckaroo->payment('tinka')->pay($this->getPaymentPayload());
 
-        $this->assertTrue($response->isFailed());
+        $this->assertTrue($response->isPendingProcessing());
     }
 
     /**
@@ -33,54 +34,65 @@ class TinkaTest extends BuckarooTestCase
     private function getPaymentPayload(): array
     {
         return [
-            'amountDebit'       => 3.5,
-            'order'             => uniqid(),
-            'invoice'           => uniqid(),
-            'description'       => 'This is a test order',
-            'serviceParameters' => [
-                'paymentMethod'       => 'Credit',
-                'deliveryMethod'      => 'Locker',
-                'deliveryDate'          => '09-12-2022',
-                'articles'      => [
-                    [
-                        'type'              => 1,
-                        'description'       => 'Blue Toy Car',
-                        'brand'             => 'Ford Focus',
-                        'manufacturer'      => 'Ford',
-                        'color'             => 'Red',
-                        'size'              => 'Small',
-                        'quantity'          => '1',
-                        'grossUnitPrice'    => '3.5',
-                        'unitCode'         => 'test'
-                    ]
+            'amountDebit'           => 3.5,
+            'order'                 => uniqid(),
+            'invoice'               => uniqid(),
+            'description'           => 'This is a test order',
+            'paymentMethod'         => 'Credit',
+            'deliveryMethod'        => 'Locker',
+            'deliveryDate'          => carbon()->addDays(30)->format('Y-m-d'),
+            'articles'              => [
+                [
+                    'type'              => 1,
+                    'description'       => 'Blue Toy Car',
+                    'brand'             => 'Ford Focus',
+                    'manufacturer'      => 'Ford',
+                    'color'             => 'Red',
+                    'size'              => 'Small',
+                    'quantity'          => '1',
+                    'price'             => '3.5',
+                    'unitCode'         => 'test'
+                ]
+            ],
+            'customer'          => [
+                'gender'        => Gender::MALE,
+                'firstName'     => 'Buck',
+                'lastName'      => 'Aroo',
+                'initials'       => 'BA',
+                'birthDate'     => carbon()->subYears(18)->format('Y-m-d'),
+            ],
+            'billing'              => [
+                'recipient'          => [
+                    'lastNamePrefix'    => 'the'
                 ],
-                'customer'      => [
-                    'gender'        => '1',
-                    'initials'      => 'J.S.',
-                    'firstName' => 'Test',
-                    'lastName' => 'Aflever',
-                    'birthDate' => '01-01-1990',
-                    'billing'                   => [
-                        'prefixLastName'    => 'the',
-                        'email' => 'billingcustomer@buckaroo.nl',
-                        'phone' => '0109876543',
-                        'street' => 'Hoofdstraat',
-                        'streetNumber' => '80',
-                        'streetNumberAdditional' => 'A',
-                        'postalCode' => '8441EE',
-                        'city' => 'Heerenveen',
-                        'country' => 'NL',
-                    ],
-                    'shipping'                  => [
-                        'externalName' => 'Test',
-                        'phone' => '0109876543',
-                        'street' => 'Hoofdstraat',
-                        'streetNumber' => '80',
-                        'streetNumberAdditional' => 'A',
-                        'postalCode' => '8441EE',
-                        'city' => 'Heerenveen',
-                        'country' => 'NL',
-                    ]
+                'email' => 'billingcustomer@buckaroo.nl',
+                'phone' => [
+                    'mobile' => '0109876543',
+                ],
+                'address'                   => [
+                    'street' => 'Hoofdstraat',
+                    'houseNumber' => '80',
+                    'houseNumberAdditional' => 'A',
+                    'zipcode' => '8441EE',
+                    'city' => 'Heerenveen',
+                    'country' => 'NL',
+                ]
+            ],
+            'shipping'              => [
+                'recipient'          => [
+                    'lastNamePrefix'    => 'the'
+                ],
+                'email' => 'billingcustomer@buckaroo.nl',
+                'phone' => [
+                    'mobile' => '0109876543',
+                ],
+                'address'                   => [
+                    'street' => 'Hoofdstraat',
+                    'houseNumber' => '80',
+                    'houseNumberAdditional' => 'A',
+                    'zipcode' => '8441EE',
+                    'city' => 'Heerenveen',
+                    'country' => 'NL',
                 ]
             ]
         ];

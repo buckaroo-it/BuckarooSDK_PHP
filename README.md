@@ -5,16 +5,15 @@
 # Buckaroo SDK Plugin
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/7081446/172777838-61a340f0-eb38-46f8-84b6-bd02235dc68f.png" position="center">
+  <img src="https://user-images.githubusercontent.com/7081446/175256338-d51b139b-80db-44a1-a0b1-a96abda3878c.png" position="center">
 </p>
 
 ---
-
 - [Requirements](#requirements)
 - [Composer Installation](#composer-installation)
 - [Requirements](#requirements)
-- [Examples](#examples)
-
+- [Example](#example)
+- [Versioning](#versioning)
 ---
 
 ## Requirements
@@ -22,7 +21,7 @@ To use the Buckaroo API client, the following things are required:
 
 + Get yourself a free [Buckaroo account](https://www.buckaroo.eu/solutions/request-form). No sign up costs.
 + Now you're ready to use the Buckaroo API client in test mode.
-+ PHP >= 7.2
++ PHP >= 7.4
 + Up-to-date OpenSSL (or other SSL/TLS toolkit)
 
 ## Composer Installation
@@ -50,15 +49,13 @@ $buckaroo = new \Buckaroo('WEBSITE_KEY', 'SECRET_KEY');
 Create a payment with all the available payment methods. In this example, we show how to create a credit card payment. Each payment has a slightly different payload.
 
 ```php
-# Get your website & secret key in your plaza.
-    $buckaroo->payment('creditcard') // Input the desire payment method.
-        ->pay([
-            'amountDebit' => 10, // The amount we want to charge
-            'invoice' => 'UNIQUE-INVOICE-NO', // Each payment must contain a unique invoice number
-            'serviceParameters' => [
-                'name'          => 'visa' // When we request to pay with Visa
-            ]
-        ]);
+# Create a new payment
+$buckaroo->payment('creditcard') // Input the desire payment method.
+    ->pay([
+        'name'          => 'visa' // Request to pay with Visa
+        'amountDebit'   => 10, // The amount we want to charge
+        'invoice'       => 'UNIQUE-INVOICE-NO', // Each payment must contain a unique invoice number
+    ]);
 ```
 
 Find our full documentation online on [dev.buckaroo.nl](https://dev.buckaroo.nl/).

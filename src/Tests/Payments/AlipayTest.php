@@ -15,9 +15,7 @@ class AlipayTest extends BuckarooTestCase
         $response = $this->buckaroo->payment('alipay')->pay([
             'amountDebit' => 10,
             'invoice' => uniqid(),
-            'serviceParameters' => [
-                'useMobileView' => true
-            ]
+            'useMobileView' => true
         ]);
 
         $this->assertTrue($response->isPendingProcessing());

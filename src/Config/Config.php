@@ -21,12 +21,12 @@ abstract class Config
     {
         $this->websiteKey = $websiteKey;
         $this->secretKey = $secretKey;
-        $this->mode = ($mode? $mode : $_ENV['BPE_MODE']);
+        $this->mode = ($mode? $mode : ($_ENV['BPE_MODE'] ?? 'test'));
 
-        $this->currency = $_ENV['BPE_EXAMPLE_CURRENCY_CODE'] ?? 'EUR';
-        $this->returnURL = $_ENV['BPE_EXAMPLE_RETURN_URL'];
-        $this->returnURLCancel = $_ENV['BPE_EXAMPLE_RETURN_URL'];
-        $this->pushURL = $_ENV['BPE_EXAMPLE_RETURN_URL'];
+        $this->currency = $_ENV['BPE_CURRENCY_CODE'] ?? 'EUR';
+        $this->returnURL = $_ENV['BPE_RETURN_URL'] ?? '';
+        $this->returnURLCancel = $_ENV['BPE_RETURN_URL_CANCEL'] ?? '';
+        $this->pushURL = $_ENV['BPE_PUSH_URL'] ?? '';
     }
 
     public function websiteKey(): string {

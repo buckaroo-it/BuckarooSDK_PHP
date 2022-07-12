@@ -9,6 +9,7 @@ class SofortTest extends BuckarooTestCase
     protected function setUp(): void
     {
         $this->paymentPayload = ([
+            'invoice' => uniqid(),
             'amountDebit' => 10.10
         ]);
     }
@@ -20,6 +21,7 @@ class SofortTest extends BuckarooTestCase
     public function it_creates_a_sofort_payment()
     {
         $response = $this->buckaroo->payment('sofortueberweisung')->pay($this->paymentPayload);
+
         $this->assertTrue($response->isPendingProcessing());
     }
 

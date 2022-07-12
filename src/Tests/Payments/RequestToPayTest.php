@@ -14,10 +14,8 @@ class RequestToPayTest extends BuckarooTestCase
 //        $response = $this->buckaroo->payment("requesttopay")->pay([
 //            'amountDebit'       => 3.5,
 //            'invoice'           => uniqid(),
-//            'serviceParameters' => [
-//                'customer'      => [
-//                    'name'          => 'J. De Tester'
-//                ]
+//            'customer'      => [
+//                'name'          => 'J. De Tester'
 //            ]
 //        ]);
 //

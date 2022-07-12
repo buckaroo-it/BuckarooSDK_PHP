@@ -43,7 +43,7 @@ class HttpClientGuzzle extends HttpClientAbstract
         $headers = $this->convertHeadersFormat($headers);
         //$this->logger->debug(__METHOD__, [$url, $headers, $method, !empty($data) ? json_decode($data) : '']);
 
-        $this->checkMethod($method);
+//        $this->checkMethod($method);
 
         $request = new Request($method, $url, $headers, $data);
 
@@ -51,11 +51,7 @@ class HttpClientGuzzle extends HttpClientAbstract
             $response = $this->httpClient->send($request, ['http_errors' => false]);
             $result = (string) $response->getBody();
         } catch (GuzzleException $e) {
-//            throw new TransferException(
-//                $this->logger,
-//                __METHOD__,
-//                $e->getMessage()
-//            );
+            throw new \Exception("Transfer failed");
         }
 
         $this->checkEmptyResult($result, "empty response");
@@ -71,7 +67,7 @@ class HttpClientGuzzle extends HttpClientAbstract
     protected function getBaseOptions(): array
     {
         return [
-            RequestOptions::VERIFY => CaBundle::getBundledCaBundlePath(),
+            //RequestOptions::VERIFY => CaBundle::getBundledCaBundlePath(),
             RequestOptions::TIMEOUT => self::TIMEOUT,
             RequestOptions::CONNECT_TIMEOUT => self::CONNECT_TIMEOUT
         ];

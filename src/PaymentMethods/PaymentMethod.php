@@ -3,12 +3,10 @@
 namespace Buckaroo\PaymentMethods;
 
 use Buckaroo\Handlers\Reply\ReplyHandler;
-use Buckaroo\Model\PaymentPayload;
-use Buckaroo\Model\RefundPayload;
-use Buckaroo\Model\ServiceList;
+use Buckaroo\Models\Model;
+use Buckaroo\Models\ServiceList;
+use Buckaroo\PaymentMethods\Interfaces\Combinable;
 use Buckaroo\Transaction\Client;
-use Buckaroo\Transaction\Request\Adapters\PaymentPayloadAdapter;
-use Buckaroo\Transaction\Request\Adapters\RefundPayloadAdapter;
 use Buckaroo\Transaction\Request\TransactionRequest;
 use Buckaroo\Transaction\Response\TransactionResponse;
 use Psr\Log\LoggerInterface;
@@ -26,6 +24,9 @@ abstract class PaymentMethod implements PaymentInterface
     protected string $paymentName = "";
     protected int $serviceVersion = 0;
 
+    protected Combinable $combinablePayment;
+    protected bool $isManually = false;
+
     public function __construct(
         Client $client,
         ?string $serviceCode
@@ -34,27 +35,6 @@ abstract class PaymentMethod implements PaymentInterface
 
         $this->request = new TransactionRequest;
         $this->serviceCode = $serviceCode;
-    }
-
-    public function pay(): TransactionResponse
-    {
-        $this->request->setPayload($this->getPaymentPayload());
-
-        $this->setPayServiceList($this->payload['serviceParameters'] ?? []);
-
-        //TODO
-        //Create validator class that validates specific request
-        //$request->validate();
-        return $this->postRequest();
-    }
-
-    public function refund(): TransactionResponse
-    {
-        $this->request->setPayload($this->getRefundPayload());
-
-        $this->setRefundServiceList($this->payload['serviceParameters'] ?? []);
-
-        return $this->postRequest();
     }
 
     public function setPayload(array $payload)
@@ -67,48 +47,39 @@ abstract class PaymentMethod implements PaymentInterface
         return $this;
     }
 
-    public function setPayServiceList(array $serviceParameters = [])
+    protected function postRequest()
     {
-        $serviceList =  new ServiceList(
-            $this->paymentName(),
-            $this->serviceVersion(),
-            'Pay'
-        );
+        if($this->isManually)
+        {
+            return $this;
+        }
 
-        $this->request->getServices()->pushServiceList($serviceList);
-
-        return $this;
-    }
-
-    public function setRefundServiceList(array $serviceParameters = [])
-    {
-        $serviceList =  new ServiceList(
-            $this->paymentName(),
-            $this->serviceVersion(),
-            'Refund'
-        );
-
-        $this->request->getServices()->pushServiceList($serviceList);
-
-        return $this;
-    }
-
-    public function getPaymentPayload(): array
-    {
-        return (new PaymentPayloadAdapter(new PaymentPayload($this->payload)))->getValues();
-    }
-
-    public function getRefundPayload(): array
-    {
-        return (new RefundPayloadAdapter(new RefundPayload($this->payload)))->getValues();
-    }
-
-    protected function postRequest(): TransactionResponse
-    {
         return $this->client->post(
             $this->request,
             TransactionResponse::class
         );
+    }
+
+    protected function dataRequest()
+    {
+        if($this->isManually)
+        {
+            return $this;
+        }
+
+        return $this->client->dataRequest(
+            $this->request,
+            TransactionResponse::class
+        );
+    }
+
+    protected function setServiceList(string $action, ?Model $model = null)
+    {
+        $serviceList = new ServiceList($this->paymentName(),  $this->serviceVersion(), $action, $model);
+
+        $this->request->getServices()->pushServiceList($serviceList);
+
+        return $this;
     }
 
     public function handleReply(array $data): ReplyHandler
@@ -124,5 +95,36 @@ abstract class PaymentMethod implements PaymentInterface
     public function serviceVersion(): int
     {
         return $this->serviceVersion;
+    }
+
+    public function manually(?bool $isManually = null)
+    {
+        if($isManually !== null)
+        {
+            $this->isManually = $isManually;
+        }
+
+        return $this;
+    }
+
+    public function combinePayment(Combinable $combinablePayment)
+    {
+        $this->combinablePayment = $combinablePayment;
+
+        $payload_data = array_filter($combinablePayment->request->data(), function($key){
+            return !in_array($key, ['Services']);
+        }, ARRAY_FILTER_USE_KEY );
+
+        foreach($payload_data as $key => $value)
+        {
+            $this->request->setData($key, $value);
+        }
+
+        foreach($this->combinablePayment->request->getServices()->serviceList() as $serviceList)
+        {
+            $this->request->getServices()->pushServiceList($serviceList);
+        }
+
+        return $this;
     }
 }

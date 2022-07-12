@@ -1,0 +1,32 @@
+<?php
+
+require('../bootstrap.php');
+
+use Buckaroo\Buckaroo;
+
+$buckaroo = new Buckaroo($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
+
+//Also accepts json
+//Pay
+$response = $buckaroo->payment('creditclick')->pay([
+    'amountDebit' => 10,
+    'invoice' => uniqid(),
+    'serviceParameters' => [
+        'customer'      => [
+            'firstName' => 'Test',
+            'lastName' => 'Aflever',
+            'email' => 'billingcustomer@buckaroo.nl'
+        ]
+    ]
+]);
+
+//Refund
+$response = $buckaroo->payment('creditclick')->refund([
+    'amountCredit' => 10,
+    'invoice'       => 'testinvoice 123',
+    'description'   => 'refund',
+    'originalTransactionKey' => '2D04704995B74D679AACC59F87XXXXXX',
+    'serviceParameters' => [
+        'reason'      => 'RequestedByCustomer'
+    ]
+]);

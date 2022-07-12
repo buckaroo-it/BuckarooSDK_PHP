@@ -5,7 +5,8 @@ namespace Buckaroo\Tests\Payments;
 use Buckaroo\Config\Config;
 use Buckaroo\Tests\BuckarooTestCase;
 
-class CustomConfig extends Config{
+class CustomConfig extends Config
+{
     public function __construct()
     {
         $websiteKey = 'Set Key';
@@ -20,16 +21,15 @@ class IdealTest extends BuckarooTestCase
     protected function setUp(): void
     {
         $this->paymentPayload = ([
+            'invoice' => uniqid(),
             'amountDebit' => 10.10,
-            'serviceParameters' => [
-                'issuer' => 'ABNANL2A',
-            ]
+            'issuer' => 'ABNANL2A'
         ]);
 
         $this->refundPayload = [
-            'invoice'   => '', //Set invoice number of the transaction to refund
-            'originalTransactionKey' => '', //Set transaction key of the transaction to refund
-            'amountCredit' => 10.10
+            'invoice'   => 'testinvoice 123', //Set invoice number of the transaction to refund
+            'originalTransactionKey' => '4E8BD922192746C3918BF4077CXXXXXX', //Set transaction key of the transaction to refund
+            'amountCredit' => 1.23
         ];
     }
 
@@ -40,6 +40,7 @@ class IdealTest extends BuckarooTestCase
     public function it_creates_a_ideal_payment()
     {
         $response = $this->buckaroo->payment('idealprocessing')->pay($this->paymentPayload);
+
         $this->assertTrue($response->isPendingProcessing());
 
 //        $customConfig = new CustomConfig();
@@ -52,9 +53,10 @@ class IdealTest extends BuckarooTestCase
     /**
      * @test
      */
-//    public function it_creates_a_ideal_refund()
-//    {
-//        $response = $this->buckaroo->payment('ideal')->refund($this->refundPayload);
-//        $this->assertTrue($response->isSuccess());
-//    }
+    public function it_creates_a_ideal_refund()
+    {
+        $response = $this->buckaroo->payment('ideal')->refund($this->refundPayload);
+
+        $this->assertTrue($response->isFailed());
+    }
 }

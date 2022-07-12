@@ -2,7 +2,7 @@
 
 namespace Buckaroo\Services\TransactionHeaders;
 
-use Buckaroo\Model\ServiceList;
+use Buckaroo\Models\ServiceList;
 
 class DefaultHeader extends TransactionHeader
 {
