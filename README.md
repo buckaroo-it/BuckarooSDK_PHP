@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://www.buckaroo.eu/media/1372/buckaroo-news-banner2.png?anchor=center&mode=crop&width=800&height=600&rnd=131988553360000000" width="225px" position="center">
+  <img src="https://user-images.githubusercontent.com/7081446/178473472-c0c29ec5-762c-47de-9ed4-999e5ad6c70d.png" width="225px" position="center">
 </p>
 
 # Buckaroo SDK Plugin
@@ -62,7 +62,7 @@ Find our full documentation online on [dev.buckaroo.nl](https://dev.buckaroo.nl/
 
 ## Versioning
 <p align="left">
-  <img src="https://www.buckaroo.nl/media/3212/versioning.png" width="600px" position="center">
+  <img src="https://user-images.githubusercontent.com/7081446/178474134-f4c3976d-653c-4ca1-bcd1-48bf6d489196.png" width="600px" position="center">
 </p>
 
 - **MAJOR:** Breaking changes that require additional testing/caution
