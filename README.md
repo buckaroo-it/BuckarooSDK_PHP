@@ -5,7 +5,7 @@
 # Buckaroo SDK Plugin
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/7081446/175256338-d51b139b-80db-44a1-a0b1-a96abda3878c.png" position="center">
+  <img src="https://user-images.githubusercontent.com/7081446/178476892-372b4f2b-f74d-4b00-b174-4fa1d5a468e5.png" position="center">
 </p>
 
 ---
