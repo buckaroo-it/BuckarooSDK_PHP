@@ -40,7 +40,7 @@ $subscriptions = $buckaroo->payment('subscriptions')->manually()->createCombined
     ]
 ]);
 
-$response = $this->buckaroo->payment('ideal')->combine($subscriptions)->pay([
+$response = $buckaroo->payment('ideal')->combine($subscriptions)->pay([
     'invoice'       => uniqid(),
     'amountDebit' => 10.10,
     'issuer' => 'ABNANL2A'
