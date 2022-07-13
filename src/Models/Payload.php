@@ -14,5 +14,17 @@ class Payload extends Model
     protected string $invoice;
     protected string $description;
     protected string $originalTransactionKey;
-    protected array $additionalParameters;
+    protected AdditionalParameters $additionalParameters;
+
+    public function setProperties(?array $data)
+    {
+        if(isset($data['additionalParameters']))
+        {
+            $this->additionalParameters = new AdditionalParameters($data['additionalParameters']);
+
+            unset($data['additionalParameters']);
+        }
+
+        return parent::setProperties($data);
+    }
 }
