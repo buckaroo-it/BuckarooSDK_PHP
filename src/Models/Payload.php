@@ -14,4 +14,5 @@ class Payload extends Model
     protected string $invoice;
     protected string $description;
     protected string $originalTransactionKey;
+    protected array $additionalParameters;
 }

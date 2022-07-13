@@ -61,7 +61,7 @@ $buckaroo->payment('creditcard') // Input the desire payment method.
 Find our full documentation online on [dev.buckaroo.nl](https://dev.buckaroo.nl/).
 
 ## Versioning
-<p align="left">
+<p align="center">
   <img src="https://user-images.githubusercontent.com/7081446/178474134-f4c3976d-653c-4ca1-bcd1-48bf6d489196.png" width="600px" position="center">
 </p>
 

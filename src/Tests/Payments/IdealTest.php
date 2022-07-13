@@ -29,7 +29,10 @@ class IdealTest extends BuckarooTestCase
         $this->refundPayload = [
             'invoice'   => 'testinvoice 123', //Set invoice number of the transaction to refund
             'originalTransactionKey' => '4E8BD922192746C3918BF4077CXXXXXX', //Set transaction key of the transaction to refund
-            'amountCredit' => 1.23
+            'amountCredit' => 1.23,
+            'additionalParameters'  => [
+                'testing'   => 'yes'
+            ]
         ];
     }
 
