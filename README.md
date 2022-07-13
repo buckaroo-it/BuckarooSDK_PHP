@@ -47,7 +47,7 @@ By far the easiest way to install the Buckaroo API client is to require it with 
     }
 
 ### Example
-Create and config the Buckaroo object
+Create and config the Buckaroo object.
 
 ```php
 require __DIR__ . '/vendor/autoload.php';
