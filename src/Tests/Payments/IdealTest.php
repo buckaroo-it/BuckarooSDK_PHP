@@ -23,7 +23,15 @@ class IdealTest extends BuckarooTestCase
         $this->paymentPayload = ([
             'invoice' => uniqid(),
             'amountDebit' => 10.10,
-            'issuer' => 'ABNANL2A'
+            'issuer' => 'ABNANL2A',
+            'clientIP' => [
+                'address'       => '123.456.789.123',
+                'type'          => 0
+            ],
+            'additionalParameters'  => [
+                'initiated_by_magento'   => '1',
+                'service_action' => 'something'
+            ]
         ]);
 
         $this->refundPayload = [
@@ -31,12 +39,12 @@ class IdealTest extends BuckarooTestCase
             'originalTransactionKey' => '4E8BD922192746C3918BF4077CXXXXXX', //Set transaction key of the transaction to refund
             'amountCredit' => 1.23,
             'clientIP' => [
-                'address'       => '123.123.123.123',
+                'address'       => '123.456.789.123',
                 'type'          => 0
             ],
             'additionalParameters'  => [
                 'initiated_by_magento'   => '1',
-                'service_ation' => 'something'
+                'service_action' => 'something'
             ]
         ];
     }
