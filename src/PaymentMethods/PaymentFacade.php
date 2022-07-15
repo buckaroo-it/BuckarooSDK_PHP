@@ -26,9 +26,22 @@ class PaymentFacade
         return $this;
     }
 
-    public function combine(Combinable $combinablePayment)
+    public function combine($combinablePayment)
     {
-        $this->paymentMethod->combinePayment($combinablePayment);
+        if(is_array($combinablePayment))
+        {
+            foreach($combinablePayment as $combinable_payment)
+            {
+                $this->combine($combinable_payment);
+            }
+
+            return $this;
+        }
+
+        if($combinablePayment instanceof Combinable)
+        {
+            $this->paymentMethod->combinePayment($combinablePayment);
+        }
 
         return $this;
     }

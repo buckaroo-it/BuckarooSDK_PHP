@@ -3,12 +3,13 @@
 namespace Buckaroo\PaymentMethods\Paypal;
 
 use Buckaroo\Models\Model;
+use Buckaroo\PaymentMethods\Interfaces\Combinable;
 use Buckaroo\PaymentMethods\PayablePaymentMethod;
 use Buckaroo\PaymentMethods\Paypal\Models\ExtraInfo;
 use Buckaroo\PaymentMethods\Paypal\Models\Pay;
 use Buckaroo\Transaction\Response\TransactionResponse;
 
-class Paypal extends PayablePaymentMethod
+class Paypal extends PayablePaymentMethod implements Combinable
 {
     protected string $paymentName = 'paypal';
 
@@ -28,7 +29,7 @@ class Paypal extends PayablePaymentMethod
         return $this->postRequest();
     }
 
-    public function extraInfo(): TransactionResponse
+    public function extraInfo()
     {
         $extraInfo = new ExtraInfo($this->payload);
 

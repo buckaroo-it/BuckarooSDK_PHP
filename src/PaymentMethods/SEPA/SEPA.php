@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Buckaroo\PaymentMethods\SEPA;
 
 use Buckaroo\Models\Model;
+use Buckaroo\PaymentMethods\Interfaces\Combinable;
 use Buckaroo\PaymentMethods\PayablePaymentMethod;
 use Buckaroo\PaymentMethods\SEPA\Models\ExtraInfo;
 use Buckaroo\PaymentMethods\SEPA\Models\Pay;
 use Buckaroo\PaymentMethods\SEPA\Service\ParameterKeys\PayAdapter;
 use Buckaroo\Transaction\Response\TransactionResponse;
 
-class SEPA extends PayablePaymentMethod
+class SEPA extends PayablePaymentMethod implements Combinable
 {
     protected string $paymentName = 'SepaDirectDebit';
     protected int $serviceVersion = 1;
