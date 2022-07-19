@@ -7,6 +7,10 @@ use Buckaroo\Resources\Constants\Gender;
 
 $buckaroo = new Buckaroo($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
+// Sometimes we need to combine multiple payments.
+// By adding "manually," it will not execute immediately but rather return the built payload.
+// With the returned payload, we can combine it with the next payment.
+
 $invoice = $buckaroo->payment('credit_management')->manually()->createCombinedInvoice([
                 'invoice'               => str_random(),
                 'applyStartRecurrent'   => 'False',
@@ -50,6 +54,8 @@ $invoice = $buckaroo->payment('credit_management')->manually()->createCombinedIn
                     'country'           => 'NL'
                 ]
             ]);
+
+// In this case, we have the payload stored in the $invoice variable. We can now combine it with the next payment using the combine method
 
 $response = $buckaroo->payment('sepadirectdebit')->combine($invoice)->pay([
     'invoice'           => uniqid(),

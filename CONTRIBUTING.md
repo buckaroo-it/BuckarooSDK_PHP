@@ -16,8 +16,6 @@
 
 
 ### Contribution to refactoring:
-- branch should be created from refactoring
-- code changes should follow Magento2 coding standard
 - include unit tests
 - open the Pull Request
 - check that git workflows checks have passed
