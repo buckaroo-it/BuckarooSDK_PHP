@@ -3,10 +3,11 @@ namespace Buckaroo\PaymentMethods\CreditCard;
 
 use Buckaroo\PaymentMethods\CreditCard\Models\CardData;
 use Buckaroo\PaymentMethods\CreditCard\Models\SecurityCode;
+use Buckaroo\PaymentMethods\Interfaces\Combinable;
 use Buckaroo\PaymentMethods\PayablePaymentMethod;
 use Buckaroo\Transaction\Response\TransactionResponse;
 
-class CreditCard extends PayablePaymentMethod
+class CreditCard extends PayablePaymentMethod implements Combinable
 {
     public function payEncrypted(): TransactionResponse
     {

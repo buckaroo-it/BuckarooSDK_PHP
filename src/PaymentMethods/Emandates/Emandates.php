@@ -4,9 +4,10 @@ namespace Buckaroo\PaymentMethods\Emandates;
 
 use Buckaroo\Models\PayPayload;
 use Buckaroo\PaymentMethods\Emandates\Models\Mandate;
+use Buckaroo\PaymentMethods\Interfaces\Combinable;
 use Buckaroo\PaymentMethods\PaymentMethod;
 
-class Emandates extends PaymentMethod
+class Emandates extends PaymentMethod implements Combinable
 {
     protected string $paymentName = 'emandate';
     protected array $requiredConfigFields = ['currency'];

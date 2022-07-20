@@ -8,10 +8,10 @@ class ClientIP extends Model
 {
     protected $Type, $Address;
 
-    public function __construct(?string $ip = null)
+    public function __construct(?string $ip = null, ?int $type = null)
     {
         $this->setAddress($ip);
-        $this->setType();
+        $this->setType($type);
     }
 
     private function setAddress(?string $ip)
@@ -21,9 +21,9 @@ class ClientIP extends Model
         return $this;
     }
 
-    private function setType()
+    private function setType(?int $type)
     {
-        $this->Type =  IPProtocolVersion::getVersion($this->Address);
+        $this->Type =  $type ?? IPProtocolVersion::getVersion($this->Address);
 
         return $this;
     }
