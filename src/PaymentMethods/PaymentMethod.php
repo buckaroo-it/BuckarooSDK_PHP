@@ -2,7 +2,6 @@
 
 namespace Buckaroo\PaymentMethods;
 
-use Buckaroo\Handlers\Reply\ReplyHandler;
 use Buckaroo\Models\Model;
 use Buckaroo\Models\ServiceList;
 use Buckaroo\PaymentMethods\Interfaces\Combinable;
@@ -80,11 +79,6 @@ abstract class PaymentMethod implements PaymentInterface
         $this->request->getServices()->pushServiceList($serviceList);
 
         return $this;
-    }
-
-    public function handleReply(array $data): ReplyHandler
-    {
-        return new ReplyHandler($this->client->config(), $data);
     }
 
     public function paymentName(): string

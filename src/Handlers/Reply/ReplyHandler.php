@@ -7,33 +7,69 @@ use Buckaroo\Config\Config;
 class ReplyHandler
 {
     private Config $config;
-    private array $data;
+    private ReplyStrategy $strategy;
+
+    private $data;
+
+    private ?string $auth_header;
+    private ?string $uri;
 
     private bool $isValid = false;
 
-    public function __construct(Config $config, array $data)
+    public function __construct(Config $config, $data, $auth_header = null, $uri = null)
     {
         $this->config = $config;
         $this->data = $data;
+        $this->auth_header = $auth_header;
+        $this->uri = $uri;
     }
 
     public function validate()
     {
-        //Remove brq_signature from the equation
-        $data = array_filter($this->data, function($key){
-            return $key != 'brq_signature';
-        }, ARRAY_FILTER_USE_KEY);
+        $this->setStrategy();
 
-        //Combine the array keys with value
-        $data = array_map(function($value, $key){
-            return $key . '=' . $value;
-        }, $data, array_keys($data));
-
-        $dataString = implode('',  $data) . trim($this->config->secretKey());
-
-        $this->isValid = hash_equals(sha1($dataString), trim($this->data['brq_signature'] ?? null));
+        $this->isValid = $this->strategy->validate();
 
         return $this;
+    }
+
+    private function setStrategy()
+    {
+        $data = $this->data;
+
+        if(is_string($data))
+        {
+            $data = json_decode($data, true);
+        }
+
+        if($this->contains('Transaction', $data))
+        {
+            $this->strategy = new Json($this->config, $data, $this->auth_header, $this->uri);
+
+            return $this;
+        }
+
+        if($this->contains('brq_', $data))
+        {
+            $this->strategy = new HttpPost($this->config, $data);
+
+            return $this;
+        }
+
+        throw new \Exception("No reply handler strategy applied.");
+    }
+
+    private function contains(string $needle, array $data): bool
+    {
+        foreach(array_keys($data) as $key)
+        {
+            if(str_contains($key, $needle))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function isValid()
