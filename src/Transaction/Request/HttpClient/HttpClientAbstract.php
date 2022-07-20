@@ -84,7 +84,6 @@ abstract class HttpClientAbstract implements HttpClientInterface, Loggable
     protected function getDecodedResult($result): array
     {
        // $this->logger->debug(__METHOD__ . '| start |');
-
         $decodedResult = json_decode($result, true);
 
         // check for json_decode errors

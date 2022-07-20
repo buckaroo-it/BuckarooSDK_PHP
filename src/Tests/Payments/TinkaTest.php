@@ -10,7 +10,7 @@ class TinkaTest extends BuckarooTestCase
     /**
      * @test
      */
-    public function it_creates_a_tinkal_payment()
+    public function it_creates_a_tinka_payment()
     {
         $response = $this->buckaroo->payment('tinka')->pay($this->getPaymentPayload());
 
@@ -20,7 +20,7 @@ class TinkaTest extends BuckarooTestCase
     /**
      * @test
      */
-    public function it_creates_a_tinkal_refund()
+    public function it_creates_a_tinka_refund()
     {
         $response = $this->buckaroo->payment('tinka')->refund([
             'amountCredit' => 10,
