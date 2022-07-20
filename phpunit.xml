@@ -1,0 +1,12 @@
+<phpunit bootstrap="./vendor/autoload.php" colors="true">
+    <testsuites>
+        <testsuite name="BuckarooSDK">
+            <directory>src/Tests/</directory>
+        </testsuite>
+    </testsuites>
+
+    <php>
+        <ini name="display_errors" value="stderr"/>
+        <ini name="error_log" value="/dev/null"/>
+    </php>
+</phpunit>

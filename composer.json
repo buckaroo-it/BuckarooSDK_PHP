@@ -1,0 +1,42 @@
+{
+    "name": "buckaroo/sdk",
+    "description": "Buckaroo payment SDK",
+    "version": "1.0.0",
+    "type": "library",
+    "require": {
+        "php": ">=7.4|^8.0",
+        "ext-json": "*",
+        "ext-pcre": "*",
+        "ext-fileinfo": "*",
+        "psr/log": "^1.1.4",
+        "monolog/monolog": "^2.2",
+        "guzzlehttp/guzzle": "^7.0",
+        "composer/ca-bundle": "^1.3",
+        "vlucas/phpdotenv": "^5.4",
+        "nesbot/carbon": "^2.58"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "3.*",
+        "symfony/var-dumper": "^5.4.9",
+        "phpunit/phpunit": "^9.5"
+    },
+    "authors": [{
+        "name": "Buckaroo",
+        "email": "support@buckaroo.nl",
+        "homepage": "https://www.buckaroo.nl",
+        "role": "Developer"
+    }],
+    "autoload": {
+        "psr-4": {
+            "Buckaroo\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "BuckarooTests\\": "Tests/"
+        }
+    }
+}
