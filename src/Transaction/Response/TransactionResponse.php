@@ -299,4 +299,9 @@ class TransactionResponse extends Response
     {
         return $this->data['CustomerName'];
     }
+
+    public function getRelatedTransactions(): ?array
+    {
+        return $this->data['RelatedTransactions'];
+    }
 }
