@@ -300,8 +300,8 @@ class TransactionResponse extends Response
         return $this->data['CustomerName'];
     }
 
-    public function getRelatedTransactions(): ?array
+    public function get(string $key)
     {
-        return $this->data['RelatedTransactions'];
+        return $this->data[$key];
     }
 }
