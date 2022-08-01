@@ -30,7 +30,7 @@ class IdealTest extends BuckarooTestCase
                 'type'          => 0
             ],
             'additionalParameters'  => [
-                'initiated_by_magento'   => '1',
+                'initiated_by_magento'   => 1,
                 'service_action' => 'something'
             ]
         ]);

@@ -23,7 +23,8 @@ declare(strict_types=1);
 
 namespace Buckaroo\Transaction\Request\HttpClient;
 
-use Composer\CaBundle\CaBundle;
+use Buckaroo\Exceptions\TransferException;
+use Buckaroo\Handlers\Logging\Subject;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
@@ -32,18 +33,23 @@ use Psr\Log\LoggerInterface;
 
 class HttpClientGuzzle extends HttpClientAbstract
 {
-    public function __construct(LoggerInterface $logger = null)
+    protected Subject $logger;
+
+    public function __construct(Subject $logger)
     {
-//        parent::__construct($logger);
-        $this->httpClient = new Client($this->getBaseOptions());
+        parent::__construct($logger);
+
+        $this->logger = $logger;
+
+        $this->httpClient = new Client([
+            RequestOptions::TIMEOUT => self::TIMEOUT,
+            RequestOptions::CONNECT_TIMEOUT => self::CONNECT_TIMEOUT
+        ]);
     }
 
     public function call(string $url, array $headers, string $method, string $data = null)
     {
         $headers = $this->convertHeadersFormat($headers);
-        //$this->logger->debug(__METHOD__, [$url, $headers, $method, !empty($data) ? json_decode($data) : '']);
-
-//        $this->checkMethod($method);
 
         $request = new Request($method, $url, $headers, $data);
 
@@ -51,25 +57,9 @@ class HttpClientGuzzle extends HttpClientAbstract
             $response = $this->httpClient->send($request, ['http_errors' => false]);
             $result = (string) $response->getBody();
         } catch (GuzzleException $e) {
-            throw new \Exception("Transfer failed");
+            throw new TransferException($this->logger, "Transfer failed", 0, $e);
         }
 
-        $this->checkEmptyResult($result, "empty response");
-
-        $this->checkStatusCode(
-            $result,
-            (!$response->getStatusCode() || $response->getStatusCode() != 200)
-        );
-
         return $this->getDecodedResult($result);
-    }
-
-    protected function getBaseOptions(): array
-    {
-        return [
-            //RequestOptions::VERIFY => CaBundle::getBundledCaBundlePath(),
-            RequestOptions::TIMEOUT => self::TIMEOUT,
-            RequestOptions::CONNECT_TIMEOUT => self::CONNECT_TIMEOUT
-        ];
     }
 }
