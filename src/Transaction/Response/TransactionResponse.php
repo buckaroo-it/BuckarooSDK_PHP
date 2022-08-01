@@ -299,4 +299,9 @@ class TransactionResponse extends Response
     {
         return $this->data['CustomerName'];
     }
+
+    public function get(string $key)
+    {
+        return $this->data[$key];
+    }
 }

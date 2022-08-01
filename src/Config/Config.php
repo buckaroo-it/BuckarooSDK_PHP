@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace Buckaroo\Config;
 
-abstract class Config
+use Buckaroo\Handlers\Logging\DefaultLogger;
+use Buckaroo\Handlers\Logging\Loggable;
+use Buckaroo\Handlers\Logging\Subject;
+
+abstract class Config implements Loggable
 {
     const LIVE_MODE = 'live';
     const TEST_MODE = 'test';
@@ -17,7 +21,9 @@ abstract class Config
     private string $returnURLCancel;
     private string $pushURL;
 
-    public function __construct(string $websiteKey, string $secretKey, string $mode = null)
+    protected Subject $logger;
+
+    public function __construct(string $websiteKey, string $secretKey, string $mode = null, Subject $logger = null)
     {
         $this->websiteKey = $websiteKey;
         $this->secretKey = $secretKey;
@@ -27,6 +33,8 @@ abstract class Config
         $this->returnURL = $_ENV['BPE_RETURN_URL'] ?? '';
         $this->returnURLCancel = $_ENV['BPE_RETURN_URL_CANCEL'] ?? '';
         $this->pushURL = $_ENV['BPE_PUSH_URL'] ?? '';
+
+        $this->setLogger($logger ?? new DefaultLogger());
     }
 
     public function websiteKey(): string {
@@ -118,5 +126,17 @@ abstract class Config
         }
 
         return $values;
+    }
+
+    public function setLogger(Subject $logger)
+    {
+        $this->logger = $logger;
+
+        return $this;
+    }
+
+    public function getLogger(): ?Subject
+    {
+        return $this->logger;
     }
 }
