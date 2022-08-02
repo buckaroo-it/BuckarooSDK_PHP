@@ -14,7 +14,7 @@ class CreditManagementTest extends BuckarooTestCase
      */
     public function it_creates_a_credit_management_invoice()
     {
-        $response = $this->buckaroo->payment('credit_management')->createInvoice($this->invoice());
+        $response = $this->buckaroo->method('credit_management')->createInvoice($this->invoice());
 
         $this->assertTrue($response->isValidationFailure());
     }
@@ -25,7 +25,7 @@ class CreditManagementTest extends BuckarooTestCase
      */
     public function it_creates_a_credit_management_invoice_with_product_lines()
     {
-        $response = $this->buckaroo->payment('credit_management')->createInvoice([
+        $response = $this->buckaroo->method('credit_management')->createInvoice([
             'invoice'           => 'Billingtest101',
             'description'       => 'buckaroo_schema_test_PDF',
             'invoiceAmount'     => 217.80,
@@ -83,9 +83,9 @@ class CreditManagementTest extends BuckarooTestCase
      */
     public function it_creates_a_credit_management_combined_invoice()
     {
-        $invoice = $this->buckaroo->payment('credit_management')->manually()->createCombinedInvoice($this->invoice());
+        $invoice = $this->buckaroo->method('credit_management')->manually()->createCombinedInvoice($this->invoice());
 
-        $response = $this->buckaroo->payment('sepadirectdebit')->combine($invoice)
+        $response = $this->buckaroo->method('sepadirectdebit')->combine($invoice)
                 ->pay([
                     'invoice'           => uniqid(),
                     'amountDebit'       => 10.10,
@@ -108,7 +108,7 @@ class CreditManagementTest extends BuckarooTestCase
      */
     public function it_creates_a_credit_management_credit_note()
     {
-        $response = $this->buckaroo->payment('credit_management')->createCreditNote([
+        $response = $this->buckaroo->method('credit_management')->createCreditNote([
                 'originalInvoiceNumber' => 'testinvoice1337',
                 'invoiceDate'           => carbon()->format('Y-m-d'),
                 'invoiceAmount'         => 10.00,
@@ -125,7 +125,7 @@ class CreditManagementTest extends BuckarooTestCase
      */
     public function it_creates_a_credit_management_add_or_update_debtor()
     {
-        $response = $this->buckaroo->payment('credit_management')->addOrUpdateDebtor($this->invoice([
+        $response = $this->buckaroo->method('credit_management')->addOrUpdateDebtor($this->invoice([
             'addressUnreachable'    => false,
             'emailUnreachable'      => false,
             'mobileUnreachable'     => false
@@ -140,7 +140,7 @@ class CreditManagementTest extends BuckarooTestCase
      */
     public function it_creates_a_credit_management_payment_plan()
     {
-        $response = $this->buckaroo->payment('credit_management')->createPaymentPlan([
+        $response = $this->buckaroo->method('credit_management')->createPaymentPlan([
             'description'               => 'Payment in two intstallments',
             'includedInvoiceKey'        => '20D09973FB5C4DBC9A33DB0F4F707xxx',
             'dossierNumber'             => 'PaymentplanJohnsmith123',
@@ -162,7 +162,7 @@ class CreditManagementTest extends BuckarooTestCase
      */
     public function it_creates_a_credit_management_terminate_payment_plan()
     {
-        $response = $this->buckaroo->payment('credit_management')->terminatePaymentPlan([
+        $response = $this->buckaroo->method('credit_management')->terminatePaymentPlan([
             'includedInvoiceKey'        => '20D09973FB5C4DBC9A33DB0F4F707xxx',
         ]);
 
@@ -175,7 +175,7 @@ class CreditManagementTest extends BuckarooTestCase
      */
     public function it_creates_a_credit_management_pause_invoice()
     {
-        $response = $this->buckaroo->payment('credit_management')->pauseInvoice([
+        $response = $this->buckaroo->method('credit_management')->pauseInvoice([
             'invoice'               => 'Testinvoice184915'
         ]);
 
@@ -188,7 +188,7 @@ class CreditManagementTest extends BuckarooTestCase
      */
     public function it_creates_a_credit_management_unpause_invoice()
     {
-        $response = $this->buckaroo->payment('credit_management')->unpauseInvoice([
+        $response = $this->buckaroo->method('credit_management')->unpauseInvoice([
             'invoice'               => 'Testinvoice184915'
         ]);
 
@@ -201,7 +201,7 @@ class CreditManagementTest extends BuckarooTestCase
      */
     public function it_creates_a_credit_management_invoice_info()
     {
-        $response = $this->buckaroo->payment('credit_management')->invoiceInfo([
+        $response = $this->buckaroo->method('credit_management')->invoiceInfo([
             'invoice'               => 'INV001',
             'invoices' => [ // If you want to check multiple invoices
                 [
@@ -222,7 +222,7 @@ class CreditManagementTest extends BuckarooTestCase
      */
     public function it_creates_a_credit_management_debtor_info()
     {
-        $response = $this->buckaroo->payment('credit_management')->debtorInfo([
+        $response = $this->buckaroo->method('credit_management')->debtorInfo([
             'debtor' => [
                 'code'               => 'TestDebtor123123'
             ]
@@ -237,7 +237,7 @@ class CreditManagementTest extends BuckarooTestCase
      */
     public function it_creates_a_credit_management_add_or_update_product_lines()
     {
-        $response = $this->buckaroo->payment('credit_management')->addOrUpdateProductLines([
+        $response = $this->buckaroo->method('credit_management')->addOrUpdateProductLines([
             'invoiceKey'      => 'xxxxxxxxxxxxxxxxxxxxxxxx',
             'articles'      => [
                 [
@@ -272,7 +272,7 @@ class CreditManagementTest extends BuckarooTestCase
      */
     public function it_creates_a_credit_management_resume_debtor_file()
     {
-        $response = $this->buckaroo->payment('credit_management')->resumeDebtorFile([
+        $response = $this->buckaroo->method('credit_management')->resumeDebtorFile([
             'debtorFileGuid'    => 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
         ]);
 
@@ -285,7 +285,7 @@ class CreditManagementTest extends BuckarooTestCase
      */
     public function it_creates_a_credit_management_pause_debtor_file()
     {
-        $response = $this->buckaroo->payment('credit_management')->pauseDebtorFile([
+        $response = $this->buckaroo->method('credit_management')->pauseDebtorFile([
             'debtorFileGuid'    => 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
         ]);
 

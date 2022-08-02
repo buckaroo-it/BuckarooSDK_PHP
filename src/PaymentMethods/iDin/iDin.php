@@ -2,7 +2,7 @@
 
 namespace Buckaroo\PaymentMethods\iDin;
 
-use Buckaroo\Models\PayPayload;
+use Buckaroo\Models\Payload\PayPayload;
 use Buckaroo\PaymentMethods\iDin\Models\Issuer;
 use Buckaroo\PaymentMethods\iDin\Service\ParameterKeys\IssuerAdapter;
 use Buckaroo\PaymentMethods\PaymentMethod;

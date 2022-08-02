@@ -7,7 +7,7 @@ use Buckaroo\Buckaroo;
 $buckaroo = new Buckaroo($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
 //Pay
-$response = $buckaroo->payment('alipay')->pay([
+$response = $buckaroo->method('alipay')->pay([
     'amountDebit' => 10,
     'invoice' => uniqid(),
     'serviceParameters' => [
@@ -16,7 +16,7 @@ $response = $buckaroo->payment('alipay')->pay([
 ]);
 
 //Refund
-$response = $buckaroo->payment('alipay')->refund([
+$response = $buckaroo->method('alipay')->refund([
     'amountCredit' => 10,
     'invoice'       => 'testinvoice 123',
     'originalTransactionKey' => '2D04704995B74D679AACC59F87XXXXXX',

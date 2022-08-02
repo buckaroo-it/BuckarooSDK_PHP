@@ -9,25 +9,30 @@ class DefaultLogger implements Subject
 {
     protected array $observers  = [];
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->attach(new Monolog());
 
-        if(($_ENV['BPE_REPORT_ERROR'] ?? false) === 'true') {
+        if(($_ENV['BPE_REPORT_ERROR'] ?? false) === 'true')
+        {
             $this->attach(new ErrorReporter());
         }
     }
 
     public function attach($observer)
     {
-        if(is_array($observer)) {
-            foreach($observer as $singleObserver) {
+        if(is_array($observer))
+        {
+            foreach($observer as $singleObserver)
+            {
                 $this->attach($singleObserver);
             }
 
             return $this;
         }
 
-        if($observer instanceof Observer) {
+        if($observer instanceof Observer)
+        {
             $this->observers[] = $observer;
         }
 

@@ -12,7 +12,7 @@ class TinkaTest extends BuckarooTestCase
      */
     public function it_creates_a_tinka_payment()
     {
-        $response = $this->buckaroo->payment('tinka')->pay($this->getPaymentPayload());
+        $response = $this->buckaroo->method('tinka')->pay($this->getPaymentPayload());
 
         $this->assertTrue($response->isPendingProcessing());
     }
@@ -22,7 +22,7 @@ class TinkaTest extends BuckarooTestCase
      */
     public function it_creates_a_tinka_refund()
     {
-        $response = $this->buckaroo->payment('tinka')->refund([
+        $response = $this->buckaroo->method('tinka')->refund([
             'amountCredit' => 10,
             'invoice'       => 'testinvoice 123',
             'originalTransactionKey' => '2D04704995B74D679AACC59F87XXXXXX'

@@ -12,7 +12,7 @@ class CreditClickTest extends BuckarooTestCase
      */
     public function it_creates_a_creditclick_payment()
     {
-        $response = $this->buckaroo->payment('creditclick')->pay([
+        $response = $this->buckaroo->method('creditclick')->pay([
             'amountDebit' => 10,
             'invoice' => uniqid(),
             'customer'      => [
@@ -30,7 +30,7 @@ class CreditClickTest extends BuckarooTestCase
      */
     public function it_creates_a_creditclick_refund()
     {
-        $response = $this->buckaroo->payment('creditclick')->refund([
+        $response = $this->buckaroo->method('creditclick')->refund([
             'amountCredit'              => 10,
             'invoice'                   => 'testinvoice 123',
             'description'               => 'refund',

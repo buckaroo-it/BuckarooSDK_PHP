@@ -12,7 +12,7 @@ class EPSTest extends BuckarooTestCase
      */
     public function it_creates_a_eps_payment()
     {
-        $response = $this->buckaroo->payment('eps')->pay([
+        $response = $this->buckaroo->method('eps')->pay([
             'invoice' => uniqid(),
             'amountDebit' => 10.10
         ]);
@@ -25,7 +25,7 @@ class EPSTest extends BuckarooTestCase
      */
     public function it_creates_a_eps_refund()
     {
-        $response = $this->buckaroo->payment('eps')->refund([
+        $response = $this->buckaroo->method('eps')->refund([
             'amountCredit'              => 10,
             'invoice'                   => 'testinvoice 123',
             'description'               => 'refund',

@@ -13,7 +13,7 @@ class SubscriptionsTest extends BuckarooTestCase
      */
     public function it_creates_a_subscription()
     {
-        $response = $this->buckaroo->payment('subscriptions')->create([
+        $response = $this->buckaroo->method('subscriptions')->create([
             'rate_plans'        => [
                 'add'        => [
                     'startDate'         => carbon()->format('Y-m-d'),
@@ -35,7 +35,7 @@ class SubscriptionsTest extends BuckarooTestCase
      */
     public function it_creates_a_combined_subscription()
     {
-        $subscriptions = $this->buckaroo->payment('subscriptions')->manually()->createCombined([
+        $subscriptions = $this->buckaroo->method('subscriptions')->manually()->createCombined([
             'includeTransaction'        => false,
             'transactionVatPercentage'  => 5,
             'configurationCode'         => 'xxxxx',
@@ -68,7 +68,7 @@ class SubscriptionsTest extends BuckarooTestCase
             ]
         ]);
 
-        $response = $this->buckaroo->payment('ideal')->combine($subscriptions)->pay([
+        $response = $this->buckaroo->method('ideal')->combine($subscriptions)->pay([
             'invoice'       => uniqid(),
             'amountDebit' => 10.10,
             'issuer' => 'ABNANL2A'
@@ -83,7 +83,7 @@ class SubscriptionsTest extends BuckarooTestCase
      */
     public function it_updates_subscription()
     {
-        $response = $this->buckaroo->payment('subscriptions')->update([
+        $response = $this->buckaroo->method('subscriptions')->update([
             'subscriptionGuid'  => 'FC512FC9CC3A485D8CF3D1804FF6xxxx',
             'configurationCode' => '9wqe32ew',
             'rate_plans'        => [
@@ -109,12 +109,12 @@ class SubscriptionsTest extends BuckarooTestCase
      */
     public function it_updates_combined_subscription()
     {
-        $subscription = $this->buckaroo->payment('subscriptions')->manually()->updateCombined([
+        $subscription = $this->buckaroo->method('subscriptions')->manually()->updateCombined([
             'startRecurrent'            => true,
             'subscriptionGuid'        => '65EB06079D854B0C9A9ECB0E2C1Cxxxx'
         ]);
 
-        $response = $this->buckaroo->payment('ideal')->combine($subscription)->pay([
+        $response = $this->buckaroo->method('ideal')->combine($subscription)->pay([
             'invoice'       => uniqid(),
             'amountDebit' => 10.10,
             'issuer' => 'ABNANL2A'
@@ -130,7 +130,7 @@ class SubscriptionsTest extends BuckarooTestCase
      */
     public function it_stops_subscription()
     {
-        $response = $this->buckaroo->payment('subscriptions')->stop([
+        $response = $this->buckaroo->method('subscriptions')->stop([
             'subscriptionGuid'        => 'A8A3DF828F0E4706B50191D3D1C88xxx'
         ]);
 
@@ -143,7 +143,7 @@ class SubscriptionsTest extends BuckarooTestCase
      */
     public function it_get_info_of_subscription()
     {
-        $response = $this->buckaroo->payment('subscriptions')->info([
+        $response = $this->buckaroo->method('subscriptions')->info([
             'subscriptionGuid'        => '6ABDB214C4944B5C8638420CE9ECxxxx'
         ]);
 
@@ -156,7 +156,7 @@ class SubscriptionsTest extends BuckarooTestCase
      */
     public function it_delete_payment_config_of_subscription()
     {
-        $response = $this->buckaroo->payment('subscriptions')->deletePaymentConfig([
+        $response = $this->buckaroo->method('subscriptions')->deletePaymentConfig([
             'subscriptionGuid'        => '6ABDB214C4944B5C8638420CE9ECxxxx'
         ]);
 
@@ -169,7 +169,7 @@ class SubscriptionsTest extends BuckarooTestCase
      */
     public function it_pauses_of_subscription()
     {
-        $response = $this->buckaroo->payment('subscriptions')->pause([
+        $response = $this->buckaroo->method('subscriptions')->pause([
             'resumeDate'                => carbon()->addDays(10)->format('Y-m-d'),
             'subscriptionGuid'        => '6ABDB214C4944B5C8638420CE9ECxxxx'
         ]);
@@ -183,7 +183,7 @@ class SubscriptionsTest extends BuckarooTestCase
      */
     public function it_resumes_of_subscription()
     {
-        $response = $this->buckaroo->payment('subscriptions')->resume([
+        $response = $this->buckaroo->method('subscriptions')->resume([
             'resumeDate'                => carbon()->addDays(10)->format('Y-m-d'),
             'subscriptionGuid'        => '6ABDB214C4944B5C8638420CE9ECxxxx'
         ]);

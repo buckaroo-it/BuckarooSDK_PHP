@@ -1,6 +1,6 @@
 <?php
 
-namespace Buckaroo\Models;
+namespace Buckaroo\Models\Payload;
 
 class RefundPayload extends Payload
 {

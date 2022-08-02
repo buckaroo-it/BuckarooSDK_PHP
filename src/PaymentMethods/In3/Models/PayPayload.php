@@ -4,7 +4,7 @@ namespace Buckaroo\PaymentMethods\In3\Models;
 
 use Buckaroo\Models\ClientIP;
 
-class PayPayload extends \Buckaroo\Models\PayPayload
+class PayPayload extends \Buckaroo\Models\Payload\PayPayload
 {
     protected ClientIP $clientIP;
 

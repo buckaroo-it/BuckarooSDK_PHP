@@ -7,7 +7,7 @@ use Buckaroo\Buckaroo;
 $buckaroo = new Buckaroo($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
 //Pay
-$response = $buckaroo->payment('afterpaydigiaccept')->pay([
+$response = $buckaroo->method('afterpaydigiaccept')->pay([
     'amountDebit'       => 40,
     'order'             => uniqid(),
     'invoice'           => uniqid(),
@@ -58,7 +58,7 @@ $response = $buckaroo->payment('afterpaydigiaccept')->pay([
 ]);
 
 //Refund
-$response = $buckaroo->payment('afterpaydigiaccept')->refund([
+$response = $buckaroo->method('afterpaydigiaccept')->refund([
     'amountCredit' => 10,
     'invoice' => '10000480',
     'originalTransactionKey' => '9AA4C81A08A84FA7B68E6A6A6291XXXX'

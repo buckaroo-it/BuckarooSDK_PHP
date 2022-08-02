@@ -13,9 +13,9 @@ class AfterpayDigiAcceptTest extends BuckarooTestCase
      */
     public function it_creates_a_afterpaydigiaccept_payment()
     {
-        $response = $this->buckaroo->payment('afterpaydigiaccept')->pay($this->getPaymentPayload());
+        $response = $this->buckaroo->method('afterpaydigiaccept')->pay($this->getPaymentPayload());
 
-        $this->assertTrue($response->isRejected());
+        $this->assertTrue($response->isSuccess());
     }
 
     /**
@@ -24,7 +24,7 @@ class AfterpayDigiAcceptTest extends BuckarooTestCase
      */
     public function it_creates_a_afterpaydigiaccept_refund()
     {
-        $response = $this->buckaroo->payment('afterpaydigiaccept')->refund([
+        $response = $this->buckaroo->method('afterpaydigiaccept')->refund([
             'amountCredit' => 10,
             'invoice' => '10000480',
             'originalTransactionKey' => '9AA4C81A08A84FA7B68E6A6A6291XXXX'

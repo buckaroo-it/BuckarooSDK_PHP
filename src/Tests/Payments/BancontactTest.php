@@ -12,7 +12,7 @@ class BancontactTest extends BuckarooTestCase
      */
     public function it_creates_a_bancontact_payment()
     {
-        $response = $this->buckaroo->payment('bancontactmrcash')->pay([
+        $response = $this->buckaroo->method('bancontactmrcash')->pay([
             'invoice' => uniqid(),
             'amountDebit' => 10.10,
             'saveToken' => true
@@ -26,7 +26,7 @@ class BancontactTest extends BuckarooTestCase
      */
     public function it_creates_a_bancontact_refund()
     {
-        $response = $this->buckaroo->payment('bancontactmrcash')->refund([
+        $response = $this->buckaroo->method('bancontactmrcash')->refund([
             'amountCredit' => 10,
             'invoice' => '10000480',
             'originalTransactionKey' => '0EF39AA94BD64FF38F1540DEB6XXXXXX'
@@ -41,7 +41,7 @@ class BancontactTest extends BuckarooTestCase
      */
     public function it_creates_a_bancontact_encrypted_payment()
     {
-        $response = $this->buckaroo->payment('bancontactmrcash')->payEncrypted([
+        $response = $this->buckaroo->method('bancontactmrcash')->payEncrypted([
             'invoice' => uniqid(),
             'amountDebit'       => 10.10,
             'description'       => 'Bancontact PayEncrypted Test 123',
@@ -57,7 +57,7 @@ class BancontactTest extends BuckarooTestCase
      */
     public function it_creates_a_bancontact_recurrent_payment()
     {
-        $response = $this->buckaroo->payment('bancontactmrcash')->payRecurrent([
+        $response = $this->buckaroo->method('bancontactmrcash')->payRecurrent([
             'invoice'                   => 'testinvoice 123',
             'amountDebit'               => 10.50,
             'originalTransactionKey'    => '91D08EC01F414926A4CA29C059XXXXXX',
@@ -72,7 +72,7 @@ class BancontactTest extends BuckarooTestCase
      */
     public function it_creates_a_bancontact_authenticate()
     {
-        $response = $this->buckaroo->payment('bancontactmrcash')->authenticate([
+        $response = $this->buckaroo->method('bancontactmrcash')->authenticate([
             'invoice'                   => 'Bancontact Authenticate SaveToken',
             'description'               => 'Bancontact Authenticate SaveToken',
             'amountDebit'               => 0.02,

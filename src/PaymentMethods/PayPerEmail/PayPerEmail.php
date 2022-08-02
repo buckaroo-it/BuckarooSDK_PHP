@@ -2,7 +2,7 @@
 
 namespace Buckaroo\PaymentMethods\PayPerEmail;
 
-use Buckaroo\Models\PayPayload;
+use Buckaroo\Models\Payload\PayPayload;
 use Buckaroo\PaymentMethods\PaymentMethod;
 use Buckaroo\PaymentMethods\PayPerEmail\Models\PaymentInvitation;
 

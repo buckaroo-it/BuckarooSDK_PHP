@@ -12,7 +12,7 @@ class BelfiusTest extends BuckarooTestCase
      */
     public function it_creates_a_belfius_payment()
     {
-        $response = $this->buckaroo->payment('belfius')->pay([
+        $response = $this->buckaroo->method('belfius')->pay([
             'amountDebit' => 10.10,
             'invoice' => uniqid(),
         ]);
@@ -25,7 +25,7 @@ class BelfiusTest extends BuckarooTestCase
      */
     public function it_creates_a_belfius_refund()
     {
-        $response = $this->buckaroo->payment('belfius')->refund([
+        $response = $this->buckaroo->method('belfius')->refund([
             'amountCredit' => 10,
             'invoice' => '10000480',
             'originalTransactionKey' => '0EF39AA94BD64FF38F1540DEB6XXXXXX'

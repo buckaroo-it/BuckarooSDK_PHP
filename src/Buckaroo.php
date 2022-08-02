@@ -24,9 +24,7 @@ namespace Buckaroo;
 use Buckaroo\Config\Config;
 use Buckaroo\Config\DefaultConfig;
 use Buckaroo\Exceptions\BuckarooException;
-use Buckaroo\Handlers\Logging\DefaultLogger;
 use Buckaroo\Handlers\Logging\Observer as LoggingObserver;
-use Buckaroo\Handlers\Logging\Subject as LoggingSubject;
 use Buckaroo\PaymentMethods\PaymentFacade;
 use Buckaroo\Transaction\Client;
 
@@ -46,7 +44,8 @@ class Buckaroo
      * @param string $secretKey
      * @param string|null $mode
      */
-    public function __construct(string $websiteKey, string $secretKey, string $mode = null) {
+    public function __construct(string $websiteKey, string $secretKey, string $mode = null)
+    {
         $this->config = $this->getConfig($websiteKey, $secretKey, $mode);
 
         $this->client = new Client($this->config);
@@ -56,7 +55,7 @@ class Buckaroo
      * @param string $method
      * @return PaymentFacade
      */
-    public function payment(string $method)
+    public function method(string $method): PaymentFacade
     {
         return new PaymentFacade($this->client, $method);
     }

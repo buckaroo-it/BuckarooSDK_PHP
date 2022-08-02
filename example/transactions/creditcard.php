@@ -7,7 +7,7 @@ use Buckaroo\Buckaroo;
 $buckaroo = new Buckaroo($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
 //Pay
-$response = $buckaroo->payment('creditcard')->pay([
+$response = $buckaroo->method('creditcard')->pay([
     'amountDebit' => 10,
     'invoice' => uniqid(),
     'serviceParameters' => [
@@ -16,7 +16,7 @@ $response = $buckaroo->payment('creditcard')->pay([
 ]);
 
 //Pay Encrypted
-$response = $buckaroo->payment('creditcard')->payEncrypted([
+$response = $buckaroo->method('creditcard')->payEncrypted([
     'amountDebit' => 10,
     'invoice' => uniqid(),
     'serviceParameters' => [
@@ -26,7 +26,7 @@ $response = $buckaroo->payment('creditcard')->payEncrypted([
 ]);
 
 //Pay with security code
-$response = $buckaroo->payment('creditcard')->payWithSecurityCode([
+$response = $buckaroo->method('creditcard')->payWithSecurityCode([
     'amountDebit' => 10,
     'invoice' => uniqid(),
     'originalTransactionKey'        => '6C5DBB69E74644958F8C25199514DC6C',
@@ -37,7 +37,7 @@ $response = $buckaroo->payment('creditcard')->payWithSecurityCode([
 ]);
 
 //Refund
-$response = $buckaroo->payment('creditcard')->refund([
+$response = $buckaroo->method('creditcard')->refund([
     'amountCredit' => 10,
     'invoice' => 'testinvoice 123',
     'originalTransactionKey'        => '13FAF43579D94F5FB8119A6819XXXXXX',
@@ -47,7 +47,7 @@ $response = $buckaroo->payment('creditcard')->refund([
 ]);
 
 //Authorize
-$response = $buckaroo->payment('creditcard')->authorize([
+$response = $buckaroo->method('creditcard')->authorize([
     'amountDebit' => 10,
     'invoice' => 'testinvoice 123',
     'serviceParameters' => [
@@ -56,7 +56,7 @@ $response = $buckaroo->payment('creditcard')->authorize([
 ]);
 
 //Authorize Encrypted
-$response = $buckaroo->payment('creditcard')->authorizeEncrypted([
+$response = $buckaroo->method('creditcard')->authorizeEncrypted([
     'amountDebit' => 10,
     'invoice' => uniqid(),
     'serviceParameters' => [
@@ -66,7 +66,7 @@ $response = $buckaroo->payment('creditcard')->authorizeEncrypted([
 ]);
 
 //Authorize with security code
-$response = $buckaroo->payment('creditcard')->authorizeWithSecurityCode([
+$response = $buckaroo->method('creditcard')->authorizeWithSecurityCode([
     'amountDebit' => 10,
     'invoice' => uniqid(),
     'originalTransactionKey'        => '6C5DBB69E74644958F8C25199514DC6C',
@@ -77,7 +77,7 @@ $response = $buckaroo->payment('creditcard')->authorizeWithSecurityCode([
 ]);
 
 //Capture
-$response = $buckaroo->payment('creditcard')->capture([
+$response = $buckaroo->method('creditcard')->capture([
     'amountDebit' => 10,
     'invoice' => uniqid(),
     'originalTransactionKey'        => '6C5DBB69E74644958F8C25199514DC6C',
@@ -88,7 +88,7 @@ $response = $buckaroo->payment('creditcard')->capture([
 ]);
 
 //Pay Recurrent
-$response = $buckaroo->payment('creditcard')->payRecurrent([
+$response = $buckaroo->method('creditcard')->payRecurrent([
     'amountDebit' => 10,
     'invoice' => uniqid(),
     'originalTransactionKey'        => '6C5DBB69E74644958F8C25199514DC6C',

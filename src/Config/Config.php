@@ -23,16 +23,16 @@ abstract class Config implements Loggable
 
     protected Subject $logger;
 
-    public function __construct(string $websiteKey, string $secretKey, string $mode = null, Subject $logger = null)
+    public function __construct(string $websiteKey, string $secretKey, ?string $mode = null, ?string $currency = null, ?string $returnURL = null, ?string $returnURLCancel = null, ?string $pushURL = null, Subject $logger = null)
     {
         $this->websiteKey = $websiteKey;
         $this->secretKey = $secretKey;
-        $this->mode = ($mode? $mode : ($_ENV['BPE_MODE'] ?? 'test'));
 
-        $this->currency = $_ENV['BPE_CURRENCY_CODE'] ?? 'EUR';
-        $this->returnURL = $_ENV['BPE_RETURN_URL'] ?? '';
-        $this->returnURLCancel = $_ENV['BPE_RETURN_URL_CANCEL'] ?? '';
-        $this->pushURL = $_ENV['BPE_PUSH_URL'] ?? '';
+        $this->mode = $_ENV['BPE_MODE'] ?? $mode ?? 'test';
+        $this->currency = $_ENV['BPE_CURRENCY_CODE'] ?? $currency ?? 'EUR';
+        $this->returnURL = $_ENV['BPE_RETURN_URL'] ?? $returnURL ?? '';
+        $this->returnURLCancel = $_ENV['BPE_RETURN_URL_CANCEL'] ?? $returnURLCancel ?? '';
+        $this->pushURL = $_ENV['BPE_PUSH_URL'] ?? $pushURL ?? '';
 
         $this->setLogger($logger ?? new DefaultLogger());
     }
@@ -60,57 +60,48 @@ abstract class Config implements Loggable
         return $this->mode;
     }
 
-    public function currency(?string $currency = null): string
+    public function currency(): string
     {
-        if($currency)
-        {
-            $this->currency = $currency;
-        }
-
         return $this->currency;
     }
 
-    public function returnURL(?string $returnURL = null): string
+    public function returnURL(): string
     {
-        if($returnURL)
-        {
-            $this->returnURL = $returnURL;
-        }
-
         return $this->returnURL;
     }
 
-    public function returnURLCancel(?string $returnURLCancel = null): string
+    public function returnURLCancel(): string
     {
-        if($returnURLCancel)
-        {
-            $this->returnURLCancel = $returnURLCancel;
-        }
-
         return $this->returnURLCancel;
     }
 
-    public function pushURL(?string $pushURL = null): string
+    public function pushURL(): string
     {
-        if($pushURL)
-        {
-            $this->pushURL = $pushURL;
-        }
-
         return $this->pushURL;
     }
 
     public function merge(array $payload)
     {
+        $payload = $this->filterNonUpdatableKeys($payload);
+
         foreach($payload as $key => $value)
         {
-            if(method_exists($this, $key))
+            if(property_exists($this, $key))
             {
-                $this->$key($value);
+                $this->$key = $value;
             }
         }
 
         return $this;
+    }
+
+    private function filterNonUpdatableKeys($payload)
+    {
+        $filter = array('websiteKey', 'secretKey');
+
+        return array_filter($payload, function($k) use ($filter){
+            return !in_array($k, $filter);
+        }, ARRAY_FILTER_USE_KEY);
     }
 
     public function get(array $properties = [])

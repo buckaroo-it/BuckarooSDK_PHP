@@ -8,7 +8,7 @@ $buckaroo = new Buckaroo($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
 //Also accepts json
 //Pay
-$response = $buckaroo->payment('billink')->pay([
+$response = $buckaroo->method('billink')->pay([
     'amountDebit'       => 50.30,
     'order'             => uniqid(),
     'invoice'           => uniqid(),
@@ -64,7 +64,7 @@ $response = $buckaroo->payment('billink')->pay([
 ]);
 
 //Refund
-$response = $buckaroo->payment('billink')->refund([
+$response = $buckaroo->method('billink')->refund([
     'amountCredit' => 10,
     'invoice'       => 'testinvoice 123',
     'originalTransactionKey' => '4E8BD922192746C3918BF4077CXXXXXX'

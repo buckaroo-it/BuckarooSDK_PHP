@@ -3,8 +3,8 @@
 namespace Buckaroo\PaymentMethods;
 
 use Buckaroo\Models\Model;
-use Buckaroo\Models\PayPayload;
-use Buckaroo\Models\RefundPayload;
+use Buckaroo\Models\Payload\PayPayload;
+use Buckaroo\Models\Payload\RefundPayload;
 
 abstract class PayablePaymentMethod extends PaymentMethod
 {

@@ -12,7 +12,7 @@ class AlipayTest extends BuckarooTestCase
      */
     public function it_creates_a_alipay_payment()
     {
-        $response = $this->buckaroo->payment('alipay')->pay([
+        $response = $this->buckaroo->method('alipay')->pay([
             'amountDebit' => 10,
             'invoice' => uniqid(),
             'useMobileView' => true
@@ -26,7 +26,7 @@ class AlipayTest extends BuckarooTestCase
      */
     public function it_creates_a_alipay_refund()
     {
-        $response = $this->buckaroo->payment('alipay')->refund([
+        $response = $this->buckaroo->method('alipay')->refund([
             'amountCredit' => 10,
             'invoice'       => 'testinvoice 123',
             'originalTransactionKey' => '2D04704995B74D679AACC59F87XXXXXX',

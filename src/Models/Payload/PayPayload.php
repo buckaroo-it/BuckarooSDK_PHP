@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Buckaroo\Models;
+namespace Buckaroo\Models\Payload;
 
 class PayPayload extends Payload
 {

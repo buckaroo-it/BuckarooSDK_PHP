@@ -13,7 +13,7 @@ class PayPerEmailTest extends BuckarooTestCase
      */
     public function it_invites_pay_per_email()
     {
-        $response = $this->buckaroo->payment('payperemail')->paymentInvitation([
+        $response = $this->buckaroo->method('payperemail')->paymentInvitation([
             'amountDebit'           => 10,
             'invoice'               => 'testinvoice 123',
             'merchantSendsEmail'    => false,
@@ -37,7 +37,7 @@ class PayPerEmailTest extends BuckarooTestCase
      */
     public function it_invites_pay_per_email_with_attachments()
     {
-        $response = $this->buckaroo->payment('payperemail')->paymentInvitation([
+        $response = $this->buckaroo->method('payperemail')->paymentInvitation([
             'amountDebit'           => 10,
             'invoice'               => 'testinvoice 123',
             'merchantSendsEmail'    => false,

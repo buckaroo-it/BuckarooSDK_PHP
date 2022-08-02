@@ -11,7 +11,7 @@ class BillinkTest extends BuckarooTestCase
      */
     public function it_creates_a_billink_payment()
     {
-        $response = $this->buckaroo->payment('billink')->pay($this->getPaymentPayload());
+        $response = $this->buckaroo->method('billink')->pay($this->getPaymentPayload());
 
         $this->assertTrue($response->isSuccess());
     }
@@ -21,7 +21,7 @@ class BillinkTest extends BuckarooTestCase
      */
     public function it_creates_a_billink_authorize()
     {
-        $response = $this->buckaroo->payment('billink')->authorize($this->getPaymentPayload());
+        $response = $this->buckaroo->method('billink')->authorize($this->getPaymentPayload());
 
         $this->assertTrue($response->isSuccess());
     }
@@ -31,7 +31,7 @@ class BillinkTest extends BuckarooTestCase
      */
     public function it_creates_a_billink_capture()
     {
-        $response = $this->buckaroo->payment('billink')->capture([
+        $response = $this->buckaroo->method('billink')->capture([
             'originalTransactionKey' => '74AD098CCFAA4F739FE16279B5059B6B', //Set transaction key of the transaction to capture
             'invoice' => '62905fa2650f4', //Set invoice id
             'amountDebit' => 50.30, //set amount to capture
@@ -63,7 +63,7 @@ class BillinkTest extends BuckarooTestCase
      */
     public function it_creates_a_billink_refund()
     {
-        $response = $this->buckaroo->payment('billink')->refund([
+        $response = $this->buckaroo->method('billink')->refund([
             'amountCredit' => 10,
             'invoice'       => 'testinvoice 123',
             'originalTransactionKey' => '4E8BD922192746C3918BF4077CXXXXXX'

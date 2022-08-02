@@ -12,7 +12,7 @@ class PaypalTest extends BuckarooTestCase
      */
     public function it_creates_a_paypal_payment()
     {
-        $response = $this->buckaroo->payment('paypal')->pay([
+        $response = $this->buckaroo->method('paypal')->pay([
             'amountDebit' => 10,
             'invoice' => uniqid()
         ]);
@@ -25,7 +25,7 @@ class PaypalTest extends BuckarooTestCase
      */
     public function it_creates_a_paypal_recurrent_payment()
     {
-        $response = $this->buckaroo->payment('paypal')->payRecurrent([
+        $response = $this->buckaroo->method('paypal')->payRecurrent([
             'amountDebit' => 10,
             'originalTransactionKey' => 'C32C0B52E1FE4A37835FFB1716XXXXXX',
             'invoice' => uniqid()
@@ -39,7 +39,7 @@ class PaypalTest extends BuckarooTestCase
      */
     public function it_creates_a_paypal_extra_info()
     {
-        $response = $this->buckaroo->payment('paypal')->extraInfo([
+        $response = $this->buckaroo->method('paypal')->extraInfo([
             'amountDebit' => 10,
             'invoice' => uniqid(),
             'customer'  => [
@@ -66,7 +66,7 @@ class PaypalTest extends BuckarooTestCase
      */
     public function it_creates_a_paypal_refund()
     {
-        $response = $this->buckaroo->payment('paypal')->refund([
+        $response = $this->buckaroo->method('paypal')->refund([
             'amountCredit' => 10,
             'invoice'       => 'testinvoice 123',
             'originalTransactionKey' => '2D04704995B74D679AACC59F87XXXXXX'
@@ -80,7 +80,7 @@ class PaypalTest extends BuckarooTestCase
      */
     public function it_creates_a_combined_subscriptions_with_paypal_and_extra_info()
     {
-        $subscriptions = $this->buckaroo->payment('subscriptions')->manually()->createCombined([
+        $subscriptions = $this->buckaroo->method('subscriptions')->manually()->createCombined([
             'includeTransaction'        => false,
             'transactionVatPercentage'  => 5,
             'configurationCode'         => 'xxxxx',
@@ -113,7 +113,7 @@ class PaypalTest extends BuckarooTestCase
             ]
         ]);
 
-        $paypal_extra_info = $this->buckaroo->payment('paypal')->manually()->extraInfo([
+        $paypal_extra_info = $this->buckaroo->method('paypal')->manually()->extraInfo([
             'amountDebit' => 10,
             'invoice' => uniqid(),
             'customer'  => [
@@ -132,7 +132,7 @@ class PaypalTest extends BuckarooTestCase
             ]
         ]);
 
-        $response = $this->buckaroo->payment('paypal')->combine([$subscriptions, $paypal_extra_info])->pay([
+        $response = $this->buckaroo->method('paypal')->combine([$subscriptions, $paypal_extra_info])->pay([
             'amountDebit' => 10,
             'invoice' => uniqid()
         ]);

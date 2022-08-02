@@ -13,6 +13,7 @@ class PayconiqTest extends BuckarooTestCase
     {
         $response = $this->buckaroo->payment('payconiq')->pay([
             'amountDebit' => 10,
+            'description' => 'Payment for testinvoice123',
             'invoice' => uniqid()
         ]);
 

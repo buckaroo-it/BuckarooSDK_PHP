@@ -13,7 +13,7 @@ class AfterpayTest extends BuckarooTestCase
      */
     public function it_creates_a_afterpay_payment()
     {
-        $response = $this->buckaroo->payment('afterpay')->pay($this->getPaymentPayload());
+        $response = $this->buckaroo->method('afterpay')->pay($this->getPaymentPayload());
 
         $this->assertTrue($response->isRejected());
     }
@@ -24,7 +24,7 @@ class AfterpayTest extends BuckarooTestCase
      */
     public function it_creates_a_afterpay_authorize()
     {
-        $response = $this->buckaroo->payment('afterpay')->authorize($this->getPaymentPayload());
+        $response = $this->buckaroo->method('afterpay')->authorize($this->getPaymentPayload());
 
         $this->assertTrue($response->isRejected());
     }
@@ -35,7 +35,7 @@ class AfterpayTest extends BuckarooTestCase
 //     */
 //    public function it_creates_a_afterpay_cancel_authorize()
 //    {
-//        $response = $this->buckaroo->payment('afterpay')->cancelAuthorize([
+//        $response = $this->buckaroo->method('afterpay')->cancelAuthorize([
 //            'amountCredit'              => 10,
 //            'originalTransactionKey'    => 'F86579ECED1D493887ECAE7C287BXXXX',
 //            'invoice'                   => 'testinvoice12345cvx'
@@ -50,7 +50,7 @@ class AfterpayTest extends BuckarooTestCase
      */
     public function it_creates_a_afterpay_capture()
     {
-        $response = $this->buckaroo->payment('afterpay')->capture($this->getPaymentPayload([
+        $response = $this->buckaroo->method('afterpay')->capture($this->getPaymentPayload([
             'originalTransactionKey'    => 'D5127080BA1D4644856FECDC560FXXXX'
         ]));
 
@@ -63,7 +63,7 @@ class AfterpayTest extends BuckarooTestCase
      */
     public function it_creates_a_afterpay_refund()
     {
-        $response = $this->buckaroo->payment('afterpay')->refund([
+        $response = $this->buckaroo->method('afterpay')->refund([
             'invoice'   => 'testinvoice 123', //Set invoice number of the transaction to refund
             'originalTransactionKey' => '4E8BD922192746C3918BF4077CXXXXXX', //Set transaction key of the transaction to refund
             'amountCredit' => 1.23

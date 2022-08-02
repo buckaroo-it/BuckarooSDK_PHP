@@ -20,7 +20,7 @@ class KBCTest extends BuckarooTestCase
      */
     public function it_creates_a_kbc_payment()
     {
-        $response = $this->buckaroo->payment('kbcpaymentbutton')->pay($this->paymentPayload);
+        $response = $this->buckaroo->method('kbcpaymentbutton')->pay($this->paymentPayload);
         $this->assertTrue($response->isPendingProcessing());
     }
 

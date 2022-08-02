@@ -2,7 +2,7 @@
 
 namespace Buckaroo\PaymentMethods\CreditManagement;
 
-use Buckaroo\Models\PayPayload;
+use Buckaroo\Models\Payload\PayPayload;
 use Buckaroo\PaymentMethods\CreditManagement\Models\AddOrUpdateProductLines;
 use Buckaroo\PaymentMethods\CreditManagement\Models\CreditNote;
 use Buckaroo\PaymentMethods\CreditManagement\Models\Debtor;

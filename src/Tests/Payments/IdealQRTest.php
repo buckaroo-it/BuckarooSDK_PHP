@@ -11,7 +11,7 @@ class IdealQRTest extends BuckarooTestCase
      */
     public function it_creates_a_ideal_qr()
     {
-        $response = $this->buckaroo->payment('ideal_qr')->generate([
+        $response = $this->buckaroo->method('ideal_qr')->generate([
             'description'           => 'Test purchase',
             'minAmount'             => '0.10',
             'maxAmount'             => '10.0',

@@ -20,7 +20,7 @@ class SofortTest extends BuckarooTestCase
      */
     public function it_creates_a_sofort_payment()
     {
-        $response = $this->buckaroo->payment('sofortueberweisung')->pay($this->paymentPayload);
+        $response = $this->buckaroo->method('sofortueberweisung')->pay($this->paymentPayload);
 
         $this->assertTrue($response->isPendingProcessing());
     }

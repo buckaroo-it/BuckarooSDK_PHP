@@ -13,7 +13,7 @@ class TransferTest extends BuckarooTestCase
      */
     public function it_creates_a_transfer_payment()
     {
-        $response = $this->buckaroo->payment('transfer')->pay([
+        $response = $this->buckaroo->method('transfer')->pay([
             'invoice' => uniqid(),
             'amountDebit' => 10.10,
             'email' => 'your@email.com',
@@ -35,7 +35,7 @@ class TransferTest extends BuckarooTestCase
      */
     public function it_creates_a_transfer_refund()
     {
-        $response = $this->buckaroo->payment('transfer')->refund([
+        $response = $this->buckaroo->method('transfer')->refund([
             'amountCredit' => 10,
             'invoice'       => 'testinvoice 123',
             'originalTransactionKey' => '2D04704995B74D679AACC59F87XXXXXX'

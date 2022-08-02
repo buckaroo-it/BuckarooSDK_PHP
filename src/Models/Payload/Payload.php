@@ -1,6 +1,10 @@
 <?php
 
-namespace Buckaroo\Models;
+namespace Buckaroo\Models\Payload;
+
+use Buckaroo\Models\AdditionalParameters;
+use Buckaroo\Models\ClientIP;
+use Buckaroo\Models\Model;
 
 class Payload extends Model
 {

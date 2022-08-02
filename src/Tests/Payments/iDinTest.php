@@ -11,7 +11,7 @@ class iDinTest extends BuckarooTestCase
      */
     public function it_identify_with_idin()
     {
-        $response = $this->buckaroo->payment('idin')->identify([
+        $response = $this->buckaroo->method('idin')->identify([
             'issuer' => 'BANKNL2Y'
         ]);
 
@@ -23,7 +23,7 @@ class iDinTest extends BuckarooTestCase
      */
     public function it_verify_with_idin()
     {
-        $response = $this->buckaroo->payment('idin')->verify([
+        $response = $this->buckaroo->method('idin')->verify([
             'issuer' => 'BANKNL2Y'
         ]);
 
@@ -35,7 +35,7 @@ class iDinTest extends BuckarooTestCase
      */
     public function it_login_with_idin()
     {
-        $response = $this->buckaroo->payment('idin')->login([
+        $response = $this->buckaroo->method('idin')->login([
             'issuer' => 'BANKNL2Y'
         ]);
 

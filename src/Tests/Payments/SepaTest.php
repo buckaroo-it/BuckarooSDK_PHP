@@ -28,7 +28,7 @@ class SepaTest extends BuckarooTestCase
      */
     public function it_creates_a_sepa_payment()
     {
-        $response = $this->buckaroo->payment('sepadirectdebit')->pay($this->paymentPayload);
+        $response = $this->buckaroo->method('sepadirectdebit')->pay($this->paymentPayload);
 
         $this->assertTrue($response->isPendingProcessing());
     }
@@ -39,7 +39,7 @@ class SepaTest extends BuckarooTestCase
      */
     public function it_creates_a_sepa_refund()
     {
-        $response = $this->buckaroo->payment('sepadirectdebit')->refund([
+        $response = $this->buckaroo->method('sepadirectdebit')->refund([
             'amountCredit' => 10,
             'invoice'       => 'testinvoice 123',
             'originalTransactionKey' => '3D175524FCF94C94A23B67E8DCXXXXXX'
@@ -54,7 +54,7 @@ class SepaTest extends BuckarooTestCase
      */
     public function it_creates_a_sepa_authorize()
     {
-        $response = $this->buckaroo->payment('sepadirectdebit')->authorize($this->paymentPayload);
+        $response = $this->buckaroo->method('sepadirectdebit')->authorize($this->paymentPayload);
 
         $this->assertTrue($response->isValidationFailure());
     }
@@ -65,7 +65,7 @@ class SepaTest extends BuckarooTestCase
      */
     public function it_creates_a_sepa_recurrent_payment()
     {
-        $response = $this->buckaroo->payment('sepadirectdebit')->payRecurrent([
+        $response = $this->buckaroo->method('sepadirectdebit')->payRecurrent([
             'amountDebit'               => 10,
             'originalTransactionKey'    => 'FDA9EEEEA53C42BF875C35C6C2B7xxxx',
             'invoice'                   => 'testinvoice 123',
@@ -81,7 +81,7 @@ class SepaTest extends BuckarooTestCase
      */
     public function it_creates_a_sepa_extra_info()
     {
-        $response = $this->buckaroo->payment('sepadirectdebit')->extraInfo([
+        $response = $this->buckaroo->method('sepadirectdebit')->extraInfo([
             'amountDebit'                   => 10,
             'invoice'                       => 'testinvoice 123',
             'iban'                          => 'NL13TEST0123456789',
@@ -111,7 +111,7 @@ class SepaTest extends BuckarooTestCase
      */
     public function it_creates_a_sepa_pay_with_emandate()
     {
-        $response = $this->buckaroo->payment('sepadirectdebit')->payWithEmandate([
+        $response = $this->buckaroo->method('sepadirectdebit')->payWithEmandate([
             'amountDebit'                   => 10,
             'invoice'                       => 'testinvoice 123',
             'mandateReference'              => '001D284C4A887F84756A1425A369997xxxx',

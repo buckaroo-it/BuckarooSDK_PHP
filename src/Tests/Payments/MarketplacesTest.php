@@ -11,7 +11,7 @@ class MarketplacesTest extends BuckarooTestCase
      */
     public function it_creates_marketplaces_split()
     {
-        $marketplace = $this->buckaroo->payment('marketplaces')->manually()->split([
+        $marketplace = $this->buckaroo->method('marketplaces')->manually()->split([
             'daysUntilTransfer' => 2,
             'marketplace'       => [
                 'amount'        => 10,
@@ -31,7 +31,7 @@ class MarketplacesTest extends BuckarooTestCase
             ]
         ]);
 
-        $response = $this->buckaroo->payment('ideal')->combine($marketplace)->pay([
+        $response = $this->buckaroo->method('ideal')->combine($marketplace)->pay([
             'invoice'       => uniqid(),
             'amountDebit' => 95.00,
             'issuer' => 'ABNANL2A'
@@ -45,7 +45,7 @@ class MarketplacesTest extends BuckarooTestCase
      */
     public function it_creates_marketplaces_transfer()
     {
-        $response = $this->buckaroo->payment('marketplaces')->transfer([
+        $response = $this->buckaroo->method('marketplaces')->transfer([
             'originalTransactionKey'   => 'D3732474ED0',
             'marketplace'       => [
                 'amount'        => 10,
@@ -68,7 +68,7 @@ class MarketplacesTest extends BuckarooTestCase
      */
     public function it_creates_marketplaces_refund()
     {
-        $marketplace = $this->buckaroo->payment('marketplaces')->manually()->refundSupplementary([
+        $marketplace = $this->buckaroo->method('marketplaces')->manually()->refundSupplementary([
             'sellers'            => [
                 [
                     'accountId'     => '789C60F316D24B088ACD471',
@@ -78,7 +78,7 @@ class MarketplacesTest extends BuckarooTestCase
             ]
         ]);
 
-        $response = $this->buckaroo->payment('ideal')->combine($marketplace)->refund([
+        $response = $this->buckaroo->method('ideal')->combine($marketplace)->refund([
             'invoice'   => 'testinvoice 123', //Set invoice number of the transaction to refund
             'originalTransactionKey' => '4E8BD922192746C3918BF4077CXXXXXX', //Set transaction key of the transaction to refund
             'amountCredit' => 30

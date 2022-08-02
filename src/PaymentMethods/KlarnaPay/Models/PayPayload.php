@@ -2,7 +2,7 @@
 
 namespace Buckaroo\PaymentMethods\KlarnaPay\Models;
 
-class PayPayload extends \Buckaroo\Models\PayPayload
+class PayPayload extends \Buckaroo\Models\Payload\PayPayload
 {
     protected string $servicesSelectableByClient;
     protected string $servicesExcludedForClient;

@@ -8,7 +8,7 @@ $buckaroo = new Buckaroo($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
 //Also accepts json
 //Create payment
-$response = $this->buckaroo->payment('ideal_qr')->generate([
+$response = $this->buckaroo->method('ideal_qr')->generate([
     'serviceParameters' => [
         'ideal_qr'      => [
             'description'           => 'Test purchase',

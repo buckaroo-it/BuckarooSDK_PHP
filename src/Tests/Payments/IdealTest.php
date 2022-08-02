@@ -56,7 +56,7 @@ class IdealTest extends BuckarooTestCase
      */
     public function it_creates_a_ideal_payment()
     {
-        $response = $this->buckaroo->payment('idealprocessing')->pay($this->paymentPayload);
+        $response = $this->buckaroo->method('idealprocessing')->pay($this->paymentPayload);
 
         $this->assertTrue($response->isPendingProcessing());
 
@@ -72,7 +72,7 @@ class IdealTest extends BuckarooTestCase
      */
     public function it_creates_a_ideal_refund()
     {
-        $response = $this->buckaroo->payment('ideal')->refund($this->refundPayload);
+        $response = $this->buckaroo->method('ideal')->refund($this->refundPayload);
 
         $this->assertTrue($response->isFailed());
     }

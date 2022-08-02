@@ -11,7 +11,7 @@ class RequestToPayTest extends BuckarooTestCase
 //     */
 //    public function it_creates_request_to_pay_payment()
 //    {
-//        $response = $this->buckaroo->payment("requesttopay")->pay([
+//        $response = $this->buckaroo->method("requesttopay")->pay([
 //            'amountDebit'       => 3.5,
 //            'invoice'           => uniqid(),
 //            'customer'      => [
@@ -27,7 +27,7 @@ class RequestToPayTest extends BuckarooTestCase
      */
     public function it_creates_a_request_to_pay_refund()
     {
-        $response = $this->buckaroo->payment('requesttopay')->refund([
+        $response = $this->buckaroo->method('requesttopay')->refund([
             'amountCredit' => 10,
             'invoice'       => 'testinvoice 123',
             'originalTransactionKey' => '2D04704995B74D679AACC59F87XXXXXX'

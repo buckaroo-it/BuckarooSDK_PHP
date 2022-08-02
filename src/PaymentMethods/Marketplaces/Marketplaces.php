@@ -2,7 +2,7 @@
 
 namespace Buckaroo\PaymentMethods\Marketplaces;
 
-use Buckaroo\Models\PayPayload;
+use Buckaroo\Models\Payload\PayPayload;
 use Buckaroo\PaymentMethods\Interfaces\Combinable;
 use Buckaroo\PaymentMethods\Marketplaces\Models\ServiceList;
 use Buckaroo\PaymentMethods\PaymentMethod;

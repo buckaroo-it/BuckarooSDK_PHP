@@ -11,7 +11,7 @@ class GiftcardsTest extends BuckarooTestCase
      */
     public function it_creates_a_giftcards_payment()
     {
-        $response = $this->buckaroo->payment('giftcard')->pay([
+        $response = $this->buckaroo->method('giftcard')->pay([
             'amountDebit'           => 10,
             'invoice'               => uniqid(),
             'name'                  => 'boekenbon',
@@ -27,7 +27,7 @@ class GiftcardsTest extends BuckarooTestCase
      */
     public function it_creates_a_giftcards_partial_payment()
     {
-        $giftCardResponse = $this->buckaroo->payment('giftcard')->pay([
+        $giftCardResponse = $this->buckaroo->method('giftcard')->pay([
             'amountDebit'           => 10,
             'invoice'               => uniqid(),
             'name'                  => 'boekenbon',
@@ -37,7 +37,7 @@ class GiftcardsTest extends BuckarooTestCase
 
         $this->assertTrue($giftCardResponse->isSuccess());
 
-        $response = $this->buckaroo->payment('ideal')->payRemainder([
+        $response = $this->buckaroo->method('ideal')->payRemainder([
             'originalTransactionKey'    => $giftCardResponse->data('RelatedTransactions')[0]['RelatedTransactionKey'],
             'invoice'                   => $giftCardResponse->data('Invoice'),
             'amountDebit'               => 10.10,
@@ -52,7 +52,7 @@ class GiftcardsTest extends BuckarooTestCase
      */
     public function it_creates_a_giftcards_refund()
     {
-        $response = $this->buckaroo->payment('giftcard')->refund([
+        $response = $this->buckaroo->method('giftcard')->refund([
             'amountCredit'              => 10,
             'invoice'                   => 'testinvoice 123',
             'originalTransactionKey'    => '2D04704995B74D679AACC59F87XXXXXX',

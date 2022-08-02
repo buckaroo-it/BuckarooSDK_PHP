@@ -2,7 +2,7 @@
 
 namespace Buckaroo\PaymentMethods\BuckarooWallet\Models;
 
-use Buckaroo\Models\Payload;
+use Buckaroo\Models\Payload\Payload;
 
 class DepositReservePayload extends Payload
 {
