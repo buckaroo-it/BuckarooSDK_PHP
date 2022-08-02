@@ -2,9 +2,10 @@
 
 namespace Buckaroo\PaymentMethods;
 
-use Buckaroo\Exceptions\SDKException;
+use Buckaroo\Exceptions\BuckarooException;
 use Buckaroo\PaymentMethods\Interfaces\Combinable;
 use Buckaroo\Services\PayloadService;
+use Buckaroo\Transaction\Client;
 
 class PaymentFacade
 {
@@ -12,7 +13,7 @@ class PaymentFacade
 
     private bool $isManually = false;
 
-    public function __construct($client, $method)
+    public function __construct(Client $client, string $method)
     {
         $this->client = $client;
 
@@ -60,6 +61,6 @@ class PaymentFacade
             return $this->paymentMethod->manually($this->isManually)->$name();
         }
 
-        throw new SDKException($this->client->getLogger(), "Payment method " . $name . " on payment " . $this->paymentMethod->paymentName() . " you requested does not exist.");
+        throw new BuckarooException($this->client->config()->getLogger(), "Payment method " . $name . " on payment " . $this->paymentMethod->paymentName() . " you requested does not exist.");
     }
 }
