@@ -1,4 +1,22 @@
 <?php
+/*
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MIT License
+ * It is available through the world-wide-web at this URL:
+ * https://tldrlegal.com/license/mit-license
+ * If you are unable to obtain it through the world-wide-web, please send an email
+ * to support@buckaroo.nl so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to newer
+ * versions in the future. If you wish to customize this module for your
+ * needs please contact support@buckaroo.nl for more information.
+ *
+ * @copyright Copyright (c) Buckaroo B.V.
+ * @license   https://tldrlegal.com/license/mit-license
+ */
 
 namespace Buckaroo\Tests\Payments;
 
@@ -29,8 +47,8 @@ class CreditManagementTest extends BuckarooTestCase
             'invoice'           => 'Billingtest101',
             'description'       => 'buckaroo_schema_test_PDF',
             'invoiceAmount'     => 217.80,
-            'invoiceDate'       => carbon()->format('Y-m-d'),
-            'dueDate'           => carbon()->addDays(30)->format('Y-m-d'),
+            'invoiceDate'       => '2022-01-01',
+            'dueDate'           => '1990-01-01',
             'schemeKey'         => '2amq34',
             'poNumber'          => 'PO-12345',
             'debtor'        => [
@@ -91,7 +109,7 @@ class CreditManagementTest extends BuckarooTestCase
                     'amountDebit'       => 10.10,
                     'iban'              => 'NL13TEST0123456789',
                     'bic'               => 'TESTNL2A',
-                    'collectdate'       => carbon()->addDays(60)->format('Y-m-d'),
+                    'collectdate'       => '2030-01-01',
                     'mandateReference'  => '1DCtestreference',
                     'mandateDate'       => '2022-07-03',
                     'customer'          => [
@@ -110,7 +128,7 @@ class CreditManagementTest extends BuckarooTestCase
     {
         $response = $this->buckaroo->method('credit_management')->createCreditNote([
                 'originalInvoiceNumber' => 'testinvoice1337',
-                'invoiceDate'           => carbon()->format('Y-m-d'),
+                'invoiceDate'           => '2022-01-01',
                 'invoiceAmount'         => 10.00,
                 'invoiceAmountVAT'      => 1.00,
                 'sendCreditNoteMessage' => 'info@buckaroo.nl'
@@ -146,7 +164,7 @@ class CreditManagementTest extends BuckarooTestCase
             'dossierNumber'             => 'PaymentplanJohnsmith123',
             'installmentCount'          => 2,
             'initialAmount'             => 100,
-            'startDate'                 => carbon()->addDays(20)->format('Y-m-d'),
+            'startDate'                 => '2030-01-01',
             'interval'                  => CreditManagementInstallmentInterval::MONTH,
             'paymentPlanCostAmount'     => 3.50,
             'paymentPlanCostAmountVat'  => 1.20,
@@ -295,12 +313,12 @@ class CreditManagementTest extends BuckarooTestCase
     private function invoice(array $append = []): array
     {
         return array_merge($append, [
-            'invoice'               => str_random(),
+            'invoice'               => rand(1000, 99999999),
             'applyStartRecurrent'   => 'False',
             'invoiceAmount'         => 10.00,
             'invoiceAmountVAT'      => 1.00,
-            'invoiceDate'           => carbon()->format('Y-m-d'),
-            'dueDate'           => carbon()->addDay(30)->format('Y-m-d'),
+        'invoiceDate'           => '2022-01-01',
+            'dueDate'           => '2030-01-01',
             'schemeKey'         => '2amq34',
             'maxStepIndex'      => 1,
             'allowedServices'   => 'ideal,mastercard',

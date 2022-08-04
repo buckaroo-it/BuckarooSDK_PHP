@@ -1,6 +1,5 @@
 <?php
-
-/**
+/*
  * NOTICE OF LICENSE
  *
  * This source file is subject to the MIT License
@@ -104,8 +103,11 @@ class Client
         $headers = $this->getHeaders($endPoint, $data->toJson(), $method);
         $headers = array_merge($headers, $data->getHeaders());
 
-        $decodedResult = $this->httpClient->call($endPoint, $headers, $method, $data->toJson(), $responseClass);
+        $this->config->getLogger()->info($method . ' ' . $endPoint);
+        $this->config->getLogger()->info('HEADERS: ' . json_encode($headers));
+        $this->config->getLogger()->info('PAYLOAD: ' . $data->toJson());
 
+        $decodedResult = $this->httpClient->call($endPoint, $headers, $method, $data->toJson(), $responseClass);
         $response = new $responseClass($decodedResult);
 
         return $response;

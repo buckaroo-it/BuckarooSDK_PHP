@@ -1,4 +1,22 @@
 <?php
+/*
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MIT License
+ * It is available through the world-wide-web at this URL:
+ * https://tldrlegal.com/license/mit-license
+ * If you are unable to obtain it through the world-wide-web, please send an email
+ * to support@buckaroo.nl so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to newer
+ * versions in the future. If you wish to customize this module for your
+ * needs please contact support@buckaroo.nl for more information.
+ *
+ * @copyright Copyright (c) Buckaroo B.V.
+ * @license   https://tldrlegal.com/license/mit-license
+ */
 
 namespace Buckaroo\PaymentMethods;
 
@@ -44,6 +62,9 @@ use Buckaroo\Transaction\Client;
 
 class PaymentMethodFactory
 {
+    /**
+     * @var array|\string[][]
+     */
     private static array $payments = [
         ApplePay::class                 => ['applepay'],
         Alipay::class                   => ['alipay'],
@@ -84,9 +105,19 @@ class PaymentMethodFactory
         WeChatPay::class                => ['wechatpay'],
     ];
 
+    /**
+     * @var Client
+     */
     private Client $client;
+    /**
+     * @var string
+     */
     private string $paymentMethod;
 
+    /**
+     * @param Client $client
+     * @param string $paymentMethod
+     */
     public function __construct(
         Client $client,
         string $paymentMethod
@@ -95,6 +126,9 @@ class PaymentMethodFactory
         $this->paymentMethod = strtolower($paymentMethod);
     }
 
+    /**
+     * @return PaymentMethod
+     */
     public function getPaymentMethod() : PaymentMethod
     {
         foreach(self::$payments as $class => $alias) {
@@ -106,6 +140,11 @@ class PaymentMethodFactory
         throw new SDKException($this->client->getLogger(), "Wrong payment method code has been given");
     }
 
+    /**
+     * @param Client $client
+     * @param string $paymentMethod
+     * @return PaymentMethod
+     */
     public static function get(
         Client $client,
         string $paymentMethod

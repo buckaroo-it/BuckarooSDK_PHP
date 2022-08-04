@@ -1,6 +1,5 @@
 <?php
-
-/**
+/*
  * NOTICE OF LICENSE
  *
  * This source file is subject to the MIT License
@@ -28,10 +27,7 @@ use Buckaroo\Handlers\Logging\Observer as LoggingObserver;
 use Buckaroo\PaymentMethods\PaymentFacade;
 use Buckaroo\Transaction\Client;
 
-/**
- *
- */
-class Buckaroo
+class BuckarooClient
 {
     /**
      * @var Client

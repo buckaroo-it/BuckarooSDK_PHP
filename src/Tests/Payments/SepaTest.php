@@ -13,7 +13,7 @@ class SepaTest extends BuckarooTestCase
             'amountDebit' => 10.10,
             'iban'              => 'NL13TEST0123456789',
             'bic'               => 'TESTNL2A',
-            'collectdate'       => carbon()->addDays(60)->format('Y-m-d'),
+            'collectdate'       => '2022-12-01',
             'mandateReference'  => '1DCtestreference',
             'mandateDate'       => '2022-07-03',
             'customer'      => [
@@ -69,7 +69,7 @@ class SepaTest extends BuckarooTestCase
             'amountDebit'               => 10,
             'originalTransactionKey'    => 'FDA9EEEEA53C42BF875C35C6C2B7xxxx',
             'invoice'                   => 'testinvoice 123',
-            'collectdate'               => carbon()->addDays(60)->format('Y-m-d'),
+            'collectdate'               => '2030-07-03',
         ]);
 
         $this->assertTrue($response->isFailed());
