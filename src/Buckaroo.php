@@ -23,6 +23,7 @@ namespace Buckaroo;
 
 use Buckaroo\Config\Config;
 use Buckaroo\Config\DefaultConfig;
+use Buckaroo\Exceptions\BuckarooException;
 use Buckaroo\Handlers\Logging\DefaultLogger;
 use Buckaroo\Handlers\Logging\Observer as LoggingObserver;
 use Buckaroo\Handlers\Logging\Subject as LoggingSubject;
@@ -38,10 +39,7 @@ class Buckaroo
      * @var Client
      */
     private Client $client;
-    /**
-     * @var LoggingSubject|DefaultLogger
-     */
-    private LoggingSubject $logger;
+    private Config $config;
 
     /**
      * @param string $websiteKey
@@ -49,12 +47,9 @@ class Buckaroo
      * @param string|null $mode
      */
     public function __construct(string $websiteKey, string $secretKey, string $mode = null) {
-        $this->logger = new DefaultLogger();
+        $this->config = $this->getConfig($websiteKey, $secretKey, $mode);
 
-        $config = $this->getConfig($websiteKey, $secretKey, $mode);
-
-        $this->client = new Client($config);
-        $this->client->setLogger($this->logger);
+        $this->client = new Client($this->config);
     }
 
     /**
@@ -72,7 +67,7 @@ class Buckaroo
      */
     public function attachLogger(LoggingObserver $observer)
     {
-        $this->logger->attach($observer);
+        $this->config->getLogger()->attach($observer);
 
         return $this;
     }
@@ -106,6 +101,6 @@ class Buckaroo
             return new DefaultConfig($websiteKey, $secretKey, $mode);
         }
 
-        return null;
+        throw new BuckarooException(null, "Config is missing.");
     }
 }
