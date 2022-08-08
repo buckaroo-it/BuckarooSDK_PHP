@@ -11,7 +11,7 @@ $buckaroo = new Buckaroo($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 // By adding "manually," it will not execute immediately but rather return the built payload.
 // With the returned payload, we can combine it with the next payment.
 
-$invoice = $buckaroo->payment('credit_management')->manually()->createCombinedInvoice([
+$invoice = $buckaroo->method('credit_management')->manually()->createCombinedInvoice([
                 'invoice'               => str_random(),
                 'applyStartRecurrent'   => 'False',
                 'invoiceAmount'         => 10.00,
@@ -57,7 +57,7 @@ $invoice = $buckaroo->payment('credit_management')->manually()->createCombinedIn
 
 // In this case, we have the payload stored in the $invoice variable. We can now combine it with the next payment using the combine method
 
-$response = $buckaroo->payment('sepadirectdebit')->combine($invoice)->pay([
+$response = $buckaroo->method('sepadirectdebit')->combine($invoice)->pay([
     'invoice'           => uniqid(),
     'amountDebit'       => 10.10,
     'iban'              => 'NL13TEST0123456789',

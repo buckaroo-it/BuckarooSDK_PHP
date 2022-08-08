@@ -1,6 +1,5 @@
 <?php
-
-/**
+/*
  * NOTICE OF LICENSE
  *
  * This source file is subject to the MIT License
@@ -33,8 +32,14 @@ use Psr\Log\LoggerInterface;
 
 class HttpClientGuzzle extends HttpClientAbstract
 {
+    /**
+     * @var Subject
+     */
     protected Subject $logger;
 
+    /**
+     * @param Subject $logger
+     */
     public function __construct(Subject $logger)
     {
         parent::__construct($logger);
@@ -47,6 +52,15 @@ class HttpClientGuzzle extends HttpClientAbstract
         ]);
     }
 
+    /**
+     * @param string $url
+     * @param array $headers
+     * @param string $method
+     * @param string|null $data
+     * @return array|mixed
+     * @throws TransferException
+     * @throws \Buckaroo\Exceptions\BuckarooException
+     */
     public function call(string $url, array $headers, string $method, string $data = null)
     {
         $headers = $this->convertHeadersFormat($headers);
@@ -56,6 +70,10 @@ class HttpClientGuzzle extends HttpClientAbstract
         try {
             $response = $this->httpClient->send($request, ['http_errors' => false]);
             $result = (string) $response->getBody();
+
+            $this->logger->info('RESPONSE HEADERS: ' . json_encode($response->getHeaders()));
+            $this->logger->info('RESPONSE BODY: ' . $response->getBody());
+
         } catch (GuzzleException $e) {
             throw new TransferException($this->logger, "Transfer failed", 0, $e);
         }

@@ -1,4 +1,22 @@
 <?php
+/*
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MIT License
+ * It is available through the world-wide-web at this URL:
+ * https://tldrlegal.com/license/mit-license
+ * If you are unable to obtain it through the world-wide-web, please send an email
+ * to support@buckaroo.nl so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to newer
+ * versions in the future. If you wish to customize this module for your
+ * needs please contact support@buckaroo.nl for more information.
+ *
+ * @copyright Copyright (c) Buckaroo B.V.
+ * @license   https://tldrlegal.com/license/mit-license
+ */
 
 namespace Buckaroo\Tests\Payments;
 
@@ -11,7 +29,7 @@ class RequestToPayTest extends BuckarooTestCase
 //     */
 //    public function it_creates_request_to_pay_payment()
 //    {
-//        $response = $this->buckaroo->payment("requesttopay")->pay([
+//        $response = $this->buckaroo->method("requesttopay")->pay([
 //            'amountDebit'       => 3.5,
 //            'invoice'           => uniqid(),
 //            'customer'      => [
@@ -27,7 +45,7 @@ class RequestToPayTest extends BuckarooTestCase
      */
     public function it_creates_a_request_to_pay_refund()
     {
-        $response = $this->buckaroo->payment('requesttopay')->refund([
+        $response = $this->buckaroo->method('requesttopay')->refund([
             'amountCredit' => 10,
             'invoice'       => 'testinvoice 123',
             'originalTransactionKey' => '2D04704995B74D679AACC59F87XXXXXX'

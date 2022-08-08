@@ -14,14 +14,27 @@ use Buckaroo\Transaction\Response\TransactionResponse;
 
 class Bancontact extends PayablePaymentMethod implements Combinable
 {
+    /**
+     * @var string
+     */
     protected string $paymentName = 'bancontactmrcash';
+    /**
+     * @var int
+     */
     protected int $serviceVersion = 0;
 
+    /**
+     * @param Model|null $model
+     * @return TransactionResponse
+     */
     public function pay(?Model $model = null): TransactionResponse
     {
         return parent::pay($model ?? new Pay($this->payload));
     }
 
+    /**
+     * @return TransactionResponse
+     */
     public function payEncrypted(): TransactionResponse
     {
         $payEncrypted = new PayEncrypted($this->payload);
@@ -33,6 +46,9 @@ class Bancontact extends PayablePaymentMethod implements Combinable
         return $this->postRequest();
     }
 
+    /**
+     * @return TransactionResponse
+     */
     public function payRecurrent(): TransactionResponse
     {
         $this->setPayPayload();
@@ -42,6 +58,9 @@ class Bancontact extends PayablePaymentMethod implements Combinable
         return $this->postRequest();
     }
 
+    /**
+     * @return TransactionResponse
+     */
     public function authenticate(): TransactionResponse
     {
         $authenticate = new Authenticate($this->payload);

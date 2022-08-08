@@ -8,13 +8,13 @@ $buckaroo = new Buckaroo($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
 //Also accepts json
 //Pay
-$response = $buckaroo->payment('sofortueberweisung')->pay([
+$response = $buckaroo->method('sofortueberweisung')->pay([
     'amountDebit' => 10.10
 ]);
 
 
 //Refund
-$response = $buckaroo->payment('sofortueberweisung')->refund([
+$response = $buckaroo->method('sofortueberweisung')->refund([
     'invoice'   => '', //Set invoice number of the transaction to refund
     'originalTransactionKey' => '', //Set transaction key of the transaction to refund
     'amountCredit' => 10.10

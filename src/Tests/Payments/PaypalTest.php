@@ -1,4 +1,22 @@
 <?php
+/*
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MIT License
+ * It is available through the world-wide-web at this URL:
+ * https://tldrlegal.com/license/mit-license
+ * If you are unable to obtain it through the world-wide-web, please send an email
+ * to support@buckaroo.nl so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to newer
+ * versions in the future. If you wish to customize this module for your
+ * needs please contact support@buckaroo.nl for more information.
+ *
+ * @copyright Copyright (c) Buckaroo B.V.
+ * @license   https://tldrlegal.com/license/mit-license
+ */
 
 namespace Buckaroo\Tests\Payments;
 
@@ -12,7 +30,7 @@ class PaypalTest extends BuckarooTestCase
      */
     public function it_creates_a_paypal_payment()
     {
-        $response = $this->buckaroo->payment('paypal')->pay([
+        $response = $this->buckaroo->method('paypal')->pay([
             'amountDebit' => 10,
             'invoice' => uniqid()
         ]);
@@ -25,7 +43,7 @@ class PaypalTest extends BuckarooTestCase
      */
     public function it_creates_a_paypal_recurrent_payment()
     {
-        $response = $this->buckaroo->payment('paypal')->payRecurrent([
+        $response = $this->buckaroo->method('paypal')->payRecurrent([
             'amountDebit' => 10,
             'originalTransactionKey' => 'C32C0B52E1FE4A37835FFB1716XXXXXX',
             'invoice' => uniqid()
@@ -39,7 +57,7 @@ class PaypalTest extends BuckarooTestCase
      */
     public function it_creates_a_paypal_extra_info()
     {
-        $response = $this->buckaroo->payment('paypal')->extraInfo([
+        $response = $this->buckaroo->method('paypal')->extraInfo([
             'amountDebit' => 10,
             'invoice' => uniqid(),
             'customer'  => [
@@ -66,7 +84,7 @@ class PaypalTest extends BuckarooTestCase
      */
     public function it_creates_a_paypal_refund()
     {
-        $response = $this->buckaroo->payment('paypal')->refund([
+        $response = $this->buckaroo->method('paypal')->refund([
             'amountCredit' => 10,
             'invoice'       => 'testinvoice 123',
             'originalTransactionKey' => '2D04704995B74D679AACC59F87XXXXXX'
@@ -80,14 +98,14 @@ class PaypalTest extends BuckarooTestCase
      */
     public function it_creates_a_combined_subscriptions_with_paypal_and_extra_info()
     {
-        $subscriptions = $this->buckaroo->payment('subscriptions')->manually()->createCombined([
+        $subscriptions = $this->buckaroo->method('subscriptions')->manually()->createCombined([
             'includeTransaction'        => false,
             'transactionVatPercentage'  => 5,
             'configurationCode'         => 'xxxxx',
             'email'                     => 'test@buckaroo.nl',
             'rate_plans'        => [
                 'add'        => [
-                    'startDate'         => carbon()->format('Y-m-d'),
+                    'startDate'         => '2022-01-01',
                     'ratePlanCode'      => 'xxxxxx',
                 ]
             ],
@@ -102,7 +120,7 @@ class PaypalTest extends BuckarooTestCase
                 'lastName'          => 'Do',
                 'gender'            => Gender::FEMALE,
                 'culture'           => 'nl-NL',
-                'birthDate'         => carbon()->subYears(24)->format('Y-m-d')
+                'birthDate'         => '1990-01-01'
             ],
             'address'           => [
                 'street'        => 'Hoofdstraat',
@@ -113,7 +131,7 @@ class PaypalTest extends BuckarooTestCase
             ]
         ]);
 
-        $paypal_extra_info = $this->buckaroo->payment('paypal')->manually()->extraInfo([
+        $paypal_extra_info = $this->buckaroo->method('paypal')->manually()->extraInfo([
             'amountDebit' => 10,
             'invoice' => uniqid(),
             'customer'  => [
@@ -132,7 +150,7 @@ class PaypalTest extends BuckarooTestCase
             ]
         ]);
 
-        $response = $this->buckaroo->payment('paypal')->combine([$subscriptions, $paypal_extra_info])->pay([
+        $response = $this->buckaroo->method('paypal')->combine([$subscriptions, $paypal_extra_info])->pay([
             'amountDebit' => 10,
             'invoice' => uniqid()
         ]);

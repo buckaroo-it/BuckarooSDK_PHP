@@ -1,6 +1,5 @@
 <?php
-
-/**
+/*
  * NOTICE OF LICENSE
  *
  * This source file is subject to the MIT License
@@ -28,18 +27,42 @@ use Buckaroo\Handlers\Logging\Subject;
 
 abstract class HttpClientAbstract implements HttpClientInterface
 {
+    /**
+     *
+     */
     protected const TIMEOUT = 30;
+    /**
+     *
+     */
     protected const CONNECT_TIMEOUT = 5;
 
+    /**
+     * @var Subject
+     */
     protected Subject $logger;
 
+    /**
+     * @param Subject $logger
+     */
     public function __construct(Subject $logger)
     {
         $this->logger = $logger;
     }
 
+    /**
+     * @param string $url
+     * @param array $headers
+     * @param string $method
+     * @param string|null $data
+     * @return mixed
+     */
     abstract public function call(string $url, array $headers, string $method, string $data = null);
 
+    /**
+     * @param $result
+     * @return array
+     * @throws BuckarooException
+     */
     protected function getDecodedResult($result): array
     {
         $decoded_result = json_decode($result, true);
@@ -52,6 +75,10 @@ abstract class HttpClientAbstract implements HttpClientInterface
         throw new BuckarooException($this->logger, $result);
     }
 
+    /**
+     * @param array $headers
+     * @return array
+     */
     protected function convertHeadersFormat(array $headers): array
     {
         $resultHeaders = [];

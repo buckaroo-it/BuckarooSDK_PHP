@@ -8,13 +8,13 @@ $buckaroo = new Buckaroo($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
 //Also accepts json
 //Pay
-$response = $this->buckaroo->payment('payconiq')->pay([
+$response = $this->buckaroo->method('payconiq')->pay([
     'amountDebit' => 10,
     'invoice' => uniqid()
 ]);
 
 //Refund
-$response = $this->buckaroo->payment('payconiq')->refund([
+$response = $this->buckaroo->method('payconiq')->refund([
     'amountCredit' => 10,
     'invoice'       => 'testinvoice 123',
     'originalTransactionKey' => '4E8BD922192746C3918BF4077CXXXXXX'

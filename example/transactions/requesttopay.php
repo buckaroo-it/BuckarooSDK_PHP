@@ -8,7 +8,7 @@ $buckaroo = new Buckaroo($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
 //Also accepts json
 //Pay
-$response = $buckaroo->payment("requesttopay")->pay([
+$response = $buckaroo->method("requesttopay")->pay([
     'amountDebit'       => 3.5,
     'invoice'           => uniqid(),
     'serviceParameters' => [
@@ -18,7 +18,7 @@ $response = $buckaroo->payment("requesttopay")->pay([
     ]
 ]);
 
-$response = $this->buckaroo->payment('requesttopay')->refund([
+$response = $this->buckaroo->method('requesttopay')->refund([
     'amountCredit' => 10,
     'invoice'       => 'testinvoice 123',
     'originalTransactionKey' => '2D04704995B74D679AACC59F87XXXXXX'

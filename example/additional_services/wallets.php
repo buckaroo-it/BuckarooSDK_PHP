@@ -6,7 +6,7 @@ use Buckaroo\Buckaroo;
 
 $buckaroo = new Buckaroo($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
-$response = $buckaroo->payment('buckaroo_wallet')->createWallet([
+$response = $buckaroo->method('buckaroo_wallet')->createWallet([
     'walletId'   => uniqid(),
     'email'         => 'test@buckaroo.nl',
     'customer'       => [

@@ -1,4 +1,22 @@
 <?php
+/*
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MIT License
+ * It is available through the world-wide-web at this URL:
+ * https://tldrlegal.com/license/mit-license
+ * If you are unable to obtain it through the world-wide-web, please send an email
+ * to support@buckaroo.nl so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to newer
+ * versions in the future. If you wish to customize this module for your
+ * needs please contact support@buckaroo.nl for more information.
+ *
+ * @copyright Copyright (c) Buckaroo B.V.
+ * @license   https://tldrlegal.com/license/mit-license
+ */
 
 namespace Buckaroo\Tests\Payments;
 
@@ -12,7 +30,7 @@ class BancontactTest extends BuckarooTestCase
      */
     public function it_creates_a_bancontact_payment()
     {
-        $response = $this->buckaroo->payment('bancontactmrcash')->pay([
+        $response = $this->buckaroo->method('bancontactmrcash')->pay([
             'invoice' => uniqid(),
             'amountDebit' => 10.10,
             'saveToken' => true
@@ -26,7 +44,7 @@ class BancontactTest extends BuckarooTestCase
      */
     public function it_creates_a_bancontact_refund()
     {
-        $response = $this->buckaroo->payment('bancontactmrcash')->refund([
+        $response = $this->buckaroo->method('bancontactmrcash')->refund([
             'amountCredit' => 10,
             'invoice' => '10000480',
             'originalTransactionKey' => '0EF39AA94BD64FF38F1540DEB6XXXXXX'
@@ -41,7 +59,7 @@ class BancontactTest extends BuckarooTestCase
      */
     public function it_creates_a_bancontact_encrypted_payment()
     {
-        $response = $this->buckaroo->payment('bancontactmrcash')->payEncrypted([
+        $response = $this->buckaroo->method('bancontactmrcash')->payEncrypted([
             'invoice' => uniqid(),
             'amountDebit'       => 10.10,
             'description'       => 'Bancontact PayEncrypted Test 123',
@@ -57,7 +75,7 @@ class BancontactTest extends BuckarooTestCase
      */
     public function it_creates_a_bancontact_recurrent_payment()
     {
-        $response = $this->buckaroo->payment('bancontactmrcash')->payRecurrent([
+        $response = $this->buckaroo->method('bancontactmrcash')->payRecurrent([
             'invoice'                   => 'testinvoice 123',
             'amountDebit'               => 10.50,
             'originalTransactionKey'    => '91D08EC01F414926A4CA29C059XXXXXX',
@@ -72,7 +90,7 @@ class BancontactTest extends BuckarooTestCase
      */
     public function it_creates_a_bancontact_authenticate()
     {
-        $response = $this->buckaroo->payment('bancontactmrcash')->authenticate([
+        $response = $this->buckaroo->method('bancontactmrcash')->authenticate([
             'invoice'                   => 'Bancontact Authenticate SaveToken',
             'description'               => 'Bancontact Authenticate SaveToken',
             'amountDebit'               => 0.02,
