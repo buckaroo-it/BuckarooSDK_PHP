@@ -21,16 +21,63 @@
 namespace Buckaroo\PaymentMethods\KlarnaKP;
 
 use Buckaroo\Models\Model;
-use Buckaroo\PaymentMethods\KlarnaKP\Models\Pay;
+use Buckaroo\PaymentMethods\KlarnaKP\Models\Payload;
 use Buckaroo\PaymentMethods\PayablePaymentMethod;
 use Buckaroo\Transaction\Response\TransactionResponse;
 
 class KlarnaKP extends PayablePaymentMethod
 {
+    /**
+     * @var string
+     */
     protected string $paymentName = 'klarnakp';
 
+    /**
+     * @param Model|null $model
+     * @return TransactionResponse
+     */
     public function pay(?Model $model = null): TransactionResponse
     {
-        return parent::pay($model ?? new Pay($this->payload));
+        return parent::pay($model ?? new Payload($this->payload));
+    }
+
+    /**
+     * @return TransactionResponse
+     */
+    public function reserve(): TransactionResponse
+    {
+        $reserve = new Payload($this->payload);
+
+        $this->setServiceList('Reserve', $reserve);
+
+        $this->setPayPayload();
+
+        return $this->dataRequest();
+    }
+
+    /**
+     * @return TransactionResponse
+     */
+    public function cancelReserve(): TransactionResponse
+    {
+        $cancel = new Payload($this->payload);
+
+        $this->setServiceList('CancelReservation', $cancel);
+
+        return $this->dataRequest();
+    }
+
+    /**
+     * @return TransactionResponse
+     */
+    public function updateReserve(): TransactionResponse
+    {
+        $update = new Payload($this->payload);
+
+        $this->setServiceList('UpdateReservation', $update);
+
+        $this->setPayPayload();
+
+        return $this->dataRequest();
     }
 }
