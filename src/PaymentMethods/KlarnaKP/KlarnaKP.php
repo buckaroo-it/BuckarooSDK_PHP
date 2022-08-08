@@ -41,11 +41,40 @@ class KlarnaKP extends PayablePaymentMethod
         return parent::pay($model ?? new Payload($this->payload));
     }
 
+    /**
+     * @return TransactionResponse
+     */
     public function reserve(): TransactionResponse
     {
         $reserve = new Payload($this->payload);
 
         $this->setServiceList('Reserve', $reserve);
+
+        $this->setPayPayload();
+
+        return $this->dataRequest();
+    }
+
+    /**
+     * @return TransactionResponse
+     */
+    public function cancelReserve(): TransactionResponse
+    {
+        $cancel = new Payload($this->payload);
+
+        $this->setServiceList('CancelReservation', $cancel);
+
+        return $this->dataRequest();
+    }
+
+    /**
+     * @return TransactionResponse
+     */
+    public function updateReserve(): TransactionResponse
+    {
+        $update = new Payload($this->payload);
+
+        $this->setServiceList('UpdateReservation', $update);
 
         $this->setPayPayload();
 
