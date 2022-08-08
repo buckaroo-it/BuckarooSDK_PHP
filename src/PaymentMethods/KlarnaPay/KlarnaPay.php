@@ -45,4 +45,18 @@ class KlarnaPay extends PayablePaymentMethod
     {
         return parent::pay($model ?? new Pay($this->payload));
     }
+
+    /**
+     * @return KlarnaPay|mixed
+     */
+    public function payInInstallments(): TransactionResponse
+    {
+        $pay = new Pay($this->payload);
+
+        $this->setPayPayload();
+
+        $this->setServiceList('PayInInstallments', $pay);
+
+        return $this->postRequest();
+    }
 }

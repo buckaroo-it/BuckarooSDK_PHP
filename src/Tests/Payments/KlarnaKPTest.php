@@ -56,6 +56,34 @@ class KlarnaKPTest extends BuckarooTestCase
      * @return void
      * @test
      */
+    public function it_creates_a_klarnakp_reserve()
+    {
+        $response = $this->buckaroo->method('klarnakp')->reserve([
+            'amountDebit'       => 50.30,
+            'order'             => uniqid(),
+            'invoice'           => uniqid(),
+            'reservationNumber' => '2377577452',
+            'serviceParameters' => [
+                'articles'      => [
+                    [
+                        'identifier' => uniqid(),
+                        'quantity' => '2'
+                    ],
+                    [
+                        'identifier' => uniqid(),
+                        'quantity' => '2'
+                    ],
+                ]
+            ]
+        ]);
+
+        $this->assertTrue($response->isValidationFailure());
+    }
+
+    /**
+     * @return void
+     * @test
+     */
     public function it_creates_a_klarnakp_refund()
     {
         $response = $this->buckaroo->method('klarnakp')->refund([

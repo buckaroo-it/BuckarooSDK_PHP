@@ -27,10 +27,24 @@ use Buckaroo\Transaction\Response\TransactionResponse;
 
 class KlarnaKP extends PayablePaymentMethod
 {
+    /**
+     * @var string
+     */
     protected string $paymentName = 'klarnakp';
 
+    /**
+     * @param Model|null $model
+     * @return TransactionResponse
+     */
     public function pay(?Model $model = null): TransactionResponse
     {
         return parent::pay($model ?? new Pay($this->payload));
+    }
+
+    public function reserve(): TransactionResponse
+    {
+        $pay = new Pay($this->payload);
+
+        dd($pay);
     }
 }
