@@ -1,29 +1,37 @@
 <?php
+/*
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MIT License
+ * It is available through the world-wide-web at this URL:
+ * https://tldrlegal.com/license/mit-license
+ * If you are unable to obtain it through the world-wide-web, please send an email
+ * to support@buckaroo.nl so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to newer
+ * versions in the future. If you wish to customize this module for your
+ * needs please contact support@buckaroo.nl for more information.
+ *
+ * @copyright Copyright (c) Buckaroo B.V.
+ * @license   https://tldrlegal.com/license/mit-license
+ * Class to create the security header for Buckaroo
+ * https://dev.buckaroo.nl/Apis/Description/json
+ */
 
 declare(strict_types=1);
 
 namespace Buckaroo\Services\TransactionHeaders;
 
 use Buckaroo\Config\Config;
-use Buckaroo\Helpers\Base;
+use Buckaroo\Handlers\HMAC\Generator;
 
-/**
- * Class to create the security header for Buckaroo
- * https://dev.buckaroo.nl/Apis/Description/json
- */
 class HmacHeader extends TransactionHeader
 {
     public function __construct(TransactionHeader $transactionHeader, Config $config, string $requestUri, string $content, string $httpMethod, string $nonce = '', int $timeStamp = 0)
     {
-        $this->config = $config;
-
-        $this->nonce = ($nonce)? $nonce : str_random(16);
-        $this->timeStamp = ($timeStamp)? $timeStamp : time();
-        $this->encodedContent = base64_encode(md5($content, true));
-        $this->requestUri = strtolower(rawurlencode(preg_replace("(^https?://)", "", $requestUri )));
-        $this->httpMethod = strtoupper($httpMethod);
-
-        $this->hash = $this->getHash();
+        $this->hmacGenerator = new Generator($config, $content, $requestUri, $httpMethod);
 
         parent::__construct($transactionHeader);
     }
@@ -31,20 +39,8 @@ class HmacHeader extends TransactionHeader
     public function getHeaders(): array {
         $headers = $this->transactionHeader->getHeaders();
 
-        $headers[] = "Authorization: hmac " . implode(':', [
-            $this->config->websiteKey(),
-            $this->getHash(),
-            $this->nonce,
-            $this->timeStamp,
-        ]);
+        $headers[] = "Authorization: hmac " . $this->hmacGenerator->generate();
 
         return $headers;
-    }
-
-    private function getHash(): string {
-        $rawData = $this->config->websiteKey() . $this->httpMethod . $this->requestUri . $this->timeStamp . $this->nonce . $this->encodedContent;
-        $hash = hash_hmac('sha256', $rawData, $this->config->secretKey(), true);
-
-        return base64_encode($hash);
     }
 }

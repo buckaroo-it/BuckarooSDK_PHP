@@ -7,7 +7,7 @@ use Buckaroo\Buckaroo;
 $buckaroo = new Buckaroo($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
 //Pay
-$response = $buckaroo->payment('afterpay')->pay([
+$response = $buckaroo->method('afterpay')->pay([
     'amountDebit'       => 50.30,
     'order'             => 'aftpay_order_test',
     'invoice'           => 'aftpay_invoice_test',
@@ -63,7 +63,7 @@ $response = $buckaroo->payment('afterpay')->pay([
 ]);
 
 //Authorize
-$response = $buckaroo->payment('afterpay')->authorize([
+$response = $buckaroo->method('afterpay')->authorize([
     'amountDebit'       => 50.30,
     'order'             => uniqid(),
     'invoice'           => uniqid(),
@@ -119,7 +119,7 @@ $response = $buckaroo->payment('afterpay')->authorize([
 ]);
 
 //Capture
-$response = $buckaroo->payment('afterpay')->capture([
+$response = $buckaroo->method('afterpay')->capture([
     'originalTransactionKey' => '63C3576B74FE4D95A8B46EFC198B6E5E', //Set transaction key of the transaction to capture
     'invoice' => '628603a20c375', //Set invoice id
     'amountDebit' => 50.30, //set amount to capture
@@ -144,7 +144,7 @@ $response = $buckaroo->payment('afterpay')->capture([
 ]);
 
 //Refund
-$response = $buckaroo->payment('afterpay')->refund([
+$response = $buckaroo->method('afterpay')->refund([
     'invoice'                   => '', //Set invoice number of the transaction to refund
     'originalTransactionKey'    => '', //Set transaction key of the transaction to refund
     'amountCredit'              => 10.10

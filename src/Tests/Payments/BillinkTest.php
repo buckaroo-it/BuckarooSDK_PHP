@@ -1,4 +1,22 @@
 <?php
+/*
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MIT License
+ * It is available through the world-wide-web at this URL:
+ * https://tldrlegal.com/license/mit-license
+ * If you are unable to obtain it through the world-wide-web, please send an email
+ * to support@buckaroo.nl so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to newer
+ * versions in the future. If you wish to customize this module for your
+ * needs please contact support@buckaroo.nl for more information.
+ *
+ * @copyright Copyright (c) Buckaroo B.V.
+ * @license   https://tldrlegal.com/license/mit-license
+ */
 
 namespace Buckaroo\Tests\Payments;
 
@@ -11,7 +29,7 @@ class BillinkTest extends BuckarooTestCase
      */
     public function it_creates_a_billink_payment()
     {
-        $response = $this->buckaroo->payment('billink')->pay($this->getPaymentPayload());
+        $response = $this->buckaroo->method('billink')->pay($this->getPaymentPayload());
 
         $this->assertTrue($response->isSuccess());
     }
@@ -21,7 +39,7 @@ class BillinkTest extends BuckarooTestCase
      */
     public function it_creates_a_billink_authorize()
     {
-        $response = $this->buckaroo->payment('billink')->authorize($this->getPaymentPayload());
+        $response = $this->buckaroo->method('billink')->authorize($this->getPaymentPayload());
 
         $this->assertTrue($response->isSuccess());
     }
@@ -31,7 +49,7 @@ class BillinkTest extends BuckarooTestCase
      */
     public function it_creates_a_billink_capture()
     {
-        $response = $this->buckaroo->payment('billink')->capture([
+        $response = $this->buckaroo->method('billink')->capture([
             'originalTransactionKey' => '74AD098CCFAA4F739FE16279B5059B6B', //Set transaction key of the transaction to capture
             'invoice' => '62905fa2650f4', //Set invoice id
             'amountDebit' => 50.30, //set amount to capture
@@ -63,7 +81,7 @@ class BillinkTest extends BuckarooTestCase
      */
     public function it_creates_a_billink_refund()
     {
-        $response = $this->buckaroo->payment('billink')->refund([
+        $response = $this->buckaroo->method('billink')->refund([
             'amountCredit' => 10,
             'invoice'       => 'testinvoice 123',
             'originalTransactionKey' => '4E8BD922192746C3918BF4077CXXXXXX'
@@ -87,7 +105,7 @@ class BillinkTest extends BuckarooTestCase
                     'initials'              => 'JD',
                     'firstName'             => 'John',
                     'lastName'              => 'Do',
-                    'birthDate'             => carbon()->subYears(18)->format('d-m-Y')
+                    'birthDate'             => '01-01-1990'
                 ],
                 'address'       => [
                     'street'                => 'Hoofdstraat',
@@ -110,7 +128,7 @@ class BillinkTest extends BuckarooTestCase
                     'initials'              => 'JD',
                     'firstName'             => 'John',
                     'lastName'              => 'Do',
-                    'birthDate'             => carbon()->subYears(20)->format('d-m-Y')
+                    'birthDate'             => '1990-01-01'
                 ],
                 'address'       => [
                     'street'                => 'Kalverstraat',

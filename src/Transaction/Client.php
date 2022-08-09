@@ -1,6 +1,5 @@
 <?php
-
-/**
+/*
  * NOTICE OF LICENSE
  *
  * This source file is subject to the MIT License
@@ -24,8 +23,7 @@ declare(strict_types=1);
 namespace Buckaroo\Transaction;
 
 use Buckaroo\Config\Config;
-use Buckaroo\Exceptions\SDKException;
-use Buckaroo\Handlers\Logging\Loggable;
+use Buckaroo\Exceptions\BuckarooException;
 use Buckaroo\Handlers\Logging\Subject;
 use Buckaroo\Resources\Constants\Endpoints;
 use Buckaroo\Services\TransactionHeaders\CultureHeader;
@@ -38,7 +36,7 @@ use Buckaroo\Transaction\Request\Request;
 use Buckaroo\Transaction\Response\Response;
 use Buckaroo\Transaction\Response\TransactionResponse;
 
-class Client implements Loggable
+class Client
 {
     private const METHOD_GET  = 'GET';
     private const METHOD_POST = 'POST';
@@ -50,7 +48,7 @@ class Client implements Loggable
     public function __construct(?Config $config)
     {
         $this->config = $config;
-        $this->httpClient =  new HttpClientGuzzle();
+        $this->httpClient =  new HttpClientGuzzle($config->getLogger());
     }
 
     public function getTransactionUrl(): string
@@ -105,8 +103,11 @@ class Client implements Loggable
         $headers = $this->getHeaders($endPoint, $data->toJson(), $method);
         $headers = array_merge($headers, $data->getHeaders());
 
-        $decodedResult = $this->httpClient->call($endPoint, $headers, $method, $data->toJson(), $responseClass);
+        $this->config->getLogger()->info($method . ' ' . $endPoint);
+        $this->config->getLogger()->info('HEADERS: ' . json_encode($headers));
+        $this->config->getLogger()->info('PAYLOAD: ' . $data->toJson());
 
+        $decodedResult = $this->httpClient->call($endPoint, $headers, $method, $data->toJson(), $responseClass);
         $response = new $responseClass($decodedResult);
 
         return $response;
@@ -121,23 +122,9 @@ class Client implements Loggable
 
         if(!$this->config)
         {
-            throw new SDKException($this->getLogger(), "No config has been configured. Please pass your credentials to the constructor or set up a Config object.");
+            throw new BuckarooException($this->logger, "No config has been configured. Please pass your credentials to the constructor or set up a Config object.");
         }
 
         return $this->config;
-    }
-
-    public function setLogger(Subject $logger)
-    {
-        $this->logger = $logger;
-
-        $this->httpClient->setLogger($logger);
-
-        return $this;
-    }
-
-    public function getLogger(): ?Subject
-    {
-        return $this->logger;
     }
 }

@@ -1,4 +1,22 @@
 <?php
+/*
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MIT License
+ * It is available through the world-wide-web at this URL:
+ * https://tldrlegal.com/license/mit-license
+ * If you are unable to obtain it through the world-wide-web, please send an email
+ * to support@buckaroo.nl so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to newer
+ * versions in the future. If you wish to customize this module for your
+ * needs please contact support@buckaroo.nl for more information.
+ *
+ * @copyright Copyright (c) Buckaroo B.V.
+ * @license   https://tldrlegal.com/license/mit-license
+ */
 
 namespace Buckaroo\Tests\Payments;
 
@@ -13,7 +31,7 @@ class AfterpayTest extends BuckarooTestCase
      */
     public function it_creates_a_afterpay_payment()
     {
-        $response = $this->buckaroo->payment('afterpay')->pay($this->getPaymentPayload());
+        $response = $this->buckaroo->method('afterpay')->pay($this->getPaymentPayload());
 
         $this->assertTrue($response->isRejected());
     }
@@ -24,7 +42,7 @@ class AfterpayTest extends BuckarooTestCase
      */
     public function it_creates_a_afterpay_authorize()
     {
-        $response = $this->buckaroo->payment('afterpay')->authorize($this->getPaymentPayload());
+        $response = $this->buckaroo->method('afterpay')->authorize($this->getPaymentPayload());
 
         $this->assertTrue($response->isRejected());
     }
@@ -35,7 +53,7 @@ class AfterpayTest extends BuckarooTestCase
 //     */
 //    public function it_creates_a_afterpay_cancel_authorize()
 //    {
-//        $response = $this->buckaroo->payment('afterpay')->cancelAuthorize([
+//        $response = $this->buckaroo->method('afterpay')->cancelAuthorize([
 //            'amountCredit'              => 10,
 //            'originalTransactionKey'    => 'F86579ECED1D493887ECAE7C287BXXXX',
 //            'invoice'                   => 'testinvoice12345cvx'
@@ -50,7 +68,7 @@ class AfterpayTest extends BuckarooTestCase
      */
     public function it_creates_a_afterpay_capture()
     {
-        $response = $this->buckaroo->payment('afterpay')->capture($this->getPaymentPayload([
+        $response = $this->buckaroo->method('afterpay')->capture($this->getPaymentPayload([
             'originalTransactionKey'    => 'D5127080BA1D4644856FECDC560FXXXX'
         ]));
 
@@ -63,7 +81,7 @@ class AfterpayTest extends BuckarooTestCase
      */
     public function it_creates_a_afterpay_refund()
     {
-        $response = $this->buckaroo->payment('afterpay')->refund([
+        $response = $this->buckaroo->method('afterpay')->refund([
             'invoice'   => 'testinvoice 123', //Set invoice number of the transaction to refund
             'originalTransactionKey' => '4E8BD922192746C3918BF4077CXXXXXX', //Set transaction key of the transaction to refund
             'amountCredit' => 1.23
@@ -84,7 +102,7 @@ class AfterpayTest extends BuckarooTestCase
                     'title'            => 'Mrs',
                     'firstName'      => 'John',
                     'lastName'      => 'Do',
-                    'birthDate'     => carbon()->subYears(18)->format('Y-m-d'),
+                    'birthDate'     => '1990-01-01',
                     'conversationLanguage'  => 'NL',
                     'identificationNumber'  => 'IdNumber12345',
                     'customerNumber'        => 'customerNumber12345'

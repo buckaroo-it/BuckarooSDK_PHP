@@ -1,6 +1,5 @@
 <?php
-
-/**
+/*
  * NOTICE OF LICENSE
  *
  * This source file is subject to the MIT License
@@ -23,7 +22,8 @@ declare(strict_types=1);
 
 namespace Buckaroo\Transaction\Request\HttpClient;
 
-use Composer\CaBundle\CaBundle;
+use Buckaroo\Exceptions\TransferException;
+use Buckaroo\Handlers\Logging\Subject;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
@@ -32,44 +32,52 @@ use Psr\Log\LoggerInterface;
 
 class HttpClientGuzzle extends HttpClientAbstract
 {
-    public function __construct(LoggerInterface $logger = null)
+    /**
+     * @var Subject
+     */
+    protected Subject $logger;
+
+    /**
+     * @param Subject $logger
+     */
+    public function __construct(Subject $logger)
     {
-//        parent::__construct($logger);
-        $this->httpClient = new Client($this->getBaseOptions());
+        parent::__construct($logger);
+
+        $this->logger = $logger;
+
+        $this->httpClient = new Client([
+            RequestOptions::TIMEOUT => self::TIMEOUT,
+            RequestOptions::CONNECT_TIMEOUT => self::CONNECT_TIMEOUT
+        ]);
     }
 
+    /**
+     * @param string $url
+     * @param array $headers
+     * @param string $method
+     * @param string|null $data
+     * @return array|mixed
+     * @throws TransferException
+     * @throws \Buckaroo\Exceptions\BuckarooException
+     */
     public function call(string $url, array $headers, string $method, string $data = null)
     {
         $headers = $this->convertHeadersFormat($headers);
-        //$this->logger->debug(__METHOD__, [$url, $headers, $method, !empty($data) ? json_decode($data) : '']);
-
-//        $this->checkMethod($method);
 
         $request = new Request($method, $url, $headers, $data);
 
         try {
             $response = $this->httpClient->send($request, ['http_errors' => false]);
             $result = (string) $response->getBody();
+
+            $this->logger->info('RESPONSE HEADERS: ' . json_encode($response->getHeaders()));
+            $this->logger->info('RESPONSE BODY: ' . $response->getBody());
+
         } catch (GuzzleException $e) {
-            throw new \Exception("Transfer failed");
+            throw new TransferException($this->logger, "Transfer failed", 0, $e);
         }
 
-        $this->checkEmptyResult($result, "empty response");
-
-        $this->checkStatusCode(
-            $result,
-            (!$response->getStatusCode() || $response->getStatusCode() != 200)
-        );
-
         return $this->getDecodedResult($result);
-    }
-
-    protected function getBaseOptions(): array
-    {
-        return [
-            //RequestOptions::VERIFY => CaBundle::getBundledCaBundlePath(),
-            RequestOptions::TIMEOUT => self::TIMEOUT,
-            RequestOptions::CONNECT_TIMEOUT => self::CONNECT_TIMEOUT
-        ];
     }
 }

@@ -1,6 +1,5 @@
 <?php
-
-/**
+/*
  * NOTICE OF LICENSE
  *
  * This source file is subject to the MIT License
@@ -23,8 +22,12 @@ declare(strict_types=1);
 
 namespace Buckaroo\Exceptions;
 
-class TransferException extends SDKException
+class TransferException extends BuckarooException
 {
+    /**
+     * @param string $message
+     * @return string
+     */
     protected function message(string $message): string
     {
         return 'Buckaroo TransferException ' . $message;

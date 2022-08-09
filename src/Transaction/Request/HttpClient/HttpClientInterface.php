@@ -1,6 +1,5 @@
 <?php
-
-/**
+/*
  * NOTICE OF LICENSE
  *
  * This source file is subject to the MIT License
@@ -25,5 +24,12 @@ namespace Buckaroo\Transaction\Request\HttpClient;
 
 interface HttpClientInterface
 {
+    /**
+     * @param string $url
+     * @param array $headers
+     * @param string $method
+     * @param string|null $data
+     * @return mixed
+     */
     public function call(string $url, array $headers, string $method, string $data = null);
 }

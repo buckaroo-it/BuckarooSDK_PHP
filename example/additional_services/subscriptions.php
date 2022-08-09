@@ -8,7 +8,7 @@ use Buckaroo\Resources\Constants\Gender;
 $buckaroo = new Buckaroo($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
 //** START Create Duo Combined */
-$subscriptions = $buckaroo->payment('subscriptions')->manually()->createCombined([
+$subscriptions = $buckaroo->method('subscriptions')->manually()->createCombined([
     'includeTransaction'        => false,
     'transactionVatPercentage'  => 5,
     'configurationCode'         => 'xxxxx',
@@ -41,7 +41,7 @@ $subscriptions = $buckaroo->payment('subscriptions')->manually()->createCombined
     ]
 ]);
 
-$response = $buckaroo->payment('ideal')->combine($subscriptions)->pay([
+$response = $buckaroo->method('ideal')->combine($subscriptions)->pay([
     'invoice'       => uniqid(),
     'amountDebit' => 10.10,
     'issuer' => 'ABNANL2A'
@@ -49,7 +49,7 @@ $response = $buckaroo->payment('ideal')->combine($subscriptions)->pay([
 //** END Create Duo Combined */
 
 //** START Create Triple Combined */
-$subscriptions = $buckaroo->payment('subscriptions')->manually()->createCombined([
+$subscriptions = $buckaroo->method('subscriptions')->manually()->createCombined([
     'includeTransaction'        => false,
     'transactionVatPercentage'  => 5,
     'configurationCode'         => 'xxxxx',
@@ -82,7 +82,7 @@ $subscriptions = $buckaroo->payment('subscriptions')->manually()->createCombined
     ]
 ]);
 
-$paypal_extra_info = $buckaroo->payment('paypal')->manually()->extraInfo([
+$paypal_extra_info = $buckaroo->method('paypal')->manually()->extraInfo([
     'amountDebit' => 10,
     'invoice' => uniqid(),
     'customer'  => [
@@ -101,7 +101,7 @@ $paypal_extra_info = $buckaroo->payment('paypal')->manually()->extraInfo([
     ]
 ]);
 
-$response = $buckaroo->payment('paypal')->combine($subscriptions)->combine($paypal_extra_info)->pay([
+$response = $buckaroo->method('paypal')->combine($subscriptions)->combine($paypal_extra_info)->pay([
     'amountDebit' => 10,
     'invoice' => uniqid()
 ]);

@@ -1,4 +1,22 @@
 <?php
+/*
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MIT License
+ * It is available through the world-wide-web at this URL:
+ * https://tldrlegal.com/license/mit-license
+ * If you are unable to obtain it through the world-wide-web, please send an email
+ * to support@buckaroo.nl so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to newer
+ * versions in the future. If you wish to customize this module for your
+ * needs please contact support@buckaroo.nl for more information.
+ *
+ * @copyright Copyright (c) Buckaroo B.V.
+ * @license   https://tldrlegal.com/license/mit-license
+ */
 
 namespace Buckaroo\Tests\Payments;
 
@@ -13,7 +31,7 @@ class In3Test extends BuckarooTestCase
      */
     public function it_creates_a_in3_payment()
     {
-        $response = $this->buckaroo->payment('in3')->pay($this->getPaymentPayload());
+        $response = $this->buckaroo->method('in3')->pay($this->getPaymentPayload());
 
         $this->assertTrue($response->isSuccess());
     }
@@ -24,7 +42,7 @@ class In3Test extends BuckarooTestCase
      */
     public function it_creates_a_in3_installments_payment()
     {
-        $response = $this->buckaroo->payment('in3')->payInInstallments($this->getPaymentPayload());
+        $response = $this->buckaroo->method('in3')->payInInstallments($this->getPaymentPayload());
 
         $this->assertTrue($response->isPendingProcessing());
     }
@@ -35,7 +53,7 @@ class In3Test extends BuckarooTestCase
      */
     public function it_creates_a_afterpaydigiaccept_refund()
     {
-        $response = $this->buckaroo->payment('in3')->refund([
+        $response = $this->buckaroo->method('in3')->refund([
             'amountCredit' => 10,
             'invoice' => '10000480',
             'originalTransactionKey' => '9AA4C81A08A84FA7B68E6A6A6291XXXX'
@@ -76,7 +94,7 @@ class In3Test extends BuckarooTestCase
                 'email'                 => 'billingcustomer@buckaroo.nl',
                 'phone'                 => '0610000000',
                 'culture'               => 'nl-NL',
-                'birthDate'             => carbon()->subYears(20)->format('Y-m-d'),
+                'birthDate'             => '1990-01-01',
             ],
             'address'   => [
                 'street'                => 'Hoofdstraat',

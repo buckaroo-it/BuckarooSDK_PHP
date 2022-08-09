@@ -7,7 +7,7 @@ use Buckaroo\Resources\Constants\Gender;
 
 $buckaroo = new Buckaroo($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
-$response = $buckaroo->payment('payperemail')->paymentInvitation([
+$response = $buckaroo->method('payperemail')->paymentInvitation([
     'amountDebit'           => 10,
     'invoice'               => 'testinvoice 123',
     'merchantSendsEmail'    => false,

@@ -1,4 +1,22 @@
 <?php
+/*
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MIT License
+ * It is available through the world-wide-web at this URL:
+ * https://tldrlegal.com/license/mit-license
+ * If you are unable to obtain it through the world-wide-web, please send an email
+ * to support@buckaroo.nl so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to newer
+ * versions in the future. If you wish to customize this module for your
+ * needs please contact support@buckaroo.nl for more information.
+ *
+ * @copyright Copyright (c) Buckaroo B.V.
+ * @license   https://tldrlegal.com/license/mit-license
+ */
 
 namespace Buckaroo\Services\ServiceListParameters;
 
@@ -8,10 +26,25 @@ use Buckaroo\Models\ServiceParameter;
 
 class ModelParameters extends ServiceListParameter
 {
+    /**
+     * @var Model
+     */
     protected Model $model;
+    /**
+     * @var string|null
+     */
     protected ?string $groupType;
+    /**
+     * @var int|null
+     */
     protected ?int $groupKey;
 
+    /**
+     * @param ServiceListParameter $serviceListParameter
+     * @param Model $model
+     * @param string|null $groupType
+     * @param int|null $groupKey
+     */
     public function __construct(ServiceListParameter $serviceListParameter, Model $model, ?string $groupType = '', ?int $groupKey = null)
     {
         $this->model = $model;
@@ -21,6 +54,9 @@ class ModelParameters extends ServiceListParameter
         parent::__construct($serviceListParameter);
     }
 
+    /**
+     * @return ServiceList
+     */
     public function data(): ServiceList
     {
         foreach($this->model->toArray() as $key => $value)
@@ -34,6 +70,10 @@ class ModelParameters extends ServiceListParameter
         return $this->serviceList;
     }
 
+    /**
+     * @param $key
+     * @return int|null
+     */
     private function groupKey($key)
     {
         if($this->model instanceof ServiceParameter && !$this->groupKey)
@@ -44,6 +84,10 @@ class ModelParameters extends ServiceListParameter
         return $this->groupKey;
     }
 
+    /**
+     * @param $key
+     * @return string|null
+     */
     private function groupType($key)
     {
         if($this->model instanceof ServiceParameter && !$this->groupType)

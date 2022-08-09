@@ -1,4 +1,22 @@
 <?php
+/*
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MIT License
+ * It is available through the world-wide-web at this URL:
+ * https://tldrlegal.com/license/mit-license
+ * If you are unable to obtain it through the world-wide-web, please send an email
+ * to support@buckaroo.nl so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to newer
+ * versions in the future. If you wish to customize this module for your
+ * needs please contact support@buckaroo.nl for more information.
+ *
+ * @copyright Copyright (c) Buckaroo B.V.
+ * @license   https://tldrlegal.com/license/mit-license
+ */
 
 namespace Buckaroo\Tests\Payments;
 
@@ -11,7 +29,7 @@ class Przelewy24Test extends BuckarooTestCase
      */
     public function it_creates_przelewy24_payment()
     {
-        $response = $this->buckaroo->payment("przelewy24")->pay([
+        $response = $this->buckaroo->method("przelewy24")->pay([
             'amountDebit'       => 3.5,
             'invoice'           => uniqid(),
             'email'         => 'test@test.nl',
@@ -29,7 +47,7 @@ class Przelewy24Test extends BuckarooTestCase
      */
     public function it_creates_a_przelewy24_refund()
     {
-        $response = $this->buckaroo->payment('przelewy24')->refund([
+        $response = $this->buckaroo->method('przelewy24')->refund([
             'amountCredit' => 10,
             'invoice'       => 'testinvoice 123',
             'originalTransactionKey' => '2D04704995B74D679AACC59F87XXXXXX'

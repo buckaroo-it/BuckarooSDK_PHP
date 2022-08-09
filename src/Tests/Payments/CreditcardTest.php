@@ -1,4 +1,22 @@
 <?php
+/*
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MIT License
+ * It is available through the world-wide-web at this URL:
+ * https://tldrlegal.com/license/mit-license
+ * If you are unable to obtain it through the world-wide-web, please send an email
+ * to support@buckaroo.nl so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to newer
+ * versions in the future. If you wish to customize this module for your
+ * needs please contact support@buckaroo.nl for more information.
+ *
+ * @copyright Copyright (c) Buckaroo B.V.
+ * @license   https://tldrlegal.com/license/mit-license
+ */
 
 namespace Buckaroo\Tests\Payments;
 
@@ -12,7 +30,7 @@ class CreditcardTest extends BuckarooTestCase
      */
     public function it_creates_a_creditcard_payment()
     {
-        $response = $this->buckaroo->payment('creditcard')->pay([
+        $response = $this->buckaroo->method('creditcard')->pay([
             'amountDebit'   => 10,
             'invoice'       => uniqid(),
             'name'          => 'visa'
@@ -27,7 +45,7 @@ class CreditcardTest extends BuckarooTestCase
      */
     public function it_creates_a_creditcard_encrypted_payment()
     {
-        $response = $this->buckaroo->payment('creditcard')->payEncrypted([
+        $response = $this->buckaroo->method('creditcard')->payEncrypted([
             'amountDebit'               => 10,
             'invoice'                   => uniqid(),
             'name'                      => 'mastercard',
@@ -43,7 +61,7 @@ class CreditcardTest extends BuckarooTestCase
      */
     public function it_creates_a_creditcard_security_code_payment()
     {
-        $response = $this->buckaroo->payment('creditcard')->payWithSecurityCode([
+        $response = $this->buckaroo->method('creditcard')->payWithSecurityCode([
             'amountDebit'                   => 10,
             'invoice'                       => uniqid(),
             'originalTransactionKey'        => '6C5DBB69E74644958F8C25199514DC6C',
@@ -60,7 +78,7 @@ class CreditcardTest extends BuckarooTestCase
      */
     public function it_creates_a_creditcard_refund()
     {
-        $response = $this->buckaroo->payment('creditcard')->refund([
+        $response = $this->buckaroo->method('creditcard')->refund([
             'amountCredit'                  => 10,
             'invoice'                       => 'testinvoice 123',
             'originalTransactionKey'        => '13FAF43579D94F5FB8119A6819XXXXXX',
@@ -76,7 +94,7 @@ class CreditcardTest extends BuckarooTestCase
      */
     public function it_creates_a_creditcard_authorize()
     {
-        $response = $this->buckaroo->payment('creditcard')->authorize([
+        $response = $this->buckaroo->method('creditcard')->authorize([
             'amountDebit'   => 10,
             'invoice'       => 'testinvoice 123',
             'name'          => 'mastercard'
@@ -91,7 +109,7 @@ class CreditcardTest extends BuckarooTestCase
      */
     public function it_creates_a_creditcard_encrypted_authorize()
     {
-        $response = $this->buckaroo->payment('creditcard')->authorizeEncrypted([
+        $response = $this->buckaroo->method('creditcard')->authorizeEncrypted([
             'amountDebit'           => 10,
             'invoice'               => uniqid(),
             'name'                  => 'mastercard',
@@ -107,7 +125,7 @@ class CreditcardTest extends BuckarooTestCase
      */
     public function it_creates_a_creditcard_security_code_authorize()
     {
-        $response = $this->buckaroo->payment('creditcard')->authorizeWithSecurityCode([
+        $response = $this->buckaroo->method('creditcard')->authorizeWithSecurityCode([
             'amountDebit'               => 10,
             'invoice'                   => uniqid(),
             'originalTransactionKey'    => '6C5DBB69E74644958F8C25199514DC6C',
@@ -124,7 +142,7 @@ class CreditcardTest extends BuckarooTestCase
      */
     public function it_creates_a_creditcard_capture()
     {
-        $response = $this->buckaroo->payment('creditcard')->capture([
+        $response = $this->buckaroo->method('creditcard')->capture([
             'amountDebit'                   => 10,
             'invoice'                       => uniqid(),
             'originalTransactionKey'        => '6C5DBB69E74644958F8C25199514DC6C',
@@ -140,7 +158,7 @@ class CreditcardTest extends BuckarooTestCase
      */
     public function it_creates_a_creditcard_pay_recurrent()
     {
-        $response = $this->buckaroo->payment('creditcard')->payRecurrent([
+        $response = $this->buckaroo->method('creditcard')->payRecurrent([
             'amountDebit'                   => 10,
             'invoice'                       => uniqid(),
             'originalTransactionKey'        => '6C5DBB69E74644958F8C25199514DC6C',

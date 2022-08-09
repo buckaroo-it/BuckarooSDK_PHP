@@ -1,4 +1,22 @@
 <?php
+/*
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MIT License
+ * It is available through the world-wide-web at this URL:
+ * https://tldrlegal.com/license/mit-license
+ * If you are unable to obtain it through the world-wide-web, please send an email
+ * to support@buckaroo.nl so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to newer
+ * versions in the future. If you wish to customize this module for your
+ * needs please contact support@buckaroo.nl for more information.
+ *
+ * @copyright Copyright (c) Buckaroo B.V.
+ * @license   https://tldrlegal.com/license/mit-license
+ */
 
 namespace Buckaroo\Tests\Payments;
 
@@ -12,7 +30,7 @@ class EmandatesTest extends BuckarooTestCase
      */
     public function it_get_emandates_issuer_list()
     {
-        $response = $this->buckaroo->payment('emandates')->issuerList();
+        $response = $this->buckaroo->method('emandates')->issuerList();
 
         $this->assertTrue($response->isSuccess());
     }
@@ -23,7 +41,7 @@ class EmandatesTest extends BuckarooTestCase
      */
     public function it_creates_mandante_on_emandates()
     {
-        $response = $this->buckaroo->payment('emandates')->createMandate([
+        $response = $this->buckaroo->method('emandates')->createMandate([
             'emandatereason'    => 'testing',
             'sequencetype'      => '1',
             'purchaseid'        => 'purchaseid1234',
@@ -42,7 +60,7 @@ class EmandatesTest extends BuckarooTestCase
      */
     public function it_get_status_from_emandates()
     {
-        $response = $this->buckaroo->payment('emandates')->status([
+        $response = $this->buckaroo->method('emandates')->status([
             'mandateid'         => '1DC1234567890'
         ]);
 
@@ -55,7 +73,7 @@ class EmandatesTest extends BuckarooTestCase
      */
     public function it_modifies_mandante_on_emandates()
     {
-        $response = $this->buckaroo->payment('emandates')->modifyMandate([
+        $response = $this->buckaroo->method('emandates')->modifyMandate([
             'originalMandateId'         => '1DC1234567890',
             'debtorbankid'      => 'ABNANL2A',
         ]);
@@ -69,7 +87,7 @@ class EmandatesTest extends BuckarooTestCase
      */
     public function it_cancels_mandante_on_emandates()
     {
-        $response = $this->buckaroo->payment('emandates')->cancelMandate([
+        $response = $this->buckaroo->method('emandates')->cancelMandate([
             'mandateid'         => '1DC1234567890',
             'emandatereason'    => 'testing cancel',
             'purchaseid'        => 'purchaseid1234',
