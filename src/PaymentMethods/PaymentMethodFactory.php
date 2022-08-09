@@ -20,6 +20,7 @@
 
 namespace Buckaroo\PaymentMethods;
 
+use Buckaroo\Exceptions\BuckarooException;
 use Buckaroo\Exceptions\SDKException;
 use Buckaroo\PaymentMethods\Afterpay\Afterpay;
 use Buckaroo\PaymentMethods\AfterpayDigiAccept\AfterpayDigiAccept;
@@ -137,7 +138,7 @@ class PaymentMethodFactory
             }
         }
 
-        throw new SDKException($this->client->getLogger(), "Wrong payment method code has been given");
+        throw new BuckarooException($this->client->config()->getLogger(), "Wrong payment method code has been given");
     }
 
     /**
