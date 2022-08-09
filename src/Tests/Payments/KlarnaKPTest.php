@@ -121,7 +121,7 @@ class KlarnaKPTest extends BuckarooTestCase
             ]
         ]);
 
-        $this->assertTrue($response->isValidationFailure());
+        $this->assertTrue($response->isFailed());
     }
 
     /**
