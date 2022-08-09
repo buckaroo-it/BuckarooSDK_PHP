@@ -82,7 +82,7 @@ class PaymentMethodFactory
         iDealQR::class                  => ['ideal_qr'],
         iDin::class                     => ['idin'],
         In3::class                      => ['in3'],
-        KlarnaPay::class                => ['klarna'],
+        KlarnaPay::class                => ['klarna', 'klarnain'],
         KlarnaKP::class                 => ['klarnakp'],
         Surepay::class                  => ['surepay'],
         Subscriptions::class            => ['subscriptions'],
