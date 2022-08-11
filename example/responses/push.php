@@ -2,10 +2,10 @@
 
 require('../bootstrap.php');
 
-use Buckaroo\Buckaroo;
+use Buckaroo\BuckarooClient;
 use Buckaroo\Handlers\Reply\ReplyHandler;
 
-$buckaroo = new Buckaroo($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
+$buckaroo = new BuckarooClient($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
 //START HTTP POST PUSH
 $post_data = [

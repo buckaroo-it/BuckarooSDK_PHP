@@ -2,10 +2,10 @@
 
 require('../bootstrap.php');
 
-use Buckaroo\Buckaroo;
+use Buckaroo\BuckarooClient;
 use Buckaroo\Resources\Constants\Gender;
 
-$buckaroo = new Buckaroo($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
+$buckaroo = new BuckarooClient($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
 //Also accepts json
 //Pay
