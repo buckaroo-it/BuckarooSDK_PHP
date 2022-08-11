@@ -23,6 +23,7 @@ namespace Buckaroo\Handlers\Logging;
 use Buckaroo\Handlers\Logging\Observers\ErrorReporter;
 use Buckaroo\Handlers\Logging\Observers\Monolog;
 use Psr\Log\LoggerInterface;
+use Stringable;
 
 class DefaultLogger implements Subject, LoggerInterface
 {
@@ -82,21 +83,21 @@ class DefaultLogger implements Subject, LoggerInterface
     }
 
     /**
-     * @param $message
+     * @param string|Stringable $message The log message
      * @param array $context
      * @return void
      */
-    public function emergency($message, array $context = array())
+    public function emergency($message, array $context = []): void
     {
         $this->notify('emergency', $message, $context);
     }
 
     /**
-     * @param $message
+     * @param string|Stringable $message The log message
      * @param array $context
      * @return void
      */
-    public function alert($message, array $context = array())
+    public function alert($message, array $context = []): void
     {
         $this->notify('alert', $message, $context);
     }
@@ -106,7 +107,7 @@ class DefaultLogger implements Subject, LoggerInterface
      * @param array $context
      * @return void
      */
-    public function critical($message, array $context = array())
+    public function critical($message, array $context = array()): void
     {
         $this->notify('critical', $message, $context);
     }
@@ -116,7 +117,7 @@ class DefaultLogger implements Subject, LoggerInterface
      * @param array $context
      * @return void
      */
-    public function error($message, array $context = array())
+    public function error($message, array $context = array()): void
     {
         $this->notify('error', $message, $context);
     }
@@ -126,7 +127,7 @@ class DefaultLogger implements Subject, LoggerInterface
      * @param array $context
      * @return void
      */
-    public function warning($message, array $context = array())
+    public function warning($message, array $context = array()): void
     {
         $this->notify('warning', $message, $context);
     }
@@ -136,7 +137,7 @@ class DefaultLogger implements Subject, LoggerInterface
      * @param array $context
      * @return void
      */
-    public function notice($message, array $context = array())
+    public function notice($message, array $context = array()): void
     {
         $this->notify('notice', $message, $context);
     }
@@ -146,7 +147,7 @@ class DefaultLogger implements Subject, LoggerInterface
      * @param array $context
      * @return void
      */
-    public function info($message, array $context = array())
+    public function info($message, array $context = array()): void
     {
         $this->notify('info', $message, $context);
     }
@@ -156,7 +157,7 @@ class DefaultLogger implements Subject, LoggerInterface
      * @param array $context
      * @return void
      */
-    public function debug($message, array $context = array())
+    public function debug($message, array $context = array()): void
     {
         if($_ENV['BPE_DEBUG'] ?? false) {
             $this->notify('debug', $message, $context);
@@ -169,7 +170,7 @@ class DefaultLogger implements Subject, LoggerInterface
      * @param array $context
      * @return void
      */
-    public function log($level, $message, array $context = array())
+    public function log($level, $message, array $context = array()): void
     {
         $this->notify('log', $message, $context);
     }
