@@ -22,8 +22,9 @@ namespace Buckaroo\Handlers\Logging;
 
 use Buckaroo\Handlers\Logging\Observers\ErrorReporter;
 use Buckaroo\Handlers\Logging\Observers\Monolog;
+use Psr\Log\LoggerInterface;
 
-class DefaultLogger implements Subject
+class DefaultLogger implements Subject, LoggerInterface
 {
     /**
      * @var array
