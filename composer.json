@@ -8,7 +8,6 @@
         "ext-json": "*",
         "ext-pcre": "*",
         "ext-fileinfo": "*",
-        "psr/log": "^1.1.4",
         "monolog/monolog": "^2.2",
         "guzzlehttp/guzzle": "^7.0",
         "composer/ca-bundle": "^1.3",
