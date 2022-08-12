@@ -60,7 +60,7 @@ Create a payment with all the available payment methods. In this example, we sho
 
 ```php
 # Create a new payment
-$buckaroo->payment('creditcard') // Input the desire payment method.
+$buckaroo->method('creditcard') // Input the desire payment method.
     ->pay([
         'name'          => 'visa' // Request to pay with Visa
         'amountDebit'   => 10, // The amount we want to charge

@@ -2,7 +2,7 @@
 
 require('../bootstrap.php');
 
-use Buckaroo\Buckaroo;
+use Buckaroo\BuckarooClient;
 
 $returnReponse = [
     "brq_amount" => "10.10",
@@ -28,7 +28,7 @@ $returnReponse = [
     "brq_signature" => "bf7a62c830da2d2e004199919a8fe0d53b0668f5"
 ];
 
-$buckaroo = new Buckaroo($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
+$buckaroo = new BuckarooClient($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
 $replyHandler = $buckaroo->payment($returnReponse['brq_payment_method'])->handleReply($returnReponse);
 $replyHandler->validate();

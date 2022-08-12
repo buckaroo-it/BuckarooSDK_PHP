@@ -2,10 +2,10 @@
 
 require('../bootstrap.php');
 
-use Buckaroo\Buckaroo;
+use Buckaroo\BuckarooClient;
 use Buckaroo\Resources\Constants\Gender;
 
-$buckaroo = new Buckaroo($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
+$buckaroo = new BuckarooClient($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
 //** START Create Duo Combined */
 $subscriptions = $buckaroo->method('subscriptions')->manually()->createCombined([
@@ -15,7 +15,7 @@ $subscriptions = $buckaroo->method('subscriptions')->manually()->createCombined(
     'email'                     => 'test@buckaroo.nl',
     'rate_plans'        => [
         'add'        => [
-            'startDate'         => carbon()->format('Y-m-d'),
+            'startDate'         => date('Y-m-d'),
             'ratePlanCode'      => 'xxxxxx',
         ]
     ],
@@ -30,7 +30,7 @@ $subscriptions = $buckaroo->method('subscriptions')->manually()->createCombined(
         'lastName'          => 'Do',
         'gender'            => Gender::FEMALE,
         'culture'           => 'nl-NL',
-        'birthDate'         => carbon()->subYears(24)->format('Y-m-d')
+        'birthDate'         => date('Y-m-d')
     ],
     'address'           => [
         'street'        => 'Hoofdstraat',
@@ -56,7 +56,7 @@ $subscriptions = $buckaroo->method('subscriptions')->manually()->createCombined(
     'email'                     => 'test@buckaroo.nl',
     'rate_plans'        => [
         'add'        => [
-            'startDate'         => carbon()->format('Y-m-d'),
+            'startDate'         => date('Y-m-d'),
             'ratePlanCode'      => 'xxxxxx',
         ]
     ],
@@ -71,7 +71,7 @@ $subscriptions = $buckaroo->method('subscriptions')->manually()->createCombined(
         'lastName'          => 'Do',
         'gender'            => Gender::FEMALE,
         'culture'           => 'nl-NL',
-        'birthDate'         => carbon()->subYears(24)->format('Y-m-d')
+        'birthDate'         => date('Y-m-d')
     ],
     'address'           => [
         'street'        => 'Hoofdstraat',

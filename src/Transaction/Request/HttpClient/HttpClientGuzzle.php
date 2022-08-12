@@ -69,6 +69,7 @@ class HttpClientGuzzle extends HttpClientAbstract
 
         try {
             $response = $this->httpClient->send($request, ['http_errors' => false]);
+
             $result = (string) $response->getBody();
 
             $this->logger->info('RESPONSE HEADERS: ' . json_encode($response->getHeaders()));
@@ -78,6 +79,11 @@ class HttpClientGuzzle extends HttpClientAbstract
             throw new TransferException($this->logger, "Transfer failed", 0, $e);
         }
 
-        return $this->getDecodedResult($result);
+        $result = $this->getDecodedResult($response, $result);
+
+        return array(
+            $response,
+            $result
+        );
     }
 }
