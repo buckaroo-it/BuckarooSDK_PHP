@@ -1,4 +1,22 @@
 <?php
+/*
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the MIT License
+ * It is available through the world-wide-web at this URL:
+ * https://tldrlegal.com/license/mit-license
+ * If you are unable to obtain it through the world-wide-web, please send an email
+ * to support@buckaroo.nl so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to newer
+ * versions in the future. If you wish to customize this module for your
+ * needs please contact support@buckaroo.nl for more information.
+ *
+ * @copyright Copyright (c) Buckaroo B.V.
+ * @license   https://tldrlegal.com/license/mit-license
+ */
 
 namespace Buckaroo\Tests\Payments;
 
@@ -20,7 +38,7 @@ class PushTest extends BuckarooTestCase
 //        $generator->generate();
 
 
-        $replyHandler = $this->buckaroo->payment('ideal');
+        $replyHandler = $this->buckaroo->method('ideal');
 
         $auth_header = 'IBjihN7Fhp:0YvyjYAzDQ28W+hQi80f2nhe0Z1QFJLbz7IH//6LsAU=:cad1832100784f57a6e6de835d9f3638:1658227572';
         $post_data = '{"Transaction":{"Key":"5340604668D74435AA344E1428ED1292","Invoice":"62d68b6c8ab0c","ServiceCode":"ideal","Status":{"Code":{"Code":190,"Description":"Success"},"SubCode":{"Code":"S001","Description":"Transaction successfully processed"},"DateTime":"2022-07-19T12:46:12"},"IsTest":true,"Order":"ORDER_NO_62d68b6ca2df3","Currency":"EUR","AmountDebit":10.1,"TransactionType":"C021","Services":[{"Name":"ideal","Action":null,"Parameters":[{"Name":"consumerIssuer","Value":"ABN AMRO"},{"Name":"transactionId","Value":"0000000000000001"},{"Name":"consumerName","Value":"J. de Tèster"},{"Name":"consumerIBAN","Value":"NL44RABO0123456789"},{"Name":"consumerBIC","Value":"RABONL2U"}],"VersionAsProperty":2}],"CustomParameters":null,"AdditionalParameters":{"List":[{"Name":"initiated_by_magento","Value":"1"},{"Name":"service_action","Value":"something"}]},"MutationType":1,"RelatedTransactions":null,"IsCancelable":false,"IssuingCountry":null,"StartRecurrent":false,"Recurring":false,"CustomerName":"J. de Tèster","PayerHash":"2d26d34584a4eafeeaa97eed10cfdae22ae64cdce1649a80a55fafca8850e3e22cb32eb7c8fc95ef0c6f96669a21651d4734cc568816f9bd59c2092911e6c0da","PaymentKey":"AEC974D455FF4A4B9B4C21E437A04838","Description":null}}';

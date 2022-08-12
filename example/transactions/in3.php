@@ -62,13 +62,13 @@ $payload = [
 
 //Also accepts json
 //Pay
-$response = $buckaroo->payment('in3')->pay($payload);
+$response = $buckaroo->method('in3')->pay($payload);
 
 //Pay installment
-$response = $buckaroo->payment('in3')->payInInstallments($payload);
+$response = $buckaroo->method('in3')->payInInstallments($payload);
 
 //Refund
-$response = $buckaroo->payment('in3')->refund([
+$response = $buckaroo->method('in3')->refund([
     'amountCredit' => 10,
     'invoice' => '10000480',
     'originalTransactionKey' => '9AA4C81A08A84FA7B68E6A6A6291XXXX'

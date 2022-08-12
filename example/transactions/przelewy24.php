@@ -8,7 +8,7 @@ $buckaroo = new Buckaroo($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
 //Also accepts json
 //Pay
-$response = $buckaroo->payment("przelewy24")->pay([
+$response = $buckaroo->method("przelewy24")->pay([
     'amountDebit'       => 3.5,
     'invoice'           => uniqid(),
     'serviceParameters' => [
@@ -21,7 +21,7 @@ $response = $buckaroo->payment("przelewy24")->pay([
 ]);
 
 //Refund
-$response = $buckaroo->payment('przelewy24')->refund([
+$response = $buckaroo->method('przelewy24')->refund([
     'amountCredit' => 10,
     'invoice'       => 'testinvoice 123',
     'originalTransactionKey' => '2D04704995B74D679AACC59F87XXXXXX'

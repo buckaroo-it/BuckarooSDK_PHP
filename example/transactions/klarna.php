@@ -4,7 +4,7 @@ use Buckaroo\Buckaroo;
 $buckaroo = new Buckaroo($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
 //Pay
-$response = $buckaroo->payment('klarna')->pay([
+$response = $buckaroo->method('klarna')->pay([
     'amountDebit'       => 50.30,
     'order'             => uniqid(),
     'invoice'           => uniqid(),
@@ -60,7 +60,7 @@ $response = $buckaroo->payment('klarna')->pay([
 ]);
 
 //Refund
-$response = $buckaroo->payment('klarna')->refund([
+$response = $buckaroo->method('klarna')->refund([
     'invoice'                   => '', //Set invoice number of the transaction to refund
     'originalTransactionKey'    => '', //Set transaction key of the transaction to refund
     'amountCredit'              => 10.10

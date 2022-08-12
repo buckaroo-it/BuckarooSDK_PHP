@@ -1,6 +1,5 @@
 <?php
-
-/**
+/*
  * NOTICE OF LICENSE
  *
  * This source file is subject to the MIT License
@@ -21,26 +20,26 @@
 
 declare(strict_types=1);
 
-namespace Buckaroo\Exceptions;
+namespace Buckaroo\Models\Payload;
 
-use Buckaroo\Handlers\Logging\Subject;
-use Exception;
-use Throwable;
-
-class SDKException extends Exception
+class PayPayload extends Payload
 {
-    protected Subject $logger;
+    /**
+     * @var string
+     */
+    protected string $order;
+    /**
+     * @var float
+     */
+    protected float $amountDebit;
 
-    public function __construct(?Subject $logger, string $message = "", int $code = 0, Throwable $previous = null) {
-        $this->logger = $logger;
-
-        $this->logger->error($this->message($message));
-
-        parent::__construct($message, $code, $previous);
-    }
-
-    protected function message(string $message): string
+    /**
+     * @param array|null $payload
+     */
+    public function __construct(?array $payload)
     {
-        return 'Buckaroo SDKExeption ' . $message;
+        $this->order = uniqid('ORDER_NO_');
+
+        parent::__construct($payload);
     }
 }

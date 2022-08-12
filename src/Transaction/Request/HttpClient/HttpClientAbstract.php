@@ -1,6 +1,5 @@
 <?php
-
-/**
+/*
  * NOTICE OF LICENSE
  *
  * This source file is subject to the MIT License
@@ -23,114 +22,74 @@ declare(strict_types=1);
 
 namespace Buckaroo\Transaction\Request\HttpClient;
 
-use Buckaroo\Handlers\Logging\Loggable;
+use Buckaroo\Exceptions\BuckarooException;
 use Buckaroo\Handlers\Logging\Subject;
-use Psr\Log\LoggerInterface;
 
-abstract class HttpClientAbstract implements HttpClientInterface, Loggable
+abstract class HttpClientAbstract implements HttpClientInterface
 {
-    public const METHOD_GET  = 'GET';
-    public const METHOD_POST = 'POST';
-
-    public const VALID_METHODS = [
-        self::METHOD_GET,
-        self::METHOD_POST,
-    ];
-
+    /**
+     *
+     */
     protected const TIMEOUT = 30;
+    /**
+     *
+     */
     protected const CONNECT_TIMEOUT = 5;
 
+    /**
+     * @var Subject
+     */
     protected Subject $logger;
 
-    public function __construct(
-        ?LoggerInterface $logger = null
-    ) {
-        //$this->logger = $logger;
+    /**
+     * @param Subject $logger
+     */
+    public function __construct(Subject $logger)
+    {
+        $this->logger = $logger;
     }
 
+    /**
+     * @param string $url
+     * @param array $headers
+     * @param string $method
+     * @param string|null $data
+     * @return mixed
+     */
     abstract public function call(string $url, array $headers, string $method, string $data = null);
 
-    protected function checkMethod(string $method)
-    {
-        if (!in_array($method, self::VALID_METHODS)) {
-//            throw new TransferException(
-//                $this->logger,
-//                __METHOD__ . '|3|',
-//                'Invalid HTTP-Method: ' . $method
-//            );
-        }
-    }
-
-    protected function checkEmptyResult($result, $error)
-    {
-        // check for curl errors
-        if ($result === false)
-        {
-            throw new \Exception("The result that came back was empty.");
-        }
-    }
-
-    protected function checkStatusCode($result, bool $isError)
-    {
-        if ($isError) {
-//            throw new TransferException(
-//                $this->logger,
-//                __METHOD__ . '|10|',
-//                var_export($result, true)
-//            );
-        }
-    }
-
+    /**
+     * @param $result
+     * @return array
+     * @throws BuckarooException
+     */
     protected function getDecodedResult($result): array
     {
-       // $this->logger->debug(__METHOD__ . '| start |');
-        $decodedResult = json_decode($result, true);
+        $decoded_result = json_decode($result, true);
 
-        // check for json_decode errors
-        if ($decodedResult === null) {
-            $jsonErrors = [
-                JSON_ERROR_NONE      => 'No error occurred',
-                JSON_ERROR_DEPTH     => 'The maximum stack depth has been reached',
-                JSON_ERROR_CTRL_CHAR => 'Control character issue, maybe wrong encoded',
-                JSON_ERROR_SYNTAX    => 'Syntaxerror',
-            ];
-
-            $decodingError = 'JSON decode error | ' .
-                (!empty($jsonErrors[json_last_error()]) ? $jsonErrors[json_last_error()] : '') .
-                ": " . print_r($result, true);
-
-//            throw new TransferException(
-//                $this->logger,
-//                __METHOD__,
-//                $decodingError
-//            );
+        if(is_array($decoded_result))
+        {
+            return $decoded_result;
         }
 
-       // $this->logger->debug(__METHOD__ . '| end |', $decodedResult);
-
-        return $decodedResult;
+        throw new BuckarooException($this->logger, $result);
     }
 
+    /**
+     * @param array $headers
+     * @return array
+     */
     protected function convertHeadersFormat(array $headers): array
     {
         $resultHeaders = [];
-        foreach ($headers as $header) {
+
+        foreach ($headers as $header)
+        {
             $headerName = substr($header, 0, strpos($header, ':'));
             $headerValue = substr($header, strpos($header, ':') + 2);
             $resultHeaders[$headerName] = $headerValue;
         }
+
         return $resultHeaders;
-    }
-
-    public function setLogger(Subject $logger)
-    {
-        $this->logger = $logger;
-
-        return $this;
-    }
-
-    public function getLogger(): ?Subject
-    {
-        return $this->logger;
     }
 }

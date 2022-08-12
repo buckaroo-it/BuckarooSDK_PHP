@@ -5,7 +5,7 @@
 # Buckaroo PHP SDK
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/7081446/178476892-372b4f2b-f74d-4b00-b174-4fa1d5a468e5.png" width="500px" position="center">
+  <img src="https://www.buckaroo.nl/media/3613/buckaroo-payment.png" width="500px" position="center">
 </p>
 
 ---

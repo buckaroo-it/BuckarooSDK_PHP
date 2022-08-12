@@ -6,7 +6,7 @@ use Buckaroo\Buckaroo;
 
 $buckaroo = new Buckaroo($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
-$marketplace = $buckaroo->payment('marketplaces')->manually()->split([
+$marketplace = $buckaroo->method('marketplaces')->manually()->split([
     'daysUntilTransfer' => 2,
     'marketplace'       => [
         'amount'        => 10,
@@ -26,7 +26,7 @@ $marketplace = $buckaroo->payment('marketplaces')->manually()->split([
     ]
 ]);
 
-$response = $buckaroo->payment('ideal')->combine($marketplace)->pay([
+$response = $buckaroo->method('ideal')->combine($marketplace)->pay([
     'invoice'       => uniqid(),
     'amountDebit' => 95.00,
     'issuer' => 'ABNANL2A'
