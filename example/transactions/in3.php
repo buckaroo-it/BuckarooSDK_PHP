@@ -2,9 +2,9 @@
 
 require('../bootstrap.php');
 
-use Buckaroo\Buckaroo;
+use Buckaroo\BuckarooClient;
 
-$buckaroo = new Buckaroo($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
+$buckaroo = new BuckarooClient($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
 $payload = [
     'amountDebit'       => 9.5,

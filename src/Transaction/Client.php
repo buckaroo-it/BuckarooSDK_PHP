@@ -41,21 +41,41 @@ class Client
     private const METHOD_GET  = 'GET';
     private const METHOD_POST = 'POST';
 
+    /**
+     * @var HttpClientInterface|HttpClientGuzzle
+     */
     protected HttpClientInterface $httpClient;
+    /**
+     * @var Subject
+     */
     protected Subject $logger;
+    /**
+     * @var Config|null
+     */
     protected ?Config $config;
 
+    /**
+     * @param Config|null $config
+     */
     public function __construct(?Config $config)
     {
         $this->config = $config;
         $this->httpClient =  new HttpClientGuzzle($config->getLogger());
     }
 
+    /**
+     * @return string
+     */
     public function getTransactionUrl(): string
     {
         return $this->getEndpoint('json/Transaction/');
     }
 
+    /**
+     * @param $path
+     * @return string
+     * @throws BuckarooException
+     */
     private function getEndpoint($path): string
     {
         $baseUrl = ($this->config()->isLiveMode())? Endpoints::LIVE : Endpoints::TEST;
@@ -63,6 +83,12 @@ class Client
         return $baseUrl . $path;
     }
 
+    /**
+     * @param string $url
+     * @param string $data
+     * @param string $method
+     * @return array
+     */
     protected function getHeaders(string $url, string $data, string $method): array
     {
         $headers = new DefaultHeader([
@@ -78,16 +104,32 @@ class Client
     }
 
     //WIP
+
+    /**
+     * @param $responseClass
+     * @return mixed
+     */
     public function get($responseClass = Response::class)
     {
         return $this->call(self::METHOD_GET, null, $responseClass);
     }
 
+    /**
+     * @param Request|null $data
+     * @param $responseClass
+     * @return mixed
+     */
     public function post(Request $data = null, $responseClass = TransactionResponse::class)
     {
         return $this->call(self::METHOD_POST, $data, $responseClass);
     }
 
+    /**
+     * @param Request|null $data
+     * @param $responseClass
+     * @return mixed
+     * @throws BuckarooException
+     */
     public function dataRequest(Request $data = null, $responseClass =  TransactionResponse::class)
     {
         $endPoint = $this->getEndpoint('json/DataRequest/');
@@ -95,6 +137,29 @@ class Client
         return $this->call(self::METHOD_POST, $data, $responseClass, $endPoint);
     }
 
+    /**
+     * @param Request|null $data
+     * @param string $paymentName
+     * @param int $serviceVersion
+     * @return mixed
+     * @throws BuckarooException
+     */
+    public function specification(Request $data = null, string $paymentName, int $serviceVersion = 0)
+    {
+        $endPoint = $this->getEndpoint('json/Transaction/Specification/' . $paymentName . '?serviceVersion=' . $serviceVersion);
+
+        return $this->call(self::METHOD_GET, $data, TransactionResponse::class, $endPoint);
+    }
+
+    /**
+     * @param $method
+     * @param Request $data
+     * @param string $responseClass
+     * @param string|null $endPoint
+     * @return mixed
+     * @throws BuckarooException
+     * @throws \Buckaroo\Exceptions\TransferException
+     */
     protected function call($method, Request $data, string $responseClass, string $endPoint = null)
     {
         $endPoint = $endPoint ?? $this->getTransactionUrl();
@@ -107,12 +172,18 @@ class Client
         $this->config->getLogger()->info('HEADERS: ' . json_encode($headers));
         $this->config->getLogger()->info('PAYLOAD: ' . $data->toJson());
 
-        $decodedResult = $this->httpClient->call($endPoint, $headers, $method, $data->toJson(), $responseClass);
-        $response = new $responseClass($decodedResult);
+        list($response, $decodedResult) = $this->httpClient->call($endPoint, $headers, $method, $data->toJson());
+
+        $response = new $responseClass($response, $decodedResult);
 
         return $response;
     }
 
+    /**
+     * @param Config|null $config
+     * @return Config|null
+     * @throws BuckarooException
+     */
     public function config(?Config $config = null)
     {
         if($config)
