@@ -1,6 +1,7 @@
 {
     "name": "buckaroo/sdk",
     "description": "Buckaroo payment SDK",
+    "license": "MIT",
     "version": "1.0.0",
     "type": "library",
     "require": {
