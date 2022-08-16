@@ -87,3 +87,6 @@ If you want to contribute as well, then please follow our [Contribution Guidelin
 ### Additional information
 - **Support:** https://support.buckaroo.eu/contact
 - **Contact:** [support@buckaroo.nl](mailto:support@buckaroo.nl) or [+31 (0)30 711 50 50](tel:+310307115050)
+
+## License
+Buckaroo PHP SDK is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
