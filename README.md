@@ -38,11 +38,11 @@ To use the Buckaroo API client, the following things are required:
 
 By far the easiest way to install the Buckaroo API client is to require it with [Composer](http://getcomposer.org/doc/00-intro.md).
 
-    $ composer require buckaroo/buckaroo-sdk:^1.0
+    $ composer require buckaroo/sdk:^1.0
 
     {
         "require": {
-            "buckaroo/buckaroo-sdk": "^1.0"
+            "buckaroo/sdk": "^1.0"
         }
     }
 
