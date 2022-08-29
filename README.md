@@ -2,6 +2,8 @@
   <img src="https://user-images.githubusercontent.com/7081446/178473472-c0c29ec5-762c-47de-9ed4-999e5ad6c70d.png" width="200px" position="center">
 </p>
 
+Temporary version of Buckaroo PHP SDK with support for older version of Guzzle and Monolog.
+
 # Buckaroo PHP SDK
 
 <p align="center">
