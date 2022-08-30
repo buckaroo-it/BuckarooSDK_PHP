@@ -1,14 +1,14 @@
 {
     "name": "buckaroo/sdk",
     "description": "Buckaroo payment SDK",
-    "version": "1.0.0",
+    "license": "MIT",
+    "version": "1.0.1",
     "type": "library",
     "require": {
         "php": ">=7.4|^8.0",
         "ext-json": "*",
         "ext-pcre": "*",
         "ext-fileinfo": "*",
-        "psr/log": "^1.1.4",
         "monolog/monolog": "^2.2",
         "guzzlehttp/guzzle": "^7.0",
         "composer/ca-bundle": "^1.3",

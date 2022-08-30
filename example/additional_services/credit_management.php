@@ -2,22 +2,22 @@
 
 require('../bootstrap.php');
 
-use Buckaroo\Buckaroo;
+use Buckaroo\BuckarooClient;
 use Buckaroo\Resources\Constants\Gender;
 
-$buckaroo = new Buckaroo($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
+$buckaroo = new BuckarooClient($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
 // Sometimes we need to combine multiple payments.
 // By adding "manually," it will not execute immediately but rather return the built payload.
 // With the returned payload, we can combine it with the next payment.
 
 $invoice = $buckaroo->method('credit_management')->manually()->createCombinedInvoice([
-                'invoice'               => str_random(),
+                'invoice'               => rand(1000, 9999),
                 'applyStartRecurrent'   => 'False',
                 'invoiceAmount'         => 10.00,
                 'invoiceAmountVAT'      => 1.00,
-                'invoiceDate'           => carbon()->format('Y-m-d'),
-                'dueDate'           => carbon()->addDay(30)->format('Y-m-d'),
+                'invoiceDate'           => date('Y-m-d'),
+                'dueDate'           => date('Y-m-d'),
                 'schemeKey'         => '2amq34',
                 'maxStepIndex'      => 1,
                 'allowedServices'   => 'ideal,mastercard',
@@ -62,7 +62,7 @@ $response = $buckaroo->method('sepadirectdebit')->combine($invoice)->pay([
     'amountDebit'       => 10.10,
     'iban'              => 'NL13TEST0123456789',
     'bic'               => 'TESTNL2A',
-    'collectdate'       => carbon()->addDays(60)->format('Y-m-d'),
+    'collectdate'       => date('Y-m-d'),
     'mandateReference'  => '1DCtestreference',
     'mandateDate'       => '2022-07-03',
     'customer'          => [

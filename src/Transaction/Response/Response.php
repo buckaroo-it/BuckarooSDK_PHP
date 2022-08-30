@@ -36,8 +36,9 @@ class Response implements ArrayAccess, Arrayable
     /**
      * @param $data
      */
-    public function __construct($data)
+    public function __construct($response, $data)
     {
+        $this->httpResponse = $response;
         $this->data     = $data;
     }
 
@@ -85,6 +86,14 @@ class Response implements ArrayAccess, Arrayable
         }
 
         throw new Exception("Call to undefined method " . __CLASS__ . '::' . $method);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getHttpResponse()
+    {
+        return $this->httpResponse;
     }
 
     /** Implement Arrayable */

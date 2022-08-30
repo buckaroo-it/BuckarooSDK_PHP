@@ -63,7 +63,7 @@ abstract class HttpClientAbstract implements HttpClientInterface
      * @return array
      * @throws BuckarooException
      */
-    protected function getDecodedResult($result): array
+    protected function getDecodedResult($response, $result): array
     {
         $decoded_result = json_decode($result, true);
 
@@ -72,7 +72,7 @@ abstract class HttpClientAbstract implements HttpClientInterface
             return $decoded_result;
         }
 
-        throw new BuckarooException($this->logger, $result);
+        throw new BuckarooException($this->logger, 'Status code: ' . $response->getStatusCode() . ' Message: ' . $result);
     }
 
     /**

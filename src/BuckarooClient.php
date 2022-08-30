@@ -23,6 +23,7 @@ namespace Buckaroo;
 use Buckaroo\Config\Config;
 use Buckaroo\Config\DefaultConfig;
 use Buckaroo\Exceptions\BuckarooException;
+use Buckaroo\Handlers\Credentials;
 use Buckaroo\Handlers\Logging\Observer as LoggingObserver;
 use Buckaroo\PaymentMethods\PaymentFacade;
 use Buckaroo\Transaction\Client;
@@ -57,6 +58,16 @@ class BuckarooClient
     }
 
     /**
+     * @return bool
+     */
+    public function confirmCredential(): bool
+    {
+        $credentialHandler = new Credentials($this->client, $this->config);
+
+        return $credentialHandler->confirm();
+    }
+
+    /**
      * @param LoggingObserver $observer
      * @return $this
      */
@@ -78,6 +89,9 @@ class BuckarooClient
         return $this;
     }
 
+    /**
+     * @return Client
+     */
     public function client()
     {
         return $this->client;

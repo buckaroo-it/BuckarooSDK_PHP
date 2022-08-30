@@ -38,11 +38,11 @@ To use the Buckaroo API client, the following things are required:
 
 By far the easiest way to install the Buckaroo API client is to require it with [Composer](http://getcomposer.org/doc/00-intro.md).
 
-    $ composer require buckaroo/buckaroo-sdk:^1.0
+    $ composer require buckaroo/sdk:^1.0
 
     {
         "require": {
-            "buckaroo/buckaroo-sdk": "^1.0"
+            "buckaroo/sdk": "^1.0"
         }
     }
 
@@ -60,7 +60,7 @@ Create a payment with all the available payment methods. In this example, we sho
 
 ```php
 # Create a new payment
-$buckaroo->payment('creditcard') // Input the desire payment method.
+$buckaroo->method('creditcard') // Input the desire payment method.
     ->pay([
         'name'          => 'visa' // Request to pay with Visa
         'amountDebit'   => 10, // The amount we want to charge
@@ -87,3 +87,6 @@ If you want to contribute as well, then please follow our [Contribution Guidelin
 ### Additional information
 - **Support:** https://support.buckaroo.eu/contact
 - **Contact:** [support@buckaroo.nl](mailto:support@buckaroo.nl) or [+31 (0)30 711 50 50](tel:+310307115050)
+
+## License
+Buckaroo PHP SDK is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

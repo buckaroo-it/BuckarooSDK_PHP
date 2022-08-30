@@ -20,9 +20,7 @@
 
 namespace Buckaroo\Handlers\Logging;
 
-use Psr\Log\LoggerInterface;
-
-interface Subject extends LoggerInterface
+interface Subject
 {
     /**
      * @param Observer $observer
