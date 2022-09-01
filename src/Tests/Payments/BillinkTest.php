@@ -99,13 +99,14 @@ class BillinkTest extends BuckarooTestCase
             'vATNumber'         => '2',
             'billing'           => [
                 'recipient'        => [
-                    'category'              => 'B2C',
+                    'category'              => 'B2B',
                     'careOf'                => 'John Smith',
                     'title'                 => 'Female',
                     'initials'              => 'JD',
                     'firstName'             => 'John',
                     'lastName'              => 'Do',
-                    'birthDate'             => '01-01-1990'
+                    'birthDate'             => '01-01-1990',
+                    'chamberOfCommerce'     => 'TEST'
                 ],
                 'address'       => [
                     'street'                => 'Hoofdstraat',
@@ -123,6 +124,7 @@ class BillinkTest extends BuckarooTestCase
             ],
             'shipping'          => [
                 'recipient'        => [
+                    'category'              => 'B2C',
                     'careOf'                => 'John Smith',
                     'title'                 => 'Male',
                     'initials'              => 'JD',

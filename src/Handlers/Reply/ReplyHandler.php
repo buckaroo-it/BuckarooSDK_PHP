@@ -99,7 +99,7 @@ class ReplyHandler
             return $this;
         }
 
-        if($this->contains('brq_', $data))
+        if($this->contains('brq_', $data) || $this->contains('BRQ_', $data))
         {
             $this->strategy = new HttpPost($this->config, $data);
 
