@@ -170,7 +170,7 @@ class BillinkTest extends BuckarooTestCase
         $response = $this->buckaroo->method('billink')->cancelAuthorize([
             'originalTransactionKey' => '74AD098CCFAA4F739FE16279B5059B6B', //Set transaction key of the transaction to capture
             'invoice' => '62905fa2650f4', //Set invoice id
-            'amountDebit' => 50.30, //set amount to capture
+            'AmountCredit' => 10, //set amount to capture
         ]);
 
         $this->assertTrue($response->isValidationFailure());
