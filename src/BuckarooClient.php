@@ -26,6 +26,7 @@ use Buckaroo\Exceptions\BuckarooException;
 use Buckaroo\Handlers\Credentials;
 use Buckaroo\Handlers\Logging\Observer as LoggingObserver;
 use Buckaroo\PaymentMethods\PaymentFacade;
+use Buckaroo\Services\TransactionService;
 use Buckaroo\Transaction\Client;
 
 class BuckarooClient
@@ -34,6 +35,9 @@ class BuckarooClient
      * @var Client
      */
     private Client $client;
+    /**
+     * @var Config|null
+     */
     private Config $config;
 
     /**
@@ -55,6 +59,15 @@ class BuckarooClient
     public function method(string $method): PaymentFacade
     {
         return new PaymentFacade($this->client, $method);
+    }
+
+    /**
+     * @param string $transactionKey
+     * @return TransactionService
+     */
+    public function transaction(string $transactionKey): TransactionService
+    {
+        return new TransactionService($this->client, $transactionKey);
     }
 
     /**

@@ -1,3 +1,4 @@
+
 <p align="center">
   <img src="https://user-images.githubusercontent.com/7081446/178473472-c0c29ec5-762c-47de-9ed4-999e5ad6c70d.png" width="200px" position="center">
 </p>
@@ -66,6 +67,16 @@ $buckaroo->method('creditcard') // Input the desire payment method.
         'amountDebit'   => 10, // The amount we want to charge
         'invoice'       => 'UNIQUE-INVOICE-NO', // Each payment must contain a unique invoice number
     ]);
+```
+
+After you create a transaction, you can retrieve several transaction information on demand.
+```php
+# Create a new payment
+$transaction = $buckaroo->transaction('YOUR-TRANSACTION-KEY')
+
+$transaction->status(); // Retrieve transaction status
+$transaction->refundInfo(); // Retrieve refund info
+$transaction->cancelInfo() // Retrieve cancellation info
 ```
 
 Find our full documentation online on [dev.buckaroo.nl](https://dev.buckaroo.nl/).

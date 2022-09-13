@@ -32,7 +32,7 @@ class Generator extends Hmac
     /**
      * @var string
      */
-    protected string $base64Data;
+    protected ?string $base64Data;
     /**
      * @var string|mixed
      */

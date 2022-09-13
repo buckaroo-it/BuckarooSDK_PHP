@@ -44,6 +44,8 @@ abstract class Hmac
      */
     public function base64Data($data = null)
     {
+        $this->base64Data = '';
+
         if($data)
         {
             if(is_array($data))
