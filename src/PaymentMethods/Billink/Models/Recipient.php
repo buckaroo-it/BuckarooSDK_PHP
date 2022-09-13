@@ -20,7 +20,7 @@
 
 namespace Buckaroo\PaymentMethods\Billink\Models;
 
-use Buckaroo\Models\{Address, Email, Person, Phone, ServiceParameter};
+use Buckaroo\Models\{Address, Company, Email, Person, Phone, ServiceParameter};
 use Buckaroo\Models\Interfaces\Recipient as RecipientInterface;
 use Buckaroo\PaymentMethods\Billink\Service\ParameterKeys\AddressAdapter;
 use Buckaroo\PaymentMethods\Billink\Service\ParameterKeys\PhoneAdapter;
@@ -69,7 +69,7 @@ class Recipient extends ServiceParameter
     {
         if(is_array($recipient))
         {
-            $this->recipient = new RecipientAdapter(new Person($recipient));
+            $this->recipient =  $this->getRecipientObject($recipient);
         }
 
         return $this->recipient;
@@ -115,6 +115,26 @@ class Recipient extends ServiceParameter
         }
 
         return $this->email;
+    }
+
+    /**
+     * @param array $recipient
+     * @return RecipientInterface
+     * @throws \Exception
+     */
+    private function getRecipientObject(array $recipient) : RecipientInterface
+    {
+        if(isset($recipient['category']))
+        {
+            switch ($recipient['category']) {
+                case 'B2B':
+                    return new RecipientAdapter(new Company($recipient));
+                case 'B2C':
+                    return new RecipientAdapter(new Person($recipient));
+            }
+        }
+
+        throw new \Exception('No recipient category found.');
     }
 
     /**

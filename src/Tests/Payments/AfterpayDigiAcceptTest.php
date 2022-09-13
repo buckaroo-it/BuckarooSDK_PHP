@@ -40,6 +40,45 @@ class AfterpayDigiAcceptTest extends BuckarooTestCase
      * @return void
      * @test
      */
+    public function it_creates_a_afterpaydigiaccept_authorize()
+    {
+        $response = $this->buckaroo->method('afterpaydigiaccept')->authorize($this->getPaymentPayload());
+
+        $this->assertTrue($response->isSuccess());
+    }
+
+    /**
+     * @return void
+     * @test
+     */
+    public function it_creates_a_afterpaydigiaccept_capture()
+    {
+        $response = $this->buckaroo->method('afterpaydigiaccept')->capture($this->getPaymentPayload([
+            'originalTransactionKey' => '9AA4C81A08A84FA7B68E6A6A6291XXXX'
+        ]));
+
+        $this->assertTrue($response->isFailed());
+    }
+
+//    /**
+//     * @return void
+//     * @test
+//     */
+//    public function it_creates_a_afterpaydigiaccept_cancel_authorize()
+//    {
+//        $response = $this->buckaroo->method('afterpaydigiaccept')->cancelAuthorize([
+//            'amountCredit' => 10,
+//            'invoice' => '10000480',
+//            'originalTransactionKey' => '9AA4C81A08A84FA7B68E6A6A6291XXXX'
+//        ]);
+//
+//        $this->assertTrue($response->isFailed());
+//    }
+
+    /**
+     * @return void
+     * @test
+     */
     public function it_creates_a_afterpaydigiaccept_refund()
     {
         $response = $this->buckaroo->method('afterpaydigiaccept')->refund([
@@ -51,8 +90,8 @@ class AfterpayDigiAcceptTest extends BuckarooTestCase
         $this->assertTrue($response->isFailed());
     }
 
-    private function getPaymentPayload(): array {
-        return [
+    private function getPaymentPayload(array $additionalParameters = null): array {
+        $payload =  [
             'amountDebit'                   => 40.50,
             'order'                         => uniqid(),
             'invoice'                       => uniqid(),
@@ -125,5 +164,12 @@ class AfterpayDigiAcceptTest extends BuckarooTestCase
                 ],
             ]
         ];
+
+        if($additionalParameters)
+        {
+            $payload = array_merge($payload, $additionalParameters);
+        }
+
+        return $payload;
     }
 }

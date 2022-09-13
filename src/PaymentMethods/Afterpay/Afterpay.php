@@ -22,6 +22,7 @@ namespace Buckaroo\PaymentMethods\Afterpay;
 
 use Buckaroo\Models\Model;
 use Buckaroo\PaymentMethods\Afterpay\Models\Pay;
+use Buckaroo\PaymentMethods\Afterpay\Models\Refund;
 use Buckaroo\PaymentMethods\PayablePaymentMethod;
 use Buckaroo\Transaction\Response\TransactionResponse;
 
@@ -83,5 +84,14 @@ class Afterpay extends PayablePaymentMethod
         $this->setServiceList('Capture', $pay);
 
         return $this->postRequest();
+    }
+
+    /**
+     * @param Model|null $model
+     * @return TransactionResponse
+     */
+    public function refund(?Model $model = null): TransactionResponse
+    {
+        return parent::refund($model ?? new Refund($this->payload));
     }
 }

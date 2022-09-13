@@ -99,13 +99,14 @@ class BillinkTest extends BuckarooTestCase
             'vATNumber'         => '2',
             'billing'           => [
                 'recipient'        => [
-                    'category'              => 'B2C',
+                    'category'              => 'B2B',
                     'careOf'                => 'John Smith',
                     'title'                 => 'Female',
                     'initials'              => 'JD',
                     'firstName'             => 'John',
                     'lastName'              => 'Do',
-                    'birthDate'             => '01-01-1990'
+                    'birthDate'             => '01-01-1990',
+                    'chamberOfCommerce'     => 'TEST'
                 ],
                 'address'       => [
                     'street'                => 'Hoofdstraat',
@@ -123,6 +124,7 @@ class BillinkTest extends BuckarooTestCase
             ],
             'shipping'          => [
                 'recipient'        => [
+                    'category'              => 'B2C',
                     'careOf'                => 'John Smith',
                     'title'                 => 'Male',
                     'initials'              => 'JD',
@@ -158,5 +160,19 @@ class BillinkTest extends BuckarooTestCase
                 ],
             ]
         ];
+    }
+
+    /**
+     * @test
+     */
+    public function it_creates_a_billink_cancel_authorize()
+    {
+        $response = $this->buckaroo->method('billink')->cancelAuthorize([
+            'originalTransactionKey' => '74AD098CCFAA4F739FE16279B5059B6B', //Set transaction key of the transaction to capture
+            'invoice' => '62905fa2650f4', //Set invoice id
+            'AmountCredit' => 10, //set amount to capture
+        ]);
+
+        $this->assertTrue($response->isValidationFailure());
     }
 }
