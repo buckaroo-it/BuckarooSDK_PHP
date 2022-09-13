@@ -43,6 +43,7 @@ class IdealTest extends BuckarooTestCase
             'amountDebit' => 10.10,
             'issuer' => 'ABNANL2A',
             'pushURL'  => 'https://buckaroo.nextto.dev/push',
+            'returnURL' => 'https://buckaroo.nextto.dev/return',
             'clientIP' => [
                 'address'       => '123.456.789.123',
                 'type'          => 0
@@ -75,7 +76,7 @@ class IdealTest extends BuckarooTestCase
     public function it_creates_a_ideal_payment()
     {
         $response = $this->buckaroo->method('idealprocessing')->pay($this->paymentPayload);
-
+        dd($response);
         $this->assertTrue($response->isPendingProcessing());
 
 //        $customConfig = new CustomConfig();

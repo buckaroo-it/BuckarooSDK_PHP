@@ -65,10 +65,38 @@ class PushTest extends BuckarooTestCase
             "brq_timestamp" => "2022-05-24 07:29:09",
             "brq_transactions" => "4C1BE53E2C42412AB32A799D9316E7DD",
             "brq_websitekey" => "IBjihN7Fhp",
-            "brq_signature" => "bf7a62c830da2d2e004199919a8fe0d53b0668f5"
+            "brq_signature" => "bf7a62c830da2d2e004199919a8fe0d53b0668f5",
         ];
 
+//        $post_data = [
+//            "BRQ_AMOUNT"                    => "10.10",
+//            "BRQ_CURRENCY"                  => "EUR",
+//            "BRQ_CUSTOMER_NAME"             => "J. de Tèster",
+//            "BRQ_INVOICENUMBER"             => "63208dbcb5702",
+//            "BRQ_ORDERNUMBER"               => "ORDER_NO_63208dbcd10e2",
+//            "BRQ_PAYER_HASH"                => "2d26d34584a4eafeeaa97eed10cfdae22ae64cdce1649a80a55fafca8850e3e22cb32eb7c8fc95ef0c6f96669a21651d4734cc568816f9bd59c2092911e6c0da",
+//            "BRQ_PAYMENT"                  => "7F817F3A3F614062AC3E6EE634B2699F",
+//            "BRQ_PAYMENT_METHOD"                  => "ideal",
+//            "BRQ_SERVICE_IDEAL_CONSUMERBIC"                  => "RABONL2U",
+//            "BRQ_SERVICE_IDEAL_CONSUMERIBAN"                  => "NL44RABO0123456789",
+//            "BRQ_SERVICE_IDEAL_CONSUMERISSUER"                  => "ABN AMRO",
+//            "BRQ_SERVICE_IDEAL_CONSUMERNAME"                  => "J. de Tèster",
+//            "BRQ_SERVICE_IDEAL_TRANSACTIONID"                  => "0000000000000001",
+//            "BRQ_STATUSCODE"                  => "190",
+//            "BRQ_STATUSCODE_DETAIL"                  => "S001",
+//            "BRQ_STATUSMESSAGE"                  => "Transaction successfully processed",
+//            "BRQ_TEST"                  => "true",
+//            "BRQ_TIMESTAMP"                  => "2022-09-13 16:03:58",
+//            "BRQ_TRANSACTIONS"                  => "BBEB99F178C64A7FB30667B6427D8064",
+//            "BRQ_WEBSITEKEY"                  => "IBjihN7Fhp",
+//            "BRQ_SIGNATURE"                  => "06de0e66b0df062df376fa619cc0792b2ed5f3fd",
+//            "ADD_INITIATED_BY_MAGENTO" => "1",
+//            "ADD_SERVICE_ACTION" => "something"
+//        ];
+
         $reply_handler = new ReplyHandler($this->buckaroo->client()->config(), $post_data, $auth_header, $uri);
+
+        dd($reply_handler->data());
         $reply_handler->validate();
 
         $this->assertTrue($reply_handler->isValid());

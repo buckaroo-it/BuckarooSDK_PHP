@@ -134,4 +134,12 @@ class ReplyHandler
     {
         return $this->isValid;
     }
+
+    /**
+     * @return mixed
+     */
+    public function data()
+    {
+        return $this->data;
+    }
 }
