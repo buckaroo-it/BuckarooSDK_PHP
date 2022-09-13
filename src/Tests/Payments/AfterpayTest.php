@@ -90,6 +90,31 @@ class AfterpayTest extends BuckarooTestCase
         $this->assertTrue($response->isValidationFailure());
     }
 
+    /**
+     * @return void
+     * @test
+     */
+    public function it_creates_a_afterpay_partial_refund()
+    {
+        $response = $this->buckaroo->method('afterpay')->refund([
+            'invoice'   => 'testinvoice 123', //Set invoice number of the transaction to refund
+            'originalTransactionKey' => '4E8BD922192746C3918BF4077CXXXXXX', //Set transaction key of the transaction to refund
+            'amountCredit' => 1.23,
+            'articles'      => [
+                [
+                    'refundType'    => 'Return',
+                    'identifier' => 'Articlenumber1',
+                    'description' => 'Blue Toy Car',
+                    'vatPercentage' => '21',
+                    'quantity' => '2',
+                    'price' => '20.10'
+                ]
+            ]
+        ]);
+
+        $this->assertTrue($response->isValidationFailure());
+    }
+
     private function getPaymentPayload(?array $additional = null): array {
         $payload = [
             'amountDebit'       => 50.30,

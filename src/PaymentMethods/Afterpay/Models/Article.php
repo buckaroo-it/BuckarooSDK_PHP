@@ -24,4 +24,6 @@ class Article extends \Buckaroo\Models\Article
 {
     protected string $imageUrl;
     protected string $url;
+    protected string $marketPlaceSellerId;
+    protected string $refundType;
 }

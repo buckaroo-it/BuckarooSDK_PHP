@@ -40,4 +40,35 @@ class AfterpayDigiAccept extends PayablePaymentMethod
     {
         return parent::pay($model ?? new Pay($this->payload));
     }
+
+    public function authorize(?Model $model = null): TransactionResponse
+    {
+        $pay = new Pay($this->payload);
+
+        $this->setPayPayload();
+
+        $this->setServiceList('Authorize', $pay);
+
+        return $this->postRequest();
+    }
+
+    public function capture(?Model $model = null): TransactionResponse
+    {
+        $pay = new Pay($this->payload);
+
+        $this->setPayPayload();
+
+        $this->setServiceList('Capture', $pay);
+
+        return $this->postRequest();
+    }
+
+    public function cancelAuthorize(?Model $model = null): TransactionResponse
+    {
+        $this->setRefundPayload();
+
+        $this->setServiceList('CancelAuthorize');
+
+        return $this->postRequest();
+    }
 }
