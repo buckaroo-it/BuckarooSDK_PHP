@@ -96,7 +96,6 @@ class PushTest extends BuckarooTestCase
 
         $reply_handler = new ReplyHandler($this->buckaroo->client()->config(), $post_data, $auth_header, $uri);
 
-        dd($reply_handler->data());
         $reply_handler->validate();
 
         $this->assertTrue($reply_handler->isValid());

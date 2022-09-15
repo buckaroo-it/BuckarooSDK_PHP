@@ -138,8 +138,13 @@ class ReplyHandler
     /**
      * @return mixed
      */
-    public function data()
+    public function data($key = null)
     {
+        if($key)
+        {
+            return $this->data[$key] ?? null;
+        }
+
         return $this->data;
     }
 }
