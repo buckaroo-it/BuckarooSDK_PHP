@@ -76,7 +76,7 @@ class IdealTest extends BuckarooTestCase
     public function it_creates_a_ideal_payment()
     {
         $response = $this->buckaroo->method('idealprocessing')->pay($this->paymentPayload);
-        dd($response);
+
         $this->assertTrue($response->isPendingProcessing());
 
 //        $customConfig = new CustomConfig();
