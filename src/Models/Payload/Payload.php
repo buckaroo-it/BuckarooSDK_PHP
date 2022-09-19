@@ -74,6 +74,18 @@ class Payload extends Model
      * @var AdditionalParameters
      */
     protected AdditionalParameters $additionalParameters;
+    /**
+     * @var string
+     */
+    protected string $continueOnIncomplete;
+    /**
+     * @var string
+     */
+    protected string $servicesSelectableByClient;
+    /**
+     * @var string
+     */
+    protected string $servicesExcludedForClient;
 
     /**
      * @param array|null $data
@@ -93,6 +105,24 @@ class Payload extends Model
             $this->clientIP = new ClientIP($data['clientIP']['address'] ?? null, $data['clientIP']['type'] ?? null);
 
             unset($data['clientIP']);
+        }
+
+        if(isset($data['continueOnIncomplete']))
+        {
+            $this->continueOnIncomplete = ($data['continueOnIncomplete'] ?? null);
+            unset($data['continueOnIncomplete']);
+        }
+
+        if(isset($data['servicesSelectableByClient']))
+        {
+            $this->servicesSelectableByClient = ($data['servicesSelectableByClient'] ?? null);
+            unset($data['servicesSelectableByClient']);
+        }
+
+        if(isset($data['servicesExcludedForClient']))
+        {
+            $this->servicesExclufdedForClient = ($data['servicesExcludedForClient'] ?? null);
+            unset($data['servicesExcludedForClient']);
         }
 
         return parent::setProperties($data);
