@@ -134,4 +134,17 @@ class ReplyHandler
     {
         return $this->isValid;
     }
+
+    /**
+     * @return mixed
+     */
+    public function data($key = null)
+    {
+        if($key)
+        {
+            return $this->data[$key] ?? null;
+        }
+
+        return $this->data;
+    }
 }
