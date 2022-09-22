@@ -99,7 +99,7 @@ class ReplyHandler
             return $this;
         }
 
-        if($this->contains('brq_', $data))
+        if($this->contains('brq_', $data) || $this->contains('BRQ_', $data))
         {
             $this->strategy = new HttpPost($this->config, $data);
 
@@ -133,5 +133,18 @@ class ReplyHandler
     public function isValid()
     {
         return $this->isValid;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function data($key = null)
+    {
+        if($key)
+        {
+            return $this->data[$key] ?? null;
+        }
+
+        return $this->data;
     }
 }

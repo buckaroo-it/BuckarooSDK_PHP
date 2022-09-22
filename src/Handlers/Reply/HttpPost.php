@@ -41,6 +41,8 @@ class HttpPost implements ReplyStrategy
     {
         $this->config = $config;
         $this->data = $data;
+
+        ksort($this->data, SORT_NATURAL | SORT_FLAG_CASE);
     }
 
     /**
@@ -50,7 +52,7 @@ class HttpPost implements ReplyStrategy
     {
         //Remove brq_signature from the equation
         $data = array_filter($this->data, function($key){
-            return $key != 'brq_signature';
+            return ($key != 'brq_signature' && $key != 'BRQ_SIGNATURE');
         }, ARRAY_FILTER_USE_KEY);
 
         //Combine the array keys with value
@@ -60,6 +62,7 @@ class HttpPost implements ReplyStrategy
 
         $dataString = implode('',  $data) . trim($this->config->secretKey());
 
-        return hash_equals(sha1($dataString), trim($this->data['brq_signature'] ?? null));
+        return hash_equals(sha1($dataString), trim($this->data['brq_signature'] ?? $this->data['BRQ_SIGNATURE'] ?? null));
     }
 }
+

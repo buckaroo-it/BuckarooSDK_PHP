@@ -67,21 +67,9 @@ class Recipient extends ServiceParameter
     {
         if(is_array($recipient))
         {
-            $this->recipient =  $this->getRecipientObject($recipient);
+            $this->recipient =  new RecipientAdapter(new Person($recipient), $this->type);
         }
 
         return $this->recipient;
-    }
-
-    private function getRecipientObject(array $recipient) : RecipientAdapter
-    {
-        switch ($recipient['careOf']) {
-            case RecipientCategory::COMPANY:
-                return new RecipientAdapter(new Company($recipient), $this->type);
-            case RecipientCategory::PERSON:
-                return new RecipientAdapter(new Person($recipient), $this->type);
-        }
-
-        throw new \Exception('No recipient category found.');
     }
 }
