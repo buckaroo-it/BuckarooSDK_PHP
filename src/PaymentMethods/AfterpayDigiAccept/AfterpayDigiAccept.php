@@ -22,6 +22,7 @@ namespace Buckaroo\PaymentMethods\AfterpayDigiAccept;
 
 use Buckaroo\Models\Model;
 use Buckaroo\PaymentMethods\AfterpayDigiAccept\Models\Pay;
+use Buckaroo\PaymentMethods\AfterpayDigiAccept\Models\Refund;
 use Buckaroo\PaymentMethods\PayablePaymentMethod;
 use Buckaroo\Transaction\Response\TransactionResponse;
 
@@ -39,6 +40,11 @@ class AfterpayDigiAccept extends PayablePaymentMethod
     public function pay(?Model $model = null): TransactionResponse
     {
         return parent::pay($model ?? new Pay($this->payload));
+    }
+
+    public function refund(?Model $model = null)
+    {
+        return parent::refund($model ?? new Refund($this->payload));
     }
 
     public function authorize(?Model $model = null): TransactionResponse
