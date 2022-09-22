@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 - Support lower and/or upper case reply and push response.
 - Improve reply and push validation.
 - ReplyHandler is able to retrieve the given data.
+- Giftcard redirect method & review update
 
 ## [1.0.0]
 
