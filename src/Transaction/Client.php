@@ -30,8 +30,7 @@ use Buckaroo\Services\TransactionHeaders\CultureHeader;
 use Buckaroo\Services\TransactionHeaders\DefaultHeader;
 use Buckaroo\Services\TransactionHeaders\HmacHeader;
 use Buckaroo\Services\TransactionHeaders\SoftwareHeader;
-use Buckaroo\Transaction\Request\HttpClient\HttpClientGuzzle;
-use Buckaroo\Transaction\Request\HttpClient\HttpClientInterface;
+use Buckaroo\Transaction\Request\HttpClient\HttpClient;
 use Buckaroo\Transaction\Request\Request;
 use Buckaroo\Transaction\Response\Response;
 use Buckaroo\Transaction\Response\TransactionResponse;
@@ -42,9 +41,9 @@ class Client
     private const METHOD_POST = 'POST';
 
     /**
-     * @var HttpClientInterface|HttpClientGuzzle
+     * @var HttpClient
      */
-    protected HttpClientInterface $httpClient;
+    protected HttpClient $httpClient;
     /**
      * @var Subject
      */
@@ -60,7 +59,7 @@ class Client
     public function __construct(?Config $config)
     {
         $this->config = $config;
-        $this->httpClient =  new HttpClientGuzzle($config->getLogger());
+        $this->httpClient =  new HttpClient($config->getLogger());
     }
 
     /**

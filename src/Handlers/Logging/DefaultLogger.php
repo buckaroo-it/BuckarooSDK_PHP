@@ -22,10 +22,9 @@ namespace Buckaroo\Handlers\Logging;
 
 use Buckaroo\Handlers\Logging\Observers\ErrorReporter;
 use Buckaroo\Handlers\Logging\Observers\Monolog;
-use Psr\Log\LoggerInterface;
 use Stringable;
 
-class DefaultLogger implements Subject, LoggerInterface
+class DefaultLogger implements Subject
 {
     /**
      * @var array
@@ -37,7 +36,10 @@ class DefaultLogger implements Subject, LoggerInterface
      */
     public function __construct()
     {
-        $this->attach(new Monolog());
+        if($this->monologIsDetected())
+        {
+            $this->attach(new Monolog());
+        }
 
         if(($_ENV['BPE_REPORT_ERROR'] ?? false) === 'true')
         {
@@ -188,5 +190,13 @@ class DefaultLogger implements Subject, LoggerInterface
         }
 
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    private function monologIsDetected()
+    {
+        return class_exists("\Monolog\Logger");
     }
 }

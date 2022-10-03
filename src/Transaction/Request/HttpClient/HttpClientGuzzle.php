@@ -31,19 +31,19 @@ use GuzzleHttp\RequestOptions;
 
 class HttpClientGuzzle extends HttpClientAbstract
 {
-    /**
-     * @var Subject
-     */
-    protected Subject $logger;
-
-    /**
-     * @param Subject $logger
-     */
-    public function __construct(Subject $logger)
+//    /**
+//     * @var Subject
+//     */
+//    protected Subject $logger;
+//
+//    /**
+//     * @param Subject $logger
+//     */
+    public function __construct()
     {
-        parent::__construct($logger);
-
-        $this->logger = $logger;
+//        parent::__construct($logger);
+//
+//        $this->logger = $logger;
 
         $this->httpClient = new Client([
             RequestOptions::TIMEOUT => self::TIMEOUT,
@@ -71,8 +71,8 @@ class HttpClientGuzzle extends HttpClientAbstract
 
             $result = (string) $response->getBody();
 
-            $this->logger->info('RESPONSE HEADERS: ' . json_encode($response->getHeaders()));
-            $this->logger->info('RESPONSE BODY: ' . $response->getBody());
+//            $this->logger->info('RESPONSE HEADERS: ' . json_encode($response->getHeaders()));
+//            $this->logger->info('RESPONSE BODY: ' . $response->getBody());
 
         } catch (GuzzleException $e) {
             throw new TransferException($this->logger, "Transfer failed", 0, $e);
