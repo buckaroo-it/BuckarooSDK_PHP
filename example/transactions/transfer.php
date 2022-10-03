@@ -10,17 +10,16 @@ $buckaroo = new BuckarooClient($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']
 //Also accepts json
 //Pay
 $response = $buckaroo->method('transfer')->pay([
+    'invoice' => uniqid(),
     'amountDebit' => 10.10,
-    'serviceParameters' => [
-        'customer' => [
-            'gender' => Gender::MALE, // 0 = unkinown / 1 = male / 2 = female
-            'firstName' => 'John',
-            'lastName' => 'Smith',
-            'email' => 'your@email.com',
-            'country' => 'NL',
-        ],
-        'dateDue' => date("Y-m-d"),
-        'sendMail' => true,
+    'email' => 'your@email.com',
+    'country' => 'NL',
+    'dateDue' => date("Y-m-d"),
+    'sendMail' => true,
+    'customer' => [
+        'gender' => Gender::MALE,
+        'firstName' => 'John',
+        'lastName' => 'Smith'
     ]
 ]);
 
