@@ -121,6 +121,18 @@ class CreditCard extends PayablePaymentMethod implements Combinable
     }
 
     /**
+     * @return TransactionResponse
+     */
+    public function cancelAuthorize(): TransactionResponse
+    {
+        $this->setRefundPayload();
+
+        $this->setServiceList('CancelAuthorize');
+
+        return $this->postRequest();
+    }
+
+    /**
      * @return string
      * @throws \Exception
      */

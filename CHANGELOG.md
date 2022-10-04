@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 ## [1.1.1]
 - BP-2061 Signature bugfix
+- BP-2059 Add CancelAuthorize for Creditcards & Missing APIs parameters
 
 ## [1.0.1]
 
