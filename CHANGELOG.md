@@ -6,6 +6,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
+## [1.1.1]
+- BP-2061 Signature bugfix
+
 ## [1.0.1]
 
 - Add missing methods to different payment providers.
