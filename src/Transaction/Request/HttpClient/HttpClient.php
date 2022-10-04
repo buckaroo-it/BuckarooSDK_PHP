@@ -8,6 +8,11 @@ class HttpClient implements HttpClientInterface
 {
     protected Subject $logger;
 
+    const HTTP_GET = "GET";
+    const HTTP_POST = "POST";
+    const HTTP_DELETE = "DELETE";
+    const HTTP_PATCH = "PATCH";
+
     public function __construct(Subject $logger)
     {
         $this->logger = $logger;
