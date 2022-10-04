@@ -76,7 +76,7 @@ class Client
      * @return string
      * @throws BuckarooException
      */
-    private function getEndpoint($path): string
+    public function getEndpoint($path): string
     {
         $baseUrl = ($this->config()->isLiveMode())? Endpoints::LIVE : Endpoints::TEST;
 
@@ -109,9 +109,9 @@ class Client
      * @param $responseClass
      * @return mixed
      */
-    public function get($responseClass = Response::class)
+    public function get($responseClass = Response::class, string $endPoint = null)
     {
-        return $this->call(self::METHOD_GET, null, $responseClass);
+        return $this->call(self::METHOD_GET, null, $responseClass, $endPoint);
     }
 
     /**
@@ -160,19 +160,23 @@ class Client
      * @throws BuckarooException
      * @throws \Buckaroo\Exceptions\TransferException
      */
-    protected function call($method, Request $data, string $responseClass, string $endPoint = null)
+    protected function call($method, Request $data = null, string $responseClass, string $endPoint = null)
     {
         $endPoint = $endPoint ?? $this->getTransactionUrl();
 
         // all headers have to be set at once
-        $headers = $this->getHeaders($endPoint, $data->toJson(), $method);
-        $headers = array_merge($headers, $data->getHeaders());
+        $headers = $this->getHeaders($endPoint, ($data)? $data->toJson() : '', $method);
+        $headers = array_merge($headers, ($data)? $data->getHeaders() : []);
 
         $this->config->getLogger()->info($method . ' ' . $endPoint);
         $this->config->getLogger()->info('HEADERS: ' . json_encode($headers));
-        $this->config->getLogger()->info('PAYLOAD: ' . $data->toJson());
 
-        list($response, $decodedResult) = $this->httpClient->call($endPoint, $headers, $method, $data->toJson());
+        if($data)
+        {
+            $this->config->getLogger()->info('PAYLOAD: ' . $data->toJson());
+        }
+
+        list($response, $decodedResult) = $this->httpClient->call($endPoint, $headers, $method, ($data)? $data->toJson() : '');
 
         $response = new $responseClass($response, $decodedResult);
 

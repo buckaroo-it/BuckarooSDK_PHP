@@ -32,6 +32,7 @@ use Buckaroo\Transaction\Response\TransactionResponse;
  * @method TransactionResponse payRecurrent(array $data)
  * @method TransactionResponse extraInfo(array $data)
  * @method TransactionResponse capture(array $data)
+ * @method TransactionResponse cancelAuthorize(array $data)
  * @method TransactionResponse authorize(array $data)
  * @method TransactionResponse payEncrypted(array $data)
  * @method TransactionResponse authenticate(array $data)

@@ -74,6 +74,9 @@ class Payload extends Model
      * @var AdditionalParameters
      */
     protected AdditionalParameters $additionalParameters;
+    /**
+     * @var string
+     */
 
     /**
      * @param array|null $data

@@ -60,46 +60,38 @@ class KlarnaKPTest extends BuckarooTestCase
     public function it_creates_a_klarnakp_reserve()
     {
         $response = $this->buckaroo->method('klarnakp')->reserve([
-            'amountDebit'       => 50.30,
-            'order'             => uniqid(),
             'invoice'           => uniqid(),
-            'reservationNumber' => '2377577452',
-            'gender'            => Gender::MALE,
+            'gender'            => "1",
             'operatingCountry'  => 'NL',
             'pno'               => '01011990',
             'billing'           => [
                 'recipient'        => [
-                    'careOf'                => 'Person',
                     'firstName'             => 'John',
                     'lastName'              => 'Do'
                 ],
                 'address'       => [
-                    'street'                => 'Hoofdstraat',
-                    'houseNumber'           => '13',
-                    'houseNumberAdditional' => 'a',
-                    'zipcode'               => '1234AB',
-                    'city'                  => 'Heerenveen',
-                    'country'               => 'GB'
+                    'street'                => 'Neherkade',
+                    'houseNumber'           => '1',
+                    'zipcode'               => '2521VA',
+                    'city'                  => 'Gravenhage',
+                    'country'               => 'NL'
                 ],
                 'phone'         => [
-                    'mobile'        => '0698765433',
-                    'landLine'      => '0109876543'
+                    'mobile'        => '0612345678',
                 ],
-                'email'         => 'test@buckaroo.nl'
+                'email'         => 'youremail@example.nl'
             ],
             'shipping'          => [
                 'recipient'        => [
-                    'careOf'                => 'Company',
                     'firstName'             => 'John',
                     'lastName'              => 'Do'
                 ],
                 'address'       => [
-                    'street'                => 'Kalverstraat',
-                    'houseNumber'           => '13',
-                    'houseNumberAdditional' => 'b',
-                    'zipcode'               => '4321EB',
-                    'city'                  => 'Amsterdam',
-                    'country'               => 'GB'
+                    'street'                => 'Rosenburglaan',
+                    'houseNumber'           => '216',
+                    'zipcode'               => '4385 JM',
+                    'city'                  => 'Vlissingen',
+                    'country'               => 'NL'
                 ],
                 'email'         => 'test@buckaroo.nl'
             ],
@@ -121,7 +113,7 @@ class KlarnaKPTest extends BuckarooTestCase
             ]
         ]);
 
-        $this->assertTrue($response->isFailed());
+        $this->assertTrue($response->isPendingProcessing());
     }
 
     /**

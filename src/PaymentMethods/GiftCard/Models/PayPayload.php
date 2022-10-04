@@ -18,12 +18,11 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\Afterpay\Models;
+namespace Buckaroo\PaymentMethods\Giftcard\Models;
 
-class Article extends \Buckaroo\Models\Article
+class PayPayload extends \Buckaroo\Models\Payload\PayPayload
 {
-    protected string $imageUrl;
-    protected string $url;
-    protected string $marketPlaceSellerId;
-    protected string $refundType;
+    protected string $continueOnIncomplete;
+    protected string $servicesSelectableByClient;
+    protected string $servicesExcludedForClient;
 }

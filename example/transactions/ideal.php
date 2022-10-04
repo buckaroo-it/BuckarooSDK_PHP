@@ -21,3 +21,6 @@ $response = $buckaroo->method('ideal')->refund([
     'originalTransactionKey' => '', //Set transaction key of the transaction to refund
     'amountCredit' => 10.10
 ]);
+
+//Get issuers
+$buckaroo->method('ideal')->issuers();

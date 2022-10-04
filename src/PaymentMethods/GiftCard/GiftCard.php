@@ -22,6 +22,7 @@ namespace Buckaroo\PaymentMethods\GiftCard;
 
 use Buckaroo\Models\Model;
 use Buckaroo\PaymentMethods\GiftCard\Models\Pay;
+use Buckaroo\PaymentMethods\GiftCard\Models\PayPayload;
 use Buckaroo\PaymentMethods\PayablePaymentMethod;
 use Buckaroo\Transaction\Response\TransactionResponse;
 
@@ -37,9 +38,18 @@ class GiftCard extends PayablePaymentMethod
 
         $pay = new Pay($this->payload);
 
-        $this->setServiceList('Pay', $pay);
-
         return parent::pay($model ?? $pay);
+    }
+
+    public function payRedirect(): TransactionResponse
+    {
+        $this->payModel = PayPayload::class;
+
+        $pay = new PayPayload($this->payload);
+
+        $this->setPayPayload();
+        
+        return $this->postRequest();
     }
 
     /**
@@ -51,8 +61,10 @@ class GiftCard extends PayablePaymentMethod
         if(isset($this->payload['name']))
         {
             return $this->payload['name'];
+        } else {
+            return 'giftcard';
         }
 
-        throw new \Exception('Missing voucher name');
+        //throw new \Exception('Missing voucher name');
     }
 }

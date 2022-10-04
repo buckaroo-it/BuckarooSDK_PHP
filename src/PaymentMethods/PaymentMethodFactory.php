@@ -99,7 +99,7 @@ class PaymentMethodFactory
         Przelewy24::class               => ['przelewy24'],
         PointOfSale::class              => ['pospayment'],
         Giropay::class                  => ['giropay'],
-        GiftCard::class                 => ['giftcard'],
+        GiftCard::class                 => ['giftcard', 'westlandbon', 'ideal', 'ippies', 'babygiftcard', 'babyparkgiftcard', 'beautywellness', 'boekenbon', 'boekenvoordeel', 'designshopsgiftcard', 'fashioncheque', 'fashionucadeaukaart', 'fijncadeau', 'koffiecadeau', 'kokenzo', 'kookcadeau', 'nationaleentertainmentcard', 'naturesgift', 'podiumcadeaukaart', 'shoesaccessories', 'webshopgiftcard', 'wijncadeau', 'wonenzo', 'yourgift', 'vvvgiftcard', 'parfumcadeaukaart'],
         Trustly::class                  => ['trustly'],
         BankTransfer::class             => ['transfer'],
         RequestToPay::class             => ['requesttopay'],

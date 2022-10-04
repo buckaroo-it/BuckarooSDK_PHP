@@ -1,3 +1,4 @@
+
 <p align="center">
   <img src="https://user-images.githubusercontent.com/7081446/178473472-c0c29ec5-762c-47de-9ed4-999e5ad6c70d.png" width="200px" position="center">
 </p>
@@ -38,34 +39,45 @@ To use the Buckaroo API client, the following things are required:
 
 By far the easiest way to install the Buckaroo API client is to require it with [Composer](http://getcomposer.org/doc/00-intro.md).
 
-    $ composer require buckaroo/buckaroo-sdk:^1.0
+    $ composer require buckaroo/sdk:^1.0
 
     {
         "require": {
-            "buckaroo/buckaroo-sdk": "^1.0"
+            "buckaroo/sdk": "^1.0"
         }
     }
 
 ### Example
-Create and config the Buckaroo object.
+Create and config the Buckaroo object. 
+You can find your credentials in plaza  [WEBSITE_KEY](https://plaza.buckaroo.nl/Configuration/Website/Index/) and [SECRET_KEY](https://admin.buckaroo.nl/Configuration/Merchant/SecretKey)
 
 ```php
 require __DIR__ . '/vendor/autoload.php';
 
 # Get your website & secret key in your plaza.
-$buckaroo = new \Buckaroo('WEBSITE_KEY', 'SECRET_KEY');
+# You can perform a test payment by giving the third param with the string "test", on default it is set on "live"
+$buckaroo = new \BuckarooClient('WEBSITE_KEY', 'SECRET_KEY', 'test');
 ```
 
 Create a payment with all the available payment methods. In this example, we show how to create a credit card payment. Each payment has a slightly different payload.
-
 ```php
 # Create a new payment
 $buckaroo->method('creditcard') // Input the desire payment method.
     ->pay([
-        'name'          => 'visa' // Request to pay with Visa
+        'name'          => 'visa', // Request to pay with Visa
         'amountDebit'   => 10, // The amount we want to charge
         'invoice'       => 'UNIQUE-INVOICE-NO', // Each payment must contain a unique invoice number
     ]);
+```
+
+After you create a transaction, you can retrieve several transaction information on demand.
+```php
+# Create a new payment
+$transaction = $buckaroo->transaction('YOUR-TRANSACTION-KEY')
+
+$transaction->status(); // Retrieve transaction status
+$transaction->refundInfo(); // Retrieve refund info
+$transaction->cancelInfo() // Retrieve cancellation info
 ```
 
 Find our full documentation online on [dev.buckaroo.nl](https://dev.buckaroo.nl/).
