@@ -78,7 +78,7 @@ class HttpClientGuzzle extends HttpClientAbstract
             throw new TransferException($this->logger, "Transfer failed", 0, $e);
         }
 
-        $result = $this->getDecodedResult($response, $result);
+        $result = $this->getDecodedResult($result);
 
         return array(
             $response,
