@@ -76,9 +76,9 @@ class GiftcardsTest extends BuckarooTestCase
             'name'                      => 'boekenbon',
             'intersolveCardnumber'      => '0000000000000000001',
             'intersolvePIN'             => '500',
-            'originalTransactionKey'   => 'ABC'
+            'originalTransactionKey'   => 'CE1443BA88FC462D91CDDECFFFD30D98'
         ]);
-
+        
         $this->assertTrue($response->isPendingProcessing());
     }
 
