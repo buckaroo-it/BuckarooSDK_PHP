@@ -79,7 +79,6 @@ class GiftcardsTest extends BuckarooTestCase
             'originalTransactionKey'   => 'ABC'
         ]);
 
-        dd($response);
         $this->assertTrue($response->isPendingProcessing());
     }
 
