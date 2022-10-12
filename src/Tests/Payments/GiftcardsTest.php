@@ -68,6 +68,24 @@ class GiftcardsTest extends BuckarooTestCase
     /**
      * @test
      */
+    public function it_creates_a_giftcards_remainder_payment()
+    {
+        $response = $this->buckaroo->method('giftcard')->payRemainder([
+            'amountDebit'               => 10,
+            'invoice'                   => uniqid(),
+            'name'                      => 'boekenbon',
+            'intersolveCardnumber'      => '0000000000000000001',
+            'intersolvePIN'             => '500',
+            'originalTransactionKey'   => 'ABC'
+        ]);
+
+        dd($response);
+        $this->assertTrue($response->isPendingProcessing());
+    }
+
+    /**
+     * @test
+     */
     public function it_creates_a_giftcards_refund()
     {
         $response = $this->buckaroo->method('giftcard')->refund([

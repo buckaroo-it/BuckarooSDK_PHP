@@ -23,6 +23,7 @@ namespace Buckaroo\PaymentMethods\GiftCard;
 use Buckaroo\Models\Model;
 use Buckaroo\PaymentMethods\GiftCard\Models\Pay;
 use Buckaroo\PaymentMethods\GiftCard\Models\PayPayload;
+use Buckaroo\PaymentMethods\GiftCard\Models\PayRemainder;
 use Buckaroo\PaymentMethods\PayablePaymentMethod;
 use Buckaroo\Transaction\Response\TransactionResponse;
 
@@ -41,6 +42,22 @@ class GiftCard extends PayablePaymentMethod
         return parent::pay($model ?? $pay);
     }
 
+    /**
+     * @param Model|null $model
+     * @return TransactionResponse
+     */
+    public function payRemainder(?Model $model = null): TransactionResponse
+    {
+        $this->setPayPayload();
+
+        $pay = new PayRemainder($this->payload);
+
+        return parent::payRemainder($model ?? $pay);
+    }
+
+    /**
+     * @return TransactionResponse
+     */
     public function payRedirect(): TransactionResponse
     {
         $this->payModel = PayPayload::class;
