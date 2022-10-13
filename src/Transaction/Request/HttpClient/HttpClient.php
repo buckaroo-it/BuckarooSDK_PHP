@@ -22,7 +22,7 @@ class HttpClient implements HttpClientInterface
 
     public function call(string $url, array $headers, string $method, string $data = null)
     {
-        $this->httpClient->call($url, $headers, $method, $data);
+        return $this->httpClient->call($url, $headers, $method, $data);
     }
 
     private function setHttpClient()

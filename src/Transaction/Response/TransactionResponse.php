@@ -424,6 +424,11 @@ class TransactionResponse extends Response
      */
     public function get(string $key)
     {
-        return $this->data[$key];
+        if($this->data)
+        {
+            return $this->data[$key];
+        }
+
+        return null;
     }
 }
