@@ -36,18 +36,18 @@ abstract class HttpClientAbstract implements HttpClientInterface
      */
     protected const CONNECT_TIMEOUT = 5;
 
-    /**
-     * @var Subject
-     */
-    protected Subject $logger;
-
-    /**
-     * @param Subject $logger
-     */
-    public function __construct(Subject $logger)
-    {
-        $this->logger = $logger;
-    }
+//    /**
+//     * @var Subject
+//     */
+//    protected Subject $logger;
+//
+//    /**
+//     * @param Subject $logger
+//     */
+//    public function __construct(Subject $logger)
+//    {
+//        $this->logger = $logger;
+//    }
 
     /**
      * @param string $url
@@ -63,7 +63,7 @@ abstract class HttpClientAbstract implements HttpClientInterface
      * @return array
      * @throws BuckarooException
      */
-    protected function getDecodedResult($response, $result): array
+    protected function getDecodedResult($result): array
     {
         $decoded_result = json_decode($result, true);
 
@@ -72,7 +72,8 @@ abstract class HttpClientAbstract implements HttpClientInterface
             return $decoded_result;
         }
 
-        throw new BuckarooException($this->logger, 'Status code: ' . $response->getStatusCode() . ' Message: ' . $result);
+        return [];
+        //throw new BuckarooException($this->logger, 'Status code: ' . $response->getStatusCode() . ' Message: ' . $result);
     }
 
     /**
@@ -93,3 +94,5 @@ abstract class HttpClientAbstract implements HttpClientInterface
         return $resultHeaders;
     }
 }
+
+

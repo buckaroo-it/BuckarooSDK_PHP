@@ -5,7 +5,7 @@ namespace Buckaroo\Transaction\Request\HttpClient;
 use Buckaroo\Exceptions\BuckarooException;
 use Composer\CaBundle\CaBundle;
 
-class HttpCurl implements HttpClientInterface
+class HttpCurl extends HttpClientAbstract
 {
 
     const DEFAULT_TIMEOUT = 10;
@@ -54,10 +54,9 @@ class HttpCurl implements HttpClientInterface
                 throw new \InvalidArgumentException("Invalid http method: ". $method);
         }
 
-        $startTime = microtime(true);
         $response = curl_exec($curl);
-        $endTime = microtime(true);
 
-        dd($response);
+
+        dd($this->getDecodedResult($response));
     }
 }

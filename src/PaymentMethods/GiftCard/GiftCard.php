@@ -41,6 +41,22 @@ class GiftCard extends PayablePaymentMethod
         return parent::pay($model ?? $pay);
     }
 
+    /**
+     * @param Model|null $model
+     * @return TransactionResponse
+     */
+    public function payRemainder(?Model $model = null): TransactionResponse
+    {
+        $this->setPayPayload();
+
+        $pay = new Pay($this->payload);
+
+        return parent::payRemainder($model ?? $pay);
+    }
+
+    /**
+     * @return TransactionResponse
+     */
     public function payRedirect(): TransactionResponse
     {
         $this->payModel = PayPayload::class;
