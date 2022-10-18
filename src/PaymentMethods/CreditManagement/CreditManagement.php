@@ -34,12 +34,6 @@ use Buckaroo\PaymentMethods\PaymentMethod;
 
 class CreditManagement extends PaymentMethod implements Combinable
 {
-
-    /**
-     * @var int
-     */
-    protected int $serviceVersion = 1;
-
     protected string $paymentName = 'CreditManagement3';
     protected array $requiredConfigFields = ['currency'];
 
