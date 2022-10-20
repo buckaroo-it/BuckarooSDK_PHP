@@ -35,7 +35,7 @@ class Voucher extends PayablePaymentMethod
      * @var string
      */
     protected string $paymentName = 'buckaroovoucher';
-    
+
     /**
      * @param Model|null $model
      * @return TransactionResponse
@@ -47,6 +47,20 @@ class Voucher extends PayablePaymentMethod
         $pay = new Pay($this->payload);
 
         return parent::pay($model ?? $pay);
+    }
+
+
+    /**
+     * @param Model|null $model
+     * @return TransactionResponse
+     */
+    public function payRemainder(?Model $model = null): TransactionResponse
+    {
+        $this->setPayPayload();
+
+        $pay = new Pay($this->payload);
+
+        return parent::payRemainder($model ?? $pay);
     }
 
     /**

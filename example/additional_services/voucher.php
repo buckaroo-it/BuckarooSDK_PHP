@@ -20,7 +20,20 @@ $response = $buckaroo->method('buckaroovoucher')->create(
 //Pay
 $response = $buckaroo->method('buckaroovoucher')->pay(
     [
+        'amountDebit' =>'10',
+        'invoice' => uniqid(),
         'vouchercode' => 'vouchercode'
+    ]
+);
+
+
+//Pay
+$response = $buckaroo->method('buckaroovoucher')->payRemainder(
+    [
+        'amountDebit' =>'10',
+        'invoice' => uniqid(),
+        'vouchercode' => 'vouchercode',
+        'originalTransactionKey' => '4E8BD922192746C3918BF4077CXXXXXX'
     ]
 );
 
@@ -29,7 +42,7 @@ $response = $buckaroo->method('buckaroovoucher')->pay(
 $response = $buckaroo->method('buckaroovoucher')->refund(
     [
         'amountCredit' => 10,
-        'invoice'       => 'testinvoice 123',
+        'invoice' => uniqid(),
         'originalTransactionKey' => '4E8BD922192746C3918BF4077CXXXXXX'
     ]
 );
