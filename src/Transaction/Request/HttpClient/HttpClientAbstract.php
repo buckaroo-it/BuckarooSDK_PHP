@@ -36,18 +36,18 @@ abstract class HttpClientAbstract implements HttpClientInterface
      */
     protected const CONNECT_TIMEOUT = 5;
 
-//    /**
-//     * @var Subject
-//     */
-//    protected Subject $logger;
-//
-//    /**
-//     * @param Subject $logger
-//     */
-//    public function __construct(Subject $logger)
-//    {
-//        $this->logger = $logger;
-//    }
+    /**
+     * @var Subject
+     */
+    protected Subject $logger;
+
+    /**
+     * @param Subject $logger
+     */
+    public function __construct(Subject $logger)
+    {
+        $this->logger = $logger;
+    }
 
     /**
      * @param string $url

@@ -28,10 +28,10 @@ class HttpClient implements HttpClientInterface
     private function setHttpClient()
     {
         if ($this->guzzleIsDetected()) {
-            return new HttpClientGuzzle;
+            return new HttpClientGuzzle($this->logger);
         }
 
-        return new HttpCurl;
+        return new HttpCurl($this->logger);
     }
 
     /**
