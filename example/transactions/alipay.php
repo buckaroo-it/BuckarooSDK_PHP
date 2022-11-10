@@ -10,9 +10,7 @@ $buckaroo = new BuckarooClient($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']
 $response = $buckaroo->method('alipay')->pay([
     'amountDebit' => 10,
     'invoice' => uniqid(),
-    'serviceParameters' => [
-        'useMobileView' => true
-    ]
+    'useMobileView' => true
 ]);
 
 //Refund

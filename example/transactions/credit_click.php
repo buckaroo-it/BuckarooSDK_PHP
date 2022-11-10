@@ -11,12 +11,10 @@ $buckaroo = new BuckarooClient($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']
 $response = $buckaroo->method('creditclick')->pay([
     'amountDebit' => 10,
     'invoice' => uniqid(),
-    'serviceParameters' => [
-        'customer'      => [
-            'firstName' => 'Test',
-            'lastName' => 'Aflever',
-            'email' => 'billingcustomer@buckaroo.nl'
-        ]
+    'email' => 'billingcustomer@buckaroo.nl',
+    'customer'      => [
+        'firstName' => 'Test',
+        'lastName' => 'Aflever'
     ]
 ]);
 
