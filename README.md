@@ -4,6 +4,7 @@
 </p>
 
 # Buckaroo PHP SDK
+[![Latest release](https://badgen.net/github/release/buckaroo-it/BuckarooSDK_PHP)](https://github.com/buckaroo-it/BuckarooSDK_PHP/releases)
 
 <p align="center">
   <img src="https://www.buckaroo.nl/media/3613/buckaroo-payment.png" width="500px" position="center">
