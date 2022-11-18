@@ -11,12 +11,10 @@ $buckaroo = new BuckarooClient($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']
 $response = $buckaroo->method("przelewy24")->pay([
     'amountDebit'       => 3.5,
     'invoice'           => uniqid(),
-    'serviceParameters' => [
-        'customer'      => [
-            'firstName'     => 'John',
-            'lastName'      => 'Smith',
-            'email'         => 'test@test.nl'
-        ]
+    'email'         => 'test@test.nl',
+    'customer'      => [
+        'firstName'     => 'John',
+        'lastName'      => 'Smith',
     ]
 ]);
 

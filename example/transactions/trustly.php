@@ -11,12 +11,10 @@ $buckaroo = new BuckarooClient($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']
 $response = $buckaroo->method('trustly')->pay([
     'amountDebit' => 10,
     'invoice' => uniqid(),
-    'serviceParameters' => [
-        'customer'      => [
-            'firstName' => 'Test',
-            'lastName' => 'Aflever',
-            'country' => 'DE'
-        ]
+    'country' => 'DE',
+    'customer'      => [
+        'firstName' => 'Test',
+        'lastName' => 'Aflever'
     ]
 ]);
 

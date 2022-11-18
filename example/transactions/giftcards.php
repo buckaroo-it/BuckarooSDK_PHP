@@ -8,13 +8,12 @@ $buckaroo = new BuckarooClient($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']
 
 //Also accepts json
 //Pay
-$response = $buckaroo->method('boekenbon')->pay([
+$response = $buckaroo->method('giftcard')->pay([
     'amountDebit' => 10,
     'invoice' => uniqid(),
-     'name' => 'boekenbon',
-     'intersolveCardnumber' => '0000000000000000001',
-     'intersolvePIN'        => '1000'
-    
+    'name' => 'boekenbon',
+    'intersolveCardnumber' => '0000000000000000001',
+    'intersolvePIN'        => '1000'    
 ]);
 
 //Refund
