@@ -18,21 +18,11 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\Tests;
+namespace Buckaroo\PaymentMethods\ApplePay\Models;
 
-use Buckaroo\BuckarooClient;
-use Dotenv\Dotenv;
-use PHPUnit\Framework\TestCase;
-
-class BuckarooTestCase extends TestCase
+class PayPayload extends \Buckaroo\Models\Payload\PayPayload
 {
-    public function __construct()
-    {
-        $dotenv = Dotenv::createImmutable(getcwd());
-        $dotenv->load();
-
-        $this->buckaroo = new BuckarooClient($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
-
-        parent::__construct();
-    }
+    protected string $continueOnIncomplete;
+    protected string $servicesSelectableByClient;
+    protected string $servicesExcludedForClient;
 }

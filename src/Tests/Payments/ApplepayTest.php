@@ -42,6 +42,21 @@ class ApplepayTest extends BuckarooTestCase
     /**
      * @test
      */
+    public function it_creates_a_applepay_redirect_payment()
+    {
+        $response = $this->buckaroo->method('applepay')->payRedirect([
+            'amountDebit' => 10,
+            'invoice' => uniqid(),
+            'servicesSelectableByClient' => 'applepay',
+            'continueOnIncomplete' => '1',
+        ]);
+
+        $this->assertTrue($response->isWaitingOnUserInput());
+    }
+
+    /**
+     * @test
+     */
     public function it_creates_a_applepay_refund()
     {
         $response = $this->buckaroo->method('applepay')->refund([
