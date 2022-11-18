@@ -29,7 +29,7 @@ use Buckaroo\PaymentMethods\BuckarooVoucher\Models\Deactivate;
 use Buckaroo\PaymentMethods\BuckarooVoucher\Models\GetBalance;
 use Buckaroo\PaymentMethods\BuckarooVoucher\Models\CreatePayload;
 
-class Voucher extends PayablePaymentMethod
+class BuckarooVoucher extends PayablePaymentMethod
 {
     /**
      * @var string

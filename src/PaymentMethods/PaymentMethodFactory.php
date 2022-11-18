@@ -50,7 +50,7 @@ use Buckaroo\PaymentMethods\WeChatPay\WeChatPay;
 use Buckaroo\PaymentMethods\Bancontact\Bancontact;
 use Buckaroo\PaymentMethods\CreditCard\CreditCard;
 use Buckaroo\PaymentMethods\Przelewy24\Przelewy24;
-use Buckaroo\PaymentMethods\BuckarooVoucher\Voucher;
+use Buckaroo\PaymentMethods\BuckarooVoucher\BuckarooVoucher;
 use Buckaroo\PaymentMethods\CreditClick\CreditClick;
 use Buckaroo\PaymentMethods\PayPerEmail\PayPerEmail;
 use Buckaroo\PaymentMethods\PointOfSale\PointOfSale;
@@ -105,7 +105,7 @@ class PaymentMethodFactory
         BankTransfer::class             => ['transfer'],
         RequestToPay::class             => ['requesttopay'],
         WeChatPay::class                => ['wechatpay'],
-        Voucher::class                  => ['buckaroovoucher'],
+        BuckarooVoucher::class          => ['buckaroovoucher'],
     ];
 
     /**
