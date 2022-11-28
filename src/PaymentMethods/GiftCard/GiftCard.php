@@ -61,7 +61,7 @@ class GiftCard extends PayablePaymentMethod
      */
     public function payRemainder(?Model $model = null)
     {
-        return parent::pay(new Pay($this->payload));
+        return parent::payRemainder(new Pay($this->payload));
     }
 
     /**
