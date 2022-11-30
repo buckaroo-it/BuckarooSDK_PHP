@@ -104,22 +104,10 @@ class iDeal extends PayablePaymentMethod
                 'name' => 'Triodos Bank'
             ],
             [
-                'id' => 'HANDNL2A',
-                'name' => 'Svenska Handelsbanken'
-            ],
-            [
                 'id' => 'FVLBNL22',
                 'name' => 'Van Lanschot'
             ]
         ];
-
-        if(!$this->client->config()->isLiveMode())
-        {
-            $issuers[] = [
-                'id'    => 'BANKNL2Y',
-                'name' => 'TEST BANK'
-            ];
-        }
 
         return $issuers;
     }

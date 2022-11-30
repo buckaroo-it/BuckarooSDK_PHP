@@ -3,6 +3,7 @@
 require('../bootstrap.php');
 
 use Buckaroo\BuckarooClient;
+use Buckaroo\Resources\Constants\Gender;
 
 $buckaroo = new BuckarooClient($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
@@ -11,51 +12,53 @@ $payload = [
     'order'             => uniqid(),
     'invoice'           => uniqid(),
     'description'       => 'This is a test order',
-    'serviceParameters' => [
-        'invoiceDate'       => '22-01-2018',
-        'customerType'      => 'Company',
-        'articles'      => [
-            [
-                'identifier'        => uniqid(),
-                'description'       => 'Blue Toy Car',
-                'quantity'          => '1',
-                'price'             => 10.00
-            ]
+    'invoiceDate'       => '22-01-2018',
+    'customerType'      => 'Company',
+    'email'             => 'test@buckaroo.nl',
+    'phone'             => [
+        'mobile'        => '0612345678'
+    ],
+    'articles'      => [
+        [
+            'identifier'        => uniqid(),
+            'description'       => 'Blue Toy Car',
+            'quantity'          => '1',
+            'price'             => 10.00
+        ]
+    ],
+    'company'       => [
+        'companyName'       => 'My Company B.V.',
+        'chamberOfCommerce' => '123456'
+    ],
+    'customer'      => [
+        'gender'                => Gender::FEMALE,
+        'initials'              => 'J.S.',
+        'lastName'              => 'Aflever',
+        'email'                 => 'billingcustomer@buckaroo.nl',
+        'phone'                 => '0610000000',
+        'culture'               => 'nl-NL',
+        'birthDate'             => '1990-01-01',
+    ],
+    'address'   => [
+        'street'                => 'Hoofdstraat',
+        'houseNumber'           => '2',
+        'houseNumberAdditional' => 'a',
+        'zipcode'               => '8441EE',
+        'city'                  => 'Heerenveen',
+        'country'               => 'NL'
+    ],
+    'subtotals'      => [
+        [
+            'name'      => 'Korting',
+            'value'     => -2.00
         ],
-        'company'       => [
-            'name'      => 'My Company B.V.',
-            'chamberOfCommerce' => '123456'
+        [
+            'name'      => 'Betaaltoeslag',
+            'value'     => 0.50
         ],
-        'customer'      => [
-            'gender'        => '1',
-            'initials'      => 'J.S.',
-            'firstName' => 'Test',
-            'lastName' => 'Aflever',
-            'email' => 'billingcustomer@buckaroo.nl',
-            'phone' => '0610000000',
-            'birthDate' => '01-01-1990',
-            'address'   => [
-                'street' => 'Hoofdstraat',
-                'housenumber'   => '2',
-                'streetNumberAdditional' => 'a',
-                'postalCode' => '8441EE',
-                'city' => 'Heerenveen',
-                'country'=> 'NL'
-            ]
-        ],
-        'subtotal'      => [
-            [
-                'name'      => 'Korting',
-                'value'     => -2.00
-            ],
-            [
-                'name'      => 'Betaaltoeslag',
-                'value'     => 0.50
-            ],
-            [
-                'name'      => 'Verzendkosten',
-                'value'     => 1.00
-            ]
+        [
+            'name'      => 'Verzendkosten',
+            'value'     => 1.00
         ]
     ]
 ];

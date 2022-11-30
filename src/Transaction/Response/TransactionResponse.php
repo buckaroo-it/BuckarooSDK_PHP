@@ -244,7 +244,7 @@ class TransactionResponse extends Response
      */
     public function getAmount(): string
     {
-        return $this->data['AmountDebit'];
+        return (string)$this->data['AmountDebit'];
     }
 
     /**

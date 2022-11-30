@@ -167,4 +167,20 @@ class CreditcardTest extends BuckarooTestCase
 
         $this->assertTrue($response->isSuccess());
     }
+
+    /**
+     * @return void
+     * @test
+     */
+    public function it_creates_a_creditcard_cancel_authorize()
+    {
+        $response = $this->buckaroo->method('creditcard')->cancelAuthorize([
+            'name'                          => 'mastercard',
+            'amountCredit'              => 10,
+            'originalTransactionKey'    => 'F86579ECED1D493887ECAE7C287BXXXX',
+            'invoice'                   => 'testinvoice12345cvx'
+        ]);
+
+        $this->assertTrue($response->isValidationFailure());
+    }
 }

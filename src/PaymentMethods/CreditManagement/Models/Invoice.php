@@ -44,7 +44,7 @@ class Invoice extends ServiceParameter
     /**
      * @var float
      */
-    protected float $invoiceAmountVat;
+    protected float $invoiceAmountVAT;
     /**
      * @var string
      */

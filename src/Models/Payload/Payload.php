@@ -71,6 +71,36 @@ class Payload extends Model
      */
     protected string $originalTransactionKey;
     /**
+     * @var string
+     */
+    protected string $originalTransactionReference;
+
+    /**
+     * @var string
+     */
+    protected string $websiteKey;
+    /**
+     * @var bool
+     */
+    protected bool $startRecurrent;
+    /**
+     * @var string
+     */
+    protected string $continueOnIncomplete;
+    /**
+     * @var string
+     */
+    protected string $servicesSelectableByClient;
+    /**
+     * @var string
+     */
+    protected string $servicesExcludedForClient;
+    /**
+     * @var array
+     */
+    protected array $customParameters;
+
+    /**
      * @var AdditionalParameters
      */
     protected AdditionalParameters $additionalParameters;

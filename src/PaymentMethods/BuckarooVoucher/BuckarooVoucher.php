@@ -18,16 +18,24 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\GiftCard;
+namespace Buckaroo\PaymentMethods\BuckarooVoucher;
 
 use Buckaroo\Models\Model;
-use Buckaroo\PaymentMethods\GiftCard\Models\Pay;
-use Buckaroo\PaymentMethods\GiftCard\Models\PayPayload;
 use Buckaroo\PaymentMethods\PayablePaymentMethod;
 use Buckaroo\Transaction\Response\TransactionResponse;
+use Buckaroo\PaymentMethods\BuckarooVoucher\Models\Pay;
+use Buckaroo\PaymentMethods\BuckarooVoucher\Models\Create;
+use Buckaroo\PaymentMethods\BuckarooVoucher\Models\Deactivate;
+use Buckaroo\PaymentMethods\BuckarooVoucher\Models\GetBalance;
+use Buckaroo\PaymentMethods\BuckarooVoucher\Models\CreatePayload;
 
-class GiftCard extends PayablePaymentMethod
+class BuckarooVoucher extends PayablePaymentMethod
 {
+    /**
+     * @var string
+     */
+    protected string $paymentName = 'buckaroovoucher';
+
     /**
      * @param Model|null $model
      * @return TransactionResponse
@@ -40,6 +48,7 @@ class GiftCard extends PayablePaymentMethod
 
         return parent::pay($model ?? $pay);
     }
+
 
     /**
      * @param Model|null $model
@@ -57,37 +66,41 @@ class GiftCard extends PayablePaymentMethod
     /**
      * @return TransactionResponse
      */
-    public function payRedirect(): TransactionResponse
+    public function getBalance(): TransactionResponse
     {
-        $this->payModel = PayPayload::class;
-
-        $pay = new PayPayload($this->payload);
+        $data = new GetBalance($this->payload);
 
         $this->setPayPayload();
-        
-        return $this->postRequest();
+
+        $this->setServiceList('GetBalance', $data);
+
+        return $this->dataRequest();
+    }
+    /**
+     * @return TransactionResponse
+     */
+    public function create(): TransactionResponse
+    {
+        $data = new Create($this->payload);
+
+        $this->setPayPayload();
+
+        $this->setServiceList('CreateApplication', $data);
+
+        return $this->dataRequest();
     }
 
     /**
-     * @param Model|null $model
-     * @return PayablePaymentMethod|mixed
+     * @return TransactionResponse
      */
-    public function payRemainder(?Model $model = null)
+    public function deactivate(): TransactionResponse
     {
-        return parent::payRemainder(new Pay($this->payload));
-    }
+        $data = new Deactivate($this->payload);
 
-    /**
-     * @return string
-     * @throws \Exception
-     */
-    public function paymentName(): string
-    {
-        if(isset($this->payload['name']))
-        {
-            return $this->payload['name'];
-        }
+        $this->setPayPayload();
 
-        return 'giftcard';
+        $this->setServiceList('DeactivateVoucher', $data);
+
+        return $this->dataRequest();
     }
 }

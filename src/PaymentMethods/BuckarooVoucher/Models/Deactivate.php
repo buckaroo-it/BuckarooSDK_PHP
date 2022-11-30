@@ -18,20 +18,10 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\GiftCard\Models;
+namespace Buckaroo\PaymentMethods\BuckarooVoucher\Models;
 
-class PayPayload extends \Buckaroo\Models\Payload\PayPayload
+use Buckaroo\PaymentMethods\BuckarooVoucher\Models\Pay;
+
+class Deactivate extends Pay
 {
-    /**
-     * @var string
-     */
-    protected string $continueOnIncomplete;
-    /**
-     * @var string
-     */
-    protected string $servicesSelectableByClient;
-    /**
-     * @var string
-     */
-    protected string $servicesExcludedForClient;
 }
