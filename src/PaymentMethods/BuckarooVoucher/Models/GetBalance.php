@@ -18,18 +18,10 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\GiftCard\Models;
+namespace Buckaroo\PaymentMethods\BuckarooVoucher\Models;
 
-use Buckaroo\Models\ServiceParameter;
+use Buckaroo\PaymentMethods\BuckarooVoucher\Models\Pay;
 
-class Pay extends ServiceParameter
+class GetBalance extends Pay
 {
-    protected string $fashionChequeCardNumber;
-    protected string $fashionChequePin;
-    protected string $intersolveCardnumber;
-    protected string $intersolvePIN;
-    protected string $tcsCardnumber;
-    protected string $tcsValidationCode;
-    protected string $lastName;
-    protected string $email;
 }

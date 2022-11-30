@@ -28,7 +28,7 @@ class BuckarooTestCase extends TestCase
 {
     public function __construct()
     {
-        $dotenv = Dotenv::createImmutable('../');
+        $dotenv = Dotenv::createImmutable(getcwd());
         $dotenv->load();
 
         $this->buckaroo = new BuckarooClient($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);

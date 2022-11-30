@@ -6,8 +6,17 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
+## [1.1.2]
+- Add missing service parameters to Giftcard payment
+- BP-2130 Examples updated. 
+- Cast getAmount in TransactionResponse a string.
+- ApplePay redirect method fixed.
+- New payment method Buckaroo Voucher added.
+- iDEAL banks list updated.
+
 ## [1.1.1]
 - BP-2061 Signature bugfix
+- BP-2059 Add CancelAuthorize for Creditcards & Missing APIs parameters
 
 ## [1.0.1]
 

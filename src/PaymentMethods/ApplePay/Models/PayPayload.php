@@ -18,18 +18,11 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\GiftCard\Models;
+namespace Buckaroo\PaymentMethods\ApplePay\Models;
 
-use Buckaroo\Models\ServiceParameter;
-
-class Pay extends ServiceParameter
+class PayPayload extends \Buckaroo\Models\Payload\PayPayload
 {
-    protected string $fashionChequeCardNumber;
-    protected string $fashionChequePin;
-    protected string $intersolveCardnumber;
-    protected string $intersolvePIN;
-    protected string $tcsCardnumber;
-    protected string $tcsValidationCode;
-    protected string $lastName;
-    protected string $email;
+    protected string $continueOnIncomplete;
+    protected string $servicesSelectableByClient;
+    protected string $servicesExcludedForClient;
 }
