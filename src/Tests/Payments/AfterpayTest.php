@@ -33,7 +33,7 @@ class AfterpayTest extends BuckarooTestCase
     {
         $response = $this->buckaroo->method('afterpay')->pay($this->getPaymentPayload());
 
-        $this->assertTrue($response->isRejected());
+        $this->assertTrue($response->isSuccess());
     }
 
     /**
@@ -117,9 +117,10 @@ class AfterpayTest extends BuckarooTestCase
 
     private function getPaymentPayload(?array $additional = null): array {
         $payload = [
-            'amountDebit'       => 50.30,
+            'amountDebit'       => 52.30,
             'order'             => uniqid(),
             'invoice'           => uniqid(),
+            'clientIP'      => '127.0.0.1',
             'billing'       => [
                 'recipient'        => [
                     'category'      => RecipientCategory::PERSON,
@@ -178,6 +179,14 @@ class AfterpayTest extends BuckarooTestCase
                     'vatPercentage' => '21',
                     'quantity' => '1',
                     'price' => '10.10'
+                ],
+                [
+                    'type'      => 'ShippingFee',
+                    'identifier' => 'USPShippingID',
+                    'description' => 'UPS',
+                    'vatPercentage' => '21',
+                    'quantity' => '1',
+                    'price' => '2'
                 ],
             ]
         ];
