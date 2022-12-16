@@ -142,7 +142,7 @@ class ReplyHandler
     {
         if($key)
         {
-            return $this->data[$key] ?? null;
+            return $this->data[$key] ?? $this->data[strtolower($key)] ?? $this->data[strtoupper($key)] ?? null;
         }
 
         return $this->data;
