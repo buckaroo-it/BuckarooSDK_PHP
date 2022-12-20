@@ -71,13 +71,15 @@ class iDeal extends PayablePaymentMethod
             return false;
         }
 
-        $issuersData = $response['Actions']['0']['RequestParameters'][0]['ListItemDescriptions'];
         $issuerList = [];
-        
-        foreach ($issuersData as $issuer){
-            $issuerList[] = ['id' => $issuer['Value'], 'name' => $issuer['Description']];
+        if (isset($response['Actions']['0']['RequestParameters'][0]['ListItemDescriptions'])) {
+            $issuersData = $response['Actions']['0']['RequestParameters'][0]['ListItemDescriptions'];
+            if (count($issuersData) > 0) {
+                foreach ($issuersData as $issuer){
+                    $issuerList[] = ['id' => $issuer['Value'], 'name' => $issuer['Description']];
+                }
+            }
         }
-
         return $issuerList;
     }       
 }
