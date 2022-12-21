@@ -26,6 +26,7 @@ use Buckaroo\Models\Model;
 use Buckaroo\PaymentMethods\iDeal\Models\Pay;
 use Buckaroo\PaymentMethods\PayablePaymentMethod;
 use Buckaroo\Transaction\Response\TransactionResponse;
+use Buckaroo\Transaction\Request\TransactionRequest;
 
 class iDeal extends PayablePaymentMethod
 {
@@ -57,58 +58,28 @@ class iDeal extends PayablePaymentMethod
     }
 
     /**
-     * @return \string[][]
+     * @return \mixed
      * @throws \Buckaroo\Exceptions\BuckarooException
      */
-    public function issuers(): array
+    public function issuers() : mixed 
     {
-        $issuers = [
-            [
-                'id' => 'ABNANL2A',
-                'name' => 'ABN AMRO'
-            ],
-            [
-                'id' => 'ASNBNL21',
-                'name' => 'ASN Bank'
-            ],
-            [
-                'id' => 'BUNQNL2A',
-                'name' => 'bunq'
-            ],
-            [
-                'id' => 'INGBNL2A',
-                'name' => 'ING'
-            ],
-            [
-                'id'    => 'KNABNL2H',
-                'name'  => 'Knab'
-            ],
-            [
-                'id' => 'RABONL2U',
-                'name' => 'Rabobank'
-            ],
-            [
-                'id' => 'RBRBNL21',
-                'name' => 'RegioBank'
-            ],
-            [
-                'id' => 'REVOLT21',
-                'name' => 'Revolut'
-            ],
-            [
-                'id' => 'SNSBNL2A',
-                'name' => 'SNS Bank'
-            ],
-            [
-                'id' => 'TRIONL2U',
-                'name' => 'Triodos Bank'
-            ],
-            [
-                'id' => 'FVLBNL22',
-                'name' => 'Van Lanschot'
-            ]
-        ];
+        $request = new TransactionRequest;
 
-        return $issuers;
-    }
+        try {
+            $response = $this->client->specification($request, 'ideal', 2);
+        }catch(BuckarooException $e){
+            return false;
+        }
+
+        $issuerList = [];
+        if (isset($response['Actions']['0']['RequestParameters'][0]['ListItemDescriptions'])) {
+            $issuersData = $response['Actions']['0']['RequestParameters'][0]['ListItemDescriptions'];
+            if (count($issuersData) > 0) {
+                foreach ($issuersData as $issuer){
+                    $issuerList[] = ['id' => $issuer['Value'], 'name' => $issuer['Description']];
+                }
+            }
+        }
+        return $issuerList;
+    }       
 }
