@@ -18,7 +18,7 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\Giftcard\Models;
+namespace Buckaroo\PaymentMethods\GiftCard\Models;
 
 class PayPayload extends \Buckaroo\Models\Payload\PayPayload
 {
