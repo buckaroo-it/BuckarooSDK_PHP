@@ -28,16 +28,6 @@ class AdditionalParameters extends Model
     protected array $AdditionalParameter;
 
     /**
-     * @param array|null $values
-     */
-    public function  __construct(?array $values = null)
-    {
-        $this->AdditionalParameter = $values ?? array();
-
-        parent::__construct($values);
-    }
-
-    /**
      * @param array|null $data
      * @return AdditionalParameters
      */
