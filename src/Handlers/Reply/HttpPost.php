@@ -59,7 +59,7 @@ class HttpPost implements ReplyStrategy
 
         //Combine the array keys with value
         $data = array_map(function($value, $key){
-            return $key . '=' . $value;
+            return $key . '=' . html_entity_decode($value);
         }, $data, array_keys($data));
 
         $dataString = implode('',  $data) . trim($this->config->secretKey());
