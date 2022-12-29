@@ -68,7 +68,7 @@ class SubscriptionsTest extends BuckarooTestCase
                 'mobile'                => '0612345678'
             ],
             'debtor'                    => [
-                'code'          => 'AapjeTest'
+                'code'          => 'johnsmith4'
             ],
 //            'person'                    => [
 //                'firstName'         => 'John',
@@ -99,7 +99,6 @@ class SubscriptionsTest extends BuckarooTestCase
             'amountDebit'               => 10.10,
             'issuer'                    => 'ABNANL2A'
         ]);
-
         $this->assertTrue($response->isPendingProcessing());
     }
 
