@@ -56,26 +56,33 @@ class SubscriptionsTest extends BuckarooTestCase
         $subscriptions = $this->buckaroo->method('subscriptions')->manually()->createCombined([
             'includeTransaction'        => false,
             'transactionVatPercentage'  => 5,
-            'configurationCode'         => 'xxxxx',
+            'configurationCode'         => 'gfyh9fe4',
             'email'                     => 'test@buckaroo.nl',
             'rate_plans'        => [
                 'add'        => [
-                    'startDate'         => '2022-01-01',
-                    'ratePlanCode'      => 'xxxxxx',
+                    'startDate'         => '2033-01-01',
+                    'ratePlanCode'      => '9863hdcj',
                 ]
             ],
             'phone'                     => [
                 'mobile'                => '0612345678'
             ],
             'debtor'                    => [
-                'code'          => 'xxxxxx'
+                'code'          => 'johnsmith4'
             ],
-            'person'                    => [
-                'firstName'         => 'John',
-                'lastName'          => 'Do',
-                'gender'            => Gender::FEMALE,
-                'culture'           => 'nl-NL',
-                'birthDate'         => '1990-01-01'
+//            'person'                    => [
+//                'firstName'         => 'John',
+//                'lastName'          => 'Do',
+//                'gender'            => Gender::FEMALE,
+//                'culture'           => 'nl-NL',
+//                'birthDate'         => '1990-01-01'
+//            ],
+            'company'   => [
+                'culture'       => 'nl-NL',
+                'companyName'   => 'My Company Coporation',
+                'vatApplicable' => true,
+                'vatNumber'     => 'NL140619562B01',
+                'chamberOfCommerce' => '20091741'
             ],
             'address'           => [
                 'street'        => 'Hoofdstraat',
@@ -87,12 +94,12 @@ class SubscriptionsTest extends BuckarooTestCase
         ]);
 
         $response = $this->buckaroo->method('ideal')->combine($subscriptions)->pay([
-            'invoice'       => uniqid(),
-            'amountDebit' => 10.10,
-            'issuer' => 'ABNANL2A'
+            'startRecurrent'            => true,
+            'invoice'                   => uniqid(),
+            'amountDebit'               => 10.10,
+            'issuer'                    => 'ABNANL2A'
         ]);
-
-        $this->assertTrue($response->isValidationFailure());
+        $this->assertTrue($response->isPendingProcessing());
     }
 
     /**
