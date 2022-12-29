@@ -22,11 +22,13 @@ namespace Buckaroo\PaymentMethods\Subscriptions\Models;
 
 use Buckaroo\Models\Address;
 use Buckaroo\Models\BankAccount;
+use Buckaroo\Models\Company;
 use Buckaroo\Models\Debtor;
 use Buckaroo\Models\Email;
+use Buckaroo\Models\Person;
 use Buckaroo\Models\Phone;
 use Buckaroo\Models\ServiceParameter;
-use Buckaroo\PaymentMethods\Afterpay\Models\Person;
+use Buckaroo\PaymentMethods\Subscriptions\Service\ParameterKeys\CompanyAdapter;
 
 class Subscription extends ServiceParameter
 {
@@ -102,6 +104,11 @@ class Subscription extends ServiceParameter
     protected Person $person;
 
     /**
+     * @var Company
+     */
+    protected CompanyAdapter $company;
+
+    /**
      * @var RatePlan
      */
     protected RatePlan $addRatePlan;
@@ -120,6 +127,15 @@ class Subscription extends ServiceParameter
     protected array $groupData = [
         'debtor'   => [
             'groupType' => 'Debtor'
+        ],
+        'person'   => [
+            'groupType' => 'Person'
+        ],
+        'email'     => [
+            'groupType' => 'Email'
+        ],
+        'address'     => [
+            'groupType' => 'Address'
         ],
         'addRatePlan'   => [
             'groupType' => 'AddRatePlan'
@@ -214,6 +230,16 @@ class Subscription extends ServiceParameter
         }
 
         return $this->person;
+    }
+
+    public function company($company = null)
+    {
+        if(is_array($company))
+        {
+            $this->company = new CompanyAdapter(new Company($company));
+        }
+
+        return $this->company;
     }
 
     /**
