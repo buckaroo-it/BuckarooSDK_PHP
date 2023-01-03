@@ -32,4 +32,7 @@ class Pay extends ServiceParameter
     protected string $tcsValidationCode;
     protected string $lastName;
     protected string $email;
+
+    protected string $cardNumber;
+    protected string $pin;
 }
