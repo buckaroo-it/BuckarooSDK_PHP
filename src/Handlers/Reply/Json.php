@@ -53,7 +53,7 @@ class Json implements ReplyStrategy
      * @param string $uri
      * @param $method
      */
-    public function __construct(Config $config, array $data, string $auth_header = '', string $uri = '', $method = 'POST')
+    public function __construct(Config $config, array $data, string $auth_header, string $uri, $method = 'POST')
     {
         $this->config = $config;
         $this->data = $data;
