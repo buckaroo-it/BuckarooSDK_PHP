@@ -26,7 +26,8 @@ class CultureHeader extends TransactionHeader
      * @param TransactionHeader $transactionHeader
      * @param string|null $locale
      */
-    public function __construct(TransactionHeader $transactionHeader, string $locale = null) {
+    public function __construct(TransactionHeader $transactionHeader, string $locale = null)
+    {
         $this->locale = $locale;
 
         parent::__construct($transactionHeader);
@@ -35,7 +36,8 @@ class CultureHeader extends TransactionHeader
     /**
      * @return array
      */
-    public function getHeaders(): array {
+    public function getHeaders(): array
+    {
         $headers = $this->transactionHeader->getHeaders();
 
         $headers[] = "Culture: " . $this->getLocale();

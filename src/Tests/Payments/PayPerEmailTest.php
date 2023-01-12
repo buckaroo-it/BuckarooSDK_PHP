@@ -75,6 +75,5 @@ class PayPerEmailTest extends BuckarooTestCase
         ]);
 
         $this->assertTrue($response->isFailed());
-
     }
 }

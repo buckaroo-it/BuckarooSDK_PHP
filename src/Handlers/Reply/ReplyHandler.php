@@ -87,20 +87,17 @@ class ReplyHandler
     {
         $data = $this->data;
 
-        if(is_string($data))
-        {
+        if (is_string($data)) {
             $data = json_decode($data, true);
         }
 
-        if($this->contains('Transaction', $data) && $this->auth_header && $this->uri)
-        {
+        if ($this->contains('Transaction', $data) && $this->auth_header && $this->uri) {
             $this->strategy = new Json($this->config, $data, $this->auth_header, $this->uri);
 
             return $this;
         }
 
-        if($this->contains('brq_', $data) || $this->contains('BRQ_', $data))
-        {
+        if ($this->contains('brq_', $data) || $this->contains('BRQ_', $data)) {
             $this->strategy = new HttpPost($this->config, $data);
 
             return $this;
@@ -116,10 +113,8 @@ class ReplyHandler
      */
     private function contains(string $needle, array $data): bool
     {
-        foreach(array_keys($data) as $key)
-        {
-            if(str_contains($key, $needle))
-            {
+        foreach (array_keys($data) as $key) {
+            if (str_contains($key, $needle)) {
                 return true;
             }
         }
@@ -140,8 +135,7 @@ class ReplyHandler
      */
     public function data($key = null)
     {
-        if($key)
-        {
+        if ($key) {
             return $this->data[$key] ?? $this->data[strtolower($key)] ?? $this->data[strtoupper($key)] ?? null;
         }
 

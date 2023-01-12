@@ -356,5 +356,4 @@ class CreditManagementTest extends BuckarooTestCase
             ]
         ]);
     }
-
 }

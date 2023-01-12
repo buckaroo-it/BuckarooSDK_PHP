@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<ruleset name="PHP_CodeSniffer"  ref="Generic.Files.LineEndings">
+    <description>The coding standard for our project.</description>
+    <rule ref="PSR2"/>
+
+    <file>src</file>
+
+    <exclude-pattern>*/Tests/*</exclude-pattern>
+    <exclude name="Generic.Files.LineEndings.InvalidEOLChar"/>
+
+</ruleset>

@@ -61,13 +61,13 @@ class iDeal extends PayablePaymentMethod
      * @return \mixed
      * @throws \Buckaroo\Exceptions\BuckarooException
      */
-    public function issuers() : mixed 
+    public function issuers() : mixed
     {
         $request = new TransactionRequest;
 
         try {
             $response = $this->client->specification($request, 'ideal', 2);
-        }catch(BuckarooException $e){
+        } catch (BuckarooException $e) {
             return false;
         }
 
@@ -75,11 +75,11 @@ class iDeal extends PayablePaymentMethod
         if (isset($response['Actions']['0']['RequestParameters'][0]['ListItemDescriptions'])) {
             $issuersData = $response['Actions']['0']['RequestParameters'][0]['ListItemDescriptions'];
             if (count($issuersData) > 0) {
-                foreach ($issuersData as $issuer){
+                foreach ($issuersData as $issuer) {
                     $issuerList[] = ['id' => $issuer['Value'], 'name' => $issuer['Description']];
                 }
             }
         }
         return $issuerList;
-    }       
+    }
 }

@@ -27,10 +27,8 @@ class ClientIP extends Model
     /**
      * @var
      */
-    /**
-     * @var
-     */
-    protected $Type, $Address;
+    protected $Type;
+    protected $Address;
 
     /**
      * @param string|null $ip
@@ -78,7 +76,9 @@ class ClientIP extends Model
             return $headers['X-Forwarded-For'];
         }
 
-        if (isset($headers['HTTP_X_FORWARDED_FOR']) && filter_var($headers['HTTP_X_FORWARDED_FOR'], FILTER_VALIDATE_IP)) {
+        if (isset($headers['HTTP_X_FORWARDED_FOR']) &&
+               filter_var($headers['HTTP_X_FORWARDED_FOR'], FILTER_VALIDATE_IP)
+        ) {
             return $headers['HTTP_X_FORWARDED_FOR'];
         }
 

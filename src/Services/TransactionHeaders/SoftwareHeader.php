@@ -27,7 +27,8 @@ class SoftwareHeader extends TransactionHeader
     /**
      * @return array
      */
-    public function getHeaders(): array {
+    public function getHeaders(): array
+    {
         $headers = $this->transactionHeader->getHeaders();
 
         $headers[] = "Software: " .  json_encode([

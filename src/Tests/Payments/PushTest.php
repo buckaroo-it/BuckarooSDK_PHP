@@ -101,4 +101,3 @@ class PushTest extends BuckarooTestCase
         $this->assertTrue($reply_handler->isValid());
     }
 }
-

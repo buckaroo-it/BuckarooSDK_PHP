@@ -68,44 +68,61 @@ class PaymentMethodFactory
      * @var array|\string[][]
      */
     private static array $payments = [
-        ApplePay::class                 => ['applepay'],
-        Alipay::class                   => ['alipay'],
-        Afterpay::class                 => ['afterpay'],
-        AfterpayDigiAccept::class       => ['afterpaydigiaccept'],
-        Bancontact::class               => ['bancontactmrcash'],
-        Billink::class                  => ['billink'],
-        Belfius::class                  => ['belfius'],
-        BuckarooWallet::class           => ['buckaroo_wallet'],
-        CreditCard::class               => ['creditcard', 'mastercard', 'visa', 'amex', 'vpay', 'maestro', 'visaelectron', 'cartebleuevisa', 'cartebancaire', 'dankort', 'nexi', 'postepay'],
-        CreditClick::class              => ['creditclick'],
-        CreditManagement::class         => ['credit_management'],
-        iDeal::class                    => ['ideal', 'idealprocessing'],
-        iDealQR::class                  => ['ideal_qr'],
-        iDin::class                     => ['idin'],
-        In3::class                      => ['in3'],
-        KlarnaPay::class                => ['klarna', 'klarnain'],
-        KlarnaKP::class                 => ['klarnakp'],
-        Surepay::class                  => ['surepay'],
-        Subscriptions::class            => ['subscriptions'],
-        SEPA::class                     => ['sepadirectdebit', 'sepa'],
-        KBC::class                      => ['kbcpaymentbutton'],
-        Paypal::class                   => ['paypal'],
-        PayPerEmail::class              => ['payperemail'],
-        EPS::class                      => ['eps'],
-        Emandates::class                => ['emandates'],
-        Sofort::class                   => ['sofort', 'sofortueberweisung'],
-        Tinka::class                    => ['tinka'],
-        Marketplaces::class             => ['marketplaces'],
-        Payconiq::class                 => ['payconiq'],
-        Przelewy24::class               => ['przelewy24'],
-        PointOfSale::class              => ['pospayment'],
-        Giropay::class                  => ['giropay'],
-        GiftCard::class                 => ['giftcard', 'westlandbon', 'ideal', 'ippies', 'babygiftcard', 'babyparkgiftcard', 'beautywellness', 'boekenbon', 'boekenvoordeel', 'designshopsgiftcard', 'fashioncheque', 'fashionucadeaukaart', 'fijncadeau', 'koffiecadeau', 'kokenzo', 'kookcadeau', 'nationaleentertainmentcard', 'naturesgift', 'podiumcadeaukaart', 'shoesaccessories', 'webshopgiftcard', 'wijncadeau', 'wonenzo', 'yourgift', 'vvvgiftcard', 'parfumcadeaukaart'],
-        Trustly::class                  => ['trustly'],
-        BankTransfer::class             => ['transfer'],
-        RequestToPay::class             => ['requesttopay'],
-        WeChatPay::class                => ['wechatpay'],
-        BuckarooVoucher::class          => ['buckaroovoucher'],
+        ApplePay::class => ['applepay'],
+        Alipay::class => ['alipay'],
+        Afterpay::class => ['afterpay'],
+        AfterpayDigiAccept::class => ['afterpaydigiaccept'],
+        Bancontact::class => ['bancontactmrcash'],
+        Billink::class => ['billink'],
+        Belfius::class => ['belfius'],
+        BuckarooWallet::class => ['buckaroo_wallet'],
+        CreditCard::class =>
+            [
+                'creditcard', 'mastercard', 'visa',
+                'amex', 'vpay', 'maestro',
+                'visaelectron', 'cartebleuevisa',
+                'cartebancaire', 'dankort', 'nexi',
+                'postepay'
+            ],
+        CreditClick::class => ['creditclick'],
+        CreditManagement::class => ['credit_management'],
+        iDeal::class => ['ideal', 'idealprocessing'],
+        iDealQR::class => ['ideal_qr'],
+        iDin::class => ['idin'],
+        In3::class => ['in3'],
+        KlarnaPay::class => ['klarna', 'klarnain'],
+        KlarnaKP::class => ['klarnakp'],
+        Surepay::class => ['surepay'],
+        Subscriptions::class => ['subscriptions'],
+        SEPA::class => ['sepadirectdebit', 'sepa'],
+        KBC::class => ['kbcpaymentbutton'],
+        Paypal::class => ['paypal'],
+        PayPerEmail::class => ['payperemail'],
+        EPS::class => ['eps'],
+        Emandates::class => ['emandates'],
+        Sofort::class => ['sofort', 'sofortueberweisung'],
+        Tinka::class => ['tinka'],
+        Marketplaces::class => ['marketplaces'],
+        Payconiq::class => ['payconiq'],
+        Przelewy24::class => ['przelewy24'],
+        PointOfSale::class => ['pospayment'],
+        Giropay::class => ['giropay'],
+        GiftCard::class => [
+            'giftcard', 'westlandbon', 'ideal',
+            'ippies', 'babygiftcard', 'babyparkgiftcard',
+            'beautywellness', 'boekenbon', 'boekenvoordeel',
+            'designshopsgiftcard', 'fashioncheque', 'fashionucadeaukaart',
+            'fijncadeau', 'koffiecadeau', 'kokenzo',
+            'kookcadeau', 'nationaleentertainmentcard', 'naturesgift',
+            'podiumcadeaukaart', 'shoesaccessories', 'webshopgiftcard',
+            'wijncadeau', 'wonenzo', 'yourgift',
+            'vvvgiftcard', 'parfumcadeaukaart'
+        ],
+        Trustly::class => ['trustly'],
+        BankTransfer::class => ['transfer'],
+        RequestToPay::class => ['requesttopay'],
+        WeChatPay::class => ['wechatpay'],
+        BuckarooVoucher::class => ['buckaroovoucher'],
     ];
 
     /**
@@ -121,10 +138,8 @@ class PaymentMethodFactory
      * @param Client $client
      * @param string $paymentMethod
      */
-    public function __construct(
-        Client $client,
-        string $paymentMethod
-    ) {
+    public function __construct(Client $client, string $paymentMethod)
+    {
         $this->client = $client;
         $this->paymentMethod = strtolower($paymentMethod);
     }
@@ -132,10 +147,10 @@ class PaymentMethodFactory
     /**
      * @return PaymentMethod
      */
-    public function getPaymentMethod() : PaymentMethod
+    public function getPaymentMethod(): PaymentMethod
     {
-        foreach(self::$payments as $class => $alias) {
-            if(in_array($this->paymentMethod, $alias)) {
+        foreach (self::$payments as $class => $alias) {
+            if (in_array($this->paymentMethod, $alias)) {
                 return new $class($this->client, $this->paymentMethod);
             }
         }
@@ -148,10 +163,8 @@ class PaymentMethodFactory
      * @param string $paymentMethod
      * @return PaymentMethod
      */
-    public static function get(
-        Client $client,
-        string $paymentMethod
-    ): PaymentMethod {
+    public static function get(Client $client, string $paymentMethod): PaymentMethod
+    {
         $factory = new self($client, $paymentMethod);
         return $factory->getPaymentMethod();
     }

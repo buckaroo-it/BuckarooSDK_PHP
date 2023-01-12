@@ -90,7 +90,8 @@ class BillinkTest extends BuckarooTestCase
         $this->assertTrue($response->isFailed());
     }
 
-    private function getPaymentPayload(): array {
+    private function getPaymentPayload(): array
+    {
         return [
             'amountDebit'       => 50.30,
             'order'             => uniqid(),

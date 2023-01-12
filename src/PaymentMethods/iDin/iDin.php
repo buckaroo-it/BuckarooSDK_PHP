@@ -25,7 +25,7 @@ use Buckaroo\PaymentMethods\iDin\Models\Issuer;
 use Buckaroo\PaymentMethods\iDin\Service\ParameterKeys\IssuerAdapter;
 use Buckaroo\PaymentMethods\PaymentMethod;
 
-class iDin extends PaymentMethod
+class IDin extends PaymentMethod
 {
     /**
      * @var string
@@ -83,5 +83,4 @@ class iDin extends PaymentMethod
 
         return $this->dataRequest();
     }
-
 }

@@ -61,5 +61,4 @@ class TransferTest extends BuckarooTestCase
 
         $this->assertTrue($response->isFailed());
     }
-
 }

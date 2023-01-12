@@ -75,8 +75,16 @@ abstract class Config implements Loggable
      * @param string|null $pushURL
      * @param Subject|null $logger
      */
-    public function __construct(string $websiteKey, string $secretKey, ?string $mode = null, ?string $currency = null, ?string $returnURL = null, ?string $returnURLCancel = null, ?string $pushURL = null, Subject $logger = null)
-    {
+    public function __construct(
+        string $websiteKey,
+        string $secretKey,
+        ?string $mode = null,
+        ?string $currency = null,
+        ?string $returnURL = null,
+        ?string $returnURLCancel = null,
+        ?string $pushURL = null,
+        Subject $logger = null
+    ) {
         $this->websiteKey = $websiteKey;
         $this->secretKey = $secretKey;
 
@@ -92,14 +100,16 @@ abstract class Config implements Loggable
     /**
      * @return string
      */
-    public function websiteKey(): string {
+    public function websiteKey(): string
+    {
         return $this->websiteKey;
     }
 
     /**
      * @return string
      */
-    public function secretKey(): string {
+    public function secretKey(): string
+    {
         return $this->secretKey;
     }
 
@@ -117,8 +127,7 @@ abstract class Config implements Loggable
      */
     public function mode(?string $mode = null): string
     {
-        if($mode && in_array($mode, [self::LIVE_MODE, self::TEST_MODE]))
-        {
+        if ($mode && in_array($mode, [self::LIVE_MODE, self::TEST_MODE])) {
             $this->mode = $mode;
         }
 
@@ -165,10 +174,8 @@ abstract class Config implements Loggable
     {
         $payload = $this->filterNonUpdatableKeys($payload);
 
-        foreach($payload as $key => $value)
-        {
-            if(property_exists($this, $key))
-            {
+        foreach ($payload as $key => $value) {
+            if (property_exists($this, $key)) {
                 $this->$key = $value;
             }
         }
@@ -184,7 +191,7 @@ abstract class Config implements Loggable
     {
         $filter = array('websiteKey', 'secretKey');
 
-        return array_filter($payload, function($k) use ($filter){
+        return array_filter($payload, function ($k) use ($filter) {
             return !in_array($k, $filter);
         }, ARRAY_FILTER_USE_KEY);
     }
@@ -197,10 +204,8 @@ abstract class Config implements Loggable
     {
         $values = array();
 
-        foreach($properties as $property)
-        {
-            if(method_exists($this, $property))
-            {
+        foreach ($properties as $property) {
+            if (method_exists($this, $property)) {
                 $values[$property] = $this->$property();
             }
         }

@@ -41,7 +41,8 @@ abstract class ServiceParametersKeysAdapter extends ServiceParameter
     /**
      * @param Model $model
      */
-    public function __construct(Model $model) {
+    public function __construct(Model $model)
+    {
         $this->model = $model;
     }
 
@@ -51,8 +52,7 @@ abstract class ServiceParametersKeysAdapter extends ServiceParameter
      */
     public function __get($property)
     {
-        if (property_exists($this->model, $property))
-        {
+        if (property_exists($this->model, $property)) {
             return $this->model->$property;
         }
 

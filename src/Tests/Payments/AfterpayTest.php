@@ -115,7 +115,8 @@ class AfterpayTest extends BuckarooTestCase
         $this->assertTrue($response->isValidationFailure());
     }
 
-    private function getPaymentPayload(?array $additional = null): array {
+    private function getPaymentPayload(?array $additional = null): array
+    {
         $payload = [
             'amountDebit'       => 50.30,
             'order'             => uniqid(),
@@ -182,8 +183,7 @@ class AfterpayTest extends BuckarooTestCase
             ]
         ];
 
-        if($additional)
-        {
+        if ($additional) {
             return array_merge($additional, $payload);
         }
 

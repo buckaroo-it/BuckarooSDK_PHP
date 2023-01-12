@@ -63,10 +63,8 @@ abstract class ServiceListParameter
      */
     protected function appendParameter(?int $groupKey, ?string $groupType, string $name, $value)
     {
-        if(!is_null($value)) {
-
-            if(is_callable($value)) {
-
+        if (!is_null($value)) {
+            if (is_callable($value)) {
                 $this->serviceList->appendParameter($value($groupKey, $groupType));
 
                 return $this;

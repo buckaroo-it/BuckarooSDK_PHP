@@ -99,9 +99,4 @@ class BancontactTest extends BuckarooTestCase
 
         $this->assertTrue($response->isWaitingOnUserInput());
     }
-
-
-
-
-
 }

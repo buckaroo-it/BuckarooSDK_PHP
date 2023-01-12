@@ -42,5 +42,4 @@ class SofortTest extends BuckarooTestCase
 
         $this->assertTrue($response->isPendingProcessing());
     }
-
 }

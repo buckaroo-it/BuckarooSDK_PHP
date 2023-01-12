@@ -97,8 +97,7 @@ class TransactionResponse extends Response
      */
     public function data(?string $key = null)
     {
-        if($key && isset($this->data[$key]))
-        {
+        if ($key && isset($this->data[$key])) {
             return $this->data[$key];
         }
 
@@ -343,7 +342,6 @@ class TransactionResponse extends Response
         $errorTypes = ['ChannelErrors', 'ServiceErrors', 'ActionErrors', 'ParameterErrors', 'CustomParameterErrors'];
 
         if ($this->hasError()) {
-            
             foreach ($errorTypes as $errorType) {
                 if (!empty($this->data['RequestErrors'][$errorType])) {
                     return $this->data['RequestErrors'][$errorType][0];

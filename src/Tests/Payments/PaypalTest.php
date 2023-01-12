@@ -156,7 +156,5 @@ class PaypalTest extends BuckarooTestCase
         ]);
 
         $this->assertTrue($response->isValidationFailure());
-
     }
-
 }

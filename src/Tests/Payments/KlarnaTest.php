@@ -47,7 +47,8 @@ class KlarnaTest extends BuckarooTestCase
         $this->assertTrue($response->isPendingProcessing());
     }
 
-    private function getPaymentPayload(): array {
+    private function getPaymentPayload(): array
+    {
         return [
             'amountDebit'       => 50.30,
             'order'             => uniqid(),
@@ -111,7 +112,8 @@ class KlarnaTest extends BuckarooTestCase
         ];
     }
 
-    private function getPaymentInstallmentPayload(): array {
+    private function getPaymentInstallmentPayload(): array
+    {
         return [
             'amountDebit'       => 50.30,
             'order'             => uniqid(),
