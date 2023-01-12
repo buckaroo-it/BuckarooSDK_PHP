@@ -119,7 +119,7 @@ class CreditCard extends PayablePaymentMethod implements Combinable
 
         return $this->postRequest();
     }
-    
+
     /**
      * @return TransactionResponse
      */
