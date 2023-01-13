@@ -123,6 +123,18 @@ class CreditCard extends PayablePaymentMethod implements Combinable
     /**
      * @return TransactionResponse
      */
+    public function payRemainderEncrypted(): TransactionResponse
+    {
+        $this->setPayPayload();
+
+        $this->setServiceList('PayRemainderEncrypted');
+
+        return $this->postRequest();
+    }
+
+    /**
+     * @return TransactionResponse
+     */
     public function cancelAuthorize(): TransactionResponse
     {
         $this->setRefundPayload();
