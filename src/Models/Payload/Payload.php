@@ -79,6 +79,12 @@ class Payload extends Model
      * @var string
      */
     protected string $websiteKey;
+
+    /**
+     * @var string
+     */
+    protected string $culture;
+
     /**
      * @var bool
      */
