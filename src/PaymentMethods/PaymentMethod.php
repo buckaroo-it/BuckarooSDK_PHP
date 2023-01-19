@@ -78,10 +78,8 @@ abstract class PaymentMethod implements PaymentInterface
      * @param Client $client
      * @param string|null $serviceCode
      */
-    public function __construct(
-        Client $client,
-        ?string $serviceCode
-    ) {
+    public function __construct(Client $client, ?string $serviceCode)
+    {
         $this->client = $client;
 
         $this->request = new TransactionRequest;
@@ -108,7 +106,7 @@ abstract class PaymentMethod implements PaymentInterface
      */
     protected function postRequest()
     {
-        if($this->isManually)
+        if ($this->isManually)
         {
             return $this;
         }
@@ -124,7 +122,7 @@ abstract class PaymentMethod implements PaymentInterface
      */
     protected function dataRequest()
     {
-        if($this->isManually)
+        if ($this->isManually)
         {
             return $this;
         }
@@ -142,7 +140,7 @@ abstract class PaymentMethod implements PaymentInterface
      */
     protected function setServiceList(string $action, ?Model $model = null)
     {
-        $serviceList = new ServiceList($this->paymentName(),  $this->serviceVersion(), $action, $model);
+        $serviceList = new ServiceList($this->paymentName(), $this->serviceVersion(), $action, $model);
 
         $this->request->getServices()->pushServiceList($serviceList);
 
@@ -171,7 +169,7 @@ abstract class PaymentMethod implements PaymentInterface
      */
     public function manually(?bool $isManually = null)
     {
-        if($isManually !== null)
+        if ($isManually !== null)
         {
             $this->isManually = $isManually;
         }
@@ -187,16 +185,17 @@ abstract class PaymentMethod implements PaymentInterface
     {
         $this->combinablePayment = $combinablePayment;
 
-        $payload_data = array_filter($combinablePayment->request->data(), function($key){
-            return !in_array($key, ['Services']);
-        }, ARRAY_FILTER_USE_KEY );
+        $payload_data = array_filter($combinablePayment->request->data(), function ($key)
+        {
+            return ! in_array($key, ['Services']);
+        }, ARRAY_FILTER_USE_KEY);
 
-        foreach($payload_data as $key => $value)
+        foreach ($payload_data as $key => $value)
         {
             $this->request->setData($key, $value);
         }
 
-        foreach($this->combinablePayment->request->getServices()->serviceList() as $serviceList)
+        foreach ($this->combinablePayment->request->getServices()->serviceList() as $serviceList)
         {
             $this->request->getServices()->pushServiceList($serviceList);
         }

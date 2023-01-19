@@ -43,9 +43,9 @@ class MultipleInvoiceInfo extends ServiceParameter
      */
     public function invoices(?array $invoices = null)
     {
-        if(is_array($invoices))
+        if (is_array($invoices))
         {
-            foreach($invoices as $invoice)
+            foreach ($invoices as $invoice)
             {
                 $this->invoices[] = new Invoice($invoice);
             }

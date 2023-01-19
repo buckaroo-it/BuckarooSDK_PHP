@@ -37,6 +37,5 @@ class PosTest extends BuckarooTestCase
         ]);
 
         $this->assertTrue($response->isSuccess());
-
     }
 }

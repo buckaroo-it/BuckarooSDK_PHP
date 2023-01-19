@@ -20,8 +20,8 @@
 
 namespace Buckaroo\Tests\Payments;
 
-use Buckaroo\Tests\BuckarooTestCase;
 use Buckaroo\Resources\Constants\Gender;
+use Buckaroo\Tests\BuckarooTestCase;
 
 class TransferTest extends BuckarooTestCase
 {
@@ -41,8 +41,8 @@ class TransferTest extends BuckarooTestCase
             'customer' => [
                 'gender' => Gender::MALE,
                 'firstName' => 'John',
-                'lastName' => 'Smith'
-            ]
+                'lastName' => 'Smith',
+            ],
         ]);
 
         $this->assertTrue($response->isAwaitingConsumer());
@@ -55,11 +55,10 @@ class TransferTest extends BuckarooTestCase
     {
         $response = $this->buckaroo->method('transfer')->refund([
             'amountCredit' => 10,
-            'invoice'       => 'testinvoice 123',
-            'originalTransactionKey' => '2D04704995B74D679AACC59F87XXXXXX'
+            'invoice' => 'testinvoice 123',
+            'originalTransactionKey' => '2D04704995B74D679AACC59F87XXXXXX',
         ]);
 
         $this->assertTrue($response->isFailed());
     }
-
 }

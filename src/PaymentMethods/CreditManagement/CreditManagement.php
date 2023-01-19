@@ -169,5 +169,4 @@ class CreditManagement extends PaymentMethod implements Combinable
 
         return $this->dataRequest();
     }
-
 }

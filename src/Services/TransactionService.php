@@ -36,7 +36,10 @@ class TransactionService
      */
     public function status(): Response
     {
-        return $this->client->get(Response::class, $this->client->getEndpoint('json/Transaction/Status/' . $this->transactionKey));
+        return $this->client->get(
+            Response::class,
+            $this->client->getEndpoint('json/Transaction/Status/' . $this->transactionKey)
+        );
     }
 
     /**
@@ -45,7 +48,10 @@ class TransactionService
      */
     public function refundInfo(): Response
     {
-        return $this->client->get(Response::class, $this->client->getEndpoint('json/Transaction/RefundInfo/' . $this->transactionKey));
+        return $this->client->get(
+            Response::class,
+            $this->client->getEndpoint('json/Transaction/RefundInfo/' . $this->transactionKey)
+        );
     }
 
     /**
@@ -54,6 +60,9 @@ class TransactionService
      */
     public function cancelInfo(): Response
     {
-        return $this->client->get(Response::class, $this->client->getEndpoint('json/Transaction/Cancel/' . $this->transactionKey));
+        return $this->client->get(
+            Response::class,
+            $this->client->getEndpoint('json/Transaction/Cancel/' . $this->transactionKey)
+        );
     }
 }

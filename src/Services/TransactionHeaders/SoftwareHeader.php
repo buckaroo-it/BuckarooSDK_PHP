@@ -27,15 +27,16 @@ class SoftwareHeader extends TransactionHeader
     /**
      * @return array
      */
-    public function getHeaders(): array {
+    public function getHeaders(): array
+    {
         $headers = $this->transactionHeader->getHeaders();
 
         $headers[] = "Software: " .  json_encode([
-            "PlatformName"    => "SDK",
+            "PlatformName" => "SDK",
             "PlatformVersion" => '0.0.1',
-            "ModuleSupplier"  => "Buckaroo",
-            "ModuleName"      => "BuckarooPayments",
-            "ModuleVersion"   => '0.0.1',
+            "ModuleSupplier" => "Buckaroo",
+            "ModuleName" => "BuckarooPayments",
+            "ModuleVersion" => '0.0.1',
         ]);
 
         return $headers;

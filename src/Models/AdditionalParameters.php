@@ -33,12 +33,12 @@ class AdditionalParameters extends Model
      */
     public function setProperties(?array $data)
     {
-        foreach($data ?? array() as $name => $value)
+        foreach ($data ?? [] as $name => $value)
         {
-            $this->AdditionalParameter[] = array(
-                'Value'   => $value,
-                'Name'    => $name
-            );
+            $this->AdditionalParameter[] = [
+                'Value' => $value,
+                'Name' => $name,
+            ];
         }
 
         return parent::setProperties($data);

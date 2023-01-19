@@ -13,13 +13,13 @@ $response = $buckaroo->method('giftcard')->pay([
     'invoice' => uniqid(),
     'name' => 'boekenbon',
     'intersolveCardnumber' => '0000000000000000001',
-    'intersolvePIN'        => '1000'    
+    'intersolvePIN' => '1000',
 ]);
 
 //Refund
 $response = $buckaroo->method('giftcard')->refund([
     'amountCredit' => 10,
-    'invoice'       => 'testinvoice 123',
+    'invoice' => 'testinvoice 123',
     'originalTransactionKey' => '2D04704995B74D679AACC59F87XXXXXX',
-    'name'          => 'boekenbon'
+    'name' => 'boekenbon',
 ]);

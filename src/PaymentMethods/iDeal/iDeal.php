@@ -25,8 +25,8 @@ namespace Buckaroo\PaymentMethods\iDeal;
 use Buckaroo\Models\Model;
 use Buckaroo\PaymentMethods\iDeal\Models\Pay;
 use Buckaroo\PaymentMethods\PayablePaymentMethod;
-use Buckaroo\Transaction\Response\TransactionResponse;
 use Buckaroo\Transaction\Request\TransactionRequest;
+use Buckaroo\Transaction\Response\TransactionResponse;
 
 class iDeal extends PayablePaymentMethod
 {
@@ -61,25 +61,32 @@ class iDeal extends PayablePaymentMethod
      * @return \mixed
      * @throws \Buckaroo\Exceptions\BuckarooException
      */
-    public function issuers() : mixed 
+    public function issuers() : mixed
     {
         $request = new TransactionRequest;
 
-        try {
+        try
+        {
             $response = $this->client->specification($request, 'ideal', 2);
-        }catch(BuckarooException $e){
+        }
+        catch (BuckarooException $e)
+        {
             return false;
         }
 
         $issuerList = [];
-        if (isset($response['Actions']['0']['RequestParameters'][0]['ListItemDescriptions'])) {
+        if (isset($response['Actions']['0']['RequestParameters'][0]['ListItemDescriptions']))
+        {
             $issuersData = $response['Actions']['0']['RequestParameters'][0]['ListItemDescriptions'];
-            if (count($issuersData) > 0) {
-                foreach ($issuersData as $issuer){
+            if (count($issuersData) > 0)
+            {
+                foreach ($issuersData as $issuer)
+                {
                     $issuerList[] = ['id' => $issuer['Value'], 'name' => $issuer['Description']];
                 }
             }
         }
+
         return $issuerList;
-    }       
+    }
 }

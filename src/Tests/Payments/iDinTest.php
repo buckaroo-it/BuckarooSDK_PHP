@@ -30,7 +30,7 @@ class iDinTest extends BuckarooTestCase
     public function it_identify_with_idin()
     {
         $response = $this->buckaroo->method('idin')->identify([
-            'issuer' => 'BANKNL2Y'
+            'issuer' => 'BANKNL2Y',
         ]);
 
         $this->assertTrue($response->isPendingProcessing());
@@ -42,7 +42,7 @@ class iDinTest extends BuckarooTestCase
     public function it_verify_with_idin()
     {
         $response = $this->buckaroo->method('idin')->verify([
-            'issuer' => 'BANKNL2Y'
+            'issuer' => 'BANKNL2Y',
         ]);
 
         $this->assertTrue($response->isPendingProcessing());
@@ -54,7 +54,7 @@ class iDinTest extends BuckarooTestCase
     public function it_login_with_idin()
     {
         $response = $this->buckaroo->method('idin')->login([
-            'issuer' => 'BANKNL2Y'
+            'issuer' => 'BANKNL2Y',
         ]);
 
         $this->assertTrue($response->isPendingProcessing());

@@ -39,7 +39,7 @@ class Response implements ArrayAccess, Arrayable
     public function __construct($response, $data)
     {
         $this->httpResponse = $response;
-        $this->data     = $data;
+        $this->data = $data;
     }
 
     /** Implement ArrayAccess */
@@ -78,10 +78,11 @@ class Response implements ArrayAccess, Arrayable
     public function __call($method, $args)
     {
         $prefix = substr($method, 0, 3);
-        $param  = substr($method, 3);
+        $param = substr($method, 3);
         // $arg    = isset($args[0]) ? $args[0] : null;
 
-        if ($prefix === 'get') {
+        if ($prefix === 'get')
+        {
             return $this->offsetGet($param);
         }
 

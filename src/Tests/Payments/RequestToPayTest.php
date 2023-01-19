@@ -47,8 +47,8 @@ class RequestToPayTest extends BuckarooTestCase
     {
         $response = $this->buckaroo->method('requesttopay')->refund([
             'amountCredit' => 10,
-            'invoice'       => 'testinvoice 123',
-            'originalTransactionKey' => '2D04704995B74D679AACC59F87XXXXXX'
+            'invoice' => 'testinvoice 123',
+            'originalTransactionKey' => '2D04704995B74D679AACC59F87XXXXXX',
         ]);
 
         $this->assertTrue($response->isFailed());

@@ -25,6 +25,6 @@ use Buckaroo\Models\Adapters\ServiceParametersKeysAdapter;
 class PayAdapter extends ServiceParametersKeysAdapter
 {
     protected array $keys = [
-        'country' => 'CustomerCountry'
+        'country' => 'CustomerCountry',
     ];
 }
