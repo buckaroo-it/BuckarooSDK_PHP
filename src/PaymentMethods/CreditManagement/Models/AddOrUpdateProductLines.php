@@ -46,9 +46,9 @@ class AddOrUpdateProductLines extends ServiceParameter
      * @var array|\string[][]
      */
     protected array $groupData = [
-        'articles'   => [
-            'groupType' => 'ProductLine'
-        ]
+        'articles' => [
+            'groupType' => 'ProductLine',
+        ],
     ];
 
     /**

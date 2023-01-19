@@ -129,26 +129,26 @@ class Invoice extends ServiceParameter
      * @var array|\string[][]
      */
     protected array $groupData = [
-        'articles'   => [
-            'groupType' => 'ProductLine'
+        'articles' => [
+            'groupType' => 'ProductLine',
         ],
-        'address'   => [
-            'groupType' => 'Address'
+        'address' => [
+            'groupType' => 'Address',
         ],
-        'company'   => [
-            'groupType' => 'Company'
+        'company' => [
+            'groupType' => 'Company',
         ],
-        'person'   => [
-            'groupType' => 'Person'
+        'person' => [
+            'groupType' => 'Person',
         ],
-        'debtor'   => [
-            'groupType' => 'Debtor'
+        'debtor' => [
+            'groupType' => 'Debtor',
         ],
-        'email'   => [
-            'groupType' => 'Email'
+        'email' => [
+            'groupType' => 'Email',
         ],
-        'phone'   => [
-            'groupType' => 'Phone'
+        'phone' => [
+            'groupType' => 'Phone',
         ],
     ];
 

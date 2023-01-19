@@ -183,7 +183,7 @@ abstract class PaymentMethod implements PaymentInterface
         $this->combinablePayment = $combinablePayment;
 
         $payload_data = array_filter($combinablePayment->request->data(), function ($key) {
-            return !in_array($key, ['Services']);
+            return ! in_array($key, ['Services']);
         }, ARRAY_FILTER_USE_KEY);
 
         foreach ($payload_data as $key => $value) {

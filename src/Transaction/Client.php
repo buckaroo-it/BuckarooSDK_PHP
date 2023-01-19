@@ -38,7 +38,7 @@ use Buckaroo\Transaction\Response\TransactionResponse;
 
 class Client
 {
-    private const METHOD_GET  = 'GET';
+    private const METHOD_GET = 'GET';
     private const METHOD_POST = 'POST';
 
     /**
@@ -60,7 +60,7 @@ class Client
     public function __construct(?Config $config)
     {
         $this->config = $config;
-        $this->httpClient =  new HttpClientGuzzle($config->getLogger());
+        $this->httpClient = new HttpClientGuzzle($config->getLogger());
     }
 
     /**
@@ -93,7 +93,7 @@ class Client
     {
         $headers = new DefaultHeader([
             'Content-Type: application/json; charset=utf-8',
-            'Accept: application/json'
+            'Accept: application/json',
         ]);
 
         $headers = new HmacHeader($headers, $this->config, $url, $data, $method);
@@ -203,7 +203,7 @@ class Client
             $this->config = $config;
         }
 
-        if (!$this->config) {
+        if (! $this->config) {
             throw new BuckarooException(
                 $this->logger,
                 "No config has been configured.

@@ -27,9 +27,9 @@ use Buckaroo\Models\Email;
 use Buckaroo\Models\Phone;
 use Buckaroo\Models\ServiceParameter;
 use Buckaroo\PaymentMethods\Afterpay\Models\Person;
-use Buckaroo\PaymentMethods\AfterpayDigiAccept\Service\ParameterKeys\PhoneAdapter;
 use Buckaroo\PaymentMethods\AfterpayDigiAccept\Service\ParameterKeys\AddressAdapter;
 use Buckaroo\PaymentMethods\AfterpayDigiAccept\Service\ParameterKeys\EmailAdapter;
+use Buckaroo\PaymentMethods\AfterpayDigiAccept\Service\ParameterKeys\PhoneAdapter;
 use Buckaroo\PaymentMethods\AfterpayDigiAccept\Service\ParameterKeys\RecipientAdapter;
 
 class Recipient extends ServiceParameter
@@ -128,7 +128,7 @@ class Recipient extends ServiceParameter
         $model = new Person($recipient);
 
         if (($recipient['companyName'] ?? null) ||
-            ( $recipient['chamberOfCommerce'] ?? null) ||
+            ($recipient['chamberOfCommerce'] ?? null) ||
             ($recipient['vatNumber'] ?? null)
         ) {
             $model = new Company($recipient);

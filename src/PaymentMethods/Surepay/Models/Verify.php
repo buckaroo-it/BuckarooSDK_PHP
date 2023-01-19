@@ -38,7 +38,7 @@ class Verify extends ServiceParameter
     public function bankAccount($bankAccount = null)
     {
         if (is_array($bankAccount)) {
-            $this->bankAccount =  new BankAccountAdapter(new BankAccount($bankAccount));
+            $this->bankAccount = new BankAccountAdapter(new BankAccount($bankAccount));
         }
 
         return $this->bankAccount;

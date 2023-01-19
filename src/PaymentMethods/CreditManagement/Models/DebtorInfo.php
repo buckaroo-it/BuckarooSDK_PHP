@@ -35,9 +35,9 @@ class DebtorInfo extends ServiceParameter
      * @var array|\string[][]
      */
     protected array $groupData = [
-        'debtor'   => [
-            'groupType' => 'Debtor'
-        ]
+        'debtor' => [
+            'groupType' => 'Debtor',
+        ],
     ];
 
     /**

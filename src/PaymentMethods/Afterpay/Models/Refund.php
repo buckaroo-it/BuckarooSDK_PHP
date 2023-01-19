@@ -34,9 +34,9 @@ class Refund extends ServiceParameter
      * @var array|\string[][]
      */
     protected array $groupData = [
-        'articles'   => [
-            'groupType' => 'Article'
-        ]
+        'articles' => [
+            'groupType' => 'Article',
+        ],
     ];
 
     /**

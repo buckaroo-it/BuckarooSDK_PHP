@@ -32,11 +32,11 @@ class SoftwareHeader extends TransactionHeader
         $headers = $this->transactionHeader->getHeaders();
 
         $headers[] = "Software: " .  json_encode([
-            "PlatformName"    => "SDK",
+            "PlatformName" => "SDK",
             "PlatformVersion" => '0.0.1',
-            "ModuleSupplier"  => "Buckaroo",
-            "ModuleName"      => "BuckarooPayments",
-            "ModuleVersion"   => '0.0.1',
+            "ModuleSupplier" => "Buckaroo",
+            "ModuleName" => "BuckarooPayments",
+            "ModuleVersion" => '0.0.1',
         ]);
 
         return $headers;

@@ -3,7 +3,6 @@
 namespace Buckaroo\PaymentMethods\KlarnaKP\Models;
 
 use Buckaroo\Models\Address;
-use Buckaroo\Models\Company;
 use Buckaroo\Models\Email;
 use Buckaroo\Models\Person;
 use Buckaroo\Models\Phone;
@@ -12,7 +11,6 @@ use Buckaroo\PaymentMethods\KlarnaKP\Service\ParameterKeys\AddressAdapter;
 use Buckaroo\PaymentMethods\KlarnaKP\Service\ParameterKeys\EmailAdapter;
 use Buckaroo\PaymentMethods\KlarnaKP\Service\ParameterKeys\PhoneAdapter;
 use Buckaroo\PaymentMethods\KlarnaKP\Service\ParameterKeys\RecipientAdapter;
-use Buckaroo\Resources\Constants\RecipientCategory;
 
 class Recipient extends ServiceParameter
 {
@@ -36,7 +34,7 @@ class Recipient extends ServiceParameter
     public function phone($phone = null)
     {
         if (is_array($phone)) {
-            $this->phone =  new PhoneAdapter(new Phone($phone), $this->type);
+            $this->phone = new PhoneAdapter(new Phone($phone), $this->type);
         }
 
         return $this->phone;
@@ -45,7 +43,7 @@ class Recipient extends ServiceParameter
     public function email($email = null)
     {
         if (is_string($email)) {
-            $this->email =  new EmailAdapter(new Email($email), $this->type);
+            $this->email = new EmailAdapter(new Email($email), $this->type);
         }
 
         return $this->email;
@@ -63,7 +61,7 @@ class Recipient extends ServiceParameter
     public function recipient($recipient = null)
     {
         if (is_array($recipient)) {
-            $this->recipient =  new RecipientAdapter(new Person($recipient), $this->type);
+            $this->recipient = new RecipientAdapter(new Person($recipient), $this->type);
         }
 
         return $this->recipient;

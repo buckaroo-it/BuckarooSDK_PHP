@@ -42,7 +42,7 @@ class Pay extends ServiceParameter
     public function customer($customer = null)
     {
         if (is_array($customer)) {
-            $this->customer =  new Person($customer);
+            $this->customer = new Person($customer);
         }
 
         return $this->customer;

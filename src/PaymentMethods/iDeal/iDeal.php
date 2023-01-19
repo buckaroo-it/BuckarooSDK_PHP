@@ -25,8 +25,8 @@ namespace Buckaroo\PaymentMethods\iDeal;
 use Buckaroo\Models\Model;
 use Buckaroo\PaymentMethods\iDeal\Models\Pay;
 use Buckaroo\PaymentMethods\PayablePaymentMethod;
-use Buckaroo\Transaction\Response\TransactionResponse;
 use Buckaroo\Transaction\Request\TransactionRequest;
+use Buckaroo\Transaction\Response\TransactionResponse;
 
 class iDeal extends PayablePaymentMethod
 {
@@ -80,6 +80,7 @@ class iDeal extends PayablePaymentMethod
                 }
             }
         }
+
         return $issuerList;
     }
 }

@@ -30,7 +30,7 @@ class DefaultLogger implements Subject, LoggerInterface
     /**
      * @var array
      */
-    protected array $observers  = [];
+    protected array $observers = [];
 
     /**
      *
@@ -103,7 +103,7 @@ class DefaultLogger implements Subject, LoggerInterface
      * @param array $context
      * @return void
      */
-    public function critical($message, array $context = array()): void
+    public function critical($message, array $context = []): void
     {
         $this->notify('critical', $message, $context);
     }
@@ -113,7 +113,7 @@ class DefaultLogger implements Subject, LoggerInterface
      * @param array $context
      * @return void
      */
-    public function error($message, array $context = array()): void
+    public function error($message, array $context = []): void
     {
         $this->notify('error', $message, $context);
     }
@@ -123,7 +123,7 @@ class DefaultLogger implements Subject, LoggerInterface
      * @param array $context
      * @return void
      */
-    public function warning($message, array $context = array()): void
+    public function warning($message, array $context = []): void
     {
         $this->notify('warning', $message, $context);
     }
@@ -133,7 +133,7 @@ class DefaultLogger implements Subject, LoggerInterface
      * @param array $context
      * @return void
      */
-    public function notice($message, array $context = array()): void
+    public function notice($message, array $context = []): void
     {
         $this->notify('notice', $message, $context);
     }
@@ -143,7 +143,7 @@ class DefaultLogger implements Subject, LoggerInterface
      * @param array $context
      * @return void
      */
-    public function info($message, array $context = array()): void
+    public function info($message, array $context = []): void
     {
         $this->notify('info', $message, $context);
     }
@@ -153,7 +153,7 @@ class DefaultLogger implements Subject, LoggerInterface
      * @param array $context
      * @return void
      */
-    public function debug($message, array $context = array()): void
+    public function debug($message, array $context = []): void
     {
         if ($_ENV['BPE_DEBUG'] ?? false) {
             $this->notify('debug', $message, $context);
@@ -166,7 +166,7 @@ class DefaultLogger implements Subject, LoggerInterface
      * @param array $context
      * @return void
      */
-    public function log($level, $message, array $context = array()): void
+    public function log($level, $message, array $context = []): void
     {
         $this->notify('log', $message, $context);
     }
@@ -177,7 +177,7 @@ class DefaultLogger implements Subject, LoggerInterface
      * @param array $context
      * @return $this
      */
-    public function notify(string $method, string $message, array $context = array())
+    public function notify(string $method, string $message, array $context = [])
     {
         foreach ($this->observers as $observer) {
             $observer->handle($method, $message, $context);

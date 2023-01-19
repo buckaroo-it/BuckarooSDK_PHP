@@ -12,15 +12,15 @@ $response = $buckaroo->method('trustly')->pay([
     'amountDebit' => 10,
     'invoice' => uniqid(),
     'country' => 'DE',
-    'customer'      => [
+    'customer' => [
         'firstName' => 'Test',
-        'lastName' => 'Aflever'
-    ]
+        'lastName' => 'Aflever',
+    ],
 ]);
 
 //Refund
 $response = $buckaroo->method('trustly')->refund([
     'amountCredit' => 10,
-    'invoice'       => 'testinvoice 123',
-    'originalTransactionKey' => '2D04704995B74D679AACC59F87XXXXXX'
+    'invoice' => 'testinvoice 123',
+    'originalTransactionKey' => '2D04704995B74D679AACC59F87XXXXXX',
 ]);

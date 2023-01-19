@@ -50,7 +50,7 @@ abstract class Hmac
                 $data = json_encode($data, JSON_UNESCAPED_UNICODE);
             }
 
-            $md5  = md5($data, true);
+            $md5 = md5($data, true);
 
             $this->base64Data = base64_encode($md5);
         }

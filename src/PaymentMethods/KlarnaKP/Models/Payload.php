@@ -43,9 +43,9 @@ class Payload extends ServiceParameter
     protected bool $shippingSameAsBilling = true;
 
     protected array $groupData = [
-        'articles'   => [
-            'groupType' => 'Article'
-        ]
+        'articles' => [
+            'groupType' => 'Article',
+        ],
     ];
 
     public function billing($billing = null)

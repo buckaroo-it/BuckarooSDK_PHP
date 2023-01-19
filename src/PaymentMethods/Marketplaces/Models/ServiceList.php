@@ -50,12 +50,12 @@ class ServiceList extends ServiceParameter
      * @var array|\string[][]
      */
     protected array $groupData = [
-        'marketplace'   => [
-            'groupType' => 'Marketplace'
+        'marketplace' => [
+            'groupType' => 'Marketplace',
         ],
-        'sellers'   => [
-            'groupType' => 'Seller'
-        ]
+        'sellers' => [
+            'groupType' => 'Seller',
+        ],
     ];
 
     /**

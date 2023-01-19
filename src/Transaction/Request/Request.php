@@ -88,8 +88,8 @@ class Request implements JsonSerializable, ArrayAccess, Arrayable
     public function __call($method, $args)
     {
         $prefix = substr($method, 0, 3);
-        $param  = substr($method, 3);
-        $arg    = isset($args[0]) ? $args[0] : null;
+        $param = substr($method, 3);
+        $arg = isset($args[0]) ? $args[0] : null;
 
         if ($prefix === 'set') {
             return $this->offsetSet($param, $arg);

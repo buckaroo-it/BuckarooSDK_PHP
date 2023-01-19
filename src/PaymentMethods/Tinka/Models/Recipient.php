@@ -25,8 +25,8 @@ use Buckaroo\Models\Email;
 use Buckaroo\Models\Person;
 use Buckaroo\Models\Phone;
 use Buckaroo\Models\ServiceParameter;
-use Buckaroo\PaymentMethods\Tinka\Service\ParameterKeys\CustomerAdapter;
 use Buckaroo\PaymentMethods\Tinka\Service\ParameterKeys\AddressAdapter;
+use Buckaroo\PaymentMethods\Tinka\Service\ParameterKeys\CustomerAdapter;
 use Buckaroo\PaymentMethods\Tinka\Service\ParameterKeys\PhoneAdapter;
 
 class Recipient extends ServiceParameter
@@ -111,7 +111,7 @@ class Recipient extends ServiceParameter
     public function email($email = null)
     {
         if (is_string($email)) {
-            $this->email =  new Email($email);
+            $this->email = new Email($email);
         }
 
         return $this->email;

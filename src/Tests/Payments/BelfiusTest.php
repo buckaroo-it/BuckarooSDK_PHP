@@ -46,7 +46,7 @@ class BelfiusTest extends BuckarooTestCase
         $response = $this->buckaroo->method('belfius')->refund([
             'amountCredit' => 10,
             'invoice' => '10000480',
-            'originalTransactionKey' => '0EF39AA94BD64FF38F1540DEB6XXXXXX'
+            'originalTransactionKey' => '0EF39AA94BD64FF38F1540DEB6XXXXXX',
         ]);
 
         $this->assertTrue($response->isFailed());

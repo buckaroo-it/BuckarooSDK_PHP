@@ -88,7 +88,7 @@ class Generator extends Hmac
             $this->config->websiteKey(),
             $hmac,
             $this->nonce,
-            $this->time
+            $this->time,
         ]);
     }
 }

@@ -26,8 +26,8 @@ class AddressAdapter extends ServiceAdapter
      * @var array|string[]
      */
     protected array $keys = [
-        'houseNumberAdditional'     => 'HouseNumberSuffix',
-        'zipcode'                   => 'PostalCode'
+        'houseNumberAdditional' => 'HouseNumberSuffix',
+        'zipcode' => 'PostalCode',
     ];
 
     /**

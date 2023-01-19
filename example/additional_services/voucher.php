@@ -20,9 +20,9 @@ $response = $buckaroo->method('buckaroovoucher')->create(
 //Pay
 $response = $buckaroo->method('buckaroovoucher')->pay(
     [
-        'amountDebit' =>'10',
+        'amountDebit' => '10',
         'invoice' => uniqid(),
-        'vouchercode' => 'vouchercode'
+        'vouchercode' => 'vouchercode',
     ]
 );
 
@@ -30,10 +30,10 @@ $response = $buckaroo->method('buckaroovoucher')->pay(
 //Pay
 $response = $buckaroo->method('buckaroovoucher')->payRemainder(
     [
-        'amountDebit' =>'10',
+        'amountDebit' => '10',
         'invoice' => uniqid(),
         'vouchercode' => 'vouchercode',
-        'originalTransactionKey' => '4E8BD922192746C3918BF4077CXXXXXX'
+        'originalTransactionKey' => '4E8BD922192746C3918BF4077CXXXXXX',
     ]
 );
 
@@ -43,20 +43,20 @@ $response = $buckaroo->method('buckaroovoucher')->refund(
     [
         'amountCredit' => 10,
         'invoice' => uniqid(),
-        'originalTransactionKey' => '4E8BD922192746C3918BF4077CXXXXXX'
+        'originalTransactionKey' => '4E8BD922192746C3918BF4077CXXXXXX',
     ]
 );
 
 //Get Balance
 $response = $buckaroo->method('buckaroovoucher')->getBalance(
     [
-        'vouchercode' => 'vouchercode'
+        'vouchercode' => 'vouchercode',
     ]
 );
 
 //Deactivate
 $response = $buckaroo->method('buckaroovoucher')->deactivate(
     [
-        'vouchercode' => 'vouchercode'
+        'vouchercode' => 'vouchercode',
     ]
 );

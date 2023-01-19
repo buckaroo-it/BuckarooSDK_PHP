@@ -38,9 +38,9 @@ class Pay extends ServiceParameter
      * @var array|\string[][]
      */
     protected array $groupData = [
-        'articles'   => [
-            'groupType' => 'Article'
-        ]
+        'articles' => [
+            'groupType' => 'Article',
+        ],
     ];
 
     /**
@@ -97,7 +97,7 @@ class Pay extends ServiceParameter
     public function billing($billing = null)
     {
         if (is_array($billing)) {
-            $this->billingRecipient =  new Recipient('Billing', $billing);
+            $this->billingRecipient = new Recipient('Billing', $billing);
             $this->shippingRecipient = new Recipient('Shipping', $billing);
         }
 

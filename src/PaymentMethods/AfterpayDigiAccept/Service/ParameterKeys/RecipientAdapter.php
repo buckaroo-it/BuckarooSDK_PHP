@@ -26,9 +26,9 @@ class RecipientAdapter extends ServiceAdapter
      * @var array|string[]
      */
     protected array $keys = [
-        'culture'               => 'Language',
-        'chamberOfCommerce'     => 'CompanyCOCRegistration',
-        'vatNumber'             => 'VatNumber'
+        'culture' => 'Language',
+        'chamberOfCommerce' => 'CompanyCOCRegistration',
+        'vatNumber' => 'VatNumber',
     ];
 
     /**

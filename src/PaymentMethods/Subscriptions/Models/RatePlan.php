@@ -69,7 +69,7 @@ class RatePlan extends ServiceParameter
     public function charge($charge = null)
     {
         if (is_array($charge)) {
-            $this->charge =  new Charge($charge);
+            $this->charge = new Charge($charge);
         }
 
         return $this->charge;

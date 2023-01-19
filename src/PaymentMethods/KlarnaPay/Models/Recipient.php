@@ -23,10 +23,10 @@ namespace Buckaroo\PaymentMethods\KlarnaPay\Models;
 use Buckaroo\Models\Address;
 use Buckaroo\Models\Company;
 use Buckaroo\Models\Email;
+use Buckaroo\Models\Interfaces\Recipient as RecipientInterface;
 use Buckaroo\Models\Person;
 use Buckaroo\Models\Phone;
 use Buckaroo\Models\ServiceParameter;
-use Buckaroo\Models\Interfaces\Recipient as RecipientInterface;
 use Buckaroo\PaymentMethods\KlarnaPay\Service\ParameterKeys\AddressAdapter;
 use Buckaroo\PaymentMethods\KlarnaPay\Service\ParameterKeys\PhoneAdapter;
 

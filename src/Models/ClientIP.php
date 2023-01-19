@@ -57,7 +57,7 @@ class ClientIP extends Model
      */
     private function setType(?int $type)
     {
-        $this->Type =  $type ?? IPProtocolVersion::getVersion($this->Address);
+        $this->Type = $type ?? IPProtocolVersion::getVersion($this->Address);
 
         return $this;
     }

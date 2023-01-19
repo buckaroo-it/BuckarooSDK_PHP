@@ -31,7 +31,7 @@ class TransactionRequest extends Request
      */
     public function __construct()
     {
-        $this->data['ClientUserAgent'] =  $_SERVER['HTTP_USER_AGENT'] ?? '';
+        $this->data['ClientUserAgent'] = $_SERVER['HTTP_USER_AGENT'] ?? '';
     }
 
     /**

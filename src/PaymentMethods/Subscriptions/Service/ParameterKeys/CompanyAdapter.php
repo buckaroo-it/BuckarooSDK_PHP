@@ -25,6 +25,6 @@ use Buckaroo\Models\Adapters\ServiceParametersKeysAdapter;
 class CompanyAdapter extends ServiceParametersKeysAdapter
 {
     protected array $keys = [
-        'companyName'               => 'Name'
+        'companyName' => 'Name',
     ];
 }

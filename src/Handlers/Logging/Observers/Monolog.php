@@ -14,7 +14,7 @@ class Monolog implements Observer
         $this->log->pushHandler(new StreamHandler('php://stdout', Logger::INFO));
     }
 
-    public function handle(string $method, string $message, array $context = array())
+    public function handle(string $method, string $message, array $context = [])
     {
         $this->log->$method($message, $context);
     }

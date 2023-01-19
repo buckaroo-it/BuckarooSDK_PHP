@@ -25,8 +25,8 @@ use Buckaroo\Models\Adapters\ServiceParametersKeysAdapter;
 class ArticleAdapter extends ServiceParametersKeysAdapter
 {
     protected array $keys = [
-        'identifier'    => 'ProductId',
-        'description'   => 'ProductName',
-        'price'         => 'PricePerUnit'
+        'identifier' => 'ProductId',
+        'description' => 'ProductName',
+        'price' => 'PricePerUnit',
     ];
 }

@@ -189,10 +189,10 @@ abstract class Config implements Loggable
      */
     private function filterNonUpdatableKeys($payload)
     {
-        $filter = array('websiteKey', 'secretKey');
+        $filter = ['websiteKey', 'secretKey'];
 
         return array_filter($payload, function ($k) use ($filter) {
-            return !in_array($k, $filter);
+            return ! in_array($k, $filter);
         }, ARRAY_FILTER_USE_KEY);
     }
 
@@ -202,7 +202,7 @@ abstract class Config implements Loggable
      */
     public function get(array $properties = [])
     {
-        $values = array();
+        $values = [];
 
         foreach ($properties as $property) {
             if (method_exists($this, $property)) {

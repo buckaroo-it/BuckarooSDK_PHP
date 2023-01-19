@@ -27,8 +27,8 @@ use Buckaroo\Models\Person;
 use Buckaroo\Models\Phone;
 use Buckaroo\Models\ServiceParameter;
 use Buckaroo\PaymentMethods\Billink\Models\Article;
-use Buckaroo\PaymentMethods\In3\Service\ParameterKeys\ArticleAdapter;
 use Buckaroo\PaymentMethods\In3\Service\ParameterKeys\AddressAdapter;
+use Buckaroo\PaymentMethods\In3\Service\ParameterKeys\ArticleAdapter;
 use Buckaroo\PaymentMethods\In3\Service\ParameterKeys\CompanyAdapter;
 use Buckaroo\PaymentMethods\In3\Service\ParameterKeys\PhoneAdapter;
 use Buckaroo\PaymentMethods\Traits\CountableGroupKey;
@@ -85,24 +85,24 @@ class Pay extends ServiceParameter
      * @var array|\string[][]
      */
     protected array $groupData = [
-        'articles'   => [
-            'groupType' => 'ProductLine'
+        'articles' => [
+            'groupType' => 'ProductLine',
         ],
-        'address'   => [
-            'groupType' => 'Address'
+        'address' => [
+            'groupType' => 'Address',
         ],
-        'customer'      => [
-            'groupType' => 'Person'
+        'customer' => [
+            'groupType' => 'Person',
         ],
-        'company'       => [
-            'groupType' => 'Company'
+        'company' => [
+            'groupType' => 'Company',
         ],
-        'phone'         => [
-            'groupType' => 'Phone'
+        'phone' => [
+            'groupType' => 'Phone',
         ],
-        'email'         => [
-            'groupType' => 'Email'
-        ]
+        'email' => [
+            'groupType' => 'Email',
+        ],
     ];
 
     /**

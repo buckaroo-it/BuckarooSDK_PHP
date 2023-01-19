@@ -74,7 +74,7 @@ class Recipient extends ServiceParameter
     public function recipient($recipient = null)
     {
         if (is_array($recipient)) {
-            $this->recipient =  $this->getRecipientObject($recipient);
+            $this->recipient = $this->getRecipientObject($recipient);
         }
 
         return $this->recipient;
@@ -100,7 +100,7 @@ class Recipient extends ServiceParameter
     public function phone($phone = null)
     {
         if (is_array($phone)) {
-            $this->phone =  new PhoneAdapter(new Phone($phone));
+            $this->phone = new PhoneAdapter(new Phone($phone));
         }
 
         return $this->phone;
@@ -113,7 +113,7 @@ class Recipient extends ServiceParameter
     public function email($email = null)
     {
         if (is_string($email)) {
-            $this->email =  new Email($email);
+            $this->email = new Email($email);
         }
 
         return $this->email;

@@ -126,26 +126,26 @@ class Subscription extends ServiceParameter
      * @var array|\string[][]
      */
     protected array $groupData = [
-        'debtor'   => [
-            'groupType' => 'Debtor'
+        'debtor' => [
+            'groupType' => 'Debtor',
         ],
-        'person'   => [
-            'groupType' => 'Person'
+        'person' => [
+            'groupType' => 'Person',
         ],
-        'email'     => [
-            'groupType' => 'Email'
+        'email' => [
+            'groupType' => 'Email',
         ],
-        'address'     => [
-            'groupType' => 'Address'
+        'address' => [
+            'groupType' => 'Address',
         ],
-        'addRatePlan'   => [
-            'groupType' => 'AddRatePlan'
+        'addRatePlan' => [
+            'groupType' => 'AddRatePlan',
         ],
-        'updateRatePlan'   => [
-            'groupType' => 'UpdateRatePlan'
+        'updateRatePlan' => [
+            'groupType' => 'UpdateRatePlan',
         ],
-        'disableRatePlan'   => [
-            'groupType' => 'DisableRatePlan'
+        'disableRatePlan' => [
+            'groupType' => 'DisableRatePlan',
         ],
     ];
 

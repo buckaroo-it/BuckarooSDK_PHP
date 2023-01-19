@@ -56,6 +56,7 @@ class CultureHeader extends TransactionHeader
             case 'de':
                 return 'de-DE';
         }
+
         return 'en-GB';
     }
 }

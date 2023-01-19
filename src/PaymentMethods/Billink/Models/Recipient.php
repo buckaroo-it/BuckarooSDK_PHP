@@ -23,10 +23,10 @@ namespace Buckaroo\PaymentMethods\Billink\Models;
 use Buckaroo\Models\Address;
 use Buckaroo\Models\Company;
 use Buckaroo\Models\Email;
+use Buckaroo\Models\Interfaces\Recipient as RecipientInterface;
 use Buckaroo\Models\Person;
 use Buckaroo\Models\Phone;
 use Buckaroo\Models\ServiceParameter;
-use Buckaroo\Models\Interfaces\Recipient as RecipientInterface;
 use Buckaroo\PaymentMethods\Billink\Service\ParameterKeys\AddressAdapter;
 use Buckaroo\PaymentMethods\Billink\Service\ParameterKeys\PhoneAdapter;
 use Buckaroo\PaymentMethods\Billink\Service\ParameterKeys\RecipientAdapter;
@@ -73,7 +73,7 @@ class Recipient extends ServiceParameter
     public function recipient($recipient = null)
     {
         if (is_array($recipient)) {
-            $this->recipient =  $this->getRecipientObject($recipient);
+            $this->recipient = $this->getRecipientObject($recipient);
         }
 
         return $this->recipient;

@@ -33,11 +33,11 @@ class CreditClickTest extends BuckarooTestCase
         $response = $this->buckaroo->method('creditclick')->pay([
             'amountDebit' => 10,
             'invoice' => uniqid(),
-            'customer'      => [
+            'customer' => [
                 'firstName' => 'Test',
                 'lastName' => 'Aflever',
             ],
-            'email'         => 't.tester@test.nl'
+            'email' => 't.tester@test.nl',
         ]);
 
         $this->assertTrue($response->isPendingProcessing());
@@ -49,11 +49,11 @@ class CreditClickTest extends BuckarooTestCase
     public function it_creates_a_creditclick_refund()
     {
         $response = $this->buckaroo->method('creditclick')->refund([
-            'amountCredit'              => 10,
-            'invoice'                   => 'testinvoice 123',
-            'description'               => 'refund',
-            'originalTransactionKey'    => '2D04704995B74D679AACC59F87XXXXXX',
-            'refundreason'              => 'RequestedByCustomer'
+            'amountCredit' => 10,
+            'invoice' => 'testinvoice 123',
+            'description' => 'refund',
+            'originalTransactionKey' => '2D04704995B74D679AACC59F87XXXXXX',
+            'refundreason' => 'RequestedByCustomer',
         ]);
 
         $this->assertTrue($response->isFailed());

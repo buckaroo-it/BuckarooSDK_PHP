@@ -28,7 +28,6 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
-use Psr\Log\LoggerInterface;
 
 class HttpClientGuzzle extends HttpClientAbstract
 {
@@ -48,7 +47,7 @@ class HttpClientGuzzle extends HttpClientAbstract
 
         $this->httpClient = new Client([
             RequestOptions::TIMEOUT => self::TIMEOUT,
-            RequestOptions::CONNECT_TIMEOUT => self::CONNECT_TIMEOUT
+            RequestOptions::CONNECT_TIMEOUT => self::CONNECT_TIMEOUT,
         ]);
     }
 
@@ -80,9 +79,9 @@ class HttpClientGuzzle extends HttpClientAbstract
 
         $result = $this->getDecodedResult($response, $result);
 
-        return array(
+        return [
             $response,
-            $result
-        );
+            $result,
+        ];
     }
 }

@@ -74,7 +74,7 @@ abstract class Model implements Arrayable
     public function setProperties(?array $data)
     {
         if ($data) {
-            foreach ($data ?? array() as $property => $value) {
+            foreach ($data ?? [] as $property => $value) {
                 $this->$property = $value;
             }
         }
