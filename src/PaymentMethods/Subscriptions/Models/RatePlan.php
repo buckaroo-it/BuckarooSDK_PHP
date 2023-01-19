@@ -68,7 +68,8 @@ class RatePlan extends ServiceParameter
      */
     public function charge($charge = null)
     {
-        if (is_array($charge)) {
+        if (is_array($charge))
+        {
             $this->charge = new Charge($charge);
         }
 
@@ -81,7 +82,8 @@ class RatePlan extends ServiceParameter
      */
     public function getGroupType(string $key): ?string
     {
-        if ($key == 'charge') {
+        if ($key == 'charge')
+        {
             return $this->type . 'RatePlanCharge';
         }
 

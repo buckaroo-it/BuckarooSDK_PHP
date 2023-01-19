@@ -65,17 +65,23 @@ class iDeal extends PayablePaymentMethod
     {
         $request = new TransactionRequest;
 
-        try {
+        try
+        {
             $response = $this->client->specification($request, 'ideal', 2);
-        } catch (BuckarooException $e) {
+        }
+        catch (BuckarooException $e)
+        {
             return false;
         }
 
         $issuerList = [];
-        if (isset($response['Actions']['0']['RequestParameters'][0]['ListItemDescriptions'])) {
+        if (isset($response['Actions']['0']['RequestParameters'][0]['ListItemDescriptions']))
+        {
             $issuersData = $response['Actions']['0']['RequestParameters'][0]['ListItemDescriptions'];
-            if (count($issuersData) > 0) {
-                foreach ($issuersData as $issuer) {
+            if (count($issuersData) > 0)
+            {
+                foreach ($issuersData as $issuer)
+                {
                     $issuerList[] = ['id' => $issuer['Value'], 'name' => $issuer['Description']];
                 }
             }

@@ -138,7 +138,8 @@ class CreditCard extends PayablePaymentMethod implements Combinable
      */
     public function paymentName(): string
     {
-        if (isset($this->payload['name'])) {
+        if (isset($this->payload['name']))
+        {
             return $this->payload['name'];
         }
 

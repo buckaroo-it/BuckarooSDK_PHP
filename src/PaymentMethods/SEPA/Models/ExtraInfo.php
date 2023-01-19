@@ -53,7 +53,8 @@ class ExtraInfo extends Pay
      */
     public function address($address = null)
     {
-        if (is_array($address)) {
+        if (is_array($address))
+        {
             $this->address = new AddressAdapter(new Address($address));
         }
 

@@ -148,8 +148,10 @@ class PaymentMethodFactory
      */
     public function getPaymentMethod(): PaymentMethod
     {
-        foreach (self::$payments as $class => $alias) {
-            if (in_array($this->paymentMethod, $alias)) {
+        foreach (self::$payments as $class => $alias)
+        {
+            if (in_array($this->paymentMethod, $alias))
+            {
                 return new $class($this->client, $this->paymentMethod);
             }
         }

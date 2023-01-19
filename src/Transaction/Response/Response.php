@@ -81,7 +81,8 @@ class Response implements ArrayAccess, Arrayable
         $param = substr($method, 3);
         // $arg    = isset($args[0]) ? $args[0] : null;
 
-        if ($prefix === 'get') {
+        if ($prefix === 'get')
+        {
             return $this->offsetGet($param);
         }
 

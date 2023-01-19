@@ -183,7 +183,8 @@ class AfterpayTest extends BuckarooTestCase
             ],
         ];
 
-        if ($additional) {
+        if ($additional)
+        {
             return array_merge($additional, $payload);
         }
 

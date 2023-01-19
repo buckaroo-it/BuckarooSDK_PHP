@@ -37,7 +37,8 @@ class RecipientAdapter extends ServiceAdapter
      */
     public function serviceParameterKeyOf($propertyName): string
     {
-        if (in_array($propertyName, ['companyName', 'chamberOfCommerce', 'vatNumber'])) {
+        if (in_array($propertyName, ['companyName', 'chamberOfCommerce', 'vatNumber']))
+        {
             return (isset($this->keys[$propertyName]))? $this->keys[$propertyName] : ucfirst($propertyName);
         }
 

@@ -166,7 +166,8 @@ class AfterpayDigiAcceptTest extends BuckarooTestCase
             ],
         ];
 
-        if ($additionalParameters) {
+        if ($additionalParameters)
+        {
             $payload = array_merge($payload, $additionalParameters);
         }
 

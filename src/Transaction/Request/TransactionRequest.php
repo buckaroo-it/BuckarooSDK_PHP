@@ -40,7 +40,8 @@ class TransactionRequest extends Request
      */
     public function setPayload(Model $model)
     {
-        foreach ($model->toArray() as $key => $value) {
+        foreach ($model->toArray() as $key => $value)
+        {
             $this->data[$model->serviceParameterKeyOf($key)] = $value;
         }
 
@@ -82,8 +83,10 @@ class TransactionRequest extends Request
      */
     public function toArray(): array
     {
-        foreach ($this->data as $key => $value) {
-            if (is_a($value, Arrayable::class)) {
+        foreach ($this->data as $key => $value)
+        {
+            if (is_a($value, Arrayable::class))
+            {
                 $this->data[$key] = $value->toArray();
             }
         }

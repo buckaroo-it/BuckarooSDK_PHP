@@ -66,14 +66,17 @@ class HttpClientGuzzle extends HttpClientAbstract
 
         $request = new Request($method, $url, $headers, $data);
 
-        try {
+        try
+        {
             $response = $this->httpClient->send($request, ['http_errors' => false]);
 
             $result = (string) $response->getBody();
 
             $this->logger->info('RESPONSE HEADERS: ' . json_encode($response->getHeaders()));
             $this->logger->info('RESPONSE BODY: ' . $response->getBody());
-        } catch (GuzzleException $e) {
+        }
+        catch (GuzzleException $e)
+        {
             throw new TransferException($this->logger, "Transfer failed", 0, $e);
         }
 

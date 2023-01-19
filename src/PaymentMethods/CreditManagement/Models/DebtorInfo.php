@@ -46,7 +46,8 @@ class DebtorInfo extends ServiceParameter
      */
     public function debtor($debtor = null)
     {
-        if (is_array($debtor)) {
+        if (is_array($debtor))
+        {
             $this->debtor = new DebtorInfoAdapter(new Debtor($debtor));
         }
 

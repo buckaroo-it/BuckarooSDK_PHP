@@ -63,8 +63,10 @@ class ModelParameters extends ServiceListParameter
      */
     public function data(): ServiceList
     {
-        foreach ($this->model->toArray() as $key => $value) {
-            if (! is_array($value)) {
+        foreach ($this->model->toArray() as $key => $value)
+        {
+            if (! is_array($value))
+            {
                 $this->appendParameter(
                     $this->groupKey($key),
                     $this->groupType($key),
@@ -83,7 +85,8 @@ class ModelParameters extends ServiceListParameter
      */
     private function groupKey($key)
     {
-        if ($this->model instanceof ServiceParameter && ! $this->groupKey) {
+        if ($this->model instanceof ServiceParameter && ! $this->groupKey)
+        {
             return $this->model->getGroupKey($key);
         }
 
@@ -96,7 +99,8 @@ class ModelParameters extends ServiceListParameter
      */
     private function groupType($key)
     {
-        if ($this->model instanceof ServiceParameter && ! $this->groupType) {
+        if ($this->model instanceof ServiceParameter && ! $this->groupType)
+        {
             return $this->model->getGroupType($key);
         }
 

@@ -73,7 +73,8 @@ class Recipient extends ServiceParameter
      */
     public function recipient($recipient = null)
     {
-        if (is_array($recipient)) {
+        if (is_array($recipient))
+        {
             $this->recipient = $this->getRecipientObject($recipient);
         }
 
@@ -86,7 +87,8 @@ class Recipient extends ServiceParameter
      */
     public function address($address = null)
     {
-        if (is_array($address)) {
+        if (is_array($address))
+        {
             $this->address = new AddressAdapter(new Address($address));
         }
 
@@ -99,7 +101,8 @@ class Recipient extends ServiceParameter
      */
     public function phone($phone = null)
     {
-        if (is_array($phone)) {
+        if (is_array($phone))
+        {
             $this->phone = new PhoneAdapter(new Phone($phone));
         }
 
@@ -112,7 +115,8 @@ class Recipient extends ServiceParameter
      */
     public function email($email = null)
     {
-        if (is_string($email)) {
+        if (is_string($email))
+        {
             $this->email = new Email($email);
         }
 
@@ -126,7 +130,8 @@ class Recipient extends ServiceParameter
      */
     private function getRecipientObject(array $recipient) : RecipientInterface
     {
-        switch ($recipient['category']) {
+        switch ($recipient['category'])
+        {
             case RecipientCategory::COMPANY:
                 return new RecipientAdapter(new Company($recipient));
             case RecipientCategory::PERSON:

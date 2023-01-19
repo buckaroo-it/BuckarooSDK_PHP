@@ -72,7 +72,8 @@ class ClientIP extends Model
         /**
          * Get the forwarded IP if it exists
          */
-        if (isset($headers['X-Forwarded-For']) && filter_var($headers['X-Forwarded-For'], FILTER_VALIDATE_IP)) {
+        if (isset($headers['X-Forwarded-For']) && filter_var($headers['X-Forwarded-For'], FILTER_VALIDATE_IP))
+        {
             return $headers['X-Forwarded-For'];
         }
 
@@ -82,7 +83,8 @@ class ClientIP extends Model
             return $headers['HTTP_X_FORWARDED_FOR'];
         }
 
-        if (isset($_SERVER['REMOTE_ADDR']) && filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP)) {
+        if (isset($_SERVER['REMOTE_ADDR']) && filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP))
+        {
             return $_SERVER['REMOTE_ADDR'];
         }
 

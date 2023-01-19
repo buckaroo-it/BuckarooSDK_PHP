@@ -50,7 +50,8 @@ class CultureHeader extends TransactionHeader
      */
     public function getLocale(): string
     {
-        switch ($this->locale) {
+        switch ($this->locale)
+        {
             case 'nl':
                 return 'nl-NL';
             case 'de':

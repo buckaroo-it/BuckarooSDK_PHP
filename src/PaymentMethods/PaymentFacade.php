@@ -125,15 +125,18 @@ class PaymentFacade
      */
     public function combine($combinablePayment)
     {
-        if (is_array($combinablePayment)) {
-            foreach ($combinablePayment as $combinable_payment) {
+        if (is_array($combinablePayment))
+        {
+            foreach ($combinablePayment as $combinable_payment)
+            {
                 $this->combine($combinable_payment);
             }
 
             return $this;
         }
 
-        if ($combinablePayment instanceof Combinable) {
+        if ($combinablePayment instanceof Combinable)
+        {
             $this->paymentMethod->combinePayment($combinablePayment);
         }
 
@@ -156,7 +159,8 @@ class PaymentFacade
      */
     public function __call(string $name, array $arguments)
     {
-        if (method_exists($this->paymentMethod, $name)) {
+        if (method_exists($this->paymentMethod, $name))
+        {
             $this->paymentMethod->setPayload((new PayloadService($arguments[0] ?? []))->toArray());
 
             return $this->paymentMethod->$name();

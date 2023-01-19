@@ -25,6 +25,12 @@ return (new PhpCsFixer\Config())
         'blank_line_before_statement' => [
             'statements' => ['break', 'continue', 'declare', 'return', 'throw', 'try'],
         ],
+        'braces' => [
+            'allow_single_line_closure' => false,
+            'position_after_functions_and_oop_constructs' => 'next',
+            'position_after_anonymous_constructs' => 'next',
+            'position_after_control_structures' => 'next',
+        ],
         'phpdoc_single_line_var_spacing' => true,
         'phpdoc_var_without_name' => true,
         'method_argument_space' => [
