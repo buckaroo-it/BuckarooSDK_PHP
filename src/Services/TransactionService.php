@@ -32,7 +32,7 @@ class TransactionService
     }
 
     /**
-     * @return Response
+     * @return TransactionResponse
      * @throws \Buckaroo\Exceptions\BuckarooException
      */
     public function status(): TransactionResponse
