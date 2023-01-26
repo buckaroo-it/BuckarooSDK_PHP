@@ -35,7 +35,7 @@ class TransactionService
      * @return Response
      * @throws \Buckaroo\Exceptions\BuckarooException
      */
-    public function status(): Response
+    public function status(): TransactionResponse
     {
         return $this->client->get(
             TransactionResponse::class,
