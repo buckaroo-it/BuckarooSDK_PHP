@@ -4,6 +4,7 @@ namespace Buckaroo\Services;
 
 use Buckaroo\Transaction\Client;
 use Buckaroo\Transaction\Response\Response;
+use Buckaroo\Transaction\Response\TransactionResponse;
 
 class TransactionService
 {
@@ -37,7 +38,7 @@ class TransactionService
     public function status(): Response
     {
         return $this->client->get(
-            Response::class,
+            TransactionResponse::class,
             $this->client->getEndpoint('json/Transaction/Status/' . $this->transactionKey)
         );
     }
