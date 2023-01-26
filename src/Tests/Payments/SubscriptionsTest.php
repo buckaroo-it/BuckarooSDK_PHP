@@ -32,9 +32,9 @@ class SubscriptionsTest extends BuckarooTestCase
     public function it_creates_a_subscription()
     {
         $response = $this->buckaroo->method('subscriptions')->create([
-            'rate_plans' => [
+            'ratePlans' => [
                 'add' => [
-                    'startDate' => '2022-01-01',
+                    'startDate' => '2023-01-01',
                     'ratePlanCode' => 'xxxxxx',
                 ],
             ],
@@ -54,11 +54,12 @@ class SubscriptionsTest extends BuckarooTestCase
     public function it_creates_a_combined_subscription()
     {
         $subscriptions = $this->buckaroo->method('subscriptions')->manually()->createCombined([
+            'pushURL' => 'https://buckaroo.nextto.dev/push',
             'includeTransaction' => false,
             'transactionVatPercentage' => 5,
             'configurationCode' => 'gfyh9fe4',
             'email' => 'test@buckaroo.nl',
-            'rate_plans' => [
+            'ratePlans' => [
                 'add' => [
                     'startDate' => '2033-01-01',
                     'ratePlanCode' => '9863hdcj',
@@ -99,6 +100,7 @@ class SubscriptionsTest extends BuckarooTestCase
             'amountDebit' => 10.10,
             'issuer' => 'ABNANL2A',
         ]);
+
         $this->assertTrue($response->isPendingProcessing());
     }
 
@@ -111,7 +113,7 @@ class SubscriptionsTest extends BuckarooTestCase
         $response = $this->buckaroo->method('subscriptions')->update([
             'subscriptionGuid' => 'FC512FC9CC3A485D8CF3D1804FF6xxxx',
             'configurationCode' => '9wqe32ew',
-            'rate_plans' => [
+            'ratePlans' => [
                 'update' => [
                     'ratePlanGuid' => 'F075470B1BB24B9291943A888A2Fxxxx',
                     'startDate' => '2022-01-01',
