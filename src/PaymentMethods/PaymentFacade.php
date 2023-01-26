@@ -67,6 +67,7 @@ use Buckaroo\Transaction\Response\TransactionResponse;
  * @method TransactionResponse modifyMandate(array $data)
  * @method TransactionResponse cancelMandate(array $data)
  * @method TransactionResponse payRemainder(array $data)
+ * @method TransactionResponse payRemainderEncrypted(array $data)
  * @method TransactionResponse generate(array $data)
  * @method TransactionResponse identify(array $data)
  * @method TransactionResponse verify(array $data)
