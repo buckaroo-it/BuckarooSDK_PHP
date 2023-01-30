@@ -26,9 +26,9 @@ class RecipientAdapter extends ServiceAdapter
      * @var array|string[]
      */
     protected array $keys = [
-        'culture'               => 'Language',
-        'chamberOfCommerce'     => 'CompanyCOCRegistration',
-        'vatNumber'             => 'VatNumber'
+        'culture' => 'Language',
+        'chamberOfCommerce' => 'CompanyCOCRegistration',
+        'vatNumber' => 'VatNumber',
     ];
 
     /**
@@ -37,7 +37,7 @@ class RecipientAdapter extends ServiceAdapter
      */
     public function serviceParameterKeyOf($propertyName): string
     {
-        if(in_array($propertyName, ['companyName', 'chamberOfCommerce', 'vatNumber']))
+        if (in_array($propertyName, ['companyName', 'chamberOfCommerce', 'vatNumber']))
         {
             return (isset($this->keys[$propertyName]))? $this->keys[$propertyName] : ucfirst($propertyName);
         }

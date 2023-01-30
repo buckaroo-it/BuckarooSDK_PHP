@@ -27,10 +27,8 @@ class ClientIP extends Model
     /**
      * @var
      */
-    /**
-     * @var
-     */
-    protected $Type, $Address;
+    protected $Type;
+    protected $Address;
 
     /**
      * @param string|null $ip
@@ -59,7 +57,7 @@ class ClientIP extends Model
      */
     private function setType(?int $type)
     {
-        $this->Type =  $type ?? IPProtocolVersion::getVersion($this->Address);
+        $this->Type = $type ?? IPProtocolVersion::getVersion($this->Address);
 
         return $this;
     }
@@ -74,15 +72,19 @@ class ClientIP extends Model
         /**
          * Get the forwarded IP if it exists
          */
-        if (isset($headers['X-Forwarded-For']) && filter_var($headers['X-Forwarded-For'], FILTER_VALIDATE_IP)) {
+        if (isset($headers['X-Forwarded-For']) && filter_var($headers['X-Forwarded-For'], FILTER_VALIDATE_IP))
+        {
             return $headers['X-Forwarded-For'];
         }
 
-        if (isset($headers['HTTP_X_FORWARDED_FOR']) && filter_var($headers['HTTP_X_FORWARDED_FOR'], FILTER_VALIDATE_IP)) {
+        if (isset($headers['HTTP_X_FORWARDED_FOR']) &&
+               filter_var($headers['HTTP_X_FORWARDED_FOR'], FILTER_VALIDATE_IP)
+        ) {
             return $headers['HTTP_X_FORWARDED_FOR'];
         }
 
-        if (isset($_SERVER['REMOTE_ADDR']) && filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP)) {
+        if (isset($_SERVER['REMOTE_ADDR']) && filter_var($_SERVER['REMOTE_ADDR'], FILTER_VALIDATE_IP))
+        {
             return $_SERVER['REMOTE_ADDR'];
         }
 

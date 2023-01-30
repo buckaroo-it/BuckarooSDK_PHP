@@ -33,9 +33,9 @@ class ServiceParameter extends Model
      */
     public function setProperties(?array $data)
     {
-        foreach($data ?? array() as $property => $value)
+        foreach ($data ?? [] as $property => $value)
         {
-            if(method_exists($this, $property))
+            if (method_exists($this, $property))
             {
                 $this->$property($value);
 

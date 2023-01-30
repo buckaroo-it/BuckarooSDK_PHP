@@ -28,7 +28,6 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
-use Psr\Log\LoggerInterface;
 
 class HttpClientGuzzle extends HttpClientAbstract
 {
@@ -48,7 +47,7 @@ class HttpClientGuzzle extends HttpClientAbstract
 
         $this->httpClient = new Client([
             RequestOptions::TIMEOUT => self::TIMEOUT,
-            RequestOptions::CONNECT_TIMEOUT => self::CONNECT_TIMEOUT
+            RequestOptions::CONNECT_TIMEOUT => self::CONNECT_TIMEOUT,
         ]);
     }
 
@@ -67,23 +66,25 @@ class HttpClientGuzzle extends HttpClientAbstract
 
         $request = new Request($method, $url, $headers, $data);
 
-        try {
+        try
+        {
             $response = $this->httpClient->send($request, ['http_errors' => false]);
 
             $result = (string) $response->getBody();
 
             $this->logger->info('RESPONSE HEADERS: ' . json_encode($response->getHeaders()));
             $this->logger->info('RESPONSE BODY: ' . $response->getBody());
-
-        } catch (GuzzleException $e) {
+        }
+        catch (GuzzleException $e)
+        {
             throw new TransferException($this->logger, "Transfer failed", 0, $e);
         }
 
         $result = $this->getDecodedResult($response, $result);
 
-        return array(
+        return [
             $response,
-            $result
-        );
+            $result,
+        ];
     }
 }

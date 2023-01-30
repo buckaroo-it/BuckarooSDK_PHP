@@ -76,7 +76,11 @@ class Generator extends Hmac
      */
     public function generate()
     {
-        $hashString = $this->config->websiteKey() . $this->method . $this->uri . $this->time . $this->nonce . $this->base64Data;
+        $hashString = $this->config->websiteKey() .
+            $this->method . $this->uri .
+            $this->time . $this->nonce .
+            $this->base64Data;
+
         $hash = hash_hmac('sha256', $hashString, $this->config->secretKey(), true);
         $hmac = base64_encode($hash);
 
@@ -84,7 +88,7 @@ class Generator extends Hmac
             $this->config->websiteKey(),
             $hmac,
             $this->nonce,
-            $this->time
+            $this->time,
         ]);
     }
 }

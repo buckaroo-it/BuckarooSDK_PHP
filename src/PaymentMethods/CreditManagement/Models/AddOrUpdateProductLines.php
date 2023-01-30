@@ -46,9 +46,9 @@ class AddOrUpdateProductLines extends ServiceParameter
      * @var array|\string[][]
      */
     protected array $groupData = [
-        'articles'   => [
-            'groupType' => 'ProductLine'
-        ]
+        'articles' => [
+            'groupType' => 'ProductLine',
+        ],
     ];
 
     /**
@@ -57,9 +57,9 @@ class AddOrUpdateProductLines extends ServiceParameter
      */
     public function articles(?array $articles = null)
     {
-        if(is_array($articles))
+        if (is_array($articles))
         {
-            foreach($articles as $article)
+            foreach ($articles as $article)
             {
                 $this->articles[] = new ArticleAdapter(new Article($article));
             }

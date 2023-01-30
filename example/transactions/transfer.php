@@ -19,13 +19,13 @@ $response = $buckaroo->method('transfer')->pay([
     'customer' => [
         'gender' => Gender::MALE,
         'firstName' => 'John',
-        'lastName' => 'Smith'
-    ]
+        'lastName' => 'Smith',
+    ],
 ]);
 
 //Refund
 $response = $buckaroo->method('transfer')->refund([
-    'invoice'   => '', //Set invoice number of the transaction to refund
+    'invoice' => '', //Set invoice number of the transaction to refund
     'originalTransactionKey' => '', //Set transaction key of the transaction to refund
-    'amountCredit' => 10.10
+    'amountCredit' => 10.10,
 ]);

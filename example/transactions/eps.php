@@ -9,13 +9,13 @@ $buckaroo = new BuckarooClient($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']
 //Also accepts json
 //Pay
 $response = $buckaroo->method('eps')->pay([
-    'invoice'     => uniqid(),
-    'amountDebit' => 10.10
+    'invoice' => uniqid(),
+    'amountDebit' => 10.10,
 ]);
 
 //Refund
 $response = $buckaroo->method('eps')->refund([
-    'invoice'   => '', //Set invoice number of the transaction to refund
+    'invoice' => '', //Set invoice number of the transaction to refund
     'originalTransactionKey' => '', //Set transaction key of the transaction to refund
-    'amountCredit' => 10.10
+    'amountCredit' => 10.10,
 ]);

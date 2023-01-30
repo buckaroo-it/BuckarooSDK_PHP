@@ -47,38 +47,38 @@ class Debtor extends Invoice
      * @var array|\string[][]
      */
     protected array $groupData = [
-        'address'   => [
-            'groupType' => 'Address'
+        'address' => [
+            'groupType' => 'Address',
         ],
-        'company'   => [
-            'groupType' => 'Company'
+        'company' => [
+            'groupType' => 'Company',
         ],
-        'person'   => [
-            'groupType' => 'Person'
+        'person' => [
+            'groupType' => 'Person',
         ],
-        'debtor'   => [
-            'groupType' => 'Debtor'
+        'debtor' => [
+            'groupType' => 'Debtor',
         ],
-        'email'   => [
-            'groupType' => 'Email'
+        'email' => [
+            'groupType' => 'Email',
         ],
-        'phone'   => [
-            'groupType' => 'Phone'
+        'phone' => [
+            'groupType' => 'Phone',
         ],
-        'addressUnreachable'   => [
-            'groupType' => 'Address'
+        'addressUnreachable' => [
+            'groupType' => 'Address',
         ],
-        'emailUnreachable'   => [
-            'groupType' => 'Email'
+        'emailUnreachable' => [
+            'groupType' => 'Email',
         ],
-        'mobileUnreachable'   => [
-            'groupType' => 'Phone'
+        'mobileUnreachable' => [
+            'groupType' => 'Phone',
         ],
-        'landlineUnreachable'   => [
-            'groupType' => 'Phone'
+        'landlineUnreachable' => [
+            'groupType' => 'Phone',
         ],
-        'faxUnreachable'   => [
-            'groupType' => 'Phone'
+        'faxUnreachable' => [
+            'groupType' => 'Phone',
         ],
     ];
 }

@@ -62,7 +62,7 @@ class ApplepayTest extends BuckarooTestCase
         $response = $this->buckaroo->method('applepay')->refund([
             'amountCredit' => 10,
             'invoice' => '10000480',
-            'originalTransactionKey' => '9AA4C81A08A84FA7B68E6A6A6291XXXX'
+            'originalTransactionKey' => '9AA4C81A08A84FA7B68E6A6A6291XXXX',
         ]);
 
         $this->assertTrue($response->isFailed());

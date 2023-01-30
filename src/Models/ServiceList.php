@@ -20,7 +20,9 @@
 
 namespace Buckaroo\Models;
 
-use Buckaroo\Services\ServiceListParameters\{DefaultParameters, ModelParameters, ServiceListParameter};
+use Buckaroo\Services\ServiceListParameters\DefaultParameters;
+use Buckaroo\Services\ServiceListParameters\ModelParameters;
+use Buckaroo\Services\ServiceListParameters\ServiceListParameter;
 
 class ServiceList extends Model
 {
@@ -59,7 +61,7 @@ class ServiceList extends Model
 
         $this->parameterService = new DefaultParameters($this);
 
-        if($model)
+        if ($model)
         {
             $this->decorateParameters($model);
             $this->parameterService->data();
@@ -84,9 +86,9 @@ class ServiceList extends Model
     public function appendParameter($value, $key = null)
     {
         /* Check value pass multiple, iterate through it*/
-        if(is_array($value) && is_array(current($value)))
+        if (is_array($value) && is_array(current($value)))
         {
-            foreach($value as $singleValue)
+            foreach ($value as $singleValue)
             {
                 $this->appendParameter($singleValue, $key);
             }
@@ -94,7 +96,7 @@ class ServiceList extends Model
             return $this;
         }
 
-        if($key)
+        if ($key)
         {
             $this->parameters[$key] = $value;
 
@@ -129,9 +131,9 @@ class ServiceList extends Model
      */
     protected function iterateThroughObject(Model $model, array $array, ?string $keyName = null)
     {
-        foreach($array as $key => $value)
+        foreach ($array as $key => $value)
         {
-            if($model instanceof ServiceParameter && $value instanceof Model)
+            if ($model instanceof ServiceParameter && $value instanceof Model)
             {
                 $this->decorateParameters(
                     $value,
@@ -142,7 +144,7 @@ class ServiceList extends Model
                 continue;
             }
 
-            if(is_array($value) && count($value))
+            if (is_array($value) && count($value))
             {
                 $this->iterateThroughObject($model, $value, $key);
             }
