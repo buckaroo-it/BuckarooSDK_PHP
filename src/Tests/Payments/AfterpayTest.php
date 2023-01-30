@@ -33,7 +33,7 @@ class AfterpayTest extends BuckarooTestCase
     {
         $response = $this->buckaroo->method('afterpay')->pay($this->getPaymentPayload());
 
-        $this->assertTrue($response->isRejected());
+        $this->assertTrue($response->isSuccess());
     }
 
     /**
@@ -118,20 +118,21 @@ class AfterpayTest extends BuckarooTestCase
     private function getPaymentPayload(?array $additional = null): array
     {
         $payload = [
-            'amountDebit' => 50.30,
-            'order' => uniqid(),
-            'invoice' => uniqid(),
-            'billing' => [
-                'recipient' => [
-                    'category' => RecipientCategory::PERSON,
-                    'careOf' => 'John Smith',
-                    'title' => 'Mrs',
-                    'firstName' => 'John',
-                    'lastName' => 'Do',
-                    'birthDate' => '1990-01-01',
-                    'conversationLanguage' => 'NL',
-                    'identificationNumber' => 'IdNumber12345',
-                    'customerNumber' => 'customerNumber12345',
+            'amountDebit'       => 52.30,
+            'order'             => uniqid(),
+            'invoice'           => uniqid(),
+            'clientIP'      => '127.0.0.1',
+            'billing'       => [
+                'recipient'        => [
+                    'category'      => RecipientCategory::PERSON,
+                    'careOf'        => 'John Smith',
+                    'title'            => 'Mrs',
+                    'firstName'      => 'John',
+                    'lastName'      => 'Do',
+                    'birthDate'     => '1990-01-01',
+                    'conversationLanguage'  => 'NL',
+                    'identificationNumber'  => 'IdNumber12345',
+                    'customerNumber'        => 'customerNumber12345'
                 ],
                 'address' => [
                     'street' => 'Hoofdstraat',
@@ -180,7 +181,15 @@ class AfterpayTest extends BuckarooTestCase
                     'quantity' => '1',
                     'price' => '10.10',
                 ],
-            ],
+                [
+                    'type'      => 'ShippingFee',
+                    'identifier' => 'USPShippingID',
+                    'description' => 'UPS',
+                    'vatPercentage' => '21',
+                    'quantity' => '1',
+                    'price' => '2'
+                ],
+            ]
         ];
 
         if ($additional)

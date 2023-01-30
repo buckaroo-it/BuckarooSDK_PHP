@@ -114,11 +114,16 @@ class ReplyHandler
      * @param array $data
      * @return bool
      */
-    private function contains(string $needle, array $data): bool
+    private function contains(string $needle, array $data, bool $strict = false): bool
     {
         foreach (array_keys($data) as $key)
         {
-            if (str_contains($key, $needle))
+            if($strict && $key == $needle)
+            {
+                return true;
+            }
+
+            if(!$strict && str_contains($key, $needle))
             {
                 return true;
             }
