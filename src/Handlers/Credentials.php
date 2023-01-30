@@ -54,17 +54,21 @@ class Credentials
      */
     public function confirm(): bool
     {
-        $serviceList = new ServiceList('ideal',  2, 'Specification');
+        $serviceList = new ServiceList('ideal', 2, 'Specification');
 
         $request = new TransactionRequest;
 
-        try {
+        try
+        {
             $response = $this->client->specification($request, 'ideal', 2);
-        }catch(BuckarooException $e){
+        }
+        catch (BuckarooException $e)
+        {
             return false;
         }
 
-        if($response->getHttpResponse()->getStatusCode() == 200) {
+        if ($response->getHttpResponse()->getStatusCode() == 200)
+        {
             return true;
         }
 

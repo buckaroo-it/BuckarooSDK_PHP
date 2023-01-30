@@ -25,6 +25,6 @@ use Buckaroo\Models\Adapters\ServiceParametersKeysAdapter;
 class AttachmentAdapter extends ServiceParametersKeysAdapter
 {
     protected array $keys = [
-        'name'            => 'attachment'
+        'name' => 'attachment',
     ];
 }

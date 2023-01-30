@@ -32,8 +32,8 @@ class GiropayTest extends BuckarooTestCase
     {
         $response = $this->buckaroo->method('giropay')->pay([
             'invoice' => uniqid(),
-            'bic'           => 'GENODETT488',
-            'amountDebit'   => 10.10
+            'bic' => 'GENODETT488',
+            'amountDebit' => 10.10,
         ]);
 
         $this->assertTrue($response->isPendingProcessing());
@@ -46,10 +46,10 @@ class GiropayTest extends BuckarooTestCase
     public function it_creates_a_giropay_refund()
     {
         $response = $this->buckaroo->method('giropay')->refund([
-            'amountCredit'              => 10,
-            'invoice'                   => 'testinvoice 123',
-            'description'               => 'refund',
-            'originalTransactionKey'    => '2D04704995B74D679AACC59F87XXXXXX'
+            'amountCredit' => 10,
+            'invoice' => 'testinvoice 123',
+            'description' => 'refund',
+            'originalTransactionKey' => '2D04704995B74D679AACC59F87XXXXXX',
         ]);
 
         $this->assertTrue($response->isFailed());

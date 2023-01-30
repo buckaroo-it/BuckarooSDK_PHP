@@ -21,13 +21,12 @@
 namespace Buckaroo\PaymentMethods\BuckarooVoucher;
 
 use Buckaroo\Models\Model;
-use Buckaroo\PaymentMethods\PayablePaymentMethod;
-use Buckaroo\Transaction\Response\TransactionResponse;
-use Buckaroo\PaymentMethods\BuckarooVoucher\Models\Pay;
 use Buckaroo\PaymentMethods\BuckarooVoucher\Models\Create;
 use Buckaroo\PaymentMethods\BuckarooVoucher\Models\Deactivate;
 use Buckaroo\PaymentMethods\BuckarooVoucher\Models\GetBalance;
-use Buckaroo\PaymentMethods\BuckarooVoucher\Models\CreatePayload;
+use Buckaroo\PaymentMethods\BuckarooVoucher\Models\Pay;
+use Buckaroo\PaymentMethods\PayablePaymentMethod;
+use Buckaroo\Transaction\Response\TransactionResponse;
 
 class BuckarooVoucher extends PayablePaymentMethod
 {

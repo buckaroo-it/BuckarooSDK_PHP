@@ -48,7 +48,7 @@ class BuckarooException extends Exception
      */
     private function log($logger, $message)
     {
-        if($logger)
+        if ($logger)
         {
             $this->logger = $logger;
             $this->logger->error($message);

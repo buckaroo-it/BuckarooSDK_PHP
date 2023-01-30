@@ -41,7 +41,8 @@ abstract class ServiceParametersKeysAdapter extends ServiceParameter
     /**
      * @param Model $model
      */
-    public function __construct(Model $model) {
+    public function __construct(Model $model)
+    {
         $this->model = $model;
     }
 

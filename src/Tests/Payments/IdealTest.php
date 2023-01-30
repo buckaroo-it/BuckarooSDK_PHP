@@ -42,30 +42,30 @@ class IdealTest extends BuckarooTestCase
             'invoice' => uniqid(),
             'amountDebit' => 10.10,
             'issuer' => 'ABNANL2A',
-            'pushURL'  => 'https://buckaroo.nextto.dev/push',
+            'pushURL' => 'https://buckaroo.nextto.dev/push',
             'returnURL' => 'https://buckaroo.nextto.dev/return',
             'clientIP' => [
-                'address'       => '123.456.789.123',
-                'type'          => 0
+                'address' => '123.456.789.123',
+                'type' => 0,
             ],
-            'additionalParameters'  => [
-                'initiated_by_magento'   => 1,
-                'service_action' => 'something'
-            ]
+            'additionalParameters' => [
+                'initiated_by_magento' => 1,
+                'service_action' => 'something',
+            ],
         ]);
 
         $this->refundPayload = [
-            'invoice'   => 'testinvoice 123', //Set invoice number of the transaction to refund
+            'invoice' => 'testinvoice 123', //Set invoice number of the transaction to refund
             'originalTransactionKey' => '4E8BD922192746C3918BF4077CXXXXXX', //Set transaction key of the transaction to refund
             'amountCredit' => 1.23,
             'clientIP' => [
-                'address'       => '123.456.789.123',
-                'type'          => 0
+                'address' => '123.456.789.123',
+                'type' => 0,
             ],
-            'additionalParameters'  => [
-                'initiated_by_magento'   => '1',
-                'service_action' => 'something'
-            ]
+            'additionalParameters' => [
+                'initiated_by_magento' => '1',
+                'service_action' => 'something',
+            ],
         ];
     }
 

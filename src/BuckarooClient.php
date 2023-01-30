@@ -118,7 +118,7 @@ class BuckarooClient
      */
     private function getConfig(string $websiteKey, string $secretKey, string $mode = null): ?Config
     {
-        if($websiteKey && $secretKey)
+        if ($websiteKey && $secretKey)
         {
             return new DefaultConfig($websiteKey, $secretKey, $mode);
         }

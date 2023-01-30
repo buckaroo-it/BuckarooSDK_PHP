@@ -28,7 +28,7 @@ class SofortTest extends BuckarooTestCase
     {
         $this->paymentPayload = ([
             'invoice' => uniqid(),
-            'amountDebit' => 10.10
+            'amountDebit' => 10.10,
         ]);
     }
 
@@ -42,5 +42,4 @@ class SofortTest extends BuckarooTestCase
 
         $this->assertTrue($response->isPendingProcessing());
     }
-
 }

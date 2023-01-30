@@ -158,5 +158,4 @@ class BuckarooWallet extends PayablePaymentMethod
     {
         return parent::pay(new Wallet($this->payload));
     }
-
 }

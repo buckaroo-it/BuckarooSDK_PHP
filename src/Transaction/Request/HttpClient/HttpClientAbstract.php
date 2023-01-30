@@ -67,12 +67,18 @@ abstract class HttpClientAbstract implements HttpClientInterface
     {
         $decoded_result = json_decode($result, true);
 
-        if(is_array($decoded_result))
+        if (is_array($decoded_result))
         {
             return $decoded_result;
         }
 
-        throw new BuckarooException($this->logger, 'Status code: ' . $response->getStatusCode() . ' Message: ' . $result);
+        throw new BuckarooException(
+            $this->logger,
+            'Status code: ' .
+            $response->getStatusCode() .
+            ' Message: ' .
+            $result
+        );
     }
 
     /**

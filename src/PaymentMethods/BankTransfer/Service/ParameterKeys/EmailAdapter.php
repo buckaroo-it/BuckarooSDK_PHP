@@ -25,6 +25,6 @@ use Buckaroo\Models\Adapters\ServiceParametersKeysAdapter;
 class EmailAdapter extends ServiceParametersKeysAdapter
 {
     protected array $keys = [
-        'email' => 'Customeremail'
+        'email' => 'Customeremail',
     ];
 }

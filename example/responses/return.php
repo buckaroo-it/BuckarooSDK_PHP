@@ -25,7 +25,7 @@ $returnReponse = [
     "brq_timestamp" => "2022-05-24 07:29:09",
     "brq_transactions" => "4C1BE53E2C42412AB32A799D9316E7DD",
     "brq_websitekey" => "IBjihN7Fhp",
-    "brq_signature" => "bf7a62c830da2d2e004199919a8fe0d53b0668f5"
+    "brq_signature" => "bf7a62c830da2d2e004199919a8fe0d53b0668f5",
 ];
 
 $buckaroo = new BuckarooClient($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
@@ -34,4 +34,3 @@ $replyHandler = $buckaroo->payment($returnReponse['brq_payment_method'])->handle
 $replyHandler->validate();
 
 $replyHandler->isValid();
-

@@ -12,7 +12,7 @@ $response = $buckaroo->method('applepay')->pay([
     'amountDebit' => 10,
     'invoice' => uniqid(),
     'paymentData' => uniqid(),
-    'customerCardName'  => 'Buck Aroo'
+    'customerCardName' => 'Buck Aroo',
 ]);
 
 //Pay Redirect
@@ -27,5 +27,5 @@ $response = $buckaroo->method('applepay')->payRedirect([
 $response = $buckaroo->method('applepay')->refund([
     'amountCredit' => 10,
     'invoice' => '10000480',
-    'originalTransactionKey' => '9AA4C81A08A84FA7B68E6A6A6291XXXX'
+    'originalTransactionKey' => '9AA4C81A08A84FA7B68E6A6A6291XXXX',
 ]);

@@ -26,6 +26,6 @@ use Buckaroo\Models\Interfaces\Recipient as RecipientInterface;
 class RecipientAdapter extends ServiceParametersKeysAdapter implements RecipientInterface
 {
     protected array $keys = [
-        'title'                     => 'Salutation',
+        'title' => 'Salutation',
     ];
 }

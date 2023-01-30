@@ -12,7 +12,7 @@ $response = $buckaroo->method('applepay')->payRedirect([
     'amountDebit' => 10,
     'invoice' => uniqid(),
     'servicesSelectableByClient' => 'applepay',
-    'continueOnIncomplete' => '1'
+    'continueOnIncomplete' => '1',
 ]);
 
 
@@ -20,5 +20,5 @@ $response = $buckaroo->method('applepay')->payRedirect([
 $response = $buckaroo->method('applepay')->refund([
     'amountCredit' => 10,
     'invoice' => '10000480',
-    'originalTransactionKey' => '9AA4C81A08A84FA7B68E6A6A6291XXXX'
+    'originalTransactionKey' => '9AA4C81A08A84FA7B68E6A6A6291XXXX',
 ]);
