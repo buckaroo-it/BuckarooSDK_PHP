@@ -20,8 +20,6 @@
 
 namespace Buckaroo\PaymentMethods\BuckarooVoucher\Models;
 
-use Buckaroo\PaymentMethods\BuckarooVoucher\Models\Pay;
-
 class Deactivate extends Pay
 {
 }

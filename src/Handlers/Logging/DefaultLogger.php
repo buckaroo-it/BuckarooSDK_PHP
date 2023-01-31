@@ -30,7 +30,7 @@ class DefaultLogger implements Subject, LoggerInterface
     /**
      * @var array
      */
-    protected array $observers  = [];
+    protected array $observers = [];
 
     /**
      *
@@ -39,7 +39,7 @@ class DefaultLogger implements Subject, LoggerInterface
     {
         $this->attach(new Monolog());
 
-        if(($_ENV['BPE_REPORT_ERROR'] ?? false) === 'true')
+        if (($_ENV['BPE_REPORT_ERROR'] ?? false) === 'true')
         {
             $this->attach(new ErrorReporter());
         }
@@ -51,9 +51,9 @@ class DefaultLogger implements Subject, LoggerInterface
      */
     public function attach($observer)
     {
-        if(is_array($observer))
+        if (is_array($observer))
         {
-            foreach($observer as $singleObserver)
+            foreach ($observer as $singleObserver)
             {
                 $this->attach($singleObserver);
             }
@@ -61,7 +61,7 @@ class DefaultLogger implements Subject, LoggerInterface
             return $this;
         }
 
-        if($observer instanceof Observer)
+        if ($observer instanceof Observer)
         {
             $this->observers[] = $observer;
         }
@@ -75,7 +75,8 @@ class DefaultLogger implements Subject, LoggerInterface
      */
     public function detach(Observer $observer)
     {
-        $this->observers = array_filter($this->observers, function($value) use ($observer){
+        $this->observers = array_filter($this->observers, function ($value) use ($observer)
+        {
             return get_class($value) != get_class($observer);
         });
 
@@ -107,7 +108,7 @@ class DefaultLogger implements Subject, LoggerInterface
      * @param array $context
      * @return void
      */
-    public function critical($message, array $context = array()): void
+    public function critical($message, array $context = []): void
     {
         $this->notify('critical', $message, $context);
     }
@@ -117,7 +118,7 @@ class DefaultLogger implements Subject, LoggerInterface
      * @param array $context
      * @return void
      */
-    public function error($message, array $context = array()): void
+    public function error($message, array $context = []): void
     {
         $this->notify('error', $message, $context);
     }
@@ -127,7 +128,7 @@ class DefaultLogger implements Subject, LoggerInterface
      * @param array $context
      * @return void
      */
-    public function warning($message, array $context = array()): void
+    public function warning($message, array $context = []): void
     {
         $this->notify('warning', $message, $context);
     }
@@ -137,7 +138,7 @@ class DefaultLogger implements Subject, LoggerInterface
      * @param array $context
      * @return void
      */
-    public function notice($message, array $context = array()): void
+    public function notice($message, array $context = []): void
     {
         $this->notify('notice', $message, $context);
     }
@@ -147,7 +148,7 @@ class DefaultLogger implements Subject, LoggerInterface
      * @param array $context
      * @return void
      */
-    public function info($message, array $context = array()): void
+    public function info($message, array $context = []): void
     {
         $this->notify('info', $message, $context);
     }
@@ -157,9 +158,10 @@ class DefaultLogger implements Subject, LoggerInterface
      * @param array $context
      * @return void
      */
-    public function debug($message, array $context = array()): void
+    public function debug($message, array $context = []): void
     {
-        if($_ENV['BPE_DEBUG'] ?? false) {
+        if ($_ENV['BPE_DEBUG'] ?? false)
+        {
             $this->notify('debug', $message, $context);
         }
     }
@@ -170,7 +172,7 @@ class DefaultLogger implements Subject, LoggerInterface
      * @param array $context
      * @return void
      */
-    public function log($level, $message, array $context = array()): void
+    public function log($level, $message, array $context = []): void
     {
         $this->notify('log', $message, $context);
     }
@@ -181,9 +183,10 @@ class DefaultLogger implements Subject, LoggerInterface
      * @param array $context
      * @return $this
      */
-    public function notify(string $method, string $message, array $context = array())
+    public function notify(string $method, string $message, array $context = [])
     {
-        foreach($this->observers as $observer) {
+        foreach ($this->observers as $observer)
+        {
             $observer->handle($method, $message, $context);
         }
 

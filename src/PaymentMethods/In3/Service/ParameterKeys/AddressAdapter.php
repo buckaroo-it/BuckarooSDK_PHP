@@ -25,7 +25,7 @@ use Buckaroo\Models\Adapters\ServiceParametersKeysAdapter;
 class AddressAdapter extends ServiceParametersKeysAdapter
 {
     protected array $keys = [
-        'houseNumberAdditional'     => 'HouseNumberSuffix',
-        'zipcode'                   => 'ZipCode'
+        'houseNumberAdditional' => 'HouseNumberSuffix',
+        'zipcode' => 'ZipCode',
     ];
 }

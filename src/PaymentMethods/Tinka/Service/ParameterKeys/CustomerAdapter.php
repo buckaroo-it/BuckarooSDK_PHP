@@ -25,7 +25,7 @@ use Buckaroo\Models\Adapters\ServiceParametersKeysAdapter;
 class CustomerAdapter extends ServiceParametersKeysAdapter
 {
     protected array $keys = [
-        'lastNamePrefix'    => 'PrefixLastName',
-        'birthDate'         => 'DateOfBirth'
+        'lastNamePrefix' => 'PrefixLastName',
+        'birthDate' => 'DateOfBirth',
     ];
 }

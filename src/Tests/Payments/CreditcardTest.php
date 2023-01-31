@@ -31,9 +31,9 @@ class CreditcardTest extends BuckarooTestCase
     public function it_creates_a_creditcard_payment()
     {
         $response = $this->buckaroo->method('creditcard')->pay([
-            'amountDebit'   => 10,
-            'invoice'       => uniqid(),
-            'name'          => 'visa'
+            'amountDebit' => 10,
+            'invoice' => uniqid(),
+            'name' => 'visa',
         ]);
 
         $this->assertTrue($response->isWaitingOnUserInput());
@@ -46,10 +46,10 @@ class CreditcardTest extends BuckarooTestCase
     public function it_creates_a_creditcard_encrypted_payment()
     {
         $response = $this->buckaroo->method('creditcard')->payEncrypted([
-            'amountDebit'               => 10,
-            'invoice'                   => uniqid(),
-            'name'                      => 'mastercard',
-            'encryptedCardData'         => '001u8gJNwngKubFCO6FmJod6aESlIFATkKYaj47KlgBp7f3NeVxUzChg1Aug7WD2vc5wut2KU9NPLUaO0tFmzhVLZoDWn7dX4AzGxSjPrsPmDMWYcEkIwMZfcyJqoRfFkF3j15mil3muXxhR1a609NfkTo11J3ENVsvU3k60z'
+            'amountDebit' => 10,
+            'invoice' => uniqid(),
+            'name' => 'mastercard',
+            'encryptedCardData' => '001u8gJNwngKubFCO6FmJod6aESlIFATkKYaj47KlgBp7f3NeVxUzChg1Aug7WD2vc5wut2KU9NPLUaO0tFmzhVLZoDWn7dX4AzGxSjPrsPmDMWYcEkIwMZfcyJqoRfFkF3j15mil3muXxhR1a609NfkTo11J3ENVsvU3k60z',
         ]);
 
         $this->assertTrue($response->isValidationFailure());
@@ -62,11 +62,11 @@ class CreditcardTest extends BuckarooTestCase
     public function it_creates_a_creditcard_security_code_payment()
     {
         $response = $this->buckaroo->method('creditcard')->payWithSecurityCode([
-            'amountDebit'                   => 10,
-            'invoice'                       => uniqid(),
-            'originalTransactionKey'        => '6C5DBB69E74644958F8C25199514DC6C',
-            'name'                          => 'mastercard',
-            'encryptedSecurityCode'         => '001u8gJNwngKubFCO6FmJod6aESlIFATkKYaj47KlgBp7f3NeVxUzChg1Aug7WD2vc5wut2KU9NPLUaO0tFmzhVLZoDWn7dX4AzGxSjPrsPmDMWYcEkIwMZfcyJqoRfFkF3j15mil3muXxhR1a609NfkTo11J3ENVsvU3k60z'
+            'amountDebit' => 10,
+            'invoice' => uniqid(),
+            'originalTransactionKey' => '6C5DBB69E74644958F8C25199514DC6C',
+            'name' => 'mastercard',
+            'encryptedSecurityCode' => '001u8gJNwngKubFCO6FmJod6aESlIFATkKYaj47KlgBp7f3NeVxUzChg1Aug7WD2vc5wut2KU9NPLUaO0tFmzhVLZoDWn7dX4AzGxSjPrsPmDMWYcEkIwMZfcyJqoRfFkF3j15mil3muXxhR1a609NfkTo11J3ENVsvU3k60z',
         ]);
 
         $this->assertTrue($response->isValidationFailure());
@@ -79,10 +79,10 @@ class CreditcardTest extends BuckarooTestCase
     public function it_creates_a_creditcard_refund()
     {
         $response = $this->buckaroo->method('creditcard')->refund([
-            'amountCredit'                  => 10,
-            'invoice'                       => 'testinvoice 123',
-            'originalTransactionKey'        => '13FAF43579D94F5FB8119A6819XXXXXX',
-            'name'                          => 'mastercard'
+            'amountCredit' => 10,
+            'invoice' => 'testinvoice 123',
+            'originalTransactionKey' => '13FAF43579D94F5FB8119A6819XXXXXX',
+            'name' => 'mastercard',
         ]);
 
         $this->assertTrue($response->isFailed());
@@ -95,9 +95,9 @@ class CreditcardTest extends BuckarooTestCase
     public function it_creates_a_creditcard_authorize()
     {
         $response = $this->buckaroo->method('creditcard')->authorize([
-            'amountDebit'   => 10,
-            'invoice'       => 'testinvoice 123',
-            'name'          => 'mastercard'
+            'amountDebit' => 10,
+            'invoice' => 'testinvoice 123',
+            'name' => 'mastercard',
         ]);
 
         $this->assertTrue($response->isWaitingOnUserInput());
@@ -110,10 +110,10 @@ class CreditcardTest extends BuckarooTestCase
     public function it_creates_a_creditcard_encrypted_authorize()
     {
         $response = $this->buckaroo->method('creditcard')->authorizeEncrypted([
-            'amountDebit'           => 10,
-            'invoice'               => uniqid(),
-            'name'                  => 'mastercard',
-            'encryptedCardData'     => '001u8gJNwngKubFCO6FmJod6aESlIFATkKYaj47KlgBp7f3NeVxUzChg1Aug7WD2vc5wut2KU9NPLUaO0tFmzhVLZoDWn7dX4AzGxSjPrsPmDMWYcEkIwMZfcyJqoRfFkF3j15mil3muXxhR1a609NfkTo11J3ENVsvU3k60z'
+            'amountDebit' => 10,
+            'invoice' => uniqid(),
+            'name' => 'mastercard',
+            'encryptedCardData' => '001u8gJNwngKubFCO6FmJod6aESlIFATkKYaj47KlgBp7f3NeVxUzChg1Aug7WD2vc5wut2KU9NPLUaO0tFmzhVLZoDWn7dX4AzGxSjPrsPmDMWYcEkIwMZfcyJqoRfFkF3j15mil3muXxhR1a609NfkTo11J3ENVsvU3k60z',
         ]);
 
         $this->assertTrue($response->isValidationFailure());
@@ -126,11 +126,11 @@ class CreditcardTest extends BuckarooTestCase
     public function it_creates_a_creditcard_security_code_authorize()
     {
         $response = $this->buckaroo->method('creditcard')->authorizeWithSecurityCode([
-            'amountDebit'               => 10,
-            'invoice'                   => uniqid(),
-            'originalTransactionKey'    => '6C5DBB69E74644958F8C25199514DC6C',
-            'name'                      => 'mastercard',
-            'encryptedSecurityCode'     => '001u8gJNwngKubFCO6FmJod6aESlIFATkKYaj47KlgBp7f3NeVxUzChg1Aug7WD2vc5wut2KU9NPLUaO0tFmzhVLZoDWn7dX4AzGxSjPrsPmDMWYcEkIwMZfcyJqoRfFkF3j15mil3muXxhR1a609NfkTo11J3ENVsvU3k60z'
+            'amountDebit' => 10,
+            'invoice' => uniqid(),
+            'originalTransactionKey' => '6C5DBB69E74644958F8C25199514DC6C',
+            'name' => 'mastercard',
+            'encryptedSecurityCode' => '001u8gJNwngKubFCO6FmJod6aESlIFATkKYaj47KlgBp7f3NeVxUzChg1Aug7WD2vc5wut2KU9NPLUaO0tFmzhVLZoDWn7dX4AzGxSjPrsPmDMWYcEkIwMZfcyJqoRfFkF3j15mil3muXxhR1a609NfkTo11J3ENVsvU3k60z',
         ]);
 
         $this->assertTrue($response->isValidationFailure());
@@ -143,10 +143,10 @@ class CreditcardTest extends BuckarooTestCase
     public function it_creates_a_creditcard_capture()
     {
         $response = $this->buckaroo->method('creditcard')->capture([
-            'amountDebit'                   => 10,
-            'invoice'                       => uniqid(),
-            'originalTransactionKey'        => '6C5DBB69E74644958F8C25199514DC6C',
-            'name'                          => 'mastercard'
+            'amountDebit' => 10,
+            'invoice' => uniqid(),
+            'originalTransactionKey' => '6C5DBB69E74644958F8C25199514DC6C',
+            'name' => 'mastercard',
         ]);
 
         $this->assertTrue($response->isFailed());
@@ -159,10 +159,10 @@ class CreditcardTest extends BuckarooTestCase
     public function it_creates_a_creditcard_pay_recurrent()
     {
         $response = $this->buckaroo->method('creditcard')->payRecurrent([
-            'amountDebit'                   => 10,
-            'invoice'                       => uniqid(),
-            'originalTransactionKey'        => '6C5DBB69E74644958F8C25199514DC6C',
-            'name'                          => 'mastercard'
+            'amountDebit' => 10,
+            'invoice' => uniqid(),
+            'originalTransactionKey' => '6C5DBB69E74644958F8C25199514DC6C',
+            'name' => 'mastercard',
         ]);
 
         $this->assertTrue($response->isSuccess());
@@ -175,10 +175,10 @@ class CreditcardTest extends BuckarooTestCase
     public function it_creates_a_creditcard_cancel_authorize()
     {
         $response = $this->buckaroo->method('creditcard')->cancelAuthorize([
-            'name'                          => 'mastercard',
-            'amountCredit'              => 10,
-            'originalTransactionKey'    => 'F86579ECED1D493887ECAE7C287BXXXX',
-            'invoice'                   => 'testinvoice12345cvx'
+            'name' => 'mastercard',
+            'amountCredit' => 10,
+            'originalTransactionKey' => 'F86579ECED1D493887ECAE7C287BXXXX',
+            'invoice' => 'testinvoice12345cvx',
         ]);
 
         $this->assertTrue($response->isValidationFailure());

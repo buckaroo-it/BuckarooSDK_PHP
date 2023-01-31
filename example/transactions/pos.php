@@ -11,5 +11,5 @@ $buckaroo = new BuckarooClient($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']
 $response = $buckaroo->method('pospayment')->pay([
     'invoice' => uniqid(),
     'amountDebit' => 10.10,
-    'terminalID' => '50000001'
+    'terminalID' => '50000001',
 ]);

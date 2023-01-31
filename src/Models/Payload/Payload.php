@@ -79,6 +79,12 @@ class Payload extends Model
      * @var string
      */
     protected string $websiteKey;
+
+    /**
+     * @var string
+     */
+    protected string $culture;
+
     /**
      * @var bool
      */
@@ -114,14 +120,14 @@ class Payload extends Model
      */
     public function setProperties(?array $data)
     {
-        if(isset($data['additionalParameters']))
+        if (isset($data['additionalParameters']))
         {
             $this->additionalParameters = new AdditionalParameters($data['additionalParameters']);
 
             unset($data['additionalParameters']);
         }
 
-        if(isset($data['clientIP']))
+        if (isset($data['clientIP']))
         {
             $this->clientIP = new ClientIP($data['clientIP']['address'] ?? null, $data['clientIP']['type'] ?? null);
 

@@ -9,12 +9,13 @@ class ErrorReporter implements Observer
     private array $reportables = [
         'error',
         'critical',
-        'emergency'
+        'emergency',
     ];
 
-    public function handle(string $method, string $message, array $context = array())
+    public function handle(string $method, string $message, array $context = [])
     {
-        if(in_array($method, $this->reportables)) {
+        if (in_array($method, $this->reportables))
+        {
             //print("Fire off message to mail/report server/slack");
         }
 

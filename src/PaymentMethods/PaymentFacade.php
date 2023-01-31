@@ -67,6 +67,7 @@ use Buckaroo\Transaction\Response\TransactionResponse;
  * @method TransactionResponse modifyMandate(array $data)
  * @method TransactionResponse cancelMandate(array $data)
  * @method TransactionResponse payRemainder(array $data)
+ * @method TransactionResponse payRemainderEncrypted(array $data)
  * @method TransactionResponse generate(array $data)
  * @method TransactionResponse identify(array $data)
  * @method TransactionResponse verify(array $data)
@@ -125,9 +126,9 @@ class PaymentFacade
      */
     public function combine($combinablePayment)
     {
-        if(is_array($combinablePayment))
+        if (is_array($combinablePayment))
         {
-            foreach($combinablePayment as $combinable_payment)
+            foreach ($combinablePayment as $combinable_payment)
             {
                 $this->combine($combinable_payment);
             }
@@ -135,7 +136,7 @@ class PaymentFacade
             return $this;
         }
 
-        if($combinablePayment instanceof Combinable)
+        if ($combinablePayment instanceof Combinable)
         {
             $this->paymentMethod->combinePayment($combinablePayment);
         }
@@ -157,15 +158,20 @@ class PaymentFacade
      * @return mixed
      * @throws BuckarooException
      */
-    public function __call(string $name , array $arguments)
+    public function __call(string $name, array $arguments)
     {
-        if(method_exists($this->paymentMethod, $name))
+        if (method_exists($this->paymentMethod, $name))
         {
             $this->paymentMethod->setPayload((new PayloadService($arguments[0] ?? []))->toArray());
 
             return $this->paymentMethod->$name();
         }
 
-        throw new BuckarooException($this->client->config()->getLogger(), "Payment method " . $name . " on payment " . $this->paymentMethod->paymentName() . " you requested does not exist.");
+        throw new BuckarooException(
+            $this->client->config()->getLogger(),
+            "Payment method " .
+            $name . " on payment " .
+            $this->paymentMethod->paymentName() . " you requested does not exist."
+        );
     }
 }

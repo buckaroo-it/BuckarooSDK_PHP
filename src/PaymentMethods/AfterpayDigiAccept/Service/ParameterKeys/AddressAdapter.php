@@ -26,8 +26,8 @@ class AddressAdapter extends ServiceAdapter
      * @var array|string[]
      */
     protected array $keys = [
-        'houseNumberAdditional'     => 'HouseNumberSuffix',
-        'zipcode'                   => 'PostalCode'
+        'houseNumberAdditional' => 'HouseNumberSuffix',
+        'zipcode' => 'PostalCode',
     ];
 
     /**
@@ -36,7 +36,7 @@ class AddressAdapter extends ServiceAdapter
      */
     public function serviceParameterKeyOf($propertyName): string
     {
-        if($this->prefix == 'Shipping' && $propertyName == 'country')
+        if ($this->prefix == 'Shipping' && $propertyName == 'country')
         {
             return 'ShippingCountryCode';
         }

@@ -33,7 +33,8 @@ class PayloadService implements Arrayable
      * @param $payload
      * @throws \Exception
      */
-    public function __construct($payload) {
+    public function __construct($payload)
+    {
         $this->setPayload($payload);
     }
 
@@ -51,11 +52,13 @@ class PayloadService implements Arrayable
             return $this;
         }
 
-        if(is_string($payload)) {
+        if (is_string($payload))
+        {
             $this->payload = json_decode($payload, true);
         }
 
-        if($this->payload == null) {
+        if ($this->payload == null)
+        {
             throw new \Exception("Invalid or empty payload. Array or json format required.");
         }
 

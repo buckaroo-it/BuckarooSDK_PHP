@@ -32,7 +32,7 @@ class PayconiqTest extends BuckarooTestCase
         $response = $this->buckaroo->method('payconiq')->pay([
             'amountDebit' => 10,
             'description' => 'Payment for testinvoice123',
-            'invoice' => uniqid()
+            'invoice' => uniqid(),
         ]);
 
         $this->assertTrue($response->isFailed());
@@ -45,8 +45,8 @@ class PayconiqTest extends BuckarooTestCase
     {
         $response = $this->buckaroo->method('payconiq')->refund([
             'amountCredit' => 10,
-            'invoice'       => 'testinvoice 123',
-            'originalTransactionKey' => '4E8BD922192746C3918BF4077CXXXXXX'
+            'invoice' => 'testinvoice 123',
+            'originalTransactionKey' => '4E8BD922192746C3918BF4077CXXXXXX',
         ]);
 
         $this->assertTrue($response->isFailed());
