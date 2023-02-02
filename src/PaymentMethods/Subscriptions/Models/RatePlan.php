@@ -45,48 +45,17 @@ class RatePlan extends ServiceParameter
      * @var string
      */
     protected string $endDate;
-
-    /**
-     * @var Charge
-     */
-    protected Charge $charge;
-
-    /**
-     * @param string $type
-     * @param array|null $values
-     */
-    public function __construct(string $type, ?array $values = null)
-    {
-        $this->type = $type;
-
-        parent::__construct($values);
-    }
-
-    /**
-     * @param $charge
-     * @return Charge
-     */
-    public function charge($charge = null)
-    {
-        if (is_array($charge))
-        {
-            $this->charge = new Charge($charge);
-        }
-
-        return $this->charge;
-    }
-
-    /**
-     * @param string $key
-     * @return string|null
-     */
-    public function getGroupType(string $key): ?string
-    {
-        if ($key == 'charge')
-        {
-            return $this->type . 'RatePlanCharge';
-        }
-
-        return parent::getGroupKey($key);
-    }
+    protected string $ratePlanName;
+    protected string $ratePlanDescription;
+    protected string $currency;
+    protected int $billingTiming;
+    protected bool $automaticTerm;
+    protected string $billingInterval;
+    protected int $customNumberOfDays;
+    protected int $termStartDay;
+    protected string $termStartWeek;
+    protected string $termStartMonth;
+    protected int $trialPeriodDays;
+    protected int $trialPeriodMonths;
+    protected bool $inheritPaymentMethod;
 }

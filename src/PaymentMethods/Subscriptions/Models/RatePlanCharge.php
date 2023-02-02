@@ -20,15 +20,20 @@
 
 namespace Buckaroo\PaymentMethods\Subscriptions\Models;
 
-use Buckaroo\Models\Model;
+use Buckaroo\Models\ServiceParameter;
 
-class Charge extends Model
+class RatePlanCharge extends ServiceParameter
 {
-    protected string $ratePlanChargeGuid;
     protected string $ratePlanChargeCode;
 
+    protected string $ratePlanChargeName;
+    protected string $rateplanChargeProductId;
+    protected string $rateplanChargeDescription;
+    protected string $unitOfMeasure;
     protected float $baseNumberOfUnits;
+    protected string $partialBilling;
     protected float $pricePerUnit;
-
+    protected bool $priceIncludesVat;
     protected float $vatPercentage;
+    protected string $b2B;
 }

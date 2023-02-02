@@ -109,6 +109,8 @@ class Subscription extends ServiceParameter
      */
     protected CompanyAdapter $company;
 
+    protected Configuration $configuration;
+
     /**
      * @var RatePlan
      */
@@ -122,6 +124,11 @@ class Subscription extends ServiceParameter
      */
     protected RatePlan $disableRatePlan;
 
+    protected RatePlanCharge $addRatePlanCharge;
+
+    protected string $customerIBAN;
+    protected string $customerAccountName;
+    protected string $customerBIC;
     /**
      * @var array|\string[][]
      */
@@ -141,11 +148,23 @@ class Subscription extends ServiceParameter
         'addRatePlan' => [
             'groupType' => 'AddRatePlan',
         ],
+        'configuration' => [
+            'groupType' => 'AddConfiguration'
+        ],
         'updateRatePlan' => [
             'groupType' => 'UpdateRatePlan',
         ],
         'disableRatePlan' => [
             'groupType' => 'DisableRatePlan',
+        ],
+        'addRatePlanCharge' => [
+            'groupType' => 'AddRatePlanCharge',
+        ],
+        'updateRatePlanCharge' => [
+            'groupType' => 'UpdateRatePlanCharge',
+        ],
+        'disableRatePlanCharge' => [
+            'groupType' => 'DisableRatePlanCharge',
         ],
     ];
 
@@ -243,6 +262,16 @@ class Subscription extends ServiceParameter
         return $this->company;
     }
 
+    public function configuration($configuration = null)
+    {
+        if (is_array($configuration))
+        {
+            $this->configuration = new Configuration($configuration);
+        }
+
+        return $this->configuration;
+    }
+
     /**
      * @param $rate_plans
      * @return $this
@@ -255,7 +284,22 @@ class Subscription extends ServiceParameter
             {
                 $property = $type . 'RatePlan';
 
-                $this->$property = new RatePlan(ucfirst($type), $rate_plan);
+                $this->$property = new RatePlan($rate_plan);
+            }
+        }
+
+        return $this;
+    }
+
+    public function ratePlanCharges($rate_plan_charges = null)
+    {
+        if (is_array($rate_plan_charges))
+        {
+            foreach ($rate_plan_charges as $type => $rate_plan_charge)
+            {
+                $property = $type . 'RatePlanCharge';
+
+                $this->$property = new RatePlanCharge($rate_plan_charge);
             }
         }
 
