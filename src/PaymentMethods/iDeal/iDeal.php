@@ -58,10 +58,10 @@ class iDeal extends PayablePaymentMethod
     }
 
     /**
-     * @return \mixed
+     * @return array
      * @throws \Buckaroo\Exceptions\BuckarooException
      */
-    public function issuers() : mixed
+    public function issuers(): array
     {
         $request = new TransactionRequest;
 
@@ -71,13 +71,13 @@ class iDeal extends PayablePaymentMethod
         }
         catch (BuckarooException $e)
         {
-            return false;
+            return [];
         }
 
         $issuerList = [];
-        if (isset($response['Actions']['0']['RequestParameters'][0]['ListItemDescriptions']))
+        if (isset($response->data()['Actions']['0']['RequestParameters'][0]['ListItemDescriptions']))
         {
-            $issuersData = $response['Actions']['0']['RequestParameters'][0]['ListItemDescriptions'];
+            $issuersData = $response->data()['Actions']['0']['RequestParameters'][0]['ListItemDescriptions'];
             if (count($issuersData) > 0)
             {
                 foreach ($issuersData as $issuer)
