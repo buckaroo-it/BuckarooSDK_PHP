@@ -24,16 +24,54 @@ use Buckaroo\Models\ServiceParameter;
 
 class RatePlanCharge extends ServiceParameter
 {
+    /**
+     * @var string
+     */
     protected string $ratePlanChargeCode;
 
+    /**
+     * @var string
+     */
     protected string $ratePlanChargeName;
+    /**
+     * @var string
+     */
     protected string $rateplanChargeProductId;
+    /**
+     * @var string
+     */
     protected string $rateplanChargeDescription;
+    /**
+     * @var string
+     */
     protected string $unitOfMeasure;
+    /**
+     * @var float
+     */
     protected float $baseNumberOfUnits;
+    /**
+     * @var string
+     */
     protected string $partialBilling;
+    /**
+     * @var float
+     */
     protected float $pricePerUnit;
+    /**
+     * @var bool
+     */
     protected bool $priceIncludesVat;
+    /**
+     * @var float
+     */
     protected float $vatPercentage;
+    /**
+     * @var string
+     */
     protected string $b2B;
+
+    /**
+     * @var string
+     */
+    protected string $ratePlanChargeType;
 }

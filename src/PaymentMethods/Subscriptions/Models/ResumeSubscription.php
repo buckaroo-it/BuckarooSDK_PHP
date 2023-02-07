@@ -22,5 +22,8 @@ namespace Buckaroo\PaymentMethods\Subscriptions\Models;
 
 class ResumeSubscription extends Subscription
 {
+    /**
+     * @var string
+     */
     protected string $resumeDate;
 }

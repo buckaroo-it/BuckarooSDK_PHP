@@ -45,17 +45,56 @@ class RatePlan extends ServiceParameter
      * @var string
      */
     protected string $endDate;
+    /**
+     * @var string
+     */
     protected string $ratePlanName;
+    /**
+     * @var string
+     */
     protected string $ratePlanDescription;
+    /**
+     * @var string
+     */
     protected string $currency;
+    /**
+     * @var int
+     */
     protected int $billingTiming;
+    /**
+     * @var bool
+     */
     protected bool $automaticTerm;
+    /**
+     * @var string
+     */
     protected string $billingInterval;
+    /**
+     * @var int
+     */
     protected int $customNumberOfDays;
+    /**
+     * @var int
+     */
     protected int $termStartDay;
+    /**
+     * @var string
+     */
     protected string $termStartWeek;
+    /**
+     * @var string
+     */
     protected string $termStartMonth;
+    /**
+     * @var int
+     */
     protected int $trialPeriodDays;
+    /**
+     * @var int
+     */
     protected int $trialPeriodMonths;
+    /**
+     * @var bool
+     */
     protected bool $inheritPaymentMethod;
 }
