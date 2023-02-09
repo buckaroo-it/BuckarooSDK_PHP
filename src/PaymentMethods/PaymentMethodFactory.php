@@ -70,7 +70,7 @@ class PaymentMethodFactory
         Alipay::class => ['alipay'],
         Afterpay::class => ['afterpay'],
         AfterpayDigiAccept::class => ['afterpaydigiaccept'],
-        Bancontact::class => ['bancontactmrcash'],
+        Bancontact::class => ['bancontact', 'bancontactmrcash'],
         Billink::class => ['billink'],
         Belfius::class => ['belfius'],
         BuckarooWallet::class => ['buckaroo_wallet'],

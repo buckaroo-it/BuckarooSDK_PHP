@@ -85,7 +85,7 @@ use Buckaroo\Transaction\Response\TransactionResponse;
  * @method TransactionResponse deletePaymentConfig(array $data)
  * @method TransactionResponse pause(array $data)
  * @method TransactionResponse resume(array $data)
- *
+ * @method TransactionResponse payOneClick(array $data)
  */
 class PaymentFacade
 {
