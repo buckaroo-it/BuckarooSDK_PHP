@@ -33,18 +33,26 @@ class SubscriptionsTest extends BuckarooTestCase
     {
         $response = $this->buckaroo->method('subscriptions')->create([
             'ratePlans' => [
-                'add' => [
-                    'startDate' => '2023-01-01',
-                    'ratePlanCode' => 'xxxxxx',
+                'update' => [
+                    'startDate' => date('Y-m-d', strtotime(date('Y-m-d'). ' + 60 days')),
+                    'ratePlanCode' => 'zfv59mmy',
                 ],
             ],
-            'configurationCode' => 'xxxxx',
+            'ratePlanCharges' => [
+                'add' => [
+                    'ratePlanChargeCode' => 'test',
+                ],
+            ],
+            'configurationCode' => 'gfyh9fe4',
+            'configuration'     => [
+                'name'          => 'owiejr'
+            ],
             'debtor' => [
-                'code' => 'xxxxxx',
+                'code' => 'johnsmith4',
             ],
         ]);
 
-        $this->assertTrue($response->isValidationFailure());
+        $this->assertTrue($response->isSuccess());
     }
 
     /**
