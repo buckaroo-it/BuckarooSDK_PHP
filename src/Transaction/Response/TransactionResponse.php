@@ -445,6 +445,6 @@ class TransactionResponse extends Response
      */
     public function get(string $key)
     {
-        return $this->data[$key];
+        return $this->data[$key] ?? null;
     }
 }
