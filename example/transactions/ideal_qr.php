@@ -10,6 +10,7 @@ $buckaroo = new BuckarooClient($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']
 //Create payment
 $response = $buckaroo->method('ideal_qr')->generate([
     'description' => 'Test purchase',
+    'returnURL' => 'https://buckaroo.dev./return',
     'minAmount' => '0.10',
     'maxAmount' => '10.0',
     'imageSize' => '2000',
