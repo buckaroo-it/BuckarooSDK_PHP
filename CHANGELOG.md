@@ -6,11 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
-<<<<<<< HEAD
 ## [1.4.0]
-=======
-## [1.3.1]
->>>>>>> master
 - Payment method Request to pay removed.
 - Fixed an issue with getting issuers for iDEAL. Reported by @reflie-nxte
 - Add missing subscriptions parameters.
