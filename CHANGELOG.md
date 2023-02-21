@@ -6,13 +6,13 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
-## [1.3.1]
-- Payment method Request to pay removed.
+## [1.4.0]
 - Fixed an issue with getting issuers for iDEAL. Reported by @reflie-nxte
-- Add missing subscriptions parameters.
-- Add Bancontact alias and fixing typo in method name.
-- When response data is not set return null.
-- Add missing parameters in iDEAL QR.
+- Add Bancontact alias and fixing typo in method name
+- When response data is not set return null
+- BP-2257 Payment method Request to pay removed
+- BP-2285 BP-Add missing subscriptions parameters
+- BP-2345 Add missing parameters in iDEAL QR
 
 ## [1.3.0]
 - Add parameter retrieval in replyhandler, check lower & upper string
