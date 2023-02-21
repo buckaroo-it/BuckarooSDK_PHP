@@ -31,6 +31,7 @@ class IdealQRTest extends BuckarooTestCase
     {
         $response = $this->buckaroo->method('ideal_qr')->generate([
             'description' => 'Test purchase',
+            'returnURL' => 'https://buckaroo.dev./return',
             'minAmount' => '0.10',
             'maxAmount' => '10.0',
             'imageSize' => '2000',

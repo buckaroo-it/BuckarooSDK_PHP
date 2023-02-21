@@ -51,7 +51,6 @@ use Buckaroo\PaymentMethods\Paypal\Paypal;
 use Buckaroo\PaymentMethods\PayPerEmail\PayPerEmail;
 use Buckaroo\PaymentMethods\PointOfSale\PointOfSale;
 use Buckaroo\PaymentMethods\Przelewy24\Przelewy24;
-use Buckaroo\PaymentMethods\RequestToPay\RequestToPay;
 use Buckaroo\PaymentMethods\SEPA\SEPA;
 use Buckaroo\PaymentMethods\Sofort\Sofort;
 use Buckaroo\PaymentMethods\Subscriptions\Subscriptions;
@@ -71,7 +70,7 @@ class PaymentMethodFactory
         Alipay::class => ['alipay'],
         Afterpay::class => ['afterpay'],
         AfterpayDigiAccept::class => ['afterpaydigiaccept'],
-        Bancontact::class => ['bancontactmrcash'],
+        Bancontact::class => ['bancontact', 'bancontactmrcash'],
         Billink::class => ['billink'],
         Belfius::class => ['belfius'],
         BuckarooWallet::class => ['buckaroo_wallet'],
@@ -119,7 +118,6 @@ class PaymentMethodFactory
         ],
         Trustly::class => ['trustly'],
         BankTransfer::class => ['transfer'],
-        RequestToPay::class => ['requesttopay'],
         WeChatPay::class => ['wechatpay'],
         BuckarooVoucher::class => ['buckaroovoucher'],
     ];

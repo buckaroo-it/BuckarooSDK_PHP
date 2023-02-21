@@ -73,9 +73,24 @@ class BancontactTest extends BuckarooTestCase
      * @return void
      * @test
      */
-    public function it_creates_a_bancontact_recurrent_payment()
+    public function it_creates_a_bancontact_recurring_payment()
     {
-        $response = $this->buckaroo->method('bancontactmrcash')->payRecurrent([
+        $response = $this->buckaroo->method('bancontactmrcash')->payRecurring([
+            'invoice' => 'testinvoice 123',
+            'amountDebit' => 10.50,
+            'originalTransactionKey' => '91D08EC01F414926A4CA29C059XXXXXX',
+        ]);
+
+        $this->assertTrue($response->isValidationFailure());
+    }
+
+    /**
+     * @return void
+     * @test
+     */
+    public function it_creates_a_bancontact_pay_one_click_payment()
+    {
+        $response = $this->buckaroo->method('bancontactmrcash')->payOneClick([
             'invoice' => 'testinvoice 123',
             'amountDebit' => 10.50,
             'originalTransactionKey' => '91D08EC01F414926A4CA29C059XXXXXX',

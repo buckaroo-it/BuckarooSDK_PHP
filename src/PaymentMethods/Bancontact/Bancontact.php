@@ -49,11 +49,23 @@ class Bancontact extends PayablePaymentMethod implements Combinable
     /**
      * @return TransactionResponse
      */
-    public function payRecurrent(): TransactionResponse
+    public function payRecurring(): TransactionResponse
     {
         $this->setPayPayload();
 
-        $this->setServiceList('PayRecurrent');
+        $this->setServiceList('PayRecurring');
+
+        return $this->postRequest();
+    }
+
+    /**
+     * @return TransactionResponse
+     */
+    public function payOneClick(): TransactionResponse
+    {
+        $this->setPayPayload();
+
+        $this->setServiceList('PayOneClick');
 
         return $this->postRequest();
     }

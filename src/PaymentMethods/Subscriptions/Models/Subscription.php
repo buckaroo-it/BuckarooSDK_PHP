@@ -110,6 +110,11 @@ class Subscription extends ServiceParameter
     protected CompanyAdapter $company;
 
     /**
+     * @var Configuration
+     */
+    protected Configuration $configuration;
+
+    /**
      * @var RatePlan
      */
     protected RatePlan $addRatePlan;
@@ -122,6 +127,23 @@ class Subscription extends ServiceParameter
      */
     protected RatePlan $disableRatePlan;
 
+    /**
+     * @var RatePlanCharge
+     */
+    protected RatePlanCharge $addRatePlanCharge;
+
+    /**
+     * @var string
+     */
+    protected string $customerIBAN;
+    /**
+     * @var string
+     */
+    protected string $customerAccountName;
+    /**
+     * @var string
+     */
+    protected string $customerBIC;
     /**
      * @var array|\string[][]
      */
@@ -141,11 +163,23 @@ class Subscription extends ServiceParameter
         'addRatePlan' => [
             'groupType' => 'AddRatePlan',
         ],
+        'configuration' => [
+            'groupType' => 'AddConfiguration'
+        ],
         'updateRatePlan' => [
             'groupType' => 'UpdateRatePlan',
         ],
         'disableRatePlan' => [
             'groupType' => 'DisableRatePlan',
+        ],
+        'addRatePlanCharge' => [
+            'groupType' => 'AddRatePlanCharge',
+        ],
+        'updateRatePlanCharge' => [
+            'groupType' => 'UpdateRatePlanCharge',
+        ],
+        'disableRatePlanCharge' => [
+            'groupType' => 'DisableRatePlanCharge',
         ],
     ];
 
@@ -233,6 +267,10 @@ class Subscription extends ServiceParameter
         return $this->person;
     }
 
+    /**
+     * @param $company
+     * @return Company|CompanyAdapter
+     */
     public function company($company = null)
     {
         if (is_array($company))
@@ -241,6 +279,20 @@ class Subscription extends ServiceParameter
         }
 
         return $this->company;
+    }
+
+    /**
+     * @param $configuration
+     * @return Configuration
+     */
+    public function configuration($configuration = null)
+    {
+        if (is_array($configuration))
+        {
+            $this->configuration = new Configuration($configuration);
+        }
+
+        return $this->configuration;
     }
 
     /**
@@ -255,7 +307,26 @@ class Subscription extends ServiceParameter
             {
                 $property = $type . 'RatePlan';
 
-                $this->$property = new RatePlan(ucfirst($type), $rate_plan);
+                $this->$property = new RatePlan($rate_plan);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param $rate_plan_charges
+     * @return $this
+     */
+    public function ratePlanCharges($rate_plan_charges = null)
+    {
+        if (is_array($rate_plan_charges))
+        {
+            foreach ($rate_plan_charges as $type => $rate_plan_charge)
+            {
+                $property = $type . 'RatePlanCharge';
+
+                $this->$property = new RatePlanCharge($rate_plan_charge);
             }
         }
 
