@@ -2,7 +2,11 @@
     "name": "buckaroo/sdk",
     "description": "Buckaroo payment SDK",
     "license": "MIT",
+<<<<<<< HEAD
     "version": "1.4.0",
+=======
+    "version": "1.3.1",
+>>>>>>> master
     "type": "library",
     "require": {
         "php": ">=7.4|^8.0",
