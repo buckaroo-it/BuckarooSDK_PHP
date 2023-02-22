@@ -286,9 +286,9 @@ class TransactionResponse extends Response
     }
 
     /**
-     * @return int|null
+     * @return string|null
      */
-    public function getSubStatusCode(): ?int
+    public function getSubStatusCode(): ?string
     {
         if (! empty($this->data['Status']['SubCode']['Code']))
         {
