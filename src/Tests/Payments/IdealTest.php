@@ -42,8 +42,8 @@ class IdealTest extends BuckarooTestCase
             'invoice' => uniqid(),
             'amountDebit' => 10.10,
             'issuer' => 'ABNANL2A',
-            'pushURL' => 'https://buckaroo.nextto.dev/push',
-            'returnURL' => 'https://buckaroo.nextto.dev/return',
+            'pushURL' => 'https://buckaroo.dev/push',
+            'returnURL' => 'https://buckaroo.dev/return',
             'clientIP' => [
                 'address' => '123.456.789.123',
                 'type' => 0,

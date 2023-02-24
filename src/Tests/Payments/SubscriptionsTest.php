@@ -62,7 +62,7 @@ class SubscriptionsTest extends BuckarooTestCase
     public function it_creates_a_combined_subscription()
     {
         $subscriptions = $this->buckaroo->method('subscriptions')->manually()->createCombined([
-            'pushURL' => 'https://buckaroo.nextto.dev/push',
+            'pushURL' => 'https://buckaroo.dev/push',
             'includeTransaction' => false,
             'transactionVatPercentage' => 5,
             'configurationCode' => 'gfyh9fe4',

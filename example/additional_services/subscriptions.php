@@ -9,28 +9,36 @@ $buckaroo = new BuckarooClient($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']
 
 //** START Create Duo Combined */
 $subscriptions = $buckaroo->method('subscriptions')->manually()->createCombined([
+    'pushURL' => 'https://buckaroo.dev/push',
     'includeTransaction' => false,
     'transactionVatPercentage' => 5,
-    'configurationCode' => 'xxxxx',
+    'configurationCode' => 'gfyh9fe4',
     'email' => 'test@buckaroo.nl',
-    'rate_plans' => [
+    'ratePlans' => [
         'add' => [
-            'startDate' => date('Y-m-d'),
-            'ratePlanCode' => 'xxxxxx',
+            'startDate' => '2033-01-01',
+            'ratePlanCode' => '9863hdcj',
         ],
     ],
     'phone' => [
         'mobile' => '0612345678',
     ],
     'debtor' => [
-        'code' => 'xxxxxx',
+        'code' => 'johnsmith4',
     ],
-    'person' => [
-        'firstName' => 'John',
-        'lastName' => 'Do',
-        'gender' => Gender::FEMALE,
+//            'person'                    => [
+//                'firstName'         => 'John',
+//                'lastName'          => 'Do',
+//                'gender'            => Gender::FEMALE,
+//                'culture'           => 'nl-NL',
+//                'birthDate'         => '1990-01-01'
+//            ],
+    'company' => [
         'culture' => 'nl-NL',
-        'birthDate' => date('Y-m-d'),
+        'companyName' => 'My Company Coporation',
+        'vatApplicable' => true,
+        'vatNumber' => 'NL140619562B01',
+        'chamberOfCommerce' => '20091741',
     ],
     'address' => [
         'street' => 'Hoofdstraat',
@@ -50,28 +58,36 @@ $response = $buckaroo->method('ideal')->combine($subscriptions)->pay([
 
 //** START Create Triple Combined */
 $subscriptions = $buckaroo->method('subscriptions')->manually()->createCombined([
+    'pushURL' => 'https://buckaroo.dev/push',
     'includeTransaction' => false,
     'transactionVatPercentage' => 5,
-    'configurationCode' => 'xxxxx',
+    'configurationCode' => 'gfyh9fe4',
     'email' => 'test@buckaroo.nl',
-    'rate_plans' => [
+    'ratePlans' => [
         'add' => [
-            'startDate' => date('Y-m-d'),
-            'ratePlanCode' => 'xxxxxx',
+            'startDate' => '2033-01-01',
+            'ratePlanCode' => '9863hdcj',
         ],
     ],
     'phone' => [
         'mobile' => '0612345678',
     ],
     'debtor' => [
-        'code' => 'xxxxxx',
+        'code' => 'johnsmith4',
     ],
-    'person' => [
-        'firstName' => 'John',
-        'lastName' => 'Do',
-        'gender' => Gender::FEMALE,
+//            'person'                    => [
+//                'firstName'         => 'John',
+//                'lastName'          => 'Do',
+//                'gender'            => Gender::FEMALE,
+//                'culture'           => 'nl-NL',
+//                'birthDate'         => '1990-01-01'
+//            ],
+    'company' => [
         'culture' => 'nl-NL',
-        'birthDate' => date('Y-m-d'),
+        'companyName' => 'My Company Coporation',
+        'vatApplicable' => true,
+        'vatNumber' => 'NL140619562B01',
+        'chamberOfCommerce' => '20091741',
     ],
     'address' => [
         'street' => 'Hoofdstraat',
