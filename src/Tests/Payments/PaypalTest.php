@@ -99,28 +99,36 @@ class PaypalTest extends BuckarooTestCase
     public function it_creates_a_combined_subscriptions_with_paypal_and_extra_info()
     {
         $subscriptions = $this->buckaroo->method('subscriptions')->manually()->createCombined([
+            'pushURL' => 'https://buckaroo.dev/push',
             'includeTransaction' => false,
             'transactionVatPercentage' => 5,
-            'configurationCode' => 'xxxxx',
+            'configurationCode' => 'gfyh9fe4',
             'email' => 'test@buckaroo.nl',
-            'rate_plans' => [
+            'ratePlans' => [
                 'add' => [
-                    'startDate' => '2022-01-01',
-                    'ratePlanCode' => 'xxxxxx',
+                    'startDate' => '2033-01-01',
+                    'ratePlanCode' => '9863hdcj',
                 ],
             ],
             'phone' => [
                 'mobile' => '0612345678',
             ],
             'debtor' => [
-                'code' => 'xxxxxx',
+                'code' => 'johnsmith4',
             ],
-            'person' => [
-                'firstName' => 'John',
-                'lastName' => 'Do',
-                'gender' => Gender::FEMALE,
+//            'person'                    => [
+//                'firstName'         => 'John',
+//                'lastName'          => 'Do',
+//                'gender'            => Gender::FEMALE,
+//                'culture'           => 'nl-NL',
+//                'birthDate'         => '1990-01-01'
+//            ],
+            'company' => [
                 'culture' => 'nl-NL',
-                'birthDate' => '1990-01-01',
+                'companyName' => 'My Company Coporation',
+                'vatApplicable' => true,
+                'vatNumber' => 'NL140619562B01',
+                'chamberOfCommerce' => '20091741',
             ],
             'address' => [
                 'street' => 'Hoofdstraat',
