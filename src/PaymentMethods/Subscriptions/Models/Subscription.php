@@ -164,7 +164,7 @@ class Subscription extends ServiceParameter
             'groupType' => 'AddRatePlan',
         ],
         'configuration' => [
-            'groupType' => 'AddConfiguration'
+            'groupType' => 'AddConfiguration',
         ],
         'updateRatePlan' => [
             'groupType' => 'UpdateRatePlan',

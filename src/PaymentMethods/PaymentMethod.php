@@ -28,6 +28,9 @@ use Buckaroo\Transaction\Request\TransactionRequest;
 use Buckaroo\Transaction\Response\TransactionResponse;
 use Psr\Log\LoggerInterface;
 
+/**
+ *
+ */
 abstract class PaymentMethod implements PaymentInterface
 {
     /**
@@ -73,6 +76,11 @@ abstract class PaymentMethod implements PaymentInterface
      * @var bool
      */
     protected bool $isManually = false;
+
+    /**
+     * @var string|null
+     */
+    protected ?string $serviceCode;
 
     /**
      * @param Client $client

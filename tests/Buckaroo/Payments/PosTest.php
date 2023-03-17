@@ -18,19 +18,24 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\BuckarooVoucher\Models;
+namespace Tests\Buckaroo\Payments;
 
-use Buckaroo\Models\ServiceParameter;
+use Tests\Buckaroo\BuckarooTestCase;
 
-class Create extends ServiceParameter
+class PosTest extends BuckarooTestCase
 {
-    protected string $groupReference;
+    /**
+     * @return void
+     * @test
+     */
+    public function it_creates_a_pos_payment()
+    {
+        $response = $this->buckaroo->method('pospayment')->pay([
+            'invoice' => uniqid(),
+            'amountDebit' => 10.10,
+            'terminalID' => '50000001',
+        ]);
 
-    protected string $usageType;
-
-    protected string $validFrom;
-
-    protected string $validUntil;
-
-    protected string $creationBalance;
+        $this->assertTrue($response->isSuccess());
+    }
 }

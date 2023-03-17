@@ -18,19 +18,25 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\BuckarooVoucher\Models;
+namespace Tests\Buckaroo\Payments;
 
-use Buckaroo\Models\ServiceParameter;
+use Tests\Buckaroo\BuckarooTestCase;
 
-class Create extends ServiceParameter
+class SurepayTest extends BuckarooTestCase
 {
-    protected string $groupReference;
+    /**
+     * @return void
+     * @test
+     */
+    public function it_verify_with_surepay()
+    {
+        $response = $this->buckaroo->method('surepay')->verify([
+            'bankAccount' => [
+                'iban' => 'NL13TEST0123456789',
+                'accountName' => 'John Doe',
+            ],
+        ]);
 
-    protected string $usageType;
-
-    protected string $validFrom;
-
-    protected string $validUntil;
-
-    protected string $creationBalance;
+        $this->assertTrue($response->isSuccess());
+    }
 }

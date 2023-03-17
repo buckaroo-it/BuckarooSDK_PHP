@@ -18,19 +18,28 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\BuckarooVoucher\Models;
+namespace Tests\Buckaroo\Payments;
 
-use Buckaroo\Models\ServiceParameter;
+use Tests\Buckaroo\BuckarooTestCase;
 
-class Create extends ServiceParameter
+class SofortTest extends BuckarooTestCase
 {
-    protected string $groupReference;
+    protected function setUp(): void
+    {
+        $this->paymentPayload = ([
+            'invoice' => uniqid(),
+            'amountDebit' => 10.10,
+        ]);
+    }
 
-    protected string $usageType;
+    /**
+     * @return void
+     * @test
+     */
+    public function it_creates_a_sofort_payment()
+    {
+        $response = $this->buckaroo->method('sofortueberweisung')->pay($this->paymentPayload);
 
-    protected string $validFrom;
-
-    protected string $validUntil;
-
-    protected string $creationBalance;
+        $this->assertTrue($response->isPendingProcessing());
+    }
 }

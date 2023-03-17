@@ -18,19 +18,22 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\BuckarooVoucher\Models;
+namespace Tests\Buckaroo;
 
-use Buckaroo\Models\ServiceParameter;
+use Buckaroo\BuckarooClient;
+use Dotenv\Dotenv;
+use PHPUnit\Framework\TestCase;
 
-class Create extends ServiceParameter
+class BuckarooTestCase extends TestCase
 {
-    protected string $groupReference;
+    protected BuckarooClient $buckaroo;
+    public function __construct()
+    {
+        $dotenv = Dotenv::createImmutable(getcwd());
+        $dotenv->load();
 
-    protected string $usageType;
+        $this->buckaroo = new BuckarooClient($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
-    protected string $validFrom;
-
-    protected string $validUntil;
-
-    protected string $creationBalance;
+        parent::__construct();
+    }
 }

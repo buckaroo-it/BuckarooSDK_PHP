@@ -18,19 +18,27 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\BuckarooVoucher\Models;
+namespace Tests\Buckaroo\Payments;
 
-use Buckaroo\Models\ServiceParameter;
+use Tests\Buckaroo\BuckarooTestCase;
 
-class Create extends ServiceParameter
+class KBCTest extends BuckarooTestCase
 {
-    protected string $groupReference;
+    protected function setUp(): void
+    {
+        $this->paymentPayload = ([
+            'invoice' => uniqid(),
+            'amountDebit' => 10.10,
+        ]);
+    }
 
-    protected string $usageType;
-
-    protected string $validFrom;
-
-    protected string $validUntil;
-
-    protected string $creationBalance;
+    /**
+     * @return void
+     * @test
+     */
+    public function it_creates_a_kbc_payment()
+    {
+        $response = $this->buckaroo->method('kbcpaymentbutton')->pay($this->paymentPayload);
+        $this->assertTrue($response->isPendingProcessing());
+    }
 }

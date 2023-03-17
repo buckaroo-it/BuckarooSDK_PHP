@@ -25,6 +25,7 @@ namespace Buckaroo\Transaction\Request\HttpClient;
 use Buckaroo\Exceptions\TransferException;
 use Buckaroo\Handlers\Logging\Subject;
 use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
@@ -35,6 +36,8 @@ class HttpClientGuzzle extends HttpClientAbstract
      * @var Subject
      */
     protected Subject $logger;
+
+    protected ClientInterface $httpClient;
 
     /**
      * @param Subject $logger
