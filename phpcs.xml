@@ -17,14 +17,4 @@
 
     <exclude name="Squiz.ControlStructures.ControlSignature.SpaceAfterKeyword">src</exclude>
 
-
-<!--    <exclude name="Squiz.WhiteSpace.FunctionSpacing.After"/>-->
-<!--    <exclude name="Squiz.WhiteSpace.FunctionSpacing.Before"/>-->
-<!--    <exclude name="Squiz.WhiteSpace.ControlStructureSpacing.SpacingAfterOpen"/>-->
-<!--    <exclude name="Squiz.WhiteSpace.ControlStructureSpacing.SpacingBeforeClose"/>-->
-<!--    <rule name="Squiz.ControlStructures.ControlSignature.SpaceAfterCloseBrace">-->
-<!--        <exclude-pattern>*.php</exclude-pattern>-->
-<!--    </rule>-->
-
-
 </ruleset>
