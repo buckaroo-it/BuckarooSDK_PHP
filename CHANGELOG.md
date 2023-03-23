@@ -6,6 +6,13 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
+## [1.5.0]
+- BP-2351 Bugfix in transaction response in sub status code
+- Subscription example updated.
+- Github action added for PSR12 and PHPlint validation. Contributed by @avido
+- iDeal QR Test updated.
+- BP-2404 PHP 8.2 support
+
 ## [1.4.0]
 - Fixed an issue with getting issuers for iDEAL. Reported by @reflie-nxte
 - Add Bancontact alias and fixing typo in method name

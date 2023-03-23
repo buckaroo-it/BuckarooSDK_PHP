@@ -194,8 +194,7 @@ abstract class Config implements Loggable
     {
         $filter = ['websiteKey', 'secretKey'];
 
-        return array_filter($payload, function ($k) use ($filter)
-        {
+        return array_filter($payload, function ($k) use ($filter) {
             return ! in_array($k, $filter);
         }, ARRAY_FILTER_USE_KEY);
     }
