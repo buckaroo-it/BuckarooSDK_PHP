@@ -100,6 +100,11 @@ class PaymentFacade
     private bool $isManually = false;
 
     /**
+     * @var Client
+     */
+    protected Client $client;
+
+    /**
      * @param Client $client
      * @param string $method
      */
