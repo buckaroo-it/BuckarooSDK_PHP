@@ -108,7 +108,7 @@ class PaymentFacade
      * @param Client $client
      * @param string $method
      */
-    public function __construct(Client $client, string $method)
+    public function __construct(Client $client, ?string $method)
     {
         $this->client = $client;
 
