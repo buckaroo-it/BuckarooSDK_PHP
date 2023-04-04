@@ -46,6 +46,7 @@ use Buckaroo\PaymentMethods\KBC\KBC;
 use Buckaroo\PaymentMethods\KlarnaKP\KlarnaKP;
 use Buckaroo\PaymentMethods\KlarnaPay\KlarnaPay;
 use Buckaroo\PaymentMethods\Marketplaces\Marketplaces;
+use Buckaroo\PaymentMethods\NoServiceSpecifiedPayment\NoServiceSpecifiedPayment;
 use Buckaroo\PaymentMethods\Payconiq\Payconiq;
 use Buckaroo\PaymentMethods\Paypal\Paypal;
 use Buckaroo\PaymentMethods\PayPerEmail\PayPerEmail;
@@ -101,6 +102,7 @@ class PaymentMethodFactory
         Sofort::class => ['sofort', 'sofortueberweisung'],
         Tinka::class => ['tinka'],
         Marketplaces::class => ['marketplaces'],
+        NoServiceSpecifiedPayment::class => ['noservice'],
         Payconiq::class => ['payconiq'],
         Przelewy24::class => ['przelewy24'],
         PointOfSale::class => ['pospayment'],
@@ -135,7 +137,7 @@ class PaymentMethodFactory
      * @param Client $client
      * @param string $paymentMethod
      */
-    public function __construct(Client $client, string $paymentMethod)
+    public function __construct(Client $client, ?string $paymentMethod)
     {
         $this->client = $client;
         $this->paymentMethod = strtolower($paymentMethod);
@@ -146,15 +148,15 @@ class PaymentMethodFactory
      */
     public function getPaymentMethod(): PaymentMethod
     {
-        foreach (self::$payments as $class => $alias)
-        {
-            if (in_array($this->paymentMethod, $alias))
-            {
-                return new $class($this->client, $this->paymentMethod);
+        if ($this->paymentMethod) {
+            foreach (self::$payments as $class => $alias) {
+                if (in_array($this->paymentMethod, $alias)) {
+                    return new $class($this->client, $this->paymentMethod);
+                }
             }
+            throw new BuckarooException($this->client->config()->getLogger(), "Wrong payment method code has been given");
         }
-
-        throw new BuckarooException($this->client->config()->getLogger(), "Wrong payment method code has been given");
+        return new NoServiceSpecifiedPayment($this->client, $this->paymentMethod);
     }
 
     /**
@@ -162,7 +164,7 @@ class PaymentMethodFactory
      * @param string $paymentMethod
      * @return PaymentMethod
      */
-    public static function get(Client $client, string $paymentMethod): PaymentMethod
+    public static function get(Client $client, ?string $paymentMethod): PaymentMethod
     {
         $factory = new self($client, $paymentMethod);
 
