@@ -56,6 +56,17 @@ abstract class PayablePaymentMethod extends PaymentMethod
      * @param Model|null $model
      * @return PayablePaymentMethod|mixed
      */
+    public function payNoService(?Model $model = null)
+    {
+        $this->setPayPayload();
+
+        return $this->postRequest();
+    }
+
+    /**
+     * @param Model|null $model
+     * @return PayablePaymentMethod|mixed
+     */
     public function payRemainder(?Model $model = null)
     {
         $this->setPayPayload();
