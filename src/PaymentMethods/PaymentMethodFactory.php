@@ -135,7 +135,7 @@ class PaymentMethodFactory
 
     /**
      * @param Client $client
-     * @param string $paymentMethod
+     * @param string|null $paymentMethod
      */
     public function __construct(Client $client, ?string $paymentMethod)
     {
@@ -145,6 +145,7 @@ class PaymentMethodFactory
 
     /**
      * @return PaymentMethod
+     * @throws BuckarooException
      */
     public function getPaymentMethod(): PaymentMethod
     {
@@ -154,15 +155,19 @@ class PaymentMethodFactory
                     return new $class($this->client, $this->paymentMethod);
                 }
             }
-            throw new BuckarooException($this->client->config()->getLogger(), "Wrong payment method code has been given");
+            throw new BuckarooException(
+                $this->client->config()->getLogger(),
+                "Wrong payment method code has been given"
+            );
         }
         return new NoServiceSpecifiedPayment($this->client, $this->paymentMethod);
     }
 
     /**
      * @param Client $client
-     * @param string $paymentMethod
+     * @param string|null $paymentMethod
      * @return PaymentMethod
+     * @throws BuckarooException
      */
     public static function get(Client $client, ?string $paymentMethod): PaymentMethod
     {
