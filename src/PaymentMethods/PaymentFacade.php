@@ -28,7 +28,6 @@ use Buckaroo\Transaction\Response\TransactionResponse;
 
 /**
  * @method TransactionResponse pay(array $data)
- * @method TransactionResponse payNoService(array $data)
  * @method TransactionResponse refund(array $data)
  * @method TransactionResponse payRecurrent(array $data)
  * @method TransactionResponse extraInfo(array $data)

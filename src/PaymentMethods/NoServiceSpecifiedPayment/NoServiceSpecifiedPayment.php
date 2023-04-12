@@ -31,4 +31,11 @@ use Buckaroo\Transaction\Response\TransactionResponse;
 class NoServiceSpecifiedPayment extends PayablePaymentMethod implements Combinable
 {
     protected string $paymentName = 'noservice';
+
+    public function pay(?Model $model = null)
+    {
+        $this->setPayPayload();
+
+        return $this->postRequest();
+    }
 }

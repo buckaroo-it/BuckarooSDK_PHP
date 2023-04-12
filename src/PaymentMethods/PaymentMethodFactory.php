@@ -131,7 +131,7 @@ class PaymentMethodFactory
     /**
      * @var string
      */
-    private string $paymentMethod;
+    private ?string $paymentMethod;
 
     /**
      * @param Client $client
@@ -140,7 +140,7 @@ class PaymentMethodFactory
     public function __construct(Client $client, ?string $paymentMethod)
     {
         $this->client = $client;
-        $this->paymentMethod = strtolower($paymentMethod);
+        $this->paymentMethod = ($paymentMethod)? strtolower($paymentMethod) : null;
     }
 
     /**
