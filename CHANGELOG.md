@@ -6,6 +6,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
+## [1.5.1]
+- BP-2485 Bugfix in generating nonce, duplicated nonce can occured when there is a large amount of transactions.
+
 ## [1.5.0]
 - BP-2351 Bugfix in transaction response in sub status code
 - Subscription example updated.
