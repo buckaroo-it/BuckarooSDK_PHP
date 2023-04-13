@@ -6,6 +6,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
+## [1.5.2]
+- Downgrade Ramsey UUID package to version 3 in order to support PHP 7.4
+
 ## [1.5.1]
 - BP-2485 Bugfix in generating nonce, duplicated nonce can occured when there is a large amount of transactions.
 
