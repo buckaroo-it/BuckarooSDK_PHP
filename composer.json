@@ -9,7 +9,7 @@
         "ext-json": "*",
         "ext-pcre": "*",
         "ext-fileinfo": "*",
-        "monolog/monolog": "^2.2",
+        "monolog/monolog": "^2.2|^3",
         "guzzlehttp/guzzle": "^7.0",
         "composer/ca-bundle": "^1.3",
         "ramsey/uuid": "^3.9.7"
