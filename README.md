@@ -81,7 +81,7 @@ $transaction->refundInfo(); // Retrieve refund info
 $transaction->cancelInfo() // Retrieve cancellation info
 ```
 
-Find our full documentation online on [dev.buckaroo.nl](https://dev.buckaroo.nl/).
+Find our full documentation online on [docs.buckaroo.io](https://docs.buckaroo.io).
 
 ### Contribute
 
