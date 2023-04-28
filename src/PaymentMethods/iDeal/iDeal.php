@@ -43,7 +43,7 @@ class iDeal extends PayablePaymentMethod
      * @param Model|null $model
      * @return TransactionResponse
      */
-    public function pay(?Model $model = null): TransactionResponse
+    public function pay(?Model $model = null)
     {
         return parent::pay($model ?? new Pay($this->payload));
     }

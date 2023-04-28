@@ -209,4 +209,9 @@ abstract class PaymentMethod implements PaymentInterface
 
         return $this;
     }
+
+    public function request(): TransactionRequest
+    {
+        return $this->request;
+    }
 }
