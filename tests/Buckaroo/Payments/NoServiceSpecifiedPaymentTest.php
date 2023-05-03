@@ -22,7 +22,7 @@ namespace Tests\Buckaroo\Payments;
 
 use Tests\Buckaroo\BuckarooTestCase;
 
-class NoServiceSpecifiedTest extends BuckarooTestCase
+class NoServiceSpecifiedPaymentTest extends BuckarooTestCase
 {
     protected function setUp(): void
     {
@@ -39,7 +39,7 @@ class NoServiceSpecifiedTest extends BuckarooTestCase
      */
     public function it_creates_a_noservice_payment()
     {
-        $response = $this->buckaroo->method(null)->pay($this->paymentPayload);
+        $response = $this->buckaroo->method()->pay($this->paymentPayload);
         $this->assertTrue($response->isWaitingOnUserInput());
     }
 }

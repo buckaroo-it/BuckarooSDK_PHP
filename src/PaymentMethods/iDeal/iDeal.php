@@ -58,6 +58,19 @@ class iDeal extends PayablePaymentMethod
     }
 
     /**
+     * @param Model|null $model
+     * @return TransactionResponse
+     */
+    public function instantRefund(?Model $model = null):TransactionResponse
+    {
+        $this->setRefundPayload();
+
+        $this->setServiceList('instantRefund', $model);
+
+        return $this->postRequest();
+    }
+
+    /**
      * @return array
      * @throws \Buckaroo\Exceptions\BuckarooException
      */
