@@ -24,22 +24,18 @@ use Tests\Buckaroo\BuckarooTestCase;
 
 class NoServiceSpecifiedPaymentTest extends BuckarooTestCase
 {
-    protected function setUp(): void
+    /**
+     * @test
+     */
+    public function it_creates_a_noservice_payment()
     {
-        $this->paymentPayload = ([
+        $response = $this->buckaroo->method(null)->pay([
             'amountDebit' => 10,
             'invoice' => uniqid(),
             'servicesSelectableByClient' => 'ideal,bancontactmrcash,paypal',
             'servicesExcludedForClient' => 'ideal',
             'continueOnIncomplete' => '1',
         ]);
-    }
-    /**
-     * @test
-     */
-    public function it_creates_a_noservice_payment()
-    {
-        $response = $this->buckaroo->method()->pay($this->paymentPayload);
         $this->assertTrue($response->isWaitingOnUserInput());
     }
 }
