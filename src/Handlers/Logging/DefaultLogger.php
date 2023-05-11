@@ -75,8 +75,7 @@ class DefaultLogger implements Subject, LoggerInterface
      */
     public function detach(Observer $observer)
     {
-        $this->observers = array_filter($this->observers, function ($value) use ($observer)
-        {
+        $this->observers = array_filter($this->observers, function ($value) use ($observer) {
             return get_class($value) != get_class($observer);
         });
 

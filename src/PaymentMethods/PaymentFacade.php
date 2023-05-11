@@ -100,10 +100,15 @@ class PaymentFacade
     private bool $isManually = false;
 
     /**
+     * @var Client
+     */
+    protected Client $client;
+
+    /**
      * @param Client $client
      * @param string $method
      */
-    public function __construct(Client $client, string $method)
+    public function __construct(Client $client, ?string $method)
     {
         $this->client = $client;
 
@@ -158,7 +163,7 @@ class PaymentFacade
      * @return mixed
      * @throws BuckarooException
      */
-    public function __call(string $name, array $arguments)
+    public function __call(?string $name, array $arguments)
     {
         if (method_exists($this->paymentMethod, $name))
         {

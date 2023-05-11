@@ -20,8 +20,15 @@
 
 namespace Buckaroo\Services\TransactionHeaders;
 
+/**
+ *
+ */
 class CultureHeader extends TransactionHeader
 {
+    /**
+     * @var string|null
+     */
+    protected ?string $locale;
     /**
      * @param TransactionHeader $transactionHeader
      * @param string|null $locale

@@ -33,6 +33,8 @@ class Response implements ArrayAccess, Arrayable
      */
     protected $data = [];
 
+    protected $httpResponse;
+
     /**
      * @param $data
      */

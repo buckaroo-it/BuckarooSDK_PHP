@@ -29,6 +29,8 @@ use Buckaroo\Handlers\HMAC\Generator;
 
 class HmacHeader extends TransactionHeader
 {
+    protected Generator $hmacGenerator;
+
     public function __construct(
         TransactionHeader $transactionHeader,
         Config $config,

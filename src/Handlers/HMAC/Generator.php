@@ -21,6 +21,7 @@
 namespace Buckaroo\Handlers\HMAC;
 
 use Buckaroo\Config\Config;
+use Ramsey\Uuid\Uuid;
 
 class Generator extends Hmac
 {
@@ -67,7 +68,7 @@ class Generator extends Hmac
 
         $this->base64Data($data);
         $this->uri($uri);
-        $this->nonce('nonce_' . rand(0000000, 9999999));
+        $this->nonce(Uuid::uuid4());
         $this->time(time());
     }
 

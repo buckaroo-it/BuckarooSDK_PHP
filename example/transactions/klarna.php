@@ -1,4 +1,5 @@
 <?php
+
 require('../bootstrap.php');
 
 use Buckaroo\BuckarooClient;

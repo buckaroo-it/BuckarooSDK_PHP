@@ -24,6 +24,8 @@ use Buckaroo\Models\ServiceParameter;
 
 class Create extends ServiceParameter
 {
+    protected string $groupReference;
+
     protected string $usageType;
 
     protected string $validFrom;

@@ -73,7 +73,7 @@ $buckaroo->method('creditcard') // Input the desire payment method.
 
 After you create a transaction, you can retrieve several transaction information on demand.
 ```php
-# Create a new payment
+# Retrieve transaction information
 $transaction = $buckaroo->transaction('YOUR-TRANSACTION-KEY')
 
 $transaction->status(); // Retrieve transaction status
@@ -81,7 +81,7 @@ $transaction->refundInfo(); // Retrieve refund info
 $transaction->cancelInfo() // Retrieve cancellation info
 ```
 
-Find our full documentation online on [dev.buckaroo.nl](https://dev.buckaroo.nl/).
+Find our full documentation online on [docs.buckaroo.io](https://docs.buckaroo.io).
 
 ### Contribute
 

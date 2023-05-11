@@ -118,12 +118,12 @@ class ReplyHandler
     {
         foreach (array_keys($data) as $key)
         {
-            if($strict && $key == $needle)
+            if ($strict && $key == $needle)
             {
                 return true;
             }
 
-            if(!$strict && str_contains($key, $needle))
+            if (! $strict && str_contains($key, $needle))
             {
                 return true;
             }
