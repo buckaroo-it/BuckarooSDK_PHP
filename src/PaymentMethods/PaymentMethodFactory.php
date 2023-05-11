@@ -56,6 +56,7 @@ use Buckaroo\PaymentMethods\SEPA\SEPA;
 use Buckaroo\PaymentMethods\Sofort\Sofort;
 use Buckaroo\PaymentMethods\Subscriptions\Subscriptions;
 use Buckaroo\PaymentMethods\Surepay\Surepay;
+use Buckaroo\PaymentMethods\Thunes\Thunes;
 use Buckaroo\PaymentMethods\Tinka\Tinka;
 use Buckaroo\PaymentMethods\Trustly\Trustly;
 use Buckaroo\PaymentMethods\WeChatPay\WeChatPay;
@@ -117,6 +118,10 @@ class PaymentMethodFactory
             'podiumcadeaukaart', 'shoesaccessories', 'webshopgiftcard',
             'wijncadeau', 'wonenzo', 'yourgift',
             'vvvgiftcard', 'parfumcadeaukaart',
+        ],
+        Thunes::class => [
+            'thunes', 'monizzemealvoucher', 'monizzeecovoucher', 'monizzegiftvoucher',
+            'sodexomealvoucher', 'sodexoecovoucher', 'sodexogiftvoucher',
         ],
         Trustly::class => ['trustly'],
         BankTransfer::class => ['transfer'],
