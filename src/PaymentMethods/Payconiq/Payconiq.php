@@ -26,4 +26,13 @@ use Buckaroo\PaymentMethods\PayablePaymentMethod;
 class Payconiq extends PayablePaymentMethod implements Combinable
 {
     protected string $paymentName = 'payconiq';
+    
+    /**
+     * @param Model|null $model
+     * @return TransactionResponse
+     */
+    public function payRemainder(?Model $model = null): TransactionResponse
+    {
+        return parent::payRemainder($model ?? new Pay($this->payload));
+    }
 }
