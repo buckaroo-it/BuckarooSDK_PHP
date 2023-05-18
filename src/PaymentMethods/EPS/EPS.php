@@ -28,4 +28,13 @@ use Buckaroo\PaymentMethods\PayablePaymentMethod;
 class EPS extends PayablePaymentMethod implements Combinable
 {
     protected string $paymentName = 'eps';
+    
+    /**
+     * @param Model|null $model
+     * @return TransactionResponse
+     */
+    public function payRemainder(?Model $model = null): TransactionResponse
+    {
+        return parent::payRemainder($model ?? new Pay($this->payload));
+    }
 }
