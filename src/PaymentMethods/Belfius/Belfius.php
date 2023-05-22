@@ -29,13 +29,4 @@ use Buckaroo\PaymentMethods\PayablePaymentMethod;
 class Belfius extends PayablePaymentMethod implements Combinable
 {
     protected string $paymentName = 'belfius';
-    
-    /**
-     * @param Model|null $model
-     * @return TransactionResponse
-     */
-    public function payRemainder(?Model $model = null): TransactionResponse
-    {
-        return parent::payRemainder($model ?? new Pay($this->payload));
-    }
 }
