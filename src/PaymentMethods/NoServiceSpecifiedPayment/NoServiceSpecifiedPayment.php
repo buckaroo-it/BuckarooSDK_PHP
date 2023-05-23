@@ -6,7 +6,7 @@
  * It is available through the world-wide-web at this URL:
  * https://tldrlegal.com/license/mit-license
  * If you are unable to obtain it through the world-wide-web, please send an email
- * to support@buckaroo.nl so we can send you a copy immediately.
+ * to support@buckaroo.nl, so we can send you a copy immediately.
  *
  * DISCLAIMER
  *
@@ -18,35 +18,30 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\Alipay;
+namespace Buckaroo\PaymentMethods\NoServiceSpecifiedPayment;
 
 use Buckaroo\Models\Model;
-use Buckaroo\PaymentMethods\Alipay\Models\Pay;
+use Buckaroo\PaymentMethods\Interfaces\Combinable;
 use Buckaroo\PaymentMethods\PayablePaymentMethod;
-use Buckaroo\Transaction\Response\TransactionResponse;
+use Buckaroo\PaymentMethods\PaymentMethod;
 
-class Alipay extends PayablePaymentMethod
+/**
+ *
+ */
+class NoServiceSpecifiedPayment extends PayablePaymentMethod implements Combinable
 {
     /**
      * @var string
      */
-    protected string $paymentName = 'alipay';
+    protected string $paymentName = 'noservice';
 
     /**
+     * @param string|null $action
      * @param Model|null $model
-     * @return TransactionResponse
+     * @return PaymentMethod
      */
-    public function pay(?Model $model = null): TransactionResponse
+    protected function setServiceList(?string $action, ?Model $model = null): PaymentMethod
     {
-        return parent::pay($model ?? new Pay($this->payload));
-    }
-    
-    /**
-     * @param Model|null $model
-     * @return TransactionResponse
-     */
-    public function payRemainder(?Model $model = null): TransactionResponse
-    {
-        return parent::payRemainder($model ?? new Pay($this->payload));
+        return $this;
     }
 }

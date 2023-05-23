@@ -43,7 +43,7 @@ class iDeal extends PayablePaymentMethod
      * @param Model|null $model
      * @return TransactionResponse
      */
-    public function pay(?Model $model = null): TransactionResponse
+    public function pay(?Model $model = null)
     {
         return parent::pay($model ?? new Pay($this->payload));
     }
@@ -58,6 +58,19 @@ class iDeal extends PayablePaymentMethod
     }
 
     /**
+     * @param Model|null $model
+     * @return TransactionResponse
+     */
+    public function instantRefund(?Model $model = null):TransactionResponse
+    {
+        $this->setRefundPayload();
+
+        $this->setServiceList('instantRefund', $model);
+
+        return $this->postRequest();
+    }
+
+    /**
      * @return array
      * @throws \Buckaroo\Exceptions\BuckarooException
      */
@@ -67,7 +80,8 @@ class iDeal extends PayablePaymentMethod
 
         try {
             $response = $this->client->specification($request, 'ideal', 2);
-        } catch (BuckarooException $e) {
+        } catch (BuckarooException $e)
+        {
             return [];
         }
 

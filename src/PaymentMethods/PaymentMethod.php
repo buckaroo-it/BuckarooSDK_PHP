@@ -146,7 +146,7 @@ abstract class PaymentMethod implements PaymentInterface
      * @param Model|null $model
      * @return $this
      */
-    protected function setServiceList(string $action, ?Model $model = null)
+    protected function setServiceList(?string $action, ?Model $model = null): PaymentMethod
     {
         $serviceList = new ServiceList($this->paymentName(), $this->serviceVersion(), $action, $model);
 
@@ -208,5 +208,10 @@ abstract class PaymentMethod implements PaymentInterface
         }
 
         return $this;
+    }
+
+    public function request(): TransactionRequest
+    {
+        return $this->request;
     }
 }
