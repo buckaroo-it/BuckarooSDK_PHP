@@ -60,7 +60,7 @@ class BuckarooClient
      * @param string $method
      * @return PaymentFacade
      */
-    public function method(?string $method): PaymentFacade
+    public function method(string $method = null): PaymentFacade
     {
         return new PaymentFacade($this->client, $method);
     }

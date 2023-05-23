@@ -70,4 +70,13 @@ class Paypal extends PayablePaymentMethod implements Combinable
 
         return $this->postRequest();
     }
+    
+    /**
+     * @param Model|null $model
+     * @return TransactionResponse
+     */
+    public function payRemainder(?Model $model = null): TransactionResponse
+    {
+        return parent::payRemainder($model ?? new Pay($this->payload));
+    }
 }
