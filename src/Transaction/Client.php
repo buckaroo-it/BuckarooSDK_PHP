@@ -139,6 +139,19 @@ class Client
 
     /**
      * @param Request|null $data
+     * @param $responseClass
+     * @return mixed
+     * @throws BuckarooException
+     */
+    public function dataBatchRequest(Request $data = null, $responseClass = TransactionResponse::class)
+    {
+        $endPoint = $this->getEndpoint('json/batch/DataRequests');
+
+        return $this->call(self::METHOD_POST, $data, $responseClass, $endPoint);
+    }
+
+    /**
+     * @param Request|null $data
      * @param string $paymentName
      * @param int $serviceVersion
      * @return mixed

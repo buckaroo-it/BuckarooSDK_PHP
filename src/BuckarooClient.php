@@ -25,10 +25,14 @@ use Buckaroo\Config\DefaultConfig;
 use Buckaroo\Exceptions\BuckarooException;
 use Buckaroo\Handlers\Credentials;
 use Buckaroo\Handlers\Logging\Observer as LoggingObserver;
+use Buckaroo\PaymentMethods\BatchTransactions;
 use Buckaroo\PaymentMethods\PaymentFacade;
 use Buckaroo\Services\TransactionService;
 use Buckaroo\Transaction\Client;
 
+/**
+ *
+ */
 class BuckarooClient
 {
     /**
@@ -59,6 +63,15 @@ class BuckarooClient
     public function method(?string $method): PaymentFacade
     {
         return new PaymentFacade($this->client, $method);
+    }
+
+    /**
+     * @param array $transactions
+     * @return BatchTransactions
+     */
+    public function batch(array $transactions): BatchTransactions
+    {
+        return new BatchTransactions($this->client, $transactions);
     }
 
     /**
