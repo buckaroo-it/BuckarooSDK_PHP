@@ -20,10 +20,25 @@
 
 namespace Buckaroo\PaymentMethods\Payconiq;
 
+use Buckaroo\Models\Model;
 use Buckaroo\PaymentMethods\Interfaces\Combinable;
 use Buckaroo\PaymentMethods\PayablePaymentMethod;
+use Buckaroo\Transaction\Response\TransactionResponse;
 
 class Payconiq extends PayablePaymentMethod implements Combinable
 {
     protected string $paymentName = 'payconiq';
+
+    /**
+     * @param Model|null $model
+     * @return TransactionResponse
+     */
+    public function instantRefund(?Model $model = null):TransactionResponse
+    {
+        $this->setRefundPayload();
+
+        $this->setServiceList('instantRefund', $model);
+
+        return $this->postRequest();
+    }
 }
