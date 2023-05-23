@@ -20,13 +20,9 @@
 
 namespace Buckaroo\PaymentMethods\NoServiceSpecifiedPayment;
 
-use Buckaroo\Models\Company;
 use Buckaroo\Models\Model;
 use Buckaroo\PaymentMethods\Interfaces\Combinable;
 use Buckaroo\PaymentMethods\PayablePaymentMethod;
-use Buckaroo\PaymentMethods\Paypal\Models\ExtraInfo;
-use Buckaroo\PaymentMethods\Paypal\Models\Pay;
-use Buckaroo\Transaction\Response\TransactionResponse;
 
 class NoServiceSpecifiedPayment extends PayablePaymentMethod implements Combinable
 {

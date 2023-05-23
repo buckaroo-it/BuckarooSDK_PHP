@@ -25,7 +25,7 @@ class BatchRequest extends Request
      */
     public function toJson(): string
     {
-        $data = array_map(function($transaction){
+        $data = array_map(function ($transaction) {
             return $transaction->request()->toArray();
         }, $this->transactions);
 
