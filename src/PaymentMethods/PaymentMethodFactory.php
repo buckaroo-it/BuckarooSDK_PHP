@@ -149,17 +149,22 @@ class PaymentMethodFactory
      */
     public function getPaymentMethod(): PaymentMethod
     {
-        if ($this->paymentMethod) {
-            foreach (self::$payments as $class => $alias) {
-                if (in_array($this->paymentMethod, $alias)) {
+        if ($this->paymentMethod)
+        {
+            foreach (self::$payments as $class => $alias)
+            {
+                if (in_array($this->paymentMethod, $alias))
+                {
                     return new $class($this->client, $this->paymentMethod);
                 }
             }
+
             throw new BuckarooException(
                 $this->client->config()->getLogger(),
                 "Wrong payment method code has been given"
             );
         }
+
         return new NoServiceSpecifiedPayment($this->client, $this->paymentMethod);
     }
 
