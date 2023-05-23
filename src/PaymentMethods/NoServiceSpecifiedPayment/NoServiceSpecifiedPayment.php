@@ -25,10 +25,21 @@ use Buckaroo\PaymentMethods\Interfaces\Combinable;
 use Buckaroo\PaymentMethods\PayablePaymentMethod;
 use Buckaroo\PaymentMethods\PaymentMethod;
 
+/**
+ *
+ */
 class NoServiceSpecifiedPayment extends PayablePaymentMethod implements Combinable
 {
+    /**
+     * @var string
+     */
     protected string $paymentName = 'noservice';
 
+    /**
+     * @param string|null $action
+     * @param Model|null $model
+     * @return PaymentMethod
+     */
     protected function setServiceList(?string $action, ?Model $model = null): PaymentMethod
     {
         return $this;
