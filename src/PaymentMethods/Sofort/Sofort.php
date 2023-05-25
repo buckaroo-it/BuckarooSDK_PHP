@@ -22,11 +22,26 @@ declare(strict_types=1);
 
 namespace Buckaroo\PaymentMethods\Sofort;
 
+use Buckaroo\Models\Model;
 use Buckaroo\PaymentMethods\Interfaces\Combinable;
 use Buckaroo\PaymentMethods\PayablePaymentMethod;
+use Buckaroo\Transaction\Response\TransactionResponse;
 
 class Sofort extends PayablePaymentMethod implements Combinable
 {
     protected string $paymentName = 'sofortueberweisung';
     protected int $serviceVersion = 1;
+
+    /**
+     * @param Model|null $model
+     * @return TransactionResponse
+     */
+    public function instantRefund(?Model $model = null):TransactionResponse
+    {
+        $this->setRefundPayload();
+
+        $this->setServiceList('instantRefund', $model);
+
+        return $this->postRequest();
+    }
 }

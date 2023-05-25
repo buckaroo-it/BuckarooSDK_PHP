@@ -36,7 +36,6 @@ class NoServiceSpecifiedPaymentTest extends BuckarooTestCase
             'servicesExcludedForClient' => 'ideal',
             'continueOnIncomplete' => '1',
         ]);
-
         $this->assertTrue($response->isWaitingOnUserInput());
     }
 }

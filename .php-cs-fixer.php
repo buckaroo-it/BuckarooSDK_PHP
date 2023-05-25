@@ -31,6 +31,10 @@ return (new PhpCsFixer\Config())
             'position_after_anonymous_constructs' => 'next',
             'position_after_control_structures' => 'next',
         ],
+        'curly_braces_position' => [
+            'classes_opening_brace' => 'next_line_unless_newline_at_signature_end',
+            'control_structures_opening_brace'  => 'next_line_unless_newline_at_signature_end'
+        ],
         'phpdoc_single_line_var_spacing' => true,
         'phpdoc_var_without_name' => true,
         'method_argument_space' => [
