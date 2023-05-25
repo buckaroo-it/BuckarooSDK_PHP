@@ -48,7 +48,6 @@ abstract class PayablePaymentMethod extends PaymentMethod
         //TODO
         //Create validator class that validates specific request
         //$request->validate();
-
         return $this->postRequest();
     }
 
