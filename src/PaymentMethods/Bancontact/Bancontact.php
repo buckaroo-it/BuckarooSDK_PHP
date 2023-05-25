@@ -12,6 +12,9 @@ use Buckaroo\PaymentMethods\Interfaces\Combinable;
 use Buckaroo\PaymentMethods\PayablePaymentMethod;
 use Buckaroo\Transaction\Response\TransactionResponse;
 
+/**
+ *
+ */
 class Bancontact extends PayablePaymentMethod implements Combinable
 {
     /**
@@ -72,6 +75,7 @@ class Bancontact extends PayablePaymentMethod implements Combinable
 
     /**
      * @return TransactionResponse
+     * @deprecated deprecated since version 1.7.0, please use authorize method
      */
     public function authenticate(): TransactionResponse
     {
@@ -83,4 +87,45 @@ class Bancontact extends PayablePaymentMethod implements Combinable
 
         return $this->postRequest();
     }
+
+    /**
+     * @return Bancontact|mixed
+     */
+    public function authorize()
+    {
+        $authenticate = new Authenticate($this->payload);
+
+        $this->setPayPayload();
+
+        $this->setServiceList('Authorize', $authenticate);
+
+        return $this->postRequest();
+    }
+
+    /**
+     * @return Bancontact|mixed
+     */
+    public function capture()
+    {
+        $authenticate = new Authenticate($this->payload);
+
+        $this->setPayPayload();
+
+        $this->setServiceList('Capture', $authenticate);
+
+        return $this->postRequest();
+    }
+
+    /**
+     * @return Bancontact|mixed
+     */
+    public function cancelAuthorize()
+    {
+        $this->setPayPayload();
+
+        $this->setServiceList('CancelAuthorize');
+
+        return $this->postRequest();
+    }
+
 }
