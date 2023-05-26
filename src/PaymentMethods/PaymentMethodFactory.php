@@ -108,8 +108,7 @@ class PaymentMethodFactory
         PointOfSale::class => ['pospayment'],
         Giropay::class => ['giropay'],
         GiftCard::class => [
-            'giftcard', 'westlandbon', 'ideal',
-            'ippies', 'babygiftcard', 'babyparkgiftcard',
+            'giftcard', 'westlandbon', 'babygiftcard', 'babyparkgiftcard',
             'beautywellness', 'boekenbon', 'boekenvoordeel',
             'designshopsgiftcard', 'fashioncheque', 'fashionucadeaukaart',
             'fijncadeau', 'koffiecadeau', 'kokenzo',
