@@ -48,6 +48,9 @@ class IdealTest extends BuckarooTestCase
                 'address' => '123.456.789.123',
                 'type' => 0,
             ],
+            'customParameters' => [
+                'CustomerBillingFirstName' => 'test'
+            ],
             'additionalParameters' => [
                 'initiated_by_magento' => 1,
                 'service_action' => 'something',
