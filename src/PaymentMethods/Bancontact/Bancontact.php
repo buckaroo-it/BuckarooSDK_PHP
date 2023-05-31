@@ -79,13 +79,7 @@ class Bancontact extends PayablePaymentMethod implements Combinable
      */
     public function authenticate(): TransactionResponse
     {
-        $authenticate = new Authenticate($this->payload);
-
-        $this->setPayPayload();
-
-        $this->setServiceList('Authenticate', $authenticate);
-
-        return $this->postRequest();
+        return $this->authorize();
     }
 
     /**
