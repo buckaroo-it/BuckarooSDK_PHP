@@ -20,22 +20,28 @@
 
 namespace Buckaroo\PaymentMethods\NoServiceSpecifiedPayment;
 
-use Buckaroo\Models\Company;
 use Buckaroo\Models\Model;
 use Buckaroo\PaymentMethods\Interfaces\Combinable;
 use Buckaroo\PaymentMethods\PayablePaymentMethod;
-use Buckaroo\PaymentMethods\Paypal\Models\ExtraInfo;
-use Buckaroo\PaymentMethods\Paypal\Models\Pay;
-use Buckaroo\Transaction\Response\TransactionResponse;
+use Buckaroo\PaymentMethods\PaymentMethod;
 
+/**
+ *
+ */
 class NoServiceSpecifiedPayment extends PayablePaymentMethod implements Combinable
 {
+    /**
+     * @var string
+     */
     protected string $paymentName = 'noservice';
 
-    public function pay(?Model $model = null)
+    /**
+     * @param string|null $action
+     * @param Model|null $model
+     * @return PaymentMethod
+     */
+    protected function setServiceList(?string $action, ?Model $model = null): PaymentMethod
     {
-        $this->setPayPayload();
-
-        return $this->postRequest();
+        return $this;
     }
 }

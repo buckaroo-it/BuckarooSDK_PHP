@@ -15,7 +15,7 @@ $response = $buckaroo->method(null)->pay([
     'amountDebit' => 10.10,
     'servicesSelectableByClient' => 'ideal,bancontactmrcash,paypal',
     'servicesExcludedForClient' => 'ideal',
-    'continueOnIncomplete' => '1'
+    'continueOnIncomplete' => '1',
 ]);
 
 

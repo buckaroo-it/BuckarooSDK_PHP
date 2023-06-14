@@ -18,27 +18,15 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\Payconiq;
+namespace Buckaroo\PaymentMethods\Thunes\Service\ParameterKeys;
 
-use Buckaroo\Models\Model;
-use Buckaroo\PaymentMethods\Interfaces\Combinable;
-use Buckaroo\PaymentMethods\PayablePaymentMethod;
-use Buckaroo\Transaction\Response\TransactionResponse;
+use Buckaroo\Models\Adapters\ServiceParametersKeysAdapter;
 
-class Payconiq extends PayablePaymentMethod implements Combinable
+class ArticleAdapter extends ServiceParametersKeysAdapter
 {
-    protected string $paymentName = 'payconiq';
-
-    /**
-     * @param Model|null $model
-     * @return TransactionResponse
-     */
-    public function instantRefund(?Model $model = null):TransactionResponse
-    {
-        $this->setRefundPayload();
-
-        $this->setServiceList('instantRefund', $model);
-
-        return $this->postRequest();
-    }
+    protected array $keys = [
+        'identifier' => 'ArticleId',
+        'description' => 'ArticleLabel',
+        'price' => 'ArticleUnitPrice',
+    ];
 }

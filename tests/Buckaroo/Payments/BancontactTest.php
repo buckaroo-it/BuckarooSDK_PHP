@@ -103,9 +103,9 @@ class BancontactTest extends BuckarooTestCase
      * @return void
      * @test
      */
-    public function it_creates_a_bancontact_authenticate()
+    public function it_creates_a_bancontact_authorize()
     {
-        $response = $this->buckaroo->method('bancontactmrcash')->authenticate([
+        $response = $this->buckaroo->method('bancontactmrcash')->authorize([
             'invoice' => 'Bancontact Authenticate SaveToken',
             'description' => 'Bancontact Authenticate SaveToken',
             'amountDebit' => 0.02,
@@ -113,5 +113,36 @@ class BancontactTest extends BuckarooTestCase
         ]);
 
         $this->assertTrue($response->isWaitingOnUserInput());
+    }
+
+    /**
+     * @return void
+     * @test
+     */
+    public function it_creates_a_bancontact_capture()
+    {
+        $response = $this->buckaroo->method('bancontactmrcash')->capture([
+            'invoice' => 'Bancontact Authenticate SaveToken',
+            'description' => 'Bancontact Authenticate SaveToken',
+            'originalTransactionKey'    => 'D3EEF5279D9047A0B202334D8050B6CF',
+            'amountDebit' => 0.02,
+        ]);
+
+        $this->assertTrue($response->isWaitingOnUserInput());
+    }
+
+    /**
+     * @return void
+     * @test
+     */
+    public function it_creates_a_bancontact_cancel_authorize()
+    {
+        $response = $this->buckaroo->method('bancontactmrcash')->cancelAuthorize([
+            'invoice'                   => 'Bancontact Authenticate SaveToken',
+            'description'               => 'Bancontact Authenticate SaveToken',
+            'originalTransactionKey'    => '122862F217D44C4DAF4012D93301E168',
+        ]);
+
+        $this->assertTrue($response->isValidationFailure());
     }
 }

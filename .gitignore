@@ -7,3 +7,5 @@ example/logs
 .phpunit.result.cache
 
 logs/
+
+.php-cs-fixer.cache

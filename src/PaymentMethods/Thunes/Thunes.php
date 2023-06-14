@@ -18,24 +18,22 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\KlarnaPay;
+declare(strict_types=1);
+
+namespace Buckaroo\PaymentMethods\Thunes;
 
 use Buckaroo\Models\Model;
-use Buckaroo\PaymentMethods\KlarnaPay\Models\Pay;
-use Buckaroo\PaymentMethods\KlarnaPay\Models\PayPayload;
+use Buckaroo\PaymentMethods\Thunes\Models\Pay;
 use Buckaroo\PaymentMethods\PayablePaymentMethod;
+use Buckaroo\Transaction\Request\TransactionRequest;
 use Buckaroo\Transaction\Response\TransactionResponse;
 
-class KlarnaPay extends PayablePaymentMethod
+class Thunes extends PayablePaymentMethod
 {
     /**
      * @var string
      */
-    protected string $paymentName = 'klarna';
-    /**
-     * @var string
-     */
-    protected string $payModel = PayPayload::class;
+    protected string $paymentName = 'thunes';
 
     /**
      * @param Model|null $model
@@ -45,27 +43,13 @@ class KlarnaPay extends PayablePaymentMethod
     {
         return parent::pay($model ?? new Pay($this->payload));
     }
-
-    /**
-     * @return KlarnaPay|mixed
-     */
-    public function payInInstallments(): TransactionResponse
+    public function paymentName(): string
     {
-        $pay = new Pay($this->payload);
+        if (isset($this->payload['name']))
+        {
+            return $this->payload['name'];
+        }
 
-        $this->setPayPayload();
-
-        $this->setServiceList('PayInInstallments', $pay);
-
-        return $this->postRequest();
-    }
-    
-     /**
-     * @param Model|null $model
-     * @return TransactionResponse
-     */
-    public function payRemainder(?Model $model = null): TransactionResponse
-    {
-        return parent::payRemainder($model ?? new Pay($this->payload));
+        return 'thunes';
     }
 }
