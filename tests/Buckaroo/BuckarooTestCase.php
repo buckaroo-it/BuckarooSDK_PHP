@@ -33,7 +33,7 @@ class BuckarooTestCase extends TestCase
         $dotenv = Dotenv::createImmutable(getcwd());
         $dotenv->load();
 
-        $this->buckaroo = new BuckarooClient($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
+//        $this->buckaroo = new BuckarooClient($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 //
 //        ?string $mode = null,
 //        ?string $currency = null,
@@ -44,8 +44,8 @@ class BuckarooTestCase extends TestCase
 //        ?string $moduleSupplier = null,
 //        ?string $moduleName = null,
 //        ?string $moduleVersion = null,
-
-        $this->buckaroo->setConfig(new DefaultConfig(
+        
+        $this->buckaroo = new BuckarooClient(new DefaultConfig(
             $_ENV['BPE_WEBSITE_KEY'],
             $_ENV['BPE_SECRET_KEY'],
             $_ENV['BPE_MODE'] ?? null,

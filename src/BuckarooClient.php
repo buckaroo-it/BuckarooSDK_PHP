@@ -45,13 +45,21 @@ class BuckarooClient
     private Config $config;
 
     /**
-     * @param string $websiteKey
+     * @param string|Config $websiteKey
      * @param string $secretKey
      * @param string|null $mode
      */
-    public function __construct(string $websiteKey, string $secretKey, string $mode = null)
+    public function __construct($websiteKey, string $secretKey = null, string $mode = null)
     {
-        $this->config = $this->getConfig($websiteKey, $secretKey, $mode);
+        if($websiteKey instanceof Config)
+        {
+            $this->config = $websiteKey;
+        }
+
+        if(is_string($websiteKey))
+        {
+            $this->config = $this->getConfig($websiteKey, $secretKey, $mode);
+        }
 
         $this->client = new Client($this->config);
     }
