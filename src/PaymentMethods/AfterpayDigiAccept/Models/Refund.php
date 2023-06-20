@@ -25,9 +25,17 @@ use Buckaroo\Models\ServiceParameter;
 use Buckaroo\PaymentMethods\AfterpayDigiAccept\Service\ParameterKeys\ArticleAdapter;
 use Buckaroo\PaymentMethods\Traits\CountableGroupKey;
 
+/**
+ *
+ */
 class Refund extends ServiceParameter
 {
     use CountableGroupKey;
+
+    /**
+     * @var float
+     */
+    protected float $shippingCosts;
 
     /**
      * @var array|string[]
