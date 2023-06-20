@@ -121,5 +121,4 @@ class Bancontact extends PayablePaymentMethod implements Combinable
 
         return $this->postRequest();
     }
-
 }

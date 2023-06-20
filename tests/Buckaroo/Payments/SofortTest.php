@@ -42,4 +42,19 @@ class SofortTest extends BuckarooTestCase
 
         $this->assertTrue($response->isPendingProcessing());
     }
+
+
+    /**
+     * @return void
+     * @test
+     */
+    public function it_creates_a_sofort_instant_refund()
+    {
+        $response = $this->buckaroo->method('sofortueberweisung')->instantRefund([
+            'invoice' => uniqid(),
+            'amountCredit' => 10.10,
+        ]);
+
+        $this->assertTrue($response->isPendingProcessing());
+    }
 }
