@@ -18,38 +18,28 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\AfterpayDigiAccept\Models;
+namespace Buckaroo\PaymentMethods\Thunes\Models;
 
-use Buckaroo\Models\Article;
 use Buckaroo\Models\ServiceParameter;
-use Buckaroo\PaymentMethods\AfterpayDigiAccept\Service\ParameterKeys\ArticleAdapter;
 use Buckaroo\PaymentMethods\Traits\CountableGroupKey;
+use Buckaroo\PaymentMethods\Thunes\Service\ParameterKeys\ArticleAdapter;
 
-/**
- *
- */
-class Refund extends ServiceParameter
+class Pay extends ServiceParameter
 {
     use CountableGroupKey;
-
-    /**
-     * @var float
-     */
-    protected float $shippingCosts;
 
     /**
      * @var array|string[]
      */
     private array $countableProperties = ['articles'];
-    /**
-     * @var array
-     */
+
     protected array $articles = [];
 
-    /**
-     * @param array|null $articles
-     * @return array
-     */
+    protected array $groupData = [
+        'articles' => [
+            'groupType' => 'Article',
+        ],
+    ];
     public function articles(?array $articles = null)
     {
         if (is_array($articles))

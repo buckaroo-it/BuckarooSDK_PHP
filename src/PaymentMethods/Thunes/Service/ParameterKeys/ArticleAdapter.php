@@ -18,29 +18,15 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\Models;
+namespace Buckaroo\PaymentMethods\Thunes\Service\ParameterKeys;
 
-class AdditionalParameters extends Model
+use Buckaroo\Models\Adapters\ServiceParametersKeysAdapter;
+
+class ArticleAdapter extends ServiceParametersKeysAdapter
 {
-    /**
-     * @var array
-     */
-    protected array $List;
-
-    /**
-     * @param array|null $data
-     * @return AdditionalParameters
-     */
-    public function setProperties(?array $data)
-    {
-        foreach ($data ?? [] as $name => $value)
-        {
-            $this->List[] = [
-                'Value' => $value,
-                'Name' => $name,
-            ];
-        }
-
-        return parent::setProperties($data);
-    }
+    protected array $keys = [
+        'identifier' => 'ArticleId',
+        'description' => 'ArticleLabel',
+        'price' => 'ArticleUnitPrice',
+    ];
 }

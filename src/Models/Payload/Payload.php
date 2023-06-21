@@ -22,8 +22,12 @@ namespace Buckaroo\Models\Payload;
 
 use Buckaroo\Models\AdditionalParameters;
 use Buckaroo\Models\ClientIP;
+use Buckaroo\Models\CustomParameters;
 use Buckaroo\Models\Model;
 
+/**
+ *
+ */
 class Payload extends Model
 {
     /**
@@ -101,18 +105,16 @@ class Payload extends Model
      * @var string
      */
     protected string $servicesExcludedForClient;
-    /**
-     * @var array
-     */
-    protected array $customParameters;
 
     /**
      * @var AdditionalParameters
      */
     protected AdditionalParameters $additionalParameters;
+
     /**
-     * @var string
+     * @var CustomParameters
      */
+    protected CustomParameters $customParameters;
 
     /**
      * @param array|null $data
@@ -120,6 +122,13 @@ class Payload extends Model
      */
     public function setProperties(?array $data)
     {
+        if (isset($data['customParameters']))
+        {
+            $this->customParameters = new CustomParameters($data['customParameters']);
+
+            unset($data['customParameters']);
+        }
+
         if (isset($data['additionalParameters']))
         {
             $this->additionalParameters = new AdditionalParameters($data['additionalParameters']);
