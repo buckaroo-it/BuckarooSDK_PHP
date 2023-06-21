@@ -58,7 +58,8 @@ class Credentials
 
         $request = new TransactionRequest;
 
-        try {
+        try
+        {
             $response = $this->client->specification($request, 'ideal', 2);
         } catch (BuckarooException $e)
         {

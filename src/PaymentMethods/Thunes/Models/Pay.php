@@ -21,8 +21,8 @@
 namespace Buckaroo\PaymentMethods\Thunes\Models;
 
 use Buckaroo\Models\ServiceParameter;
-use Buckaroo\PaymentMethods\Traits\CountableGroupKey;
 use Buckaroo\PaymentMethods\Thunes\Service\ParameterKeys\ArticleAdapter;
+use Buckaroo\PaymentMethods\Traits\CountableGroupKey;
 
 class Pay extends ServiceParameter
 {

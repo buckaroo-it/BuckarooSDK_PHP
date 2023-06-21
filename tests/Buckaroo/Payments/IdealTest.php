@@ -23,6 +23,7 @@ namespace Tests\Buckaroo\Payments;
 use Tests\Buckaroo\BuckarooTestCase;
 use Buckaroo\Config\Config;
 
+
 class CustomConfig extends Config
 {
     public function __construct()
@@ -36,9 +37,12 @@ class CustomConfig extends Config
 
 class IdealTest extends BuckarooTestCase
 {
+    protected array $paymentPayload;
+    protected array $refundPayload;
+
     protected function setUp(): void
     {
-        $this->paymentPayload = ([
+        $this->paymentPayload = [
             'invoice' => uniqid(),
             'amountDebit' => 10.10,
             'issuer' => 'ABNANL2A',
@@ -55,7 +59,7 @@ class IdealTest extends BuckarooTestCase
                 'initiated_by_magento' => 1,
                 'service_action' => 'something',
             ],
-        ]);
+        ];
 
         $this->refundPayload = [
             'invoice' => 'testinvoice 123', //Set invoice number of the transaction to refund

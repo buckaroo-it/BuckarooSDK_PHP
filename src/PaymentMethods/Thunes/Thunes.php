@@ -23,9 +23,8 @@ declare(strict_types=1);
 namespace Buckaroo\PaymentMethods\Thunes;
 
 use Buckaroo\Models\Model;
-use Buckaroo\PaymentMethods\Thunes\Models\Pay;
 use Buckaroo\PaymentMethods\PayablePaymentMethod;
-use Buckaroo\Transaction\Request\TransactionRequest;
+use Buckaroo\PaymentMethods\Thunes\Models\Pay;
 use Buckaroo\Transaction\Response\TransactionResponse;
 
 class Thunes extends PayablePaymentMethod
