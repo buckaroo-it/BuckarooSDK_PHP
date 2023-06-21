@@ -42,11 +42,11 @@ class SoftwareHeader extends TransactionHeader
         $headers = $this->transactionHeader->getHeaders();
 
         $headers[] = "Software: " .  json_encode([
-            "PlatformName"      => $this->config->platformName(),
-            "PlatformVersion"   => $this->config->platformVersion(),
-            "ModuleSupplier"    => $this->config->moduleSupplier(),
-            "ModuleName"        => $this->config->moduleName(),
-            "ModuleVersion"     => $this->config->moduleVersion(),
+            "PlatformName" => $this->config->platformName(),
+            "PlatformVersion" => $this->config->platformVersion(),
+            "ModuleSupplier" => $this->config->moduleSupplier(),
+            "ModuleName" => $this->config->moduleName(),
+            "ModuleVersion" => $this->config->moduleVersion(),
         ]);
 
         return $headers;

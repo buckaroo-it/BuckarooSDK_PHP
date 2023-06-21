@@ -51,12 +51,12 @@ class BuckarooClient
      */
     public function __construct($websiteKey, string $secretKey = null, string $mode = null)
     {
-        if($websiteKey instanceof Config)
+        if ($websiteKey instanceof Config)
         {
             $this->config = $websiteKey;
         }
 
-        if(is_string($websiteKey))
+        if (is_string($websiteKey))
         {
             $this->config = $this->getConfig($websiteKey, $secretKey, $mode);
         }
