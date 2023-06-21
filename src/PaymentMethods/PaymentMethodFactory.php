@@ -105,6 +105,7 @@ class PaymentMethodFactory
         Sofort::class => ['sofort', 'sofortueberweisung'],
         Tinka::class => ['tinka'],
         Marketplaces::class => ['marketplaces'],
+        NoServiceSpecifiedPayment::class => ['noservice'],
         Payconiq::class => ['payconiq'],
         Przelewy24::class => ['przelewy24'],
         PointOfSale::class => ['pospayment'],
