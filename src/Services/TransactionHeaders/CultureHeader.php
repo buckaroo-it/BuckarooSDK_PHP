@@ -57,12 +57,9 @@ class CultureHeader extends TransactionHeader
      */
     public function getLocale(): string
     {
-        switch ($this->locale)
+        if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))
         {
-            case 'nl':
-                return 'nl-NL';
-            case 'de':
-                return 'de-DE';
+            return substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 5);
         }
 
         return 'en-GB';
