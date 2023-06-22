@@ -78,7 +78,8 @@ class iDeal extends PayablePaymentMethod
     {
         $request = new TransactionRequest;
 
-        try {
+        try
+        {
             $response = $this->client->specification($request, 'ideal', 2);
         } catch (BuckarooException $e)
         {

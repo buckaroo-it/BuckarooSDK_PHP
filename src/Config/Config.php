@@ -26,9 +26,18 @@ use Buckaroo\Handlers\Logging\DefaultLogger;
 use Buckaroo\Handlers\Logging\Loggable;
 use Buckaroo\Handlers\Logging\Subject;
 
+/**
+ *
+ */
 abstract class Config implements Loggable
 {
+    /**
+     *
+     */
     const LIVE_MODE = 'live';
+    /**
+     *
+     */
     const TEST_MODE = 'test';
 
     /**
@@ -61,6 +70,27 @@ abstract class Config implements Loggable
     private string $pushURL;
 
     /**
+     * @var string|mixed
+     */
+    private string $platformName;
+    /**
+     * @var string|mixed
+     */
+    private string $platformVersion;
+    /**
+     * @var string|mixed
+     */
+    private string $moduleSupplier;
+    /**
+     * @var string|mixed
+     */
+    private string $moduleName;
+    /**
+     * @var string|mixed
+     */
+    private string $moduleVersion;
+
+    /**
      * @var Subject
      */
     protected Subject $logger;
@@ -83,6 +113,11 @@ abstract class Config implements Loggable
         ?string $returnURL = null,
         ?string $returnURLCancel = null,
         ?string $pushURL = null,
+        ?string $platformName = null,
+        ?string $platformVersion = null,
+        ?string $moduleSupplier = null,
+        ?string $moduleName = null,
+        ?string $moduleVersion = null,
         Subject $logger = null
     ) {
         $this->websiteKey = $websiteKey;
@@ -93,6 +128,11 @@ abstract class Config implements Loggable
         $this->returnURL = $_ENV['BPE_RETURN_URL'] ?? $returnURL ?? '';
         $this->returnURLCancel = $_ENV['BPE_RETURN_URL_CANCEL'] ?? $returnURLCancel ?? '';
         $this->pushURL = $_ENV['BPE_PUSH_URL'] ?? $pushURL ?? '';
+        $this->platformName = $_ENV['PlatformName'] ?? $platformName ?? '';
+        $this->platformVersion = $_ENV['PlatformVersion'] ?? $platformVersion ?? '';
+        $this->moduleSupplier = $_ENV['ModuleSupplier'] ?? $moduleSupplier ?? '';
+        $this->moduleName = $_ENV['ModuleName'] ?? $moduleName ?? '';
+        $this->moduleVersion = $_ENV['ModuleVersion'] ?? $moduleVersion ?? '';
 
         $this->setLogger($logger ?? new DefaultLogger());
     }
@@ -165,6 +205,46 @@ abstract class Config implements Loggable
     public function pushURL(): string
     {
         return $this->pushURL;
+    }
+
+    /**
+     * @return string
+     */
+    public function platformName(): string
+    {
+        return $this->platformName;
+    }
+
+    /**
+     * @return string
+     */
+    public function platformVersion(): string
+    {
+        return $this->platformVersion;
+    }
+
+    /**
+     * @return string
+     */
+    public function moduleSupplier(): string
+    {
+        return $this->moduleSupplier;
+    }
+
+    /**
+     * @return string
+     */
+    public function moduleName(): string
+    {
+        return $this->moduleName;
+    }
+
+    /**
+     * @return string
+     */
+    public function moduleVersion(): string
+    {
+        return $this->moduleVersion;
     }
 
     /**

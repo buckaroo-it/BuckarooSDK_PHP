@@ -18,37 +18,29 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-declare(strict_types=1);
+namespace Buckaroo\Models;
 
-namespace Buckaroo\PaymentMethods\Thunes;
-
-use Buckaroo\Models\Model;
-use Buckaroo\PaymentMethods\PayablePaymentMethod;
-use Buckaroo\PaymentMethods\Thunes\Models\Pay;
-use Buckaroo\Transaction\Response\TransactionResponse;
-
-class Thunes extends PayablePaymentMethod
+class CustomParameters extends Model
 {
     /**
-     * @var string
+     * @var array
      */
-    protected string $paymentName = 'thunes';
+    protected array $List;
 
     /**
-     * @param Model|null $model
-     * @return TransactionResponse
+     * @param array|null $data
+     * @return CustomParameters
      */
-    public function pay(?Model $model = null): TransactionResponse
+    public function setProperties(?array $data)
     {
-        return parent::pay($model ?? new Pay($this->payload));
-    }
-    public function paymentName(): string
-    {
-        if (isset($this->payload['name']))
+        foreach ($data ?? [] as $name => $value)
         {
-            return $this->payload['name'];
+            $this->List[] = [
+                'Value' => $value,
+                'Name' => $name,
+            ];
         }
 
-        return 'thunes';
+        return parent::setProperties($data);
     }
 }
