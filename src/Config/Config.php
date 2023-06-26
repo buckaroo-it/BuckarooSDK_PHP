@@ -131,8 +131,7 @@ abstract class Config implements Loggable
         ?string $moduleVersion = null,
         ?string $culture = null,
         Subject $logger = null
-    )
-    {
+    ) {
         $this->websiteKey = $websiteKey;
         $this->secretKey = $secretKey;
 
@@ -181,7 +180,8 @@ abstract class Config implements Loggable
      */
     public function mode(?string $mode = null): string
     {
-        if ($mode && in_array($mode, [self::LIVE_MODE, self::TEST_MODE])) {
+        if ($mode && in_array($mode, [self::LIVE_MODE, self::TEST_MODE]))
+        {
             $this->mode = $mode;
         }
 
@@ -265,7 +265,7 @@ abstract class Config implements Loggable
      */
     public function culture(): string
     {
-        if(!empty($this->culture))
+        if (! empty($this->culture))
         {
             return $this->culture;
         }
