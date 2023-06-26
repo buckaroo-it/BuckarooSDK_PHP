@@ -91,6 +91,11 @@ abstract class Config implements Loggable
     private string $moduleVersion;
 
     /**
+     * @var string|mixed
+     */
+    private string $culture;
+
+    /**
      * @var Subject
      */
     protected Subject $logger;
@@ -103,11 +108,17 @@ abstract class Config implements Loggable
      * @param string|null $returnURL
      * @param string|null $returnURLCancel
      * @param string|null $pushURL
+     * @param string|null $platformName
+     * @param string|null $platformVersion
+     * @param string|null $moduleSupplier
+     * @param string|null $moduleName
+     * @param string|null $moduleVersion
+     * @param string|null $culture
      * @param Subject|null $logger
      */
     public function __construct(
-        string $websiteKey,
-        string $secretKey,
+        string  $websiteKey,
+        string  $secretKey,
         ?string $mode = null,
         ?string $currency = null,
         ?string $returnURL = null,
@@ -118,8 +129,10 @@ abstract class Config implements Loggable
         ?string $moduleSupplier = null,
         ?string $moduleName = null,
         ?string $moduleVersion = null,
+        ?string $culture = null,
         Subject $logger = null
-    ) {
+    )
+    {
         $this->websiteKey = $websiteKey;
         $this->secretKey = $secretKey;
 
@@ -133,6 +146,7 @@ abstract class Config implements Loggable
         $this->moduleSupplier = $_ENV['ModuleSupplier'] ?? $moduleSupplier ?? '';
         $this->moduleName = $_ENV['ModuleName'] ?? $moduleName ?? '';
         $this->moduleVersion = $_ENV['ModuleVersion'] ?? $moduleVersion ?? '';
+        $this->culture = $_ENV['Culture'] ?? $culture ?? '';
 
         $this->setLogger($logger ?? new DefaultLogger());
     }
@@ -167,8 +181,7 @@ abstract class Config implements Loggable
      */
     public function mode(?string $mode = null): string
     {
-        if ($mode && in_array($mode, [self::LIVE_MODE, self::TEST_MODE]))
-        {
+        if ($mode && in_array($mode, [self::LIVE_MODE, self::TEST_MODE])) {
             $this->mode = $mode;
         }
 
@@ -245,6 +258,24 @@ abstract class Config implements Loggable
     public function moduleVersion(): string
     {
         return $this->moduleVersion;
+    }
+
+    /**
+     * @return string
+     */
+    public function culture(): string
+    {
+        if(!empty($this->culture))
+        {
+            return $this->culture;
+        }
+
+        if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))
+        {
+            return substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 5);
+        }
+
+        return 'en-GB';
     }
 
     /**
