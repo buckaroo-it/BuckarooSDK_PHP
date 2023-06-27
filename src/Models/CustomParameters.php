@@ -20,7 +20,7 @@
 
 namespace Buckaroo\Models;
 
-class AdditionalParameters extends Model
+class CustomParameters extends Model
 {
     /**
      * @var array
@@ -29,7 +29,7 @@ class AdditionalParameters extends Model
 
     /**
      * @param array|null $data
-     * @return AdditionalParameters
+     * @return CustomParameters
      */
     public function setProperties(?array $data)
     {

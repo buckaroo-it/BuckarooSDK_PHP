@@ -48,7 +48,8 @@ class Request implements JsonSerializable, ArrayAccess, Arrayable
         if (is_null($offset))
         {
             $this->data[] = $value;
-        } else {
+        } else
+        {
             $this->data[$offset] = $value;
         }
     }

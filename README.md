@@ -24,7 +24,7 @@
 
 ### About
 
-Buckaroo is the the Payment Service Provider for all your online payments with more than 15,000 companies relying on Buckaroo's platform to securely process their payments, subscriptions and unpaid invoices.
+Buckaroo is the the Payment Service Provider for all your online payments with more than 30,000 companies relying on Buckaroo's platform to securely process their payments, subscriptions and unpaid invoices.
 Buckaroo developed their own PHP SDK. The SDK is a modern, open-source PHP library that makes it easy to integrate your PHP application with Buckaroo's services.
 Start accepting payments today with Buckaroo.
 
@@ -98,7 +98,7 @@ If you want to contribute as well, then please follow our [Contribution Guidelin
 - **PATCHES:** Bug and hotfixes only
 
 ### Additional information
-- **Support:** https://support.buckaroo.eu/contact
+- **Support:** https://docs.buckaroo.io/docs/contact-us
 - **Contact:** [support@buckaroo.nl](mailto:support@buckaroo.nl) or [+31 (0)30 711 50 50](tel:+310307115050)
 
 ## License

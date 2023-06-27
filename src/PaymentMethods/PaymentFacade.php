@@ -70,6 +70,7 @@ use Buckaroo\Transaction\Response\TransactionResponse;
  * @method TransactionResponse payRemainderEncrypted(array $data)
  * @method TransactionResponse generate(array $data)
  * @method TransactionResponse identify(array $data)
+ * @method TransactionResponse instantRefund(array $data)
  * @method TransactionResponse verify(array $data)
  * @method TransactionResponse login(array $data)
  * @method TransactionResponse payInInstallments(array $data)

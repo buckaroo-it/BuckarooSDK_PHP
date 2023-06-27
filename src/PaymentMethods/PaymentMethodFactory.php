@@ -48,6 +48,7 @@ use Buckaroo\PaymentMethods\KlarnaPay\KlarnaPay;
 use Buckaroo\PaymentMethods\Marketplaces\Marketplaces;
 use Buckaroo\PaymentMethods\NoServiceSpecifiedPayment\NoServiceSpecifiedPayment;
 use Buckaroo\PaymentMethods\Payconiq\Payconiq;
+use Buckaroo\PaymentMethods\PaymentInitiation\PaymentInitiation;
 use Buckaroo\PaymentMethods\Paypal\Paypal;
 use Buckaroo\PaymentMethods\PayPerEmail\PayPerEmail;
 use Buckaroo\PaymentMethods\PointOfSale\PointOfSale;
@@ -56,6 +57,7 @@ use Buckaroo\PaymentMethods\SEPA\SEPA;
 use Buckaroo\PaymentMethods\Sofort\Sofort;
 use Buckaroo\PaymentMethods\Subscriptions\Subscriptions;
 use Buckaroo\PaymentMethods\Surepay\Surepay;
+use Buckaroo\PaymentMethods\Thunes\Thunes;
 use Buckaroo\PaymentMethods\Tinka\Tinka;
 use Buckaroo\PaymentMethods\Trustly\Trustly;
 use Buckaroo\PaymentMethods\WeChatPay\WeChatPay;
@@ -97,6 +99,7 @@ class PaymentMethodFactory
         KBC::class => ['kbcpaymentbutton'],
         Paypal::class => ['paypal'],
         PayPerEmail::class => ['payperemail'],
+        PaymentInitiation::class => ['paymentinitiation','paybybank'],
         EPS::class => ['eps'],
         Emandates::class => ['emandates'],
         Sofort::class => ['sofort', 'sofortueberweisung'],
@@ -107,9 +110,9 @@ class PaymentMethodFactory
         Przelewy24::class => ['przelewy24'],
         PointOfSale::class => ['pospayment'],
         Giropay::class => ['giropay'],
+        NoServiceSpecifiedPayment::class => ['noservice'],
         GiftCard::class => [
-            'giftcard', 'westlandbon', 'ideal',
-            'ippies', 'babygiftcard', 'babyparkgiftcard',
+            'giftcard', 'westlandbon', 'babygiftcard', 'babyparkgiftcard',
             'beautywellness', 'boekenbon', 'boekenvoordeel',
             'designshopsgiftcard', 'fashioncheque', 'fashionucadeaukaart',
             'fijncadeau', 'koffiecadeau', 'kokenzo',
@@ -117,6 +120,10 @@ class PaymentMethodFactory
             'podiumcadeaukaart', 'shoesaccessories', 'webshopgiftcard',
             'wijncadeau', 'wonenzo', 'yourgift',
             'vvvgiftcard', 'parfumcadeaukaart',
+        ],
+        Thunes::class => [
+            'thunes', 'monizzemealvoucher', 'monizzeecovoucher', 'monizzegiftvoucher',
+            'sodexomealvoucher', 'sodexoecovoucher', 'sodexogiftvoucher',
         ],
         Trustly::class => ['trustly'],
         BankTransfer::class => ['transfer'],
