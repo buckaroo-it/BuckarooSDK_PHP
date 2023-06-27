@@ -25,9 +25,6 @@ use Buckaroo\Models\ClientIP;
 use Buckaroo\Models\CustomParameters;
 use Buckaroo\Models\Model;
 
-/**
- *
- */
 class Payload extends Model
 {
     /**
