@@ -26,9 +26,6 @@ use Buckaroo\Handlers\Logging\DefaultLogger;
 use Buckaroo\Handlers\Logging\Loggable;
 use Buckaroo\Handlers\Logging\Subject;
 
-/**
- *
- */
 abstract class Config implements Loggable
 {
     /**
