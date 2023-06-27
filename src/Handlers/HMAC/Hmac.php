@@ -50,7 +50,11 @@ abstract class Hmac
         {
             if (is_array($data))
             {
+<<<<<<< HEAD
                 $data = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRESERVE_ZERO_FRACTION);
+=======
+                $data = json_encode($data, JSON_UNESCAPED_UNICODE|JSON_PRESERVE_ZERO_FRACTION);
+>>>>>>> master
             }
 
             $md5 = md5($data, true);
