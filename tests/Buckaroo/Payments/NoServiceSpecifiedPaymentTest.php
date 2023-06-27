@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?php
 /*
  * NOTICE OF LICENSE
