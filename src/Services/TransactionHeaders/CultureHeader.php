@@ -32,6 +32,10 @@ class CultureHeader extends TransactionHeader
      */
     protected ?string $locale;
     /**
+     * @var Config
+     */
+    protected Config $config;
+    /**
      * @param TransactionHeader $transactionHeader
      * @param Config $config
      */
