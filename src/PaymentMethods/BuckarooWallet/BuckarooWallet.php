@@ -39,6 +39,8 @@ class BuckarooWallet extends PayablePaymentMethod
      */
     public function createWallet()
     {
+        $this->isDataRequest = true;
+
         $this->requiredConfigFields = ['currency'];
 
         $wallet = new Wallet($this->payload);
@@ -55,6 +57,8 @@ class BuckarooWallet extends PayablePaymentMethod
      */
     public function updateWallet()
     {
+        $this->isDataRequest = true;
+
         $wallet = new Wallet($this->payload);
 
         $this->setServiceList('Update', $wallet);
@@ -67,6 +71,8 @@ class BuckarooWallet extends PayablePaymentMethod
      */
     public function getInfo()
     {
+        $this->isDataRequest = true;
+
         $wallet = new Wallet($this->payload);
 
         $this->setServiceList('GetInfo', $wallet);
@@ -79,6 +85,8 @@ class BuckarooWallet extends PayablePaymentMethod
      */
     public function release()
     {
+        $this->isDataRequest = true;
+
         $relasePayload = new ReleasePayload($this->payload);
 
         $wallet = new Wallet($this->payload);

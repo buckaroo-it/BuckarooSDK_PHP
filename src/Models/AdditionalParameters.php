@@ -20,22 +20,48 @@
 
 namespace Buckaroo\Models;
 
+/**
+ *
+ */
 class AdditionalParameters extends Model
 {
     /**
      * @var array
      */
-    protected array $AdditionalParameter;
+    protected ?array $AdditionalParameter;
+
+    /**
+     * @var array
+     */
+    protected ?array $List;
+
+    /**
+     * @var bool
+     */
+    private bool $isDataRequest;
 
     /**
      * @param array|null $data
      * @return AdditionalParameters
      */
-    public function setProperties(?array $data)
+    public function setProperties(?array $data, $type = 'AdditionalParameter')
     {
+        if($data == null) {
+            if(isset($this->AdditionalParameter)) {
+                $data = $this->AdditionalParameter;
+            }
+
+            if(isset($this->List)) {
+                $data = $this->List;
+            }
+        }
+
+        $this->AdditionalParameter = null;
+        $this->List = null;
+
         foreach ($data ?? [] as $name => $value)
         {
-            $this->AdditionalParameter[] = [
+            $this->$type[] = [
                 'Value' => $value,
                 'Name' => $name,
             ];

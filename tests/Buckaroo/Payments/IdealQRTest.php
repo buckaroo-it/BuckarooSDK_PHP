@@ -43,7 +43,7 @@ class IdealQRTest extends BuckarooTestCase
             'amount' => '1.00',
             'amountIsChangeable' => true,
             'expiration' => '2030-09-30',
-            'isProcessing' => false,
+            'isProcessing' => false
         ]);
 
         $this->assertTrue($response->isSuccess());
