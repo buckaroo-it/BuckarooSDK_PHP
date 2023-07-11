@@ -25,7 +25,7 @@ class AdditionalParameters extends Model
     /**
      * @var array
      */
-    protected array $List;
+    protected array $AdditionalParameter;
 
     /**
      * @param array|null $data
@@ -35,7 +35,7 @@ class AdditionalParameters extends Model
     {
         foreach ($data ?? [] as $name => $value)
         {
-            $this->List[] = [
+            $this->AdditionalParameter[] = [
                 'Value' => $value,
                 'Name' => $name,
             ];

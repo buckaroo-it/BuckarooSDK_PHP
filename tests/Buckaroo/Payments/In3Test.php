@@ -51,7 +51,7 @@ class In3Test extends BuckarooTestCase
      * @return void
      * @test
      */
-    public function it_creates_a_afterpaydigiaccept_refund()
+    public function it_creates_a_in3_refund()
     {
         $response = $this->buckaroo->method('in3')->refund([
             'amountCredit' => 10,
