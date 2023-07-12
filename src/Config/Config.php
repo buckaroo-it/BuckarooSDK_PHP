@@ -137,11 +137,11 @@ abstract class Config implements Loggable
         $this->returnURL = $_ENV['BPE_RETURN_URL'] ?? $returnURL ?? '';
         $this->returnURLCancel = $_ENV['BPE_RETURN_URL_CANCEL'] ?? $returnURLCancel ?? '';
         $this->pushURL = $_ENV['BPE_PUSH_URL'] ?? $pushURL ?? '';
-        $this->platformName = $_ENV['PlatformName'] ?? $platformName ?? '';
-        $this->platformVersion = $_ENV['PlatformVersion'] ?? $platformVersion ?? '';
-        $this->moduleSupplier = $_ENV['ModuleSupplier'] ?? $moduleSupplier ?? '';
-        $this->moduleName = $_ENV['ModuleName'] ?? $moduleName ?? '';
-        $this->moduleVersion = $_ENV['ModuleVersion'] ?? $moduleVersion ?? '';
+        $this->platformName = $_ENV['PlatformName'] ?? $platformName ?? 'Empty Platform Name';
+        $this->platformVersion = $_ENV['PlatformVersion'] ?? $platformVersion ?? '1.0.0';
+        $this->moduleSupplier = $_ENV['ModuleSupplier'] ?? $moduleSupplier ?? 'Empty Module Supplier';
+        $this->moduleName = $_ENV['ModuleName'] ?? $moduleName ?? 'Empty Module name';
+        $this->moduleVersion = $_ENV['ModuleVersion'] ?? $moduleVersion ?? '1.0.0';
         $this->culture = $_ENV['Culture'] ?? $culture ?? '';
 
         $this->setLogger($logger ?? new DefaultLogger());

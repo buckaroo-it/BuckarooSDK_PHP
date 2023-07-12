@@ -37,9 +37,12 @@ class iDealQR extends PaymentMethod
     public function generate()
     {
         $payPayload = new Payload($this->payload);
+        $payPayload->isDataRequest();
+
         $this->request->setPayload($payPayload);
 
         $generate = new Generate($this->payload);
+
         $this->setServiceList('Generate', $generate);
 
         return $this->dataRequest();

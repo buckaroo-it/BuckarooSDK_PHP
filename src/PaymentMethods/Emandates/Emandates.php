@@ -54,6 +54,7 @@ class Emandates extends PaymentMethod implements Combinable
         $mandate = new Mandate($this->payload);
 
         $payPayload = new PayPayload($this->payload);
+        $payPayload->isDataRequest();
 
         $this->request->setPayload($payPayload);
 
@@ -82,6 +83,7 @@ class Emandates extends PaymentMethod implements Combinable
         $mandate = new Mandate($this->payload);
 
         $payPayload = new PayPayload($this->payload);
+        $payPayload->isDataRequest();
 
         $this->request->setPayload($payPayload);
 
@@ -98,6 +100,7 @@ class Emandates extends PaymentMethod implements Combinable
         $mandate = new Mandate($this->payload);
 
         $payPayload = new PayPayload($this->payload);
+        $payPayload->isDataRequest();
 
         $this->request->setPayload($payPayload);
 

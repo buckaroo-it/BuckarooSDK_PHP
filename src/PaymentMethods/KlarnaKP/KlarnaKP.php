@@ -46,6 +46,8 @@ class KlarnaKP extends PayablePaymentMethod
      */
     public function reserve(): TransactionResponse
     {
+        $this->isDataRequest = true;
+
         $reserve = new Payload($this->payload);
 
         $this->setServiceList('Reserve', $reserve);
@@ -60,6 +62,8 @@ class KlarnaKP extends PayablePaymentMethod
      */
     public function cancelReserve(): TransactionResponse
     {
+        $this->isDataRequest = true;
+
         $cancel = new Payload($this->payload);
 
         $this->setServiceList('CancelReservation', $cancel);
@@ -72,6 +76,8 @@ class KlarnaKP extends PayablePaymentMethod
      */
     public function updateReserve(): TransactionResponse
     {
+        $this->isDataRequest = true;
+
         $update = new Payload($this->payload);
 
         $this->setServiceList('UpdateReservation', $update);

@@ -25,6 +25,9 @@ use Buckaroo\Models\ClientIP;
 use Buckaroo\Models\CustomParameters;
 use Buckaroo\Models\Model;
 
+/**
+ *
+ */
 class Payload extends Model
 {
     /**
@@ -141,5 +144,17 @@ class Payload extends Model
         }
 
         return parent::setProperties($data);
+    }
+
+    /**
+     * @return $this
+     */
+    public function isDataRequest()
+    {
+        if(isset($this->additionalParameters)) {
+            $this->additionalParameters->setProperties(null, 'List');
+        }
+
+        return $this;
     }
 }
