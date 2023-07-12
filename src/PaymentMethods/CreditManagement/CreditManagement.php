@@ -42,6 +42,7 @@ class CreditManagement extends PaymentMethod implements Combinable
         $invoice = new Invoice($this->payload);
 
         $payPayload = new PayPayload($this->payload);
+        $payPayload->isDataRequest();
 
         $this->request->setPayload($payPayload);
 
@@ -55,6 +56,7 @@ class CreditManagement extends PaymentMethod implements Combinable
         $invoice = new Invoice($this->payload);
 
         $payPayload = new PayPayload($this->payload);
+        $payPayload->isDataRequest();
 
         $this->request->setPayload($payPayload);
 
@@ -68,6 +70,7 @@ class CreditManagement extends PaymentMethod implements Combinable
         $creditNote = new CreditNote($this->payload);
 
         $payPayload = new PayPayload($this->payload);
+        $payPayload->isDataRequest();
 
         $this->request->setPayload($payPayload);
 

@@ -96,7 +96,7 @@ class PaymentMethodFactory
         Surepay::class => ['surepay'],
         Subscriptions::class => ['subscriptions'],
         SEPA::class => ['sepadirectdebit', 'sepa'],
-        KBC::class => ['kbcpaymentbutton'],
+        KBC::class => ['kbc', 'kbcpaymentbutton'],
         Paypal::class => ['paypal'],
         PayPerEmail::class => ['payperemail'],
         PaymentInitiation::class => ['paymentinitiation','paybybank'],
@@ -110,7 +110,6 @@ class PaymentMethodFactory
         Przelewy24::class => ['przelewy24'],
         PointOfSale::class => ['pospayment'],
         Giropay::class => ['giropay'],
-        NoServiceSpecifiedPayment::class => ['noservice'],
         GiftCard::class => [
             'giftcard', 'westlandbon', 'babygiftcard', 'babyparkgiftcard',
             'beautywellness', 'boekenbon', 'boekenvoordeel',

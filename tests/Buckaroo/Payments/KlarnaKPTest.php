@@ -110,6 +110,10 @@ class KlarnaKPTest extends BuckarooTestCase
                     'price' => '10.10',
                 ],
             ],
+            'additionalParameters' => [
+                'initiated_by_magento' => '1',
+                'service_action' => 'something',
+            ],
         ]);
 
         $this->assertTrue($response->isPendingProcessing());

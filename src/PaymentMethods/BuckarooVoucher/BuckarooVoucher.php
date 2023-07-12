@@ -67,6 +67,8 @@ class BuckarooVoucher extends PayablePaymentMethod
      */
     public function getBalance(): TransactionResponse
     {
+        $this->isDataRequest = true;
+
         $data = new GetBalance($this->payload);
 
         $this->setPayPayload();
@@ -80,6 +82,8 @@ class BuckarooVoucher extends PayablePaymentMethod
      */
     public function create(): TransactionResponse
     {
+        $this->isDataRequest = true;
+
         $data = new Create($this->payload);
 
         $this->setPayPayload();
@@ -94,6 +98,8 @@ class BuckarooVoucher extends PayablePaymentMethod
      */
     public function deactivate(): TransactionResponse
     {
+        $this->isDataRequest = true;
+        
         $data = new Deactivate($this->payload);
 
         $this->setPayPayload();
