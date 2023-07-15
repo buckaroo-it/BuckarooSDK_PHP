@@ -20,6 +20,7 @@
 
 namespace Buckaroo\Handlers\Logging;
 
-interface Observer{
-    public function handle(string $method, string $message, array $context = array());
+interface Observer
+{
+    public function handle(string $method, string $message, array $context = []);
 }

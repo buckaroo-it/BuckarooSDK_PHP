@@ -1,7 +1,7 @@
 <phpunit bootstrap="./vendor/autoload.php" colors="true">
     <testsuites>
-        <testsuite name="BuckarooSDK">
-            <directory>src/Tests/</directory>
+        <testsuite name="Unit tests">
+            <directory>tests</directory>
         </testsuite>
     </testsuites>
 

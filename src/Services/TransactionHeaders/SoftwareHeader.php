@@ -22,20 +22,31 @@ declare(strict_types=1);
 
 namespace Buckaroo\Services\TransactionHeaders;
 
+use Buckaroo\Config\Config;
+
 class SoftwareHeader extends TransactionHeader
 {
+    protected Config $config;
+
+    public function __construct(TransactionHeader $transactionHeader, Config $config)
+    {
+        $this->config = $config;
+
+        parent::__construct($transactionHeader);
+    }
     /**
      * @return array
      */
-    public function getHeaders(): array {
+    public function getHeaders(): array
+    {
         $headers = $this->transactionHeader->getHeaders();
 
         $headers[] = "Software: " .  json_encode([
-            "PlatformName"    => "SDK",
-            "PlatformVersion" => '0.0.1',
-            "ModuleSupplier"  => "Buckaroo",
-            "ModuleName"      => "BuckarooPayments",
-            "ModuleVersion"   => '0.0.1',
+            "PlatformName" => $this->config->platformName(),
+            "PlatformVersion" => $this->config->platformVersion(),
+            "ModuleSupplier" => $this->config->moduleSupplier(),
+            "ModuleName" => $this->config->moduleName(),
+            "ModuleVersion" => $this->config->moduleVersion(),
         ]);
 
         return $headers;

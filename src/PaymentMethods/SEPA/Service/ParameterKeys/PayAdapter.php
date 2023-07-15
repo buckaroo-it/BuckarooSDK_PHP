@@ -25,7 +25,7 @@ use Buckaroo\Models\Adapters\ServiceParametersKeysAdapter;
 class PayAdapter extends ServiceParametersKeysAdapter
 {
     protected array $keys = [
-        'bic'       => 'customerbic',
-        'iban'        => 'CustomerIBAN'
+        'bic' => 'customerbic',
+        'iban' => 'CustomerIBAN',
     ];
 }

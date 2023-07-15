@@ -1,4 +1,5 @@
 <?php
+
 /*
  * NOTICE OF LICENSE
  *
@@ -22,11 +23,13 @@ namespace Buckaroo\PaymentMethods\Subscriptions\Models;
 
 use Buckaroo\Models\Address;
 use Buckaroo\Models\BankAccount;
+use Buckaroo\Models\Company;
 use Buckaroo\Models\Debtor;
 use Buckaroo\Models\Email;
+use Buckaroo\Models\Person;
 use Buckaroo\Models\Phone;
 use Buckaroo\Models\ServiceParameter;
-use Buckaroo\PaymentMethods\Afterpay\Models\Person;
+use Buckaroo\PaymentMethods\Subscriptions\Service\ParameterKeys\CompanyAdapter;
 
 class Subscription extends ServiceParameter
 {
@@ -102,6 +105,16 @@ class Subscription extends ServiceParameter
     protected Person $person;
 
     /**
+     * @var Company
+     */
+    protected CompanyAdapter $company;
+
+    /**
+     * @var Configuration
+     */
+    protected Configuration $configuration;
+
+    /**
      * @var RatePlan
      */
     protected RatePlan $addRatePlan;
@@ -115,20 +128,58 @@ class Subscription extends ServiceParameter
     protected RatePlan $disableRatePlan;
 
     /**
+     * @var RatePlanCharge
+     */
+    protected RatePlanCharge $addRatePlanCharge;
+
+    /**
+     * @var string
+     */
+    protected string $customerIBAN;
+    /**
+     * @var string
+     */
+    protected string $customerAccountName;
+    /**
+     * @var string
+     */
+    protected string $customerBIC;
+    /**
      * @var array|\string[][]
      */
     protected array $groupData = [
-        'debtor'   => [
-            'groupType' => 'Debtor'
+        'debtor' => [
+            'groupType' => 'Debtor',
         ],
-        'addRatePlan'   => [
-            'groupType' => 'AddRatePlan'
+        'person' => [
+            'groupType' => 'Person',
         ],
-        'updateRatePlan'   => [
-            'groupType' => 'UpdateRatePlan'
+        'email' => [
+            'groupType' => 'Email',
         ],
-        'disableRatePlan'   => [
-            'groupType' => 'DisableRatePlan'
+        'address' => [
+            'groupType' => 'Address',
+        ],
+        'addRatePlan' => [
+            'groupType' => 'AddRatePlan',
+        ],
+        'configuration' => [
+            'groupType' => 'AddConfiguration',
+        ],
+        'updateRatePlan' => [
+            'groupType' => 'UpdateRatePlan',
+        ],
+        'disableRatePlan' => [
+            'groupType' => 'DisableRatePlan',
+        ],
+        'addRatePlanCharge' => [
+            'groupType' => 'AddRatePlanCharge',
+        ],
+        'updateRatePlanCharge' => [
+            'groupType' => 'UpdateRatePlanCharge',
+        ],
+        'disableRatePlanCharge' => [
+            'groupType' => 'DisableRatePlanCharge',
         ],
     ];
 
@@ -138,7 +189,7 @@ class Subscription extends ServiceParameter
      */
     public function debtor($debtor = null)
     {
-        if(is_array($debtor))
+        if (is_array($debtor))
         {
             $this->debtor = new Debtor($debtor);
         }
@@ -152,7 +203,7 @@ class Subscription extends ServiceParameter
      */
     public function bankAccount($bankAccount = null)
     {
-        if(is_array($bankAccount))
+        if (is_array($bankAccount))
         {
             $this->bankAccount = new BankAccount($bankAccount);
         }
@@ -166,7 +217,7 @@ class Subscription extends ServiceParameter
      */
     public function email($email = null)
     {
-        if(is_string($email))
+        if (is_string($email))
         {
             $this->email = new Email($email);
         }
@@ -180,7 +231,7 @@ class Subscription extends ServiceParameter
      */
     public function phone($phone = null)
     {
-        if(is_array($phone))
+        if (is_array($phone))
         {
             $this->phone = new Phone($phone);
         }
@@ -194,7 +245,7 @@ class Subscription extends ServiceParameter
      */
     public function address($address = null)
     {
-        if(is_array($address))
+        if (is_array($address))
         {
             $this->address = new Address($address);
         }
@@ -208,7 +259,7 @@ class Subscription extends ServiceParameter
      */
     public function person($person = null)
     {
-        if(is_array($person))
+        if (is_array($person))
         {
             $this->person = new Person($person);
         }
@@ -217,18 +268,65 @@ class Subscription extends ServiceParameter
     }
 
     /**
+     * @param $company
+     * @return Company|CompanyAdapter
+     */
+    public function company($company = null)
+    {
+        if (is_array($company))
+        {
+            $this->company = new CompanyAdapter(new Company($company));
+        }
+
+        return $this->company;
+    }
+
+    /**
+     * @param $configuration
+     * @return Configuration
+     */
+    public function configuration($configuration = null)
+    {
+        if (is_array($configuration))
+        {
+            $this->configuration = new Configuration($configuration);
+        }
+
+        return $this->configuration;
+    }
+
+    /**
      * @param $rate_plans
      * @return $this
      */
-    public function rate_plans($rate_plans = null)
+    public function ratePlans($rate_plans = null)
     {
-        if(is_array($rate_plans))
+        if (is_array($rate_plans))
         {
-            foreach($rate_plans as $type => $rate_plan)
+            foreach ($rate_plans as $type => $rate_plan)
             {
                 $property = $type . 'RatePlan';
 
-                $this->$property = new RatePlan(ucfirst($type), $rate_plan);
+                $this->$property = new RatePlan($rate_plan);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param $rate_plan_charges
+     * @return $this
+     */
+    public function ratePlanCharges($rate_plan_charges = null)
+    {
+        if (is_array($rate_plan_charges))
+        {
+            foreach ($rate_plan_charges as $type => $rate_plan_charge)
+            {
+                $property = $type . 'RatePlanCharge';
+
+                $this->$property = new RatePlanCharge($rate_plan_charge);
             }
         }
 

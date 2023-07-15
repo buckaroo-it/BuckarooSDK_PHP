@@ -1,4 +1,5 @@
 <?php
+
 /*
  * NOTICE OF LICENSE
  *
@@ -26,9 +27,9 @@ use Buckaroo\Models\Email;
 use Buckaroo\Models\Phone;
 use Buckaroo\Models\ServiceParameter;
 use Buckaroo\PaymentMethods\Afterpay\Models\Person;
-use Buckaroo\PaymentMethods\AfterpayDigiAccept\Service\ParameterKeys\{PhoneAdapter};
 use Buckaroo\PaymentMethods\AfterpayDigiAccept\Service\ParameterKeys\AddressAdapter;
 use Buckaroo\PaymentMethods\AfterpayDigiAccept\Service\ParameterKeys\EmailAdapter;
+use Buckaroo\PaymentMethods\AfterpayDigiAccept\Service\ParameterKeys\PhoneAdapter;
 use Buckaroo\PaymentMethods\AfterpayDigiAccept\Service\ParameterKeys\RecipientAdapter;
 
 class Recipient extends ServiceParameter
@@ -72,7 +73,7 @@ class Recipient extends ServiceParameter
      */
     public function recipient($recipient = null)
     {
-        if(is_array($recipient))
+        if (is_array($recipient))
         {
             $this->recipient = $this->getRecipientObject($recipient);
         }
@@ -86,7 +87,7 @@ class Recipient extends ServiceParameter
      */
     public function address($address = null)
     {
-        if(is_array($address))
+        if (is_array($address))
         {
             $this->address = new AddressAdapter($this->type, new Address($address));
         }
@@ -100,7 +101,7 @@ class Recipient extends ServiceParameter
      */
     public function phone($phone = null)
     {
-        if(is_array($phone))
+        if (is_array($phone))
         {
             $this->phone = new PhoneAdapter($this->type, new Phone($phone));
         }
@@ -114,7 +115,7 @@ class Recipient extends ServiceParameter
      */
     public function email($email = null)
     {
-        if(is_string($email))
+        if (is_string($email))
         {
             $this->email = new EmailAdapter($this->type, new Email($email));
         }
@@ -130,8 +131,10 @@ class Recipient extends ServiceParameter
     {
         $model = new Person($recipient);
 
-        if(($recipient['companyName'] ?? null) || ( $recipient['chamberOfCommerce'] ?? null) || ($recipient['vatNumber'] ?? null))
-        {
+        if (($recipient['companyName'] ?? null) ||
+            ($recipient['chamberOfCommerce'] ?? null) ||
+            ($recipient['vatNumber'] ?? null)
+        ) {
             $model = new Company($recipient);
         }
 

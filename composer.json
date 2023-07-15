@@ -2,7 +2,7 @@
     "name": "buckaroo/sdk",
     "description": "Buckaroo payment SDK",
     "license": "MIT",
-    "version": "1.1.1",
+    "version": "1.7.3",
     "type": "library",
     "require": {
         "php": ">=7.4|^8.0",
@@ -10,13 +10,17 @@
         "ext-json": "*",
         "ext-pcre": "*",
         "ext-fileinfo": "*",
-        "composer/ca-bundle": "^1.3"
+        "monolog/monolog": "^2.2|^3",
+        "guzzlehttp/guzzle": "^7.0",
+        "composer/ca-bundle": "^1.3",
+        "ramsey/uuid": "^3.9.7|^4"
     },
     "require-dev": {
         "squizlabs/php_codesniffer": "3.*",
         "symfony/var-dumper": "^5.4.9",
         "phpunit/phpunit": "^9.5",
-        "vlucas/phpdotenv": "^5.4"
+        "vlucas/phpdotenv": "^5.4",
+        "friendsofphp/php-cs-fixer": "^3.13"
     },
     "suggest": {
         "monolog/monolog": "Allows more advanced logging of the application flow"
@@ -34,7 +38,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "BuckarooTests\\": "Tests/"
+            "Tests\\": "tests/"
         }
     }
 }

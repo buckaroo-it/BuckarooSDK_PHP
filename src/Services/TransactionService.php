@@ -4,6 +4,7 @@ namespace Buckaroo\Services;
 
 use Buckaroo\Transaction\Client;
 use Buckaroo\Transaction\Response\Response;
+use Buckaroo\Transaction\Response\TransactionResponse;
 
 class TransactionService
 {
@@ -31,12 +32,15 @@ class TransactionService
     }
 
     /**
-     * @return Response
+     * @return TransactionResponse
      * @throws \Buckaroo\Exceptions\BuckarooException
      */
-    public function status(): Response
+    public function status(): TransactionResponse
     {
-        return $this->client->get(Response::class, $this->client->getEndpoint('json/Transaction/Status/' . $this->transactionKey));
+        return $this->client->get(
+            TransactionResponse::class,
+            $this->client->getEndpoint('json/Transaction/Status/' . $this->transactionKey)
+        );
     }
 
     /**
@@ -45,7 +49,10 @@ class TransactionService
      */
     public function refundInfo(): Response
     {
-        return $this->client->get(Response::class, $this->client->getEndpoint('json/Transaction/RefundInfo/' . $this->transactionKey));
+        return $this->client->get(
+            Response::class,
+            $this->client->getEndpoint('json/Transaction/RefundInfo/' . $this->transactionKey)
+        );
     }
 
     /**
@@ -54,6 +61,9 @@ class TransactionService
      */
     public function cancelInfo(): Response
     {
-        return $this->client->get(Response::class, $this->client->getEndpoint('json/Transaction/Cancel/' . $this->transactionKey));
+        return $this->client->get(
+            Response::class,
+            $this->client->getEndpoint('json/Transaction/Cancel/' . $this->transactionKey)
+        );
     }
 }

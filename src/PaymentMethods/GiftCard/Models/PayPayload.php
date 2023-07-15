@@ -22,7 +22,16 @@ namespace Buckaroo\PaymentMethods\GiftCard\Models;
 
 class PayPayload extends \Buckaroo\Models\Payload\PayPayload
 {
+    /**
+     * @var string
+     */
     protected string $continueOnIncomplete;
+    /**
+     * @var string
+     */
     protected string $servicesSelectableByClient;
+    /**
+     * @var string
+     */
     protected string $servicesExcludedForClient;
 }

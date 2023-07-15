@@ -22,8 +22,12 @@ namespace Buckaroo\Models\Payload;
 
 use Buckaroo\Models\AdditionalParameters;
 use Buckaroo\Models\ClientIP;
+use Buckaroo\Models\CustomParameters;
 use Buckaroo\Models\Model;
 
+/**
+ *
+ */
 class Payload extends Model
 {
     /**
@@ -71,12 +75,46 @@ class Payload extends Model
      */
     protected string $originalTransactionKey;
     /**
-     * @var AdditionalParameters
+     * @var string
      */
-    protected AdditionalParameters $additionalParameters;
+    protected string $originalTransactionReference;
+
     /**
      * @var string
      */
+    protected string $websiteKey;
+
+    /**
+     * @var string
+     */
+    protected string $culture;
+
+    /**
+     * @var bool
+     */
+    protected bool $startRecurrent;
+    /**
+     * @var string
+     */
+    protected string $continueOnIncomplete;
+    /**
+     * @var string
+     */
+    protected string $servicesSelectableByClient;
+    /**
+     * @var string
+     */
+    protected string $servicesExcludedForClient;
+
+    /**
+     * @var AdditionalParameters
+     */
+    protected AdditionalParameters $additionalParameters;
+
+    /**
+     * @var CustomParameters
+     */
+    protected CustomParameters $customParameters;
 
     /**
      * @param array|null $data
@@ -84,14 +122,21 @@ class Payload extends Model
      */
     public function setProperties(?array $data)
     {
-        if(isset($data['additionalParameters']))
+        if (isset($data['customParameters']))
+        {
+            $this->customParameters = new CustomParameters($data['customParameters']);
+
+            unset($data['customParameters']);
+        }
+
+        if (isset($data['additionalParameters']))
         {
             $this->additionalParameters = new AdditionalParameters($data['additionalParameters']);
 
             unset($data['additionalParameters']);
         }
 
-        if(isset($data['clientIP']))
+        if (isset($data['clientIP']))
         {
             $this->clientIP = new ClientIP($data['clientIP']['address'] ?? null, $data['clientIP']['type'] ?? null);
 
@@ -99,5 +144,17 @@ class Payload extends Model
         }
 
         return parent::setProperties($data);
+    }
+
+    /**
+     * @return $this
+     */
+    public function isDataRequest()
+    {
+        if(isset($this->additionalParameters)) {
+            $this->additionalParameters->setProperties(null, 'List');
+        }
+
+        return $this;
     }
 }

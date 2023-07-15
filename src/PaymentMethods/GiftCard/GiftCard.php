@@ -42,19 +42,6 @@ class GiftCard extends PayablePaymentMethod
     }
 
     /**
-     * @param Model|null $model
-     * @return TransactionResponse
-     */
-    public function payRemainder(?Model $model = null): TransactionResponse
-    {
-        $this->setPayPayload();
-
-        $pay = new Pay($this->payload);
-
-        return parent::payRemainder($model ?? $pay);
-    }
-
-    /**
      * @return TransactionResponse
      */
     public function payRedirect(): TransactionResponse
@@ -69,18 +56,25 @@ class GiftCard extends PayablePaymentMethod
     }
 
     /**
+     * @param Model|null $model
+     * @return PayablePaymentMethod|mixed
+     */
+    public function payRemainder(?Model $model = null)
+    {
+        return parent::payRemainder(new Pay($this->payload));
+    }
+
+    /**
      * @return string
      * @throws \Exception
      */
     public function paymentName(): string
     {
-        if(isset($this->payload['name']))
+        if (isset($this->payload['name']))
         {
             return $this->payload['name'];
-        } else {
-            return 'giftcard';
         }
 
-        //throw new \Exception('Missing voucher name');
+        return 'giftcard';
     }
 }

@@ -25,6 +25,7 @@ namespace Buckaroo\PaymentMethods\iDeal;
 use Buckaroo\Models\Model;
 use Buckaroo\PaymentMethods\iDeal\Models\Pay;
 use Buckaroo\PaymentMethods\PayablePaymentMethod;
+use Buckaroo\Transaction\Request\TransactionRequest;
 use Buckaroo\Transaction\Response\TransactionResponse;
 
 class iDeal extends PayablePaymentMethod
@@ -42,7 +43,7 @@ class iDeal extends PayablePaymentMethod
      * @param Model|null $model
      * @return TransactionResponse
      */
-    public function pay(?Model $model = null): TransactionResponse
+    public function pay(?Model $model = null)
     {
         return parent::pay($model ?? new Pay($this->payload));
     }
@@ -57,70 +58,47 @@ class iDeal extends PayablePaymentMethod
     }
 
     /**
-     * @return \string[][]
+     * @param Model|null $model
+     * @return TransactionResponse
+     */
+    public function instantRefund(?Model $model = null):TransactionResponse
+    {
+        $this->setRefundPayload();
+
+        $this->setServiceList('instantRefund', $model);
+
+        return $this->postRequest();
+    }
+
+    /**
+     * @return array
      * @throws \Buckaroo\Exceptions\BuckarooException
      */
     public function issuers(): array
     {
-        $issuers = [
-            [
-                'id' => 'ABNANL2A',
-                'name' => 'ABN AMRO'
-            ],
-            [
-                'id' => 'ASNBNL21',
-                'name' => 'ASN Bank'
-            ],
-            [
-                'id' => 'BUNQNL2A',
-                'name' => 'bunq'
-            ],
-            [
-                'id' => 'INGBNL2A',
-                'name' => 'ING'
-            ],
-            [
-                'id'    => 'KNABNL2H',
-                'name'  => 'Knab'
-            ],
-            [
-                'id' => 'RABONL2U',
-                'name' => 'Rabobank'
-            ],
-            [
-                'id' => 'RBRBNL21',
-                'name' => 'RegioBank'
-            ],
-            [
-                'id' => 'REVOLT21',
-                'name' => 'Revolut'
-            ],
-            [
-                'id' => 'SNSBNL2A',
-                'name' => 'SNS Bank'
-            ],
-            [
-                'id' => 'TRIONL2U',
-                'name' => 'Triodos Bank'
-            ],
-            [
-                'id' => 'HANDNL2A',
-                'name' => 'Svenska Handelsbanken'
-            ],
-            [
-                'id' => 'FVLBNL22',
-                'name' => 'Van Lanschot'
-            ]
-        ];
+        $request = new TransactionRequest;
 
-        if(!$this->client->config()->isLiveMode())
+        try
         {
-            $issuers[] = [
-                'id'    => 'BANKNL2Y',
-                'name' => 'TEST BANK'
-            ];
+            $response = $this->client->specification($request, 'ideal', 2);
+        } catch (BuckarooException $e)
+        {
+            return [];
         }
 
-        return $issuers;
+        $issuerList = [];
+        if (isset($response->data()['Actions']['0']['RequestParameters'][0]['ListItemDescriptions']))
+        {
+            $issuersData = $response->data()['Actions']['0']['RequestParameters'][0]['ListItemDescriptions'];
+            if (count($issuersData) > 0)
+            {
+                foreach ($issuersData as $issuer)
+                {
+                    $issuerList[] = ['id' => $issuer['Value'], 'name' => $issuer['Description']];
+                }
+            }
+        }
+
+        return $issuerList;
     }
 }

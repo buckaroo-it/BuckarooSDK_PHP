@@ -24,5 +24,8 @@ use Buckaroo\Models\Model;
 
 class CombinedPayload extends Model
 {
+    /**
+     * @var bool
+     */
     protected bool $startRecurrent;
 }

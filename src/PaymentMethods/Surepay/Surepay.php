@@ -41,5 +41,4 @@ class Surepay extends PaymentMethod
 
         return $this->dataRequest();
     }
-
 }

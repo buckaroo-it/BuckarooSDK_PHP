@@ -75,9 +75,9 @@ abstract class Model implements Arrayable
      */
     public function setProperties(?array $data)
     {
-        if($data)
+        if ($data)
         {
-            foreach($data ?? array() as $property => $value)
+            foreach ($data ?? [] as $property => $value)
             {
                 $this->$property = $value;
             }
@@ -109,14 +109,14 @@ abstract class Model implements Arrayable
      */
     private function recursiveToArray(array $array) : array
     {
-        foreach($array as $key => $value)
+        foreach ($array as $key => $value)
         {
-            if(is_array($value))
+            if (is_array($value))
             {
                 $array[$key] = $this->recursiveToArray($value);
             }
 
-            if(is_a($value, Arrayable::class))
+            if (is_a($value, Arrayable::class))
             {
                 $array[$key] = $value->toArray();
             }

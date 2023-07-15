@@ -32,6 +32,9 @@ class BuckarooException extends Exception
      * @param int $code
      * @param Throwable|null $previous
      */
+
+    protected ?Subject $logger;
+
     public function __construct(?Subject $logger, string $message = "", int $code = 0, Throwable $previous = null)
     {
         $message = $this->message($message);
@@ -48,7 +51,7 @@ class BuckarooException extends Exception
      */
     private function log($logger, $message)
     {
-        if($logger)
+        if ($logger)
         {
             $this->logger = $logger;
             $this->logger->error($message);

@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<ruleset name="Buckaroo_Coding_Standard">
+    <description>Buckaroo SDK coding standard.</description>
+
+    <file>src</file>
+
+    <rule ref="PSR2">
+        <exclude name="Squiz.ControlStructures.ControlSignature.SpaceAfterKeyword">src</exclude>
+    </rule>
+
+    <rule ref="Squiz.ControlStructures.ControlSignature.SpaceAfterCloseParenthesis">
+        <exclude-pattern>*.php</exclude-pattern>
+    </rule>
+
+    <rule ref="Squiz.Classes.ValidClassName.NotCamelCaps">
+        <exclude-pattern>src/PaymentMethods/iDeal/iDeal.php</exclude-pattern>
+        <exclude-pattern>src/PaymentMethods/iDealQR/iDealQR.php</exclude-pattern>
+    </rule>
+
+
+</ruleset>

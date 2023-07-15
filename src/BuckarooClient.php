@@ -25,10 +25,14 @@ use Buckaroo\Config\DefaultConfig;
 use Buckaroo\Exceptions\BuckarooException;
 use Buckaroo\Handlers\Credentials;
 use Buckaroo\Handlers\Logging\Observer as LoggingObserver;
+use Buckaroo\PaymentMethods\BatchTransactions;
 use Buckaroo\PaymentMethods\PaymentFacade;
 use Buckaroo\Services\TransactionService;
 use Buckaroo\Transaction\Client;
 
+/**
+ *
+ */
 class BuckarooClient
 {
     /**
@@ -41,13 +45,21 @@ class BuckarooClient
     private Config $config;
 
     /**
-     * @param string $websiteKey
+     * @param string|Config $websiteKey
      * @param string $secretKey
      * @param string|null $mode
      */
-    public function __construct(string $websiteKey, string $secretKey, string $mode = null)
+    public function __construct($websiteKey, string $secretKey = null, string $mode = null)
     {
-        $this->config = $this->getConfig($websiteKey, $secretKey, $mode);
+        if ($websiteKey instanceof Config)
+        {
+            $this->config = $websiteKey;
+        }
+
+        if (is_string($websiteKey))
+        {
+            $this->config = $this->getConfig($websiteKey, $secretKey, $mode);
+        }
 
         $this->client = new Client($this->config);
     }
@@ -56,9 +68,18 @@ class BuckarooClient
      * @param string $method
      * @return PaymentFacade
      */
-    public function method(string $method): PaymentFacade
+    public function method(string $method = null): PaymentFacade
     {
         return new PaymentFacade($this->client, $method);
+    }
+
+    /**
+     * @param array $transactions
+     * @return BatchTransactions
+     */
+    public function batch(array $transactions): BatchTransactions
+    {
+        return new BatchTransactions($this->client, $transactions);
     }
 
     /**
@@ -118,7 +139,7 @@ class BuckarooClient
      */
     private function getConfig(string $websiteKey, string $secretKey, string $mode = null): ?Config
     {
-        if($websiteKey && $secretKey)
+        if ($websiteKey && $secretKey)
         {
             return new DefaultConfig($websiteKey, $secretKey, $mode);
         }

@@ -20,14 +20,28 @@
 
 namespace Buckaroo\Services\TransactionHeaders;
 
+use Buckaroo\Config\Config;
+
+/**
+ *
+ */
 class CultureHeader extends TransactionHeader
 {
     /**
-     * @param TransactionHeader $transactionHeader
-     * @param string|null $locale
+     * @var string|null
      */
-    public function __construct(TransactionHeader $transactionHeader, string $locale = null) {
-        $this->locale = $locale;
+    protected ?string $locale;
+    /**
+     * @var Config
+     */
+    protected Config $config;
+    /**
+     * @param TransactionHeader $transactionHeader
+     * @param Config $config
+     */
+    public function __construct(TransactionHeader $transactionHeader, Config $config)
+    {
+        $this->config = $config;
 
         parent::__construct($transactionHeader);
     }
@@ -35,25 +49,12 @@ class CultureHeader extends TransactionHeader
     /**
      * @return array
      */
-    public function getHeaders(): array {
+    public function getHeaders(): array
+    {
         $headers = $this->transactionHeader->getHeaders();
 
-        $headers[] = "Culture: " . $this->getLocale();
+        $headers[] = "Culture: " . $this->config->culture();
 
         return $headers;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLocale(): string
-    {
-        switch ($this->locale) {
-            case 'nl':
-                return 'nl-NL';
-            case 'de':
-                return 'de-DE';
-        }
-        return 'en-GB';
     }
 }

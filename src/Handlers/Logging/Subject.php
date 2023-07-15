@@ -40,5 +40,5 @@ interface Subject
      * @param array $context
      * @return mixed
      */
-    public function notify(string $method, string $message, array $context = array());
+    public function notify(string $method, string $message, array $context = []);
 }

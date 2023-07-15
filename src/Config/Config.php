@@ -28,7 +28,13 @@ use Buckaroo\Handlers\Logging\Subject;
 
 abstract class Config implements Loggable
 {
+    /**
+     *
+     */
     const LIVE_MODE = 'live';
+    /**
+     *
+     */
     const TEST_MODE = 'test';
 
     /**
@@ -61,6 +67,32 @@ abstract class Config implements Loggable
     private string $pushURL;
 
     /**
+     * @var string|mixed
+     */
+    private string $platformName;
+    /**
+     * @var string|mixed
+     */
+    private string $platformVersion;
+    /**
+     * @var string|mixed
+     */
+    private string $moduleSupplier;
+    /**
+     * @var string|mixed
+     */
+    private string $moduleName;
+    /**
+     * @var string|mixed
+     */
+    private string $moduleVersion;
+
+    /**
+     * @var string|mixed
+     */
+    private string $culture;
+
+    /**
      * @var Subject
      */
     protected Subject $logger;
@@ -73,10 +105,30 @@ abstract class Config implements Loggable
      * @param string|null $returnURL
      * @param string|null $returnURLCancel
      * @param string|null $pushURL
+     * @param string|null $platformName
+     * @param string|null $platformVersion
+     * @param string|null $moduleSupplier
+     * @param string|null $moduleName
+     * @param string|null $moduleVersion
+     * @param string|null $culture
      * @param Subject|null $logger
      */
-    public function __construct(string $websiteKey, string $secretKey, ?string $mode = null, ?string $currency = null, ?string $returnURL = null, ?string $returnURLCancel = null, ?string $pushURL = null, Subject $logger = null)
-    {
+    public function __construct(
+        string  $websiteKey,
+        string  $secretKey,
+        ?string $mode = null,
+        ?string $currency = null,
+        ?string $returnURL = null,
+        ?string $returnURLCancel = null,
+        ?string $pushURL = null,
+        ?string $platformName = null,
+        ?string $platformVersion = null,
+        ?string $moduleSupplier = null,
+        ?string $moduleName = null,
+        ?string $moduleVersion = null,
+        ?string $culture = null,
+        Subject $logger = null
+    ) {
         $this->websiteKey = $websiteKey;
         $this->secretKey = $secretKey;
 
@@ -85,6 +137,12 @@ abstract class Config implements Loggable
         $this->returnURL = $_ENV['BPE_RETURN_URL'] ?? $returnURL ?? '';
         $this->returnURLCancel = $_ENV['BPE_RETURN_URL_CANCEL'] ?? $returnURLCancel ?? '';
         $this->pushURL = $_ENV['BPE_PUSH_URL'] ?? $pushURL ?? '';
+        $this->platformName = $_ENV['PlatformName'] ?? $platformName ?? 'Empty Platform Name';
+        $this->platformVersion = $_ENV['PlatformVersion'] ?? $platformVersion ?? '1.0.0';
+        $this->moduleSupplier = $_ENV['ModuleSupplier'] ?? $moduleSupplier ?? 'Empty Module Supplier';
+        $this->moduleName = $_ENV['ModuleName'] ?? $moduleName ?? 'Empty Module name';
+        $this->moduleVersion = $_ENV['ModuleVersion'] ?? $moduleVersion ?? '1.0.0';
+        $this->culture = $_ENV['Culture'] ?? $culture ?? '';
 
         $this->setLogger($logger ?? new DefaultLogger());
     }
@@ -92,14 +150,16 @@ abstract class Config implements Loggable
     /**
      * @return string
      */
-    public function websiteKey(): string {
+    public function websiteKey(): string
+    {
         return $this->websiteKey;
     }
 
     /**
      * @return string
      */
-    public function secretKey(): string {
+    public function secretKey(): string
+    {
         return $this->secretKey;
     }
 
@@ -117,7 +177,7 @@ abstract class Config implements Loggable
      */
     public function mode(?string $mode = null): string
     {
-        if($mode && in_array($mode, [self::LIVE_MODE, self::TEST_MODE]))
+        if ($mode && in_array($mode, [self::LIVE_MODE, self::TEST_MODE]))
         {
             $this->mode = $mode;
         }
@@ -158,6 +218,64 @@ abstract class Config implements Loggable
     }
 
     /**
+     * @return string
+     */
+    public function platformName(): string
+    {
+        return $this->platformName;
+    }
+
+    /**
+     * @return string
+     */
+    public function platformVersion(): string
+    {
+        return $this->platformVersion;
+    }
+
+    /**
+     * @return string
+     */
+    public function moduleSupplier(): string
+    {
+        return $this->moduleSupplier;
+    }
+
+    /**
+     * @return string
+     */
+    public function moduleName(): string
+    {
+        return $this->moduleName;
+    }
+
+    /**
+     * @return string
+     */
+    public function moduleVersion(): string
+    {
+        return $this->moduleVersion;
+    }
+
+    /**
+     * @return string
+     */
+    public function culture(): string
+    {
+        if (! empty($this->culture))
+        {
+            return $this->culture;
+        }
+
+        if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))
+        {
+            return substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 5);
+        }
+
+        return 'en-GB';
+    }
+
+    /**
      * @param array $payload
      * @return $this
      */
@@ -165,9 +283,9 @@ abstract class Config implements Loggable
     {
         $payload = $this->filterNonUpdatableKeys($payload);
 
-        foreach($payload as $key => $value)
+        foreach ($payload as $key => $value)
         {
-            if(property_exists($this, $key))
+            if (property_exists($this, $key))
             {
                 $this->$key = $value;
             }
@@ -182,10 +300,10 @@ abstract class Config implements Loggable
      */
     private function filterNonUpdatableKeys($payload)
     {
-        $filter = array('websiteKey', 'secretKey');
+        $filter = ['websiteKey', 'secretKey'];
 
-        return array_filter($payload, function($k) use ($filter){
-            return !in_array($k, $filter);
+        return array_filter($payload, function ($k) use ($filter) {
+            return ! in_array($k, $filter);
         }, ARRAY_FILTER_USE_KEY);
     }
 
@@ -195,11 +313,11 @@ abstract class Config implements Loggable
      */
     public function get(array $properties = [])
     {
-        $values = array();
+        $values = [];
 
-        foreach($properties as $property)
+        foreach ($properties as $property)
         {
-            if(method_exists($this, $property))
+            if (method_exists($this, $property))
             {
                 $values[$property] = $this->$property();
             }

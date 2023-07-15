@@ -25,6 +25,7 @@ use Buckaroo\Models\ServiceParameter;
 class Pay extends ServiceParameter
 {
     protected string $fashionChequeCardNumber;
+    protected string $fashionChequePin;
     protected string $intersolveCardnumber;
     protected string $intersolvePIN;
     protected string $cardNumber;
@@ -33,4 +34,7 @@ class Pay extends ServiceParameter
     protected string $tcsValidationCode;
     protected string $lastName;
     protected string $email;
+
+    protected string $cardNumber;
+    protected string $pin;
 }

@@ -20,12 +20,9 @@
 
 namespace Buckaroo\PaymentMethods\iDealQR;
 
-use Buckaroo\Models\ServiceList;
+use Buckaroo\Models\Payload\Payload;
 use Buckaroo\PaymentMethods\iDealQR\Models\Generate;
 use Buckaroo\PaymentMethods\PaymentMethod;
-use Buckaroo\Services\ServiceListParameters\DefaultParameters;
-use Buckaroo\Services\ServiceListParameters\iDealQRParameters;
-use Buckaroo\Transaction\Response\TransactionResponse;
 
 class iDealQR extends PaymentMethod
 {
@@ -39,6 +36,11 @@ class iDealQR extends PaymentMethod
      */
     public function generate()
     {
+        $payPayload = new Payload($this->payload);
+        $payPayload->isDataRequest();
+
+        $this->request->setPayload($payPayload);
+
         $generate = new Generate($this->payload);
 
         $this->setServiceList('Generate', $generate);

@@ -52,6 +52,7 @@ class Marketplaces extends PaymentMethod implements Combinable
         $serviceList = new ServiceList($this->payload);
 
         $payPayload = new PayPayload($this->payload);
+        $payPayload->isDataRequest();
 
         $this->request->setPayload($payPayload);
 
