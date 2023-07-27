@@ -90,6 +90,11 @@ class Payload extends Model
     protected string $culture;
 
     /**
+     * @var string
+     */
+    protected string $channel;
+
+    /**
      * @var bool
      */
     protected bool $startRecurrent;
