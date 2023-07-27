@@ -57,7 +57,8 @@ class BuckarooTestCase extends TestCase
             '3.0.0',
             'TestingModule',
             'Testing',
-            '2.4.0'
+            '2.4.0',
+            'nl-NL'
         ));
 
         parent::__construct();

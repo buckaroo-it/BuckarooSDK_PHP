@@ -96,7 +96,7 @@ class PaymentMethodFactory
         Surepay::class => ['surepay'],
         Subscriptions::class => ['subscriptions'],
         SEPA::class => ['sepadirectdebit', 'sepa'],
-        KBC::class => ['kbcpaymentbutton'],
+        KBC::class => ['kbc', 'kbcpaymentbutton'],
         Paypal::class => ['paypal'],
         PayPerEmail::class => ['payperemail'],
         PaymentInitiation::class => ['paymentinitiation','paybybank'],

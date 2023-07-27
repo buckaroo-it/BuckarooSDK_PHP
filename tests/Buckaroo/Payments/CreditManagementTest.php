@@ -317,7 +317,7 @@ class CreditManagementTest extends BuckarooTestCase
             'applyStartRecurrent' => 'False',
             'invoiceAmount' => 10.00,
             'invoiceAmountVAT' => 1.00,
-        'invoiceDate' => '2022-01-01',
+            'invoiceDate' => '2022-01-01',
             'dueDate' => '2030-01-01',
             'schemeKey' => '2amq34',
             'maxStepIndex' => 1,

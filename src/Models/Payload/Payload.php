@@ -145,4 +145,16 @@ class Payload extends Model
 
         return parent::setProperties($data);
     }
+
+    /**
+     * @return $this
+     */
+    public function isDataRequest()
+    {
+        if(isset($this->additionalParameters)) {
+            $this->additionalParameters->setProperties(null, 'List');
+        }
+
+        return $this;
+    }
 }

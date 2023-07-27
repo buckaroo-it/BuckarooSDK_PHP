@@ -97,7 +97,7 @@ class Client
         ]);
 
         $headers = new HmacHeader($headers, $this->config, $url, $data, $method);
-        $headers = new CultureHeader($headers);
+        $headers = new CultureHeader($headers, $this->config);
         $headers = new SoftwareHeader($headers, $this->config);
 
         return $headers->getHeaders();

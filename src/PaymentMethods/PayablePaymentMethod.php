@@ -24,6 +24,9 @@ use Buckaroo\Models\Model;
 use Buckaroo\Models\Payload\PayPayload;
 use Buckaroo\Models\Payload\RefundPayload;
 
+/**
+ *
+ */
 abstract class PayablePaymentMethod extends PaymentMethod
 {
     /**
@@ -34,6 +37,11 @@ abstract class PayablePaymentMethod extends PaymentMethod
      * @var string
      */
     protected string $refundModel = RefundPayload::class;
+
+    /**
+     * @var bool
+     */
+    protected bool $isDataRequest = false;
 
     /**
      * @param Model|null $model
@@ -84,6 +92,11 @@ abstract class PayablePaymentMethod extends PaymentMethod
     {
         $payPayload = new $this->payModel($this->payload);
 
+        if($this->isDataRequest)
+        {
+            $payPayload->isDataRequest();
+        }
+
         $this->request->setPayload($payPayload);
 
         return $this;
@@ -95,6 +108,11 @@ abstract class PayablePaymentMethod extends PaymentMethod
     protected function setRefundPayload()
     {
         $refundPayload = new $this->refundModel($this->payload);
+
+        if($this->isDataRequest)
+        {
+            $refundPayload->isDataRequest();
+        }
 
         $this->request->setPayload($refundPayload);
 

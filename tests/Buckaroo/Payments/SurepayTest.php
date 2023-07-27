@@ -34,7 +34,7 @@ class SurepayTest extends BuckarooTestCase
             'bankAccount' => [
                 'iban' => 'NL13TEST0123456789',
                 'accountName' => 'John Doe',
-            ],
+            ]
         ]);
 
         $this->assertTrue($response->isSuccess());
