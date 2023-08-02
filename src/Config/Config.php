@@ -266,7 +266,7 @@ abstract class Config implements Loggable
         {
             return $this->culture;
         }
-        
+
         return 'en-GB';
     }
 
