@@ -18,52 +18,26 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\Models;
+namespace Buckaroo\Models\Payload;
+
+use Buckaroo\Models\AdditionalParameters;
 
 /**
  *
  */
-class AdditionalParameters extends Model
+class DataRequestPayload extends Payload
 {
     /**
-     * @var array
-     */
-    protected ?array $AdditionalParameter;
-
-    /**
-     * @var array
-     */
-    protected ?array $List;
-
-    /**
-     * @var bool
-     */
-    private string $type = 'AdditionalParameter';
-
-    public function __construct(?array $values = null, $isDataRequest = false)
-    {
-        if($isDataRequest)
-        {
-            $this->type = 'List';
-        }
-
-        parent::__construct($values);
-    }
-
-    /**
      * @param array|null $data
-     * @return AdditionalParameters
+     * @return Payload
      */
     public function setProperties(?array $data)
     {
-        $type = $this->type;
-
-        foreach ($data ?? [] as $name => $value)
+        if (isset($data['additionalParameters']))
         {
-            $this->$type[] = [
-                'Value' => $value,
-                'Name' => $name,
-            ];
+            $this->additionalParameters = new AdditionalParameters($data['additionalParameters'], true);
+
+            unset($data['additionalParameters']);
         }
 
         return parent::setProperties($data);
