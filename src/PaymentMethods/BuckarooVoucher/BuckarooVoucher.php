@@ -21,6 +21,7 @@
 namespace Buckaroo\PaymentMethods\BuckarooVoucher;
 
 use Buckaroo\Models\Model;
+use Buckaroo\Models\Payload\DataRequestPayload;
 use Buckaroo\PaymentMethods\BuckarooVoucher\Models\Create;
 use Buckaroo\PaymentMethods\BuckarooVoucher\Models\Deactivate;
 use Buckaroo\PaymentMethods\BuckarooVoucher\Models\GetBalance;
@@ -67,7 +68,7 @@ class BuckarooVoucher extends PayablePaymentMethod
      */
     public function getBalance(): TransactionResponse
     {
-        $this->isDataRequest = true;
+        $this->payModel = DataRequestPayload::class;
 
         $data = new GetBalance($this->payload);
 
@@ -82,7 +83,7 @@ class BuckarooVoucher extends PayablePaymentMethod
      */
     public function create(): TransactionResponse
     {
-        $this->isDataRequest = true;
+        $this->payModel = DataRequestPayload::class;
 
         $data = new Create($this->payload);
 
@@ -98,7 +99,7 @@ class BuckarooVoucher extends PayablePaymentMethod
      */
     public function deactivate(): TransactionResponse
     {
-        $this->isDataRequest = true;
+        $this->payModel = DataRequestPayload::class;
         
         $data = new Deactivate($this->payload);
 

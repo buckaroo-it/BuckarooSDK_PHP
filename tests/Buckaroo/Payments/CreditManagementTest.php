@@ -146,7 +146,7 @@ class CreditManagementTest extends BuckarooTestCase
         $response = $this->buckaroo->method('credit_management')->addOrUpdateDebtor($this->invoice([
             'addressUnreachable' => false,
             'emailUnreachable' => false,
-            'mobileUnreachable' => false,
+            'mobileUnreachable' => false
         ]));
 
         $this->assertTrue($response->isSuccess());
@@ -313,7 +313,7 @@ class CreditManagementTest extends BuckarooTestCase
     private function invoice(array $append = []): array
     {
         return array_merge($append, [
-            'invoice' => rand(1000, 99999999),
+           // 'invoice' => rand(1000, 99999999),
             'applyStartRecurrent' => 'False',
             'invoiceAmount' => 10.00,
             'invoiceAmountVAT' => 1.00,

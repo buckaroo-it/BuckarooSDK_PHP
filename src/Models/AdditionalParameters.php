@@ -38,14 +38,11 @@ class AdditionalParameters extends Model
     /**
      * @var bool
      */
-    private string $type = 'AdditionalParameter';
+    private bool $isDataRequest;
 
     public function __construct(?array $values = null, $isDataRequest = false)
     {
-        if($isDataRequest)
-        {
-            $this->type = 'List';
-        }
+        $this->isDataRequest = $isDataRequest;
 
         parent::__construct($values);
     }
@@ -56,11 +53,19 @@ class AdditionalParameters extends Model
      */
     public function setProperties(?array $data)
     {
-        $type = $this->type;
-
         foreach ($data ?? [] as $name => $value)
         {
-            $this->$type[] = [
+            if($this->isDataRequest)
+            {
+                $this->List[] = [
+                    'Value' => $value,
+                    'Name' => $name,
+                ];
+
+                continue;
+            }
+
+            $this->AdditionalParameter[] = [
                 'Value' => $value,
                 'Name' => $name,
             ];

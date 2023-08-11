@@ -30,7 +30,7 @@ use Buckaroo\Transaction\Response\TransactionResponse;
 class Sofort extends PayablePaymentMethod implements Combinable
 {
     protected string $paymentName = 'sofortueberweisung';
-    protected int $serviceVersion = 1;
+    protected int $serviceVersion = 2;
 
     /**
      * @param Model|null $model
