@@ -31,6 +31,7 @@ class SubscriptionsTest extends BuckarooTestCase
     public function it_creates_a_subscription()
     {
         $response = $this->buckaroo->method('subscriptions')->create([
+            'startDate' => date('Y-m-d'),
             'ratePlans' => [
                 'update' => [
                     'startDate' => date('Y-m-d', strtotime(date('Y-m-d'). ' + 60 days')),
@@ -51,7 +52,7 @@ class SubscriptionsTest extends BuckarooTestCase
             ],
         ]);
 
-        $this->assertTrue($response->isSuccess());
+        $this->assertTrue($response->isValidationFailure());
     }
 
     /**

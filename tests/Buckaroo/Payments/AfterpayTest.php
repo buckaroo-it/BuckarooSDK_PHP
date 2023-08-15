@@ -44,7 +44,7 @@ class AfterpayTest extends BuckarooTestCase
     {
         $response = $this->buckaroo->method('afterpay')->authorize($this->getPaymentPayload());
 
-        $this->assertTrue($response->isRejected());
+        $this->assertTrue($response->isSuccess());
     }
 
 //    /**

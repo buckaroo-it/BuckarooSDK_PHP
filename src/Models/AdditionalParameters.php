@@ -40,28 +40,32 @@ class AdditionalParameters extends Model
      */
     private bool $isDataRequest;
 
+    public function __construct(?array $values = null, $isDataRequest = false)
+    {
+        $this->isDataRequest = $isDataRequest;
+
+        parent::__construct($values);
+    }
+
     /**
      * @param array|null $data
      * @return AdditionalParameters
      */
-    public function setProperties(?array $data, $type = 'AdditionalParameter')
+    public function setProperties(?array $data)
     {
-        if($data == null) {
-            if(isset($this->AdditionalParameter)) {
-                $data = $this->AdditionalParameter;
-            }
-
-            if(isset($this->List)) {
-                $data = $this->List;
-            }
-        }
-
-        $this->AdditionalParameter = null;
-        $this->List = null;
-
         foreach ($data ?? [] as $name => $value)
         {
-            $this->$type[] = [
+            if($this->isDataRequest)
+            {
+                $this->List[] = [
+                    'Value' => $value,
+                    'Name' => $name,
+                ];
+
+                continue;
+            }
+
+            $this->AdditionalParameter[] = [
                 'Value' => $value,
                 'Name' => $name,
             ];

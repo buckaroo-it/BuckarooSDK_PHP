@@ -39,11 +39,6 @@ abstract class PayablePaymentMethod extends PaymentMethod
     protected string $refundModel = RefundPayload::class;
 
     /**
-     * @var bool
-     */
-    protected bool $isDataRequest = false;
-
-    /**
      * @param Model|null $model
      * @return PayablePaymentMethod|mixed
      */
@@ -92,11 +87,6 @@ abstract class PayablePaymentMethod extends PaymentMethod
     {
         $payPayload = new $this->payModel($this->payload);
 
-        if($this->isDataRequest)
-        {
-            $payPayload->isDataRequest();
-        }
-
         $this->request->setPayload($payPayload);
 
         return $this;
@@ -108,11 +98,6 @@ abstract class PayablePaymentMethod extends PaymentMethod
     protected function setRefundPayload()
     {
         $refundPayload = new $this->refundModel($this->payload);
-
-        if($this->isDataRequest)
-        {
-            $refundPayload->isDataRequest();
-        }
 
         $this->request->setPayload($refundPayload);
 
