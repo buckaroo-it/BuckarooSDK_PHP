@@ -40,13 +40,27 @@ To use the Buckaroo API client, the following things are required:
 
 By far the easiest way to install the Buckaroo API client is to require it with [Composer](http://getcomposer.org/doc/00-intro.md).
 
-    $ composer require buckaroo/sdk:^1.0
+    $ composer require buckaroo/sdk:^2.0
 
     {
         "require": {
-            "buckaroo/sdk": "^1.0"
+            "buckaroo/sdk": "^2.0"
         }
     }
+
+
+### Experimental
+```php
+$buckaroo = new \BuckarooClient('WEBSITE_KEY', 'SECRET_KEY', 'test');
+
+//iDEAL
+$buckaroo->payments->methods('ideal')->issuer('ABNANL2A')->amount(10.0)->pay(); //Execute payment
+$buckaroo->payments->methods('ideal')->originalTransactionKey('4E8BD922192746C3918BF4077CXXXXXX')->amountCredit(2.0)->refund(); // Execute refund
+
+$buckaroo->payments->methods('creditcard')->name('visa')->invoice('UNIQUE-INVOICE-NO')->amount(10.0)->pay(); //Execute creditcard payment
+
+$buckaroo->payments->methods('riverty')->billing(new Billing)->shipping(new Shipping)->articles([new Articles])->amount(10.0)->pay() //Execute Riverty payment
+```
 
 ### Example
 Create and config the Buckaroo object. 
