@@ -57,9 +57,14 @@ $buckaroo = new \BuckarooClient('WEBSITE_KEY', 'SECRET_KEY', 'test');
 $buckaroo->payments->methods('ideal')->issuer('ABNANL2A')->amount(10.0)->pay(); //Execute payment
 $buckaroo->payments->methods('ideal')->originalTransactionKey('4E8BD922192746C3918BF4077CXXXXXX')->amountCredit(2.0)->refund(); // Execute refund
 
+//Creditcard
 $buckaroo->payments->methods('creditcard')->name('visa')->invoice('UNIQUE-INVOICE-NO')->amount(10.0)->pay(); //Execute creditcard payment
 
+//Riverty
 $buckaroo->payments->methods('riverty')->billing(new Billing)->shipping(new Shipping)->articles([new Articles])->amount(10.0)->pay() //Execute Riverty payment
+
+//Services
+$buckaroo->services->getActiveSubscriptions();
 ```
 
 ### Example
