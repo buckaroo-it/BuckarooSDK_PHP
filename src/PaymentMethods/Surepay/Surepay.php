@@ -20,6 +20,7 @@
 
 namespace Buckaroo\PaymentMethods\Surepay;
 
+use Buckaroo\Models\Payload\DataRequestPayload;
 use Buckaroo\PaymentMethods\PaymentMethod;
 use Buckaroo\PaymentMethods\Surepay\Models\Verify;
 
@@ -38,6 +39,8 @@ class Surepay extends PaymentMethod
         $verify = new Verify($this->payload);
 
         $this->setServiceList('verify', $verify);
+
+        $this->request->setPayload(new DataRequestPayload($this->payload));
 
         return $this->dataRequest();
     }

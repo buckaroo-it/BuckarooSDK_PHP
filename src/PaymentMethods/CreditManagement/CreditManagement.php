@@ -20,6 +20,7 @@
 
 namespace Buckaroo\PaymentMethods\CreditManagement;
 
+use Buckaroo\Models\Payload\DataRequestPayload;
 use Buckaroo\Models\Payload\PayPayload;
 use Buckaroo\PaymentMethods\CreditManagement\Models\AddOrUpdateProductLines;
 use Buckaroo\PaymentMethods\CreditManagement\Models\CreditNote;
@@ -41,10 +42,7 @@ class CreditManagement extends PaymentMethod implements Combinable
     {
         $invoice = new Invoice($this->payload);
 
-        $payPayload = new PayPayload($this->payload);
-        $payPayload->isDataRequest();
-
-        $this->request->setPayload($payPayload);
+        $this->request->setPayload(new DataRequestPayload($this->payload));
 
         $this->setServiceList('CreateInvoice', $invoice);
 
@@ -55,10 +53,7 @@ class CreditManagement extends PaymentMethod implements Combinable
     {
         $invoice = new Invoice($this->payload);
 
-        $payPayload = new PayPayload($this->payload);
-        $payPayload->isDataRequest();
-
-        $this->request->setPayload($payPayload);
+        $this->request->setPayload(new DataRequestPayload($this->payload));
 
         $this->setServiceList('CreateCombinedInvoice', $invoice);
 
@@ -69,10 +64,7 @@ class CreditManagement extends PaymentMethod implements Combinable
     {
         $creditNote = new CreditNote($this->payload);
 
-        $payPayload = new PayPayload($this->payload);
-        $payPayload->isDataRequest();
-
-        $this->request->setPayload($payPayload);
+        $this->request->setPayload(new DataRequestPayload($this->payload));
 
         $this->setServiceList('CreateCreditNote', $creditNote);
 
@@ -85,6 +77,8 @@ class CreditManagement extends PaymentMethod implements Combinable
 
         $this->setServiceList('AddOrUpdateDebtor', $debtor);
 
+        $this->request->setPayload(new DataRequestPayload($this->payload));
+
         return $this->dataRequest();
     }
 
@@ -93,6 +87,8 @@ class CreditManagement extends PaymentMethod implements Combinable
         $paymentPlan = new PaymentPlan($this->payload);
 
         $this->setServiceList('CreatePaymentPlan', $paymentPlan);
+
+        $this->request->setPayload(new DataRequestPayload($this->payload));
 
         $this->request->setData('Description', $this->payload['description'] ?? null);
 
@@ -105,6 +101,8 @@ class CreditManagement extends PaymentMethod implements Combinable
 
         $this->setServiceList('TerminatePaymentPlan', $paymentPlan);
 
+        $this->request->setPayload(new DataRequestPayload($this->payload));
+
         return $this->dataRequest();
     }
 
@@ -114,6 +112,8 @@ class CreditManagement extends PaymentMethod implements Combinable
 
         $this->setServiceList('PauseInvoice');
 
+        $this->request->setPayload(new DataRequestPayload($this->payload));
+
         return $this->dataRequest();
     }
 
@@ -122,6 +122,8 @@ class CreditManagement extends PaymentMethod implements Combinable
         $this->request->setData('Invoice', $this->payload['invoice'] ?? null);
 
         $this->setServiceList('UnPauseInvoice');
+
+        $this->request->setPayload(new DataRequestPayload($this->payload));
 
         return $this->dataRequest();
     }
@@ -134,6 +136,8 @@ class CreditManagement extends PaymentMethod implements Combinable
 
         $this->setServiceList('InvoiceInfo', $multipleInvoices);
 
+        $this->request->setPayload(new DataRequestPayload($this->payload));
+
         return $this->dataRequest();
     }
 
@@ -142,6 +146,8 @@ class CreditManagement extends PaymentMethod implements Combinable
         $debtorInfo = new DebtorInfo($this->payload);
 
         $this->setServiceList('DebtorInfo', $debtorInfo);
+
+        $this->request->setPayload(new DataRequestPayload($this->payload));
 
         return $this->dataRequest();
     }
@@ -152,6 +158,8 @@ class CreditManagement extends PaymentMethod implements Combinable
 
         $this->setServiceList('AddOrUpdateProductLines', $addOrUpdateProductLines);
 
+        $this->request->setPayload(new DataRequestPayload($this->payload));
+
         return $this->dataRequest();
     }
 
@@ -161,6 +169,8 @@ class CreditManagement extends PaymentMethod implements Combinable
 
         $this->setServiceList('ResumeDebtorFile', $debtor_file);
 
+        $this->request->setPayload(new DataRequestPayload($this->payload));
+
         return $this->dataRequest();
     }
 
@@ -169,6 +179,8 @@ class CreditManagement extends PaymentMethod implements Combinable
         $debtor_file = new DebtorFile($this->payload);
 
         $this->setServiceList('PauseDebtorFile', $debtor_file);
+
+        $this->request->setPayload(new DataRequestPayload($this->payload));
 
         return $this->dataRequest();
     }

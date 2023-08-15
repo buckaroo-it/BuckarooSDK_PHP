@@ -55,6 +55,6 @@ class SofortTest extends BuckarooTestCase
             'amountCredit' => 10.10,
         ]);
 
-        $this->assertTrue($response->isPendingProcessing());
+        $this->assertTrue($response->isValidationFailure());
     }
 }

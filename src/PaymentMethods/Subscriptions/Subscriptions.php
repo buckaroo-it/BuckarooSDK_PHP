@@ -20,11 +20,13 @@
 
 namespace Buckaroo\PaymentMethods\Subscriptions;
 
+use Buckaroo\Models\Payload\DataRequestPayload;
 use Buckaroo\PaymentMethods\Interfaces\Combinable;
 use Buckaroo\PaymentMethods\PaymentMethod;
 use Buckaroo\PaymentMethods\Subscriptions\Models\CombinedPayload;
 use Buckaroo\PaymentMethods\Subscriptions\Models\ResumeSubscription;
 use Buckaroo\PaymentMethods\Subscriptions\Models\Subscription;
+use function Ramsey\Uuid\v1;
 
 class Subscriptions extends PaymentMethod implements Combinable
 {
@@ -42,6 +44,8 @@ class Subscriptions extends PaymentMethod implements Combinable
 
         $this->setServiceList('CreateSubscription', $subscription);
 
+        $this->request->setPayload(new DataRequestPayload($this->payload));
+
         return $this->dataRequest();
     }
 
@@ -54,6 +58,8 @@ class Subscriptions extends PaymentMethod implements Combinable
 
         $this->setServiceList('CreateCombinedSubscription', $subscription);
 
+        $this->request->setPayload(new DataRequestPayload($this->payload));
+
         return $this->dataRequest();
     }
 
@@ -65,6 +71,8 @@ class Subscriptions extends PaymentMethod implements Combinable
         $subscription = new Subscription($this->payload);
 
         $this->setServiceList('UpdateSubscription', $subscription);
+
+        $this->request->setPayload(new DataRequestPayload($this->payload));
 
         return $this->dataRequest();
     }
@@ -94,6 +102,8 @@ class Subscriptions extends PaymentMethod implements Combinable
 
         $this->setServiceList('StopSubscription', $subscription);
 
+        $this->request->setPayload(new DataRequestPayload($this->payload));
+
         return $this->dataRequest();
     }
 
@@ -105,6 +115,8 @@ class Subscriptions extends PaymentMethod implements Combinable
         $subscription = new Subscription($this->payload);
 
         $this->setServiceList('SubscriptionInfo', $subscription);
+
+        $this->request->setPayload(new DataRequestPayload($this->payload));
 
         return $this->dataRequest();
     }
@@ -118,6 +130,8 @@ class Subscriptions extends PaymentMethod implements Combinable
 
         $this->setServiceList('DeletePaymentConfiguration', $subscription);
 
+        $this->request->setPayload(new DataRequestPayload($this->payload));
+
         return $this->dataRequest();
     }
 
@@ -130,6 +144,8 @@ class Subscriptions extends PaymentMethod implements Combinable
 
         $this->setServiceList('PauseSubscription', $subscription);
 
+        $this->request->setPayload(new DataRequestPayload($this->payload));
+
         return $this->dataRequest();
     }
 
@@ -141,6 +157,8 @@ class Subscriptions extends PaymentMethod implements Combinable
         $subscription = new ResumeSubscription($this->payload);
 
         $this->setServiceList('ResumeSubscription', $subscription);
+
+        $this->request->setPayload(new DataRequestPayload($this->payload));
 
         return $this->dataRequest();
     }

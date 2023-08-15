@@ -39,7 +39,7 @@ class BuckarooWalletTest extends BuckarooTestCase
             ],
             'bankAccount' => [
                 'iban' => 'NL13TEST0123456789',
-            ],
+            ]
         ]);
 
         $this->assertTrue($response->isSuccess());

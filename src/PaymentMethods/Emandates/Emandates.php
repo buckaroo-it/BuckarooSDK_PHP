@@ -20,7 +20,7 @@
 
 namespace Buckaroo\PaymentMethods\Emandates;
 
-use Buckaroo\Models\Payload\PayPayload;
+use Buckaroo\Models\Payload\DataRequestPayload;
 use Buckaroo\PaymentMethods\Emandates\Models\Mandate;
 use Buckaroo\PaymentMethods\Interfaces\Combinable;
 use Buckaroo\PaymentMethods\PaymentMethod;
@@ -53,12 +53,9 @@ class Emandates extends PaymentMethod implements Combinable
     {
         $mandate = new Mandate($this->payload);
 
-        $payPayload = new PayPayload($this->payload);
-        $payPayload->isDataRequest();
-
-        $this->request->setPayload($payPayload);
-
         $this->setServiceList('CreateMandate', $mandate);
+
+        $this->request->setPayload(new DataRequestPayload($this->payload));
 
         return $this->dataRequest();
     }
@@ -72,6 +69,8 @@ class Emandates extends PaymentMethod implements Combinable
 
         $this->setServiceList('GetStatus', $mandate);
 
+        $this->request->setPayload(new DataRequestPayload($this->payload));
+
         return $this->dataRequest();
     }
 
@@ -82,12 +81,9 @@ class Emandates extends PaymentMethod implements Combinable
     {
         $mandate = new Mandate($this->payload);
 
-        $payPayload = new PayPayload($this->payload);
-        $payPayload->isDataRequest();
-
-        $this->request->setPayload($payPayload);
-
         $this->setServiceList('ModifyMandate', $mandate);
+
+        $this->request->setPayload(new DataRequestPayload($this->payload));
 
         return $this->dataRequest();
     }
@@ -99,12 +95,9 @@ class Emandates extends PaymentMethod implements Combinable
     {
         $mandate = new Mandate($this->payload);
 
-        $payPayload = new PayPayload($this->payload);
-        $payPayload->isDataRequest();
-
-        $this->request->setPayload($payPayload);
-
         $this->setServiceList('CancelMandate', $mandate);
+
+        $this->request->setPayload(new DataRequestPayload($this->payload));
 
         return $this->dataRequest();
     }

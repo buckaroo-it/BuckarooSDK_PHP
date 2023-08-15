@@ -21,6 +21,7 @@
 namespace Buckaroo\PaymentMethods\KlarnaKP;
 
 use Buckaroo\Models\Model;
+use Buckaroo\Models\Payload\DataRequestPayload;
 use Buckaroo\PaymentMethods\KlarnaKP\Models\Payload;
 use Buckaroo\PaymentMethods\PayablePaymentMethod;
 use Buckaroo\Transaction\Response\TransactionResponse;
@@ -46,7 +47,7 @@ class KlarnaKP extends PayablePaymentMethod
      */
     public function reserve(): TransactionResponse
     {
-        $this->isDataRequest = true;
+        $this->payModel = DataRequestPayload::class;
 
         $reserve = new Payload($this->payload);
 
@@ -62,7 +63,7 @@ class KlarnaKP extends PayablePaymentMethod
      */
     public function cancelReserve(): TransactionResponse
     {
-        $this->isDataRequest = true;
+        $this->payModel = DataRequestPayload::class;
 
         $cancel = new Payload($this->payload);
 
@@ -76,7 +77,7 @@ class KlarnaKP extends PayablePaymentMethod
      */
     public function updateReserve(): TransactionResponse
     {
-        $this->isDataRequest = true;
+        $this->payModel = DataRequestPayload::class;
 
         $update = new Payload($this->payload);
 

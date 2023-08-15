@@ -43,7 +43,11 @@ class IdealQRTest extends BuckarooTestCase
             'amount' => '1.00',
             'amountIsChangeable' => true,
             'expiration' => '2030-09-30',
-            'isProcessing' => false
+            'isProcessing' => false,
+            'additionalParameters' => [
+                'initiated_by_magento' => '1',
+                'service_action' => 'something',
+            ]
         ]);
 
         $this->assertTrue($response->isSuccess());

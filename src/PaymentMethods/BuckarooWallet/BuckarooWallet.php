@@ -21,6 +21,7 @@
 namespace Buckaroo\PaymentMethods\BuckarooWallet;
 
 use Buckaroo\Models\Model;
+use Buckaroo\Models\Payload\DataRequestPayload;
 use Buckaroo\PaymentMethods\BuckarooWallet\Models\DepositReservePayload;
 use Buckaroo\PaymentMethods\BuckarooWallet\Models\ReleasePayload;
 use Buckaroo\PaymentMethods\BuckarooWallet\Models\Wallet;
@@ -39,7 +40,7 @@ class BuckarooWallet extends PayablePaymentMethod
      */
     public function createWallet()
     {
-        $this->isDataRequest = true;
+        $this->payModel = DataRequestPayload::class;
 
         $this->requiredConfigFields = ['currency'];
 
@@ -57,7 +58,7 @@ class BuckarooWallet extends PayablePaymentMethod
      */
     public function updateWallet()
     {
-        $this->isDataRequest = true;
+        $this->payModel = DataRequestPayload::class;
 
         $wallet = new Wallet($this->payload);
 
@@ -71,7 +72,7 @@ class BuckarooWallet extends PayablePaymentMethod
      */
     public function getInfo()
     {
-        $this->isDataRequest = true;
+        $this->payModel = DataRequestPayload::class;
 
         $wallet = new Wallet($this->payload);
 
@@ -85,7 +86,7 @@ class BuckarooWallet extends PayablePaymentMethod
      */
     public function release()
     {
-        $this->isDataRequest = true;
+        $this->payModel = DataRequestPayload::class;
 
         $relasePayload = new ReleasePayload($this->payload);
 

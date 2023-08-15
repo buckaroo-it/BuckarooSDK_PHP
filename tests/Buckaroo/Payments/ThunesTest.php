@@ -33,7 +33,7 @@ class ThunesTest extends BuckarooTestCase
     {
         $response = $this->buckaroo->method('thunes')->pay($this->getPaymentPayload());
 
-        $this->assertTrue($response->isPendingProcessing());
+        $this->assertTrue($response->isValidationFailure());
     }
 
     /**

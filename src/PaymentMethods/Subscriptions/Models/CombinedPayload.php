@@ -20,9 +20,9 @@
 
 namespace Buckaroo\PaymentMethods\Subscriptions\Models;
 
-use Buckaroo\Models\Model;
+use Buckaroo\Models\Payload\DataRequestPayload;
 
-class CombinedPayload extends Model
+class CombinedPayload extends DataRequestPayload
 {
     /**
      * @var bool

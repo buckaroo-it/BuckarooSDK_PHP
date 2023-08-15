@@ -27,6 +27,9 @@ use Buckaroo\PaymentMethods\PayablePaymentMethod;
 use Buckaroo\PaymentMethods\Thunes\Models\Pay;
 use Buckaroo\Transaction\Response\TransactionResponse;
 
+/**
+ *
+ */
 class Thunes extends PayablePaymentMethod
 {
     /**
@@ -42,6 +45,10 @@ class Thunes extends PayablePaymentMethod
     {
         return parent::pay($model ?? new Pay($this->payload));
     }
+
+    /**
+     * @return string
+     */
     public function paymentName(): string
     {
         if (isset($this->payload['name']))
