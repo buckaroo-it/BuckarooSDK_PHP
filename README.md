@@ -51,7 +51,9 @@ By far the easiest way to install the Buckaroo API client is to require it with 
 
 ### Experimental
 ```php
-$buckaroo = new \BuckarooClient('WEBSITE_KEY', 'SECRET_KEY', 'test');
+use Buckaroo\Api\BuckarooClient; //New namespace, so we can seperate different packages!
+
+$buckaroo = new BuckarooClient('WEBSITE_KEY', 'SECRET_KEY', 'test');
 
 //iDEAL
 $buckaroo->payments->methods('ideal')->issuer('ABNANL2A')->amount(10.0)->pay(); //Execute payment
