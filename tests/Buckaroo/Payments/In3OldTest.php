@@ -23,15 +23,15 @@ namespace Tests\Buckaroo\Payments;
 use Tests\Buckaroo\BuckarooTestCase;
 use Buckaroo\Resources\Constants\Gender;
 
-class In3Test extends BuckarooTestCase
+class In3OldTest extends BuckarooTestCase
 {
     /**
      * @return void
      * @test
      */
-    public function it_creates_a_in3_payment()
+    public function it_creates_a_in3old_payment()
     {
-        $response = $this->buckaroo->method('in3')->pay($this->getPaymentPayload());
+        $response = $this->buckaroo->method('in3old')->pay($this->getPaymentPayload());
 
         $this->assertTrue($response->isSuccess());
     }
@@ -40,9 +40,9 @@ class In3Test extends BuckarooTestCase
      * @return void
      * @test
      */
-    public function it_creates_a_in3_installments_payment()
+    public function it_creates_a_in3old_installments_payment()
     {
-        $response = $this->buckaroo->method('in3')->payInInstallments($this->getPaymentPayload());
+        $response = $this->buckaroo->method('in3Old')->payInInstallments($this->getPaymentPayload());
 
         $this->assertTrue($response->isPendingProcessing());
     }
@@ -51,9 +51,9 @@ class In3Test extends BuckarooTestCase
      * @return void
      * @test
      */
-    public function it_creates_a_in3_refund()
+    public function it_creates_a_in3old_refund()
     {
-        $response = $this->buckaroo->method('in3')->refund([
+        $response = $this->buckaroo->method('in3Old')->refund([
             'amountCredit' => 10,
             'invoice' => '10000480',
             'originalTransactionKey' => '9AA4C81A08A84FA7B68E6A6A6291XXXX',

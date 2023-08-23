@@ -24,5 +24,6 @@ class Phone extends Model
 {
     protected string $landLine;
     protected string $mobile;
+    protected string $phone;
     protected string $fax;
 }

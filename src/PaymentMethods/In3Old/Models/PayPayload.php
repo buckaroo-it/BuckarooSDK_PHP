@@ -18,7 +18,7 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\In3\Models;
+namespace Buckaroo\PaymentMethods\In3Old\Models;
 
 use Buckaroo\Models\ClientIP;
 

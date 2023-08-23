@@ -26,7 +26,7 @@ use Buckaroo\PaymentMethods\In3Old\Models\PayPayload;
 use Buckaroo\PaymentMethods\PayablePaymentMethod;
 use Buckaroo\Transaction\Response\TransactionResponse;
 
-class In3 extends PayablePaymentMethod
+class In3Old extends PayablePaymentMethod
 {
     /**
      * @var string
@@ -48,7 +48,7 @@ class In3 extends PayablePaymentMethod
     }
 
     /**
-     * @return In3|mixed
+     * @return In3Old|mixed
      */
     public function payInInstallments()
     {

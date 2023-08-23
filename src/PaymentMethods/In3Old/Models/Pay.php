@@ -18,7 +18,7 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\In3\Models;
+namespace Buckaroo\PaymentMethods\In3Old\Models;
 
 use Buckaroo\Models\Address;
 use Buckaroo\Models\Company;
@@ -27,10 +27,10 @@ use Buckaroo\Models\Person;
 use Buckaroo\Models\Phone;
 use Buckaroo\Models\ServiceParameter;
 use Buckaroo\PaymentMethods\Billink\Models\Article;
-use Buckaroo\PaymentMethods\In3\Service\ParameterKeys\AddressAdapter;
-use Buckaroo\PaymentMethods\In3\Service\ParameterKeys\ArticleAdapter;
-use Buckaroo\PaymentMethods\In3\Service\ParameterKeys\CompanyAdapter;
-use Buckaroo\PaymentMethods\In3\Service\ParameterKeys\PhoneAdapter;
+use Buckaroo\PaymentMethods\In3Old\Service\ParameterKeys\AddressAdapter;
+use Buckaroo\PaymentMethods\In3Old\Service\ParameterKeys\ArticleAdapter;
+use Buckaroo\PaymentMethods\In3Old\Service\ParameterKeys\CompanyAdapter;
+use Buckaroo\PaymentMethods\In3Old\Service\ParameterKeys\PhoneAdapter;
 use Buckaroo\PaymentMethods\Traits\CountableGroupKey;
 
 class Pay extends ServiceParameter
