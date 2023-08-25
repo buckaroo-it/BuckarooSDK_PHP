@@ -26,7 +26,7 @@ class AddressAdapter extends ServiceParametersKeysAdapter
 {
     protected array $keys = [
         'houseNumber' => 'StreetNumber',
-        'houseNumberAdditional' => 'HouseNumberSuffix',
+        'houseNumberAdditional' => 'StreetNumberSuffix',
         'zipcode' => 'PostalCode',
         'country' => 'CountryCode'
     ];

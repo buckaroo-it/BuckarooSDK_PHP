@@ -21,7 +21,6 @@
 namespace Buckaroo\PaymentMethods\In3\Models;
 
 use Buckaroo\Models\Address;
-use Buckaroo\Models\Company;
 use Buckaroo\Models\Email;
 use Buckaroo\Models\Interfaces\Recipient as RecipientInterface;
 use Buckaroo\Models\Phone;

@@ -62,7 +62,7 @@ class In3Test extends BuckarooTestCase
             'clientIP'      => '127.0.0.1',
             'billing'       => [
                 'recipient'        => [
-                    'category'      => 'B2B',
+                    'category'      => 'B2C',
                     'initials'      => 'J',
                     'firstName'      => 'John',
                     'lastName'      => 'Dona',
@@ -88,11 +88,10 @@ class In3Test extends BuckarooTestCase
             ],
             'shipping' => [
                 'recipient' => [
-                    'category' => 'B2B',
+                    'category' => 'B2C',
                     'careOf' => 'John Smith',
                     'firstName' => 'John',
                     'lastName' => 'Do',
-//                    'chamberOfCommerce' => '12345678',
                 ],
                 'address' => [
                     'street' => 'Kalverstraat',
@@ -112,33 +111,24 @@ class In3Test extends BuckarooTestCase
                     'vatPercentage' => '21',
                     'quantity' => '2',
                     'price' => '20.10',
-//                    'quantityDescription' => 'Pieces', geen onderdeel van de SDK en werkt pas na release
-//                    'vatAmount' => '4.22', geen onderdeel van de SDK en werkt pas na release
-//                    'deliveryDate' => '2024-01-01' geen onderdeel van de SDK en werkt pas na release
                 ],
                 [
                     'identifier' => 'Articlenumber2',
                     'type' => 'Physical',
                     'description' => 'Red Toy Car',
-//                    'category' => 'test product',
-//                    'vatPercentage' => '21',
+                    'category' => 'test product',
+                    'vatPercentage' => '21',
                     'quantity' => '1',
                     'price' => '10.10',
-//                    'quantityDescription' => 'Pieces',
-//                    'vatAmount' => '2.12',
-//                    'deliveryDate' => '2024-01-01'
                 ],
                 [
                     'identifier' => 'USPShippingID',
                     'type' => 'Physical',
                     'description' => 'UPS',
-//                    'category' => 'test product',
-//                    'vatPercentage' => '21',
+                    'category' => 'test product',
+                    'vatPercentage' => '21',
                     'quantity' => '1',
                     'price' => '2',
-//                    'quantityDescription' => 'Pieces',
-//                    'vatAmount' => '0.42',
-//                    'deliveryDate' => '2024-01-01'
                 ],
             ]
         ];
