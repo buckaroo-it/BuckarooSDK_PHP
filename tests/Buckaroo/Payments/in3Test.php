@@ -92,6 +92,7 @@ class In3Test extends BuckarooTestCase
                     'careOf' => 'John Smith',
                     'firstName' => 'John',
                     'lastName' => 'Do',
+                    'chamberOfCommerce' => '123456'
                 ],
                 'address' => [
                     'street' => 'Kalverstraat',
