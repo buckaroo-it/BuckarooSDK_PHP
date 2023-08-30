@@ -18,12 +18,12 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\Models;
+namespace Buckaroo\PaymentMethods\In3Old\Models;
 
-class Phone extends Model
+use Buckaroo\Models\Model;
+
+class Subtotal extends Model
 {
-    protected string $landLine;
-    protected string $mobile;
-    protected string $phone;
-    protected string $fax;
+    protected string $name;
+    protected float $value;
 }

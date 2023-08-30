@@ -20,6 +20,7 @@
 
 namespace Tests\Buckaroo\Payments;
 
+use Buckaroo\Resources\Constants\RecipientCategory;
 use Tests\Buckaroo\BuckarooTestCase;
 use Buckaroo\Resources\Constants\Gender;
 
@@ -33,17 +34,6 @@ class In3Test extends BuckarooTestCase
     {
         $response = $this->buckaroo->method('in3')->pay($this->getPaymentPayload());
 
-        $this->assertTrue($response->isSuccess());
-    }
-
-    /**
-     * @return void
-     * @test
-     */
-    public function it_creates_a_in3_installments_payment()
-    {
-        $response = $this->buckaroo->method('in3')->payInInstallments($this->getPaymentPayload());
-
         $this->assertTrue($response->isPendingProcessing());
     }
 
@@ -53,7 +43,7 @@ class In3Test extends BuckarooTestCase
      */
     public function it_creates_a_in3_refund()
     {
-        $response = $this->buckaroo->method('in3')->refund([
+        $response = $this->buckaroo->method('in3Old')->refund([
             'amountCredit' => 10,
             'invoice' => '10000480',
             'originalTransactionKey' => '9AA4C81A08A84FA7B68E6A6A6291XXXX',
@@ -62,62 +52,93 @@ class In3Test extends BuckarooTestCase
         $this->assertTrue($response->isFailed());
     }
 
-    private function getPaymentPayload(): array
+    private function getPaymentPayload(?array $additional = null): array
     {
-        return [
-            'amountDebit' => 9.5,
-            'order' => uniqid(),
-            'invoice' => uniqid(),
-            'description' => 'This is a test order',
-            'invoiceDate' => '22-01-2018',
-            'customerType' => 'Company',
-            'email' => 'test@buckaroo.nl',
-            'phone' => [
-                'mobile' => '0612345678',
+        $payload = [
+            'amountDebit'       => 52.30,
+            'description'       => 'in3 pay',
+            'order'             => uniqid(),
+            'invoice'           => uniqid(),
+            'clientIP'      => '127.0.0.1',
+            'billing'       => [
+                'recipient'        => [
+                    'category'      => 'B2C',
+                    'initials'      => 'J',
+                    'firstName'      => 'John',
+                    'lastName'      => 'Dona',
+                    'birthDate'     => '1990-01-01',
+                    'customerNumber'        => '12345',
+                    'phone'                 => '0612345678',
+                    'country'               => 'NL',
+                    'companyName' => 'My Company B.V.',
+                    'chamberOfCommerce' => '123456'
+                ],
+                'address' => [
+                    'street' => 'Hoofdstraat',
+                    'houseNumber' => '13',
+                    'houseNumberAdditional' => 'a',
+                    'zipcode' => '1234AB',
+                    'city' => 'Heerenveen',
+                    'country' => 'NL',
+                ],
+                'phone' => [
+                    'phone' => '0698765433',
+                ],
+                'email' => 'test@buckaroo.nl',
+            ],
+            'shipping' => [
+                'recipient' => [
+                    'category' => 'B2C',
+                    'careOf' => 'John Smith',
+                    'firstName' => 'John',
+                    'lastName' => 'Do',
+                    'chamberOfCommerce' => '123456'
+                ],
+                'address' => [
+                    'street' => 'Kalverstraat',
+                    'houseNumber' => '13',
+                    'houseNumberAdditional' => 'b',
+                    'zipcode' => '4321EB',
+                    'city' => 'Amsterdam',
+                    'country' => 'NL',
+                ],
             ],
             'articles' => [
                 [
-                    'identifier' => uniqid(),
+                    'identifier' => 'Articlenumber1',
+                    'type' => 'Physical',
                     'description' => 'Blue Toy Car',
+                    'category' => 'test product',
+                    'vatPercentage' => '21',
+                    'quantity' => '2',
+                    'price' => '20.10',
+                ],
+                [
+                    'identifier' => 'Articlenumber2',
+                    'type' => 'Physical',
+                    'description' => 'Red Toy Car',
+                    'category' => 'test product',
+                    'vatPercentage' => '21',
                     'quantity' => '1',
-                    'price' => 10.00,
-                ],
-            ],
-            'company' => [
-                'companyName' => 'My Company B.V.',
-                'chamberOfCommerce' => '123456',
-            ],
-            'customer' => [
-                'gender' => Gender::FEMALE,
-                'initials' => 'J.S.',
-                'lastName' => 'Aflever',
-                'email' => 'billingcustomer@buckaroo.nl',
-                'phone' => '0610000000',
-                'culture' => 'nl-NL',
-                'birthDate' => '1990-01-01',
-            ],
-            'address' => [
-                'street' => 'Hoofdstraat',
-                'houseNumber' => '2',
-                'houseNumberAdditional' => 'a',
-                'zipcode' => '8441EE',
-                'city' => 'Heerenveen',
-                'country' => 'NL',
-            ],
-            'subtotals' => [
-                [
-                    'name' => 'Korting',
-                    'value' => -2.00,
+                    'price' => '10.10',
                 ],
                 [
-                    'name' => 'Betaaltoeslag',
-                    'value' => 0.50,
+                    'identifier' => 'USPShippingID',
+                    'type' => 'Physical',
+                    'description' => 'UPS',
+                    'category' => 'test product',
+                    'vatPercentage' => '21',
+                    'quantity' => '1',
+                    'price' => '2',
                 ],
-                [
-                    'name' => 'Verzendkosten',
-                    'value' => 1.00,
-                ],
-            ],
+            ]
         ];
+
+        if ($additional)
+        {
+            return array_merge($additional, $payload);
+        }
+
+        return $payload;
     }
 }
