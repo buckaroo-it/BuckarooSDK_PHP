@@ -73,7 +73,7 @@ class BillinkTest extends BuckarooTestCase
             ],
         ]);
 
-        $this->assertTrue($response->isRejected());
+        $this->assertTrue($response->isFailed());
     }
 
     /**

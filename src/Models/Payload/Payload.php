@@ -120,6 +120,7 @@ class Payload extends Model
      * @param array|null $data
      * @return Payload
      */
+
     public function setProperties(?array $data)
     {
         if (isset($data['customParameters']))
@@ -144,17 +145,5 @@ class Payload extends Model
         }
 
         return parent::setProperties($data);
-    }
-
-    /**
-     * @return $this
-     */
-    public function isDataRequest()
-    {
-        if(isset($this->additionalParameters)) {
-            $this->additionalParameters->setProperties(null, 'List');
-        }
-
-        return $this;
     }
 }

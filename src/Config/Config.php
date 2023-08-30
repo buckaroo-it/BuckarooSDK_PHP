@@ -273,11 +273,6 @@ abstract class Config implements Loggable
             return $this->culture;
         }
 
-        if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))
-        {
-            return substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 5);
-        }
-
         return 'en-GB';
     }
 

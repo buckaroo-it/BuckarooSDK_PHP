@@ -18,30 +18,28 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-declare(strict_types=1);
+namespace Buckaroo\Models\Payload;
 
-namespace Buckaroo\PaymentMethods\Sofort;
+use Buckaroo\Models\AdditionalParameters;
 
-use Buckaroo\Models\Model;
-use Buckaroo\PaymentMethods\Interfaces\Combinable;
-use Buckaroo\PaymentMethods\PayablePaymentMethod;
-use Buckaroo\Transaction\Response\TransactionResponse;
-
-class Sofort extends PayablePaymentMethod implements Combinable
+/**
+ *
+ */
+class DataRequestPayload extends Payload
 {
-    protected string $paymentName = 'sofortueberweisung';
-    protected int $serviceVersion = 2;
-
     /**
-     * @param Model|null $model
-     * @return TransactionResponse
+     * @param array|null $data
+     * @return Payload
      */
-    public function instantRefund(?Model $model = null):TransactionResponse
+    public function setProperties(?array $data)
     {
-        $this->setRefundPayload();
+        if (isset($data['additionalParameters']))
+        {
+            $this->additionalParameters = new AdditionalParameters($data['additionalParameters'], true);
 
-        $this->setServiceList('instantRefund', $model);
+            unset($data['additionalParameters']);
+        }
 
-        return $this->postRequest();
+        return parent::setProperties($data);
     }
 }
