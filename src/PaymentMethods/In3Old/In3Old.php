@@ -18,20 +18,25 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\In3;
+namespace Buckaroo\PaymentMethods\In3Old;
 
 use Buckaroo\Models\Model;
-use Buckaroo\PaymentMethods\In3\Models\Pay;
-use Buckaroo\PaymentMethods\In3\Models\PayPayload;
+use Buckaroo\PaymentMethods\In3Old\Models\Pay;
+use Buckaroo\PaymentMethods\In3Old\Models\PayPayload;
 use Buckaroo\PaymentMethods\PayablePaymentMethod;
 use Buckaroo\Transaction\Response\TransactionResponse;
 
-class In3 extends PayablePaymentMethod
+class In3Old extends PayablePaymentMethod
 {
     /**
      * @var string
      */
-    protected string $paymentName = 'In3';
+    protected string $paymentName = 'Capayable';
+
+    /**
+     * @var string
+     */
+    protected string $payModel = PayPayload::class;
 
     /**
      * @param Model|null $model
@@ -40,5 +45,19 @@ class In3 extends PayablePaymentMethod
     public function pay(?Model $model = null): TransactionResponse
     {
         return parent::pay($model ?? new Pay($this->payload));
+    }
+
+    /**
+     * @return In3Old|mixed
+     */
+    public function payInInstallments()
+    {
+        $pay = new Pay($this->payload);
+
+        $this->setPayPayload();
+
+        $this->setServiceList('PayInInstallments', $pay);
+
+        return $this->postRequest();
     }
 }

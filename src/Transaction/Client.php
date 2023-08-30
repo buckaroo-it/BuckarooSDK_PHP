@@ -27,6 +27,7 @@ use Buckaroo\Exceptions\BuckarooException;
 use Buckaroo\Handlers\Logging\Subject;
 use Buckaroo\Resources\Constants\Endpoints;
 use Buckaroo\Services\TransactionHeaders\CultureHeader;
+use Buckaroo\Services\TransactionHeaders\ChannelHeader;
 use Buckaroo\Services\TransactionHeaders\DefaultHeader;
 use Buckaroo\Services\TransactionHeaders\HmacHeader;
 use Buckaroo\Services\TransactionHeaders\SoftwareHeader;
@@ -98,6 +99,7 @@ class Client
 
         $headers = new HmacHeader($headers, $this->config, $url, $data, $method);
         $headers = new CultureHeader($headers, $this->config);
+        $headers = new ChannelHeader($headers, $this->config);
         $headers = new SoftwareHeader($headers, $this->config);
 
         return $headers->getHeaders();

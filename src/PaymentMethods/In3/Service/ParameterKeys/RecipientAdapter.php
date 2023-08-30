@@ -18,24 +18,17 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\In3\Models;
+namespace Buckaroo\PaymentMethods\In3\Service\ParameterKeys;
 
-use Buckaroo\Models\ClientIP;
+use Buckaroo\Models\Adapters\ServiceParametersKeysAdapter;
+use Buckaroo\Models\Interfaces\Recipient as RecipientInterface;
 
-class PayPayload extends \Buckaroo\Models\Payload\PayPayload
+class RecipientAdapter extends ServiceParametersKeysAdapter implements RecipientInterface
 {
-    /**
-     * @var ClientIP
-     */
-    protected ClientIP $clientIP;
-
-    /**
-     * @param array|null $payload
-     */
-    public function __construct(?array $payload)
-    {
-        $this->clientIP = new ClientIP();
-
-        parent::__construct($payload);
-    }
+    protected array $keys = [
+        'title' => 'Salutation',
+        'chamberOfCommerce' => 'CocNumber',
+        'companyName' => 'CompanyName',
+        'customerNumber' => 'customerNumber',
+    ];
 }

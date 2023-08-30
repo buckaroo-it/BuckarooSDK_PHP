@@ -18,12 +18,24 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\Models;
+namespace Buckaroo\PaymentMethods\In3Old\Models;
 
-class Phone extends Model
+use Buckaroo\Models\ClientIP;
+
+class PayPayload extends \Buckaroo\Models\Payload\PayPayload
 {
-    protected string $landLine;
-    protected string $mobile;
-    protected string $phone;
-    protected string $fax;
+    /**
+     * @var ClientIP
+     */
+    protected ClientIP $clientIP;
+
+    /**
+     * @param array|null $payload
+     */
+    public function __construct(?array $payload)
+    {
+        $this->clientIP = new ClientIP();
+
+        parent::__construct($payload);
+    }
 }

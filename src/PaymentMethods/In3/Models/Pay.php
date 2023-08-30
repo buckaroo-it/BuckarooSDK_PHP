@@ -20,17 +20,9 @@
 
 namespace Buckaroo\PaymentMethods\In3\Models;
 
-use Buckaroo\Models\Address;
-use Buckaroo\Models\Company;
-use Buckaroo\Models\Email;
-use Buckaroo\Models\Person;
-use Buckaroo\Models\Phone;
 use Buckaroo\Models\ServiceParameter;
-use Buckaroo\PaymentMethods\Billink\Models\Article;
-use Buckaroo\PaymentMethods\In3\Service\ParameterKeys\AddressAdapter;
 use Buckaroo\PaymentMethods\In3\Service\ParameterKeys\ArticleAdapter;
 use Buckaroo\PaymentMethods\In3\Service\ParameterKeys\CompanyAdapter;
-use Buckaroo\PaymentMethods\In3\Service\ParameterKeys\PhoneAdapter;
 use Buckaroo\PaymentMethods\Traits\CountableGroupKey;
 
 class Pay extends ServiceParameter
@@ -40,70 +32,84 @@ class Pay extends ServiceParameter
     /**
      * @var array|string[]
      */
-    private array $countableProperties = ['articles', 'subtotals'];
+    private array $countableProperties = ['articles'];
+
+    /**
+     * @var Recipient
+     */
+    protected Recipient $billingRecipient;
+    /**
+     * @var Recipient
+     */
+    protected Recipient $shippingRecipient;
 
     /**
      * @var string
      */
-    protected string $customerType;
+    protected string $merchantImageUrl;
     /**
      * @var string
      */
-    protected string $invoiceDate;
-
+    protected string $summaryImageUrl;
     /**
-     * @var Person
+     * @var string
      */
-    protected Person $customer;
+    protected string $bankAccount;
     /**
-     * @var CompanyAdapter
+     * @var string
      */
-    protected CompanyAdapter $company;
+    protected string $bankCode;
     /**
-     * @var AddressAdapter
+     * @var string
      */
-    protected AddressAdapter $address;
+    protected string $yourReference;
     /**
-     * @var Email
+     * @var string
      */
-    protected Email $email;
-    /**
-     * @var PhoneAdapter
-     */
-    protected PhoneAdapter $phone;
+    protected string $ourReference;
 
     /**
      * @var array
      */
     protected array $articles = [];
-    /**
-     * @var array
-     */
-    protected array $subtotals = [];
 
     /**
      * @var array|\string[][]
      */
     protected array $groupData = [
         'articles' => [
-            'groupType' => 'ProductLine',
-        ],
-        'address' => [
-            'groupType' => 'Address',
-        ],
-        'customer' => [
-            'groupType' => 'Person',
-        ],
-        'company' => [
-            'groupType' => 'Company',
-        ],
-        'phone' => [
-            'groupType' => 'Phone',
-        ],
-        'email' => [
-            'groupType' => 'Email',
+            'groupType' => 'Article',
         ],
     ];
+
+    /**
+     * @param $billing
+     * @return Recipient
+     */
+    public function billing($billing = null)
+    {
+        if (is_array($billing))
+        {
+            $this->billingRecipient = new Recipient('Billing', $billing);
+            $this->shippingRecipient = new Recipient('Shipping', $billing);
+        }
+
+        return $this->billingRecipient;
+    }
+
+    /**
+     * @param $shipping
+     * @return Recipient
+     */
+    public function shipping($shipping = null)
+    {
+        if (is_array($shipping))
+        {
+            $this->shippingRecipient = new Recipient('Shipping', $shipping);
+        }
+
+        return $this->shippingRecipient;
+    }
 
     /**
      * @param array|null $articles
@@ -120,92 +126,5 @@ class Pay extends ServiceParameter
         }
 
         return $this->articles;
-    }
-
-    /**
-     * @param $company
-     * @return CompanyAdapter
-     */
-    public function company($company = null)
-    {
-        if (is_array($company))
-        {
-            $this->company = new CompanyAdapter(new Company($company));
-        }
-
-        return $this->company;
-    }
-
-    /**
-     * @param $customer
-     * @return Person
-     */
-    public function customer($customer = null)
-    {
-        if (is_array($customer))
-        {
-            $this->customer = new Person($customer);
-        }
-
-        return $this->customer;
-    }
-
-    /**
-     * @param $address
-     * @return AddressAdapter
-     */
-    public function address($address = null)
-    {
-        if (is_array($address))
-        {
-            $this->address = new AddressAdapter(new Address($address));
-        }
-
-        return $this->address;
-    }
-
-    /**
-     * @param $email
-     * @return Email
-     */
-    public function email($email = null)
-    {
-        if (is_string($email))
-        {
-            $this->email = new Email($email);
-        }
-
-        return $this->email;
-    }
-
-    /**
-     * @param $phone
-     * @return PhoneAdapter
-     */
-    public function phone($phone = null)
-    {
-        if (is_array($phone))
-        {
-            $this->phone = new PhoneAdapter(new Phone($phone));
-        }
-
-        return $this->phone;
-    }
-
-    /**
-     * @param array|null $subtotals
-     * @return array
-     */
-    public function subtotals(?array $subtotals = null)
-    {
-        if (is_array($subtotals))
-        {
-            foreach ($subtotals as $subtotal)
-            {
-                $this->subtotals[] = new Subtotal($subtotal);
-            }
-        }
-
-        return $this->subtotals;
     }
 }

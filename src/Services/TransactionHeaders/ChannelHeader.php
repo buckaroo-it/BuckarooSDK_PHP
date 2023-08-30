@@ -18,27 +18,39 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\In3;
+namespace Buckaroo\Services\TransactionHeaders;
 
-use Buckaroo\Models\Model;
-use Buckaroo\PaymentMethods\In3\Models\Pay;
-use Buckaroo\PaymentMethods\In3\Models\PayPayload;
-use Buckaroo\PaymentMethods\PayablePaymentMethod;
-use Buckaroo\Transaction\Response\TransactionResponse;
+use Buckaroo\Config\Config;
 
-class In3 extends PayablePaymentMethod
+/**
+ *
+ */
+class ChannelHeader extends TransactionHeader
 {
     /**
-     * @var string
+     * @var Config
      */
-    protected string $paymentName = 'In3';
+    protected Config $config;
+    /**
+     * @param TransactionHeader $transactionHeader
+     * @param Config $config
+     */
+    public function __construct(TransactionHeader $transactionHeader, Config $config)
+    {
+        $this->config = $config;
+
+        parent::__construct($transactionHeader);
+    }
 
     /**
-     * @param Model|null $model
-     * @return TransactionResponse
+     * @return array
      */
-    public function pay(?Model $model = null): TransactionResponse
+    public function getHeaders(): array
     {
-        return parent::pay($model ?? new Pay($this->payload));
+        $headers = $this->transactionHeader->getHeaders();
+
+        $headers[] = "Channel: " . $this->config->channel();
+
+        return $headers;
     }
 }

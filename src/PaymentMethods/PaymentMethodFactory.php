@@ -42,6 +42,7 @@ use Buckaroo\PaymentMethods\iDeal\iDeal;
 use Buckaroo\PaymentMethods\iDealQR\iDealQR;
 use Buckaroo\PaymentMethods\iDin\iDin;
 use Buckaroo\PaymentMethods\In3\In3;
+use Buckaroo\PaymentMethods\In3Old\In3Old;
 use Buckaroo\PaymentMethods\KBC\KBC;
 use Buckaroo\PaymentMethods\KlarnaKP\KlarnaKP;
 use Buckaroo\PaymentMethods\KlarnaPay\KlarnaPay;
@@ -91,6 +92,7 @@ class PaymentMethodFactory
         iDealQR::class => ['ideal_qr'],
         iDin::class => ['idin'],
         In3::class => ['in3'],
+        In3Old::class => ['in3old'],
         KlarnaPay::class => ['klarna', 'klarnain'],
         KlarnaKP::class => ['klarnakp'],
         Surepay::class => ['surepay'],
@@ -110,6 +112,7 @@ class PaymentMethodFactory
         Przelewy24::class => ['przelewy24'],
         PointOfSale::class => ['pospayment'],
         Giropay::class => ['giropay'],
+        NoServiceSpecifiedPayment::class => ['noservice'],
         GiftCard::class => [
             'giftcard', 'westlandbon', 'babygiftcard', 'babyparkgiftcard',
             'beautywellness', 'boekenbon', 'boekenvoordeel',
