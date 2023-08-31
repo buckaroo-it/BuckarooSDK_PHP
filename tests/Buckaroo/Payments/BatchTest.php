@@ -65,6 +65,7 @@ class BatchTest extends BuckarooTestCase
             ]);
 
             $transactions[]  = $this->buckaroo->method('sepadirectdebit')->combine($invoice)->manually()->pay([
+                'pushURL'   => 'https://buckaroo.dev/push',
                 'invoice' => uniqid(),
                 'amountDebit' => 10.10,
                 'iban' => 'NL13TEST0123456789',
