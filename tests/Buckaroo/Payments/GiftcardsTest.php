@@ -75,6 +75,8 @@ class GiftcardsTest extends BuckarooTestCase
             'invoice' => 'testinvoice 123',
             'originalTransactionKey' => '2D04704995B74D679AACC59F87XXXXXX',
             'name' => 'boekenbon',
+            'email' => 'test123@hotmail.com',
+            'lastname' => 'test123'
         ]);
 
         $this->assertTrue($response->isFailed());
