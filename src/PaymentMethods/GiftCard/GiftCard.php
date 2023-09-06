@@ -23,6 +23,7 @@ namespace Buckaroo\PaymentMethods\GiftCard;
 use Buckaroo\Models\Model;
 use Buckaroo\PaymentMethods\GiftCard\Models\Pay;
 use Buckaroo\PaymentMethods\GiftCard\Models\PayPayload;
+use Buckaroo\PaymentMethods\GiftCard\Models\Refund;
 use Buckaroo\PaymentMethods\PayablePaymentMethod;
 use Buckaroo\Transaction\Response\TransactionResponse;
 
@@ -42,6 +43,15 @@ class GiftCard extends PayablePaymentMethod
     }
 
     /**
+     * @param Model|null $model
+     * @return TransactionResponse
+     */
+    public function refund(?Model $model = null): TransactionResponse
+    {
+        return parent::refund($model ?? new Refund($this->payload));
+    }
+
+    /**
      * @return TransactionResponse
      */
     public function payRedirect(): TransactionResponse
@@ -51,7 +61,7 @@ class GiftCard extends PayablePaymentMethod
         $pay = new PayPayload($this->payload);
 
         $this->setPayPayload();
-        
+
         return $this->postRequest();
     }
 
