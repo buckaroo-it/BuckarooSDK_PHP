@@ -26,7 +26,7 @@ class PhoneAdapter extends ServiceParametersKeysAdapter
 {
     protected array $keys = [
         'landLine' => 'Phone',
-        'mobile' => 'MobilePhone',
+        'mobile' => 'Phone',
         'phone' => 'Phone'
     ];
 }
