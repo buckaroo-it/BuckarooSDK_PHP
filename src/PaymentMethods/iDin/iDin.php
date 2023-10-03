@@ -26,12 +26,12 @@ use Buckaroo\PaymentMethods\iDin\Models\Issuer;
 use Buckaroo\PaymentMethods\iDin\Service\ParameterKeys\IssuerAdapter;
 use Buckaroo\PaymentMethods\PaymentMethod;
 
-class Idin extends PaymentMethod
+class iDin extends PaymentMethod
 {
     /**
      * @var string
      */
-    protected string $paymentName = 'Idin';
+    protected string $paymentName = 'idin';
     /**
      * @var array|string[]
      */
