@@ -91,7 +91,10 @@ abstract class Config implements Loggable
      * @var string|mixed
      */
     private string $culture;
-
+    /**
+     * @var string|mixed
+     */
+    private string $channel;
     /**
      * @var Subject
      */
@@ -111,6 +114,7 @@ abstract class Config implements Loggable
      * @param string|null $moduleName
      * @param string|null $moduleVersion
      * @param string|null $culture
+     * @param string|null $channel
      * @param Subject|null $logger
      */
     public function __construct(
@@ -127,6 +131,7 @@ abstract class Config implements Loggable
         ?string $moduleName = null,
         ?string $moduleVersion = null,
         ?string $culture = null,
+        ?string $channel = null,
         Subject $logger = null
     ) {
         $this->websiteKey = $websiteKey;
@@ -143,6 +148,7 @@ abstract class Config implements Loggable
         $this->moduleName = $_ENV['ModuleName'] ?? $moduleName ?? 'Empty Module name';
         $this->moduleVersion = $_ENV['ModuleVersion'] ?? $moduleVersion ?? '1.0.0';
         $this->culture = $_ENV['Culture'] ?? $culture ?? '';
+        $this->channel = $_ENV['Channel'] ?? $channel ?? '';
 
         $this->setLogger($logger ?? new DefaultLogger());
     }
@@ -267,12 +273,19 @@ abstract class Config implements Loggable
             return $this->culture;
         }
 
-        if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))
-        {
-            return substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 5);
-        }
-
         return 'en-GB';
+    }
+
+    /**
+     * @return string
+     */
+    public function channel(): string
+    {
+        if (! empty($this->channel))
+        {
+            return $this->channel;
+        }
+        return 'Web';
     }
 
     /**

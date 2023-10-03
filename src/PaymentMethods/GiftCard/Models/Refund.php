@@ -18,12 +18,18 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\Models;
+namespace Buckaroo\PaymentMethods\GiftCard\Models;
 
-class Phone extends Model
+use Buckaroo\Models\ServiceParameter;
+
+class Refund extends ServiceParameter
 {
-    protected string $landLine;
-    protected string $mobile;
-    protected string $phone;
-    protected string $fax;
+    /**
+     * @var string
+     */
+    protected string $email;
+    /**
+     * @var string
+     */
+    protected string $lastname;
 }

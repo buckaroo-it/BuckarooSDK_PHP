@@ -35,7 +35,7 @@ class PayconiqTest extends BuckarooTestCase
             'invoice' => uniqid(),
         ]);
 
-        $this->assertTrue($response->isFailed());
+        $this->assertTrue($response->isPendingProcessing());
     }
 
     /**

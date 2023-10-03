@@ -18,12 +18,13 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\Models;
+namespace Buckaroo\PaymentMethods\In3Old\Service\ParameterKeys;
 
-class Phone extends Model
+use Buckaroo\Models\Adapters\ServiceParametersKeysAdapter;
+
+class CompanyAdapter extends ServiceParametersKeysAdapter
 {
-    protected string $landLine;
-    protected string $mobile;
-    protected string $phone;
-    protected string $fax;
+    protected array $keys = [
+        'companyName' => 'Name',
+    ];
 }

@@ -18,12 +18,28 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\Models;
+namespace Buckaroo\Models\Payload;
 
-class Phone extends Model
+use Buckaroo\Models\AdditionalParameters;
+
+/**
+ *
+ */
+class DataRequestPayload extends Payload
 {
-    protected string $landLine;
-    protected string $mobile;
-    protected string $phone;
-    protected string $fax;
+    /**
+     * @param array|null $data
+     * @return Payload
+     */
+    public function setProperties(?array $data)
+    {
+        if (isset($data['additionalParameters']))
+        {
+            $this->additionalParameters = new AdditionalParameters($data['additionalParameters'], true);
+
+            unset($data['additionalParameters']);
+        }
+
+        return parent::setProperties($data);
+    }
 }

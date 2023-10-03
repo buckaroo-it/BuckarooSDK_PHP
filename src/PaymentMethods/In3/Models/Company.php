@@ -18,12 +18,9 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\Models;
+namespace Buckaroo\PaymentMethods\In3\Models;
 
-class Phone extends Model
+class Company extends \Buckaroo\Models\Person
 {
-    protected string $landLine;
-    protected string $mobile;
-    protected string $phone;
-    protected string $fax;
+    protected string $customerNumber;
 }

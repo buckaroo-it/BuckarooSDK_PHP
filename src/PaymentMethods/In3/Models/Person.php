@@ -20,10 +20,9 @@
 
 namespace Buckaroo\PaymentMethods\In3\Models;
 
-use Buckaroo\Models\Model;
-
-class Subtotal extends Model
+class Person extends \Buckaroo\Models\Person
 {
-    protected string $name;
-    protected float $value;
+    protected string $customerNumber;
+    protected string $identificationNumber;
+    protected string $conversationLanguage;
 }

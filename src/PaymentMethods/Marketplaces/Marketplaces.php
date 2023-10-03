@@ -20,7 +20,7 @@
 
 namespace Buckaroo\PaymentMethods\Marketplaces;
 
-use Buckaroo\Models\Payload\PayPayload;
+use Buckaroo\Models\Payload\DataRequestPayload;
 use Buckaroo\PaymentMethods\Interfaces\Combinable;
 use Buckaroo\PaymentMethods\Marketplaces\Models\ServiceList;
 use Buckaroo\PaymentMethods\PaymentMethod;
@@ -41,6 +41,8 @@ class Marketplaces extends PaymentMethod implements Combinable
 
         $this->setServiceList('Split', $serviceList);
 
+        $this->request->setPayload(new DataRequestPayload($this->payload));
+
         return $this->dataRequest();
     }
 
@@ -51,12 +53,9 @@ class Marketplaces extends PaymentMethod implements Combinable
     {
         $serviceList = new ServiceList($this->payload);
 
-        $payPayload = new PayPayload($this->payload);
-        $payPayload->isDataRequest();
-
-        $this->request->setPayload($payPayload);
-
         $this->setServiceList('Transfer', $serviceList);
+
+        $this->request->setPayload(new DataRequestPayload($this->payload));
 
         return $this->dataRequest();
     }
@@ -69,6 +68,8 @@ class Marketplaces extends PaymentMethod implements Combinable
         $serviceList = new ServiceList($this->payload);
 
         $this->setServiceList('RefundSupplementary', $serviceList);
+
+        $this->request->setPayload(new DataRequestPayload($this->payload));
 
         return $this->dataRequest();
     }

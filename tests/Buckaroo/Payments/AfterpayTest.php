@@ -44,7 +44,7 @@ class AfterpayTest extends BuckarooTestCase
     {
         $response = $this->buckaroo->method('afterpay')->authorize($this->getPaymentPayload());
 
-        $this->assertTrue($response->isRejected());
+        $this->assertTrue($response->isSuccess());
     }
 
 //    /**
@@ -124,14 +124,15 @@ class AfterpayTest extends BuckarooTestCase
             'clientIP'      => '127.0.0.1',
             'billing'       => [
                 'recipient'        => [
-                    'category'      => RecipientCategory::PERSON,
+                    'category'      => RecipientCategory::COMPANY,
                     'careOf'        => 'John Smith',
                     'title'            => 'Mrs',
                     'firstName'      => 'John',
                     'lastName'      => 'Do',
                     'birthDate'     => '1990-01-01',
+                    'companyName' => 'buckarooTest',
                     'conversationLanguage'  => 'NL',
-                    'identificationNumber'  => 'IdNumber12345',
+                    'chamberOfCommerce'  => 'IdNumber12345',
                     'customerNumber'        => 'customerNumber12345'
                 ],
                 'address' => [

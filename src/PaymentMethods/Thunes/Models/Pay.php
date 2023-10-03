@@ -20,6 +20,7 @@
 
 namespace Buckaroo\PaymentMethods\Thunes\Models;
 
+use Buckaroo\Models\Article;
 use Buckaroo\Models\ServiceParameter;
 use Buckaroo\PaymentMethods\Thunes\Service\ParameterKeys\ArticleAdapter;
 use Buckaroo\PaymentMethods\Traits\CountableGroupKey;
