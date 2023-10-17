@@ -36,7 +36,7 @@ use Buckaroo\PaymentMethods\CreditClick\CreditClick;
 use Buckaroo\PaymentMethods\CreditManagement\CreditManagement;
 use Buckaroo\PaymentMethods\Emandates\Emandates;
 use Buckaroo\PaymentMethods\EPS\EPS;
-use Buckaroo\PaymentMethods\EPS\MBWay;
+use Buckaroo\PaymentMethods\MBWay\MBWay;
 use Buckaroo\PaymentMethods\GiftCard\GiftCard;
 use Buckaroo\PaymentMethods\Giropay\Giropay;
 use Buckaroo\PaymentMethods\iDeal\iDeal;

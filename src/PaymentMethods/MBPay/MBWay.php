@@ -20,7 +20,7 @@
 
 declare(strict_types=1);
 
-namespace Buckaroo\PaymentMethods\EPS;
+namespace Buckaroo\PaymentMethods\MBWay;
 
 use Buckaroo\PaymentMethods\PayablePaymentMethod;
 
