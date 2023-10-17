@@ -35,7 +35,7 @@ class MultibancoTest extends BuckarooTestCase
             'amountDebit' => 10.10,
         ]);
 
-        $this->assertTrue($response->isSuccess());
+        $this->assertTrue($response->isPendingProcessing());
     }
 
     /**
