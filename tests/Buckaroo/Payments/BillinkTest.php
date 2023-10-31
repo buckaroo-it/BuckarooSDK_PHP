@@ -50,7 +50,8 @@ class BillinkTest extends BuckarooTestCase
     public function it_creates_a_billink_capture()
     {
         $response = $this->buckaroo->method('billink')->capture([
-            'originalTransactionKey' => '74AD098CCFAA4F739FE16279B5059B6B', //Set transaction key of the transaction to capture
+            'originalTransactionKey' => '74AD098CCFAA4F739FE16279B5059B6B',
+            //Set transaction key of the transaction to capture
             'invoice' => '62905fa2650f4', //Set invoice id
             'amountDebit' => 50.30, //set amount to capture
             'articles' => [
@@ -169,7 +170,8 @@ class BillinkTest extends BuckarooTestCase
     public function it_creates_a_billink_cancel_authorize()
     {
         $response = $this->buckaroo->method('billink')->cancelAuthorize([
-            'originalTransactionKey' => '74AD098CCFAA4F739FE16279B5059B6B', //Set transaction key of the transaction to capture
+            'originalTransactionKey' => '74AD098CCFAA4F739FE16279B5059B6B',
+            //Set transaction key of the transaction to capture
             'invoice' => '62905fa2650f4', //Set invoice id
             'AmountCredit' => 10, //set amount to capture
         ]);

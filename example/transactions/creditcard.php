@@ -1,6 +1,6 @@
 <?php
 
-require('../bootstrap.php');
+require_once '../bootstrap.php';
 
 use Buckaroo\BuckarooClient;
 
@@ -18,7 +18,8 @@ $response = $buckaroo->method('creditcard')->payEncrypted([
     'amountDebit' => 10,
     'invoice' => uniqid(),
     'name' => 'mastercard',
-    'cardData' => '001u8gJNwngKubFCO6FmJod6aESlIFATkKYaj47KlgBp7f3NeVxUzChg1Aug7WD2vc5wut2KU9NPLUaO0tFmzhVLZoDWn7dX4AzGxSjPrsPmDMWYcEkIwMZfcyJqoRfFkF3j15mil3muXxhR1a609NfkTo11J3ENVsvU3k60z',
+    'cardData' => '001u8gJNwngKubFCO6FmJod6aESlIFATkKYaj47KlgBp7f3NeVxUzChg1Aug7WD2vc5wut2KU9NPLUaO0tFmzhVLZoDW
+    n7dX4AzGxSjPrsPmDMWYcEkIwMZfcyJqoRfFkF3j15mil3muXxhR1a609NfkTo11J3ENVsvU3k60z',
 ]);
 
 //Pay with security code
@@ -27,7 +28,8 @@ $response = $buckaroo->method('creditcard')->payWithSecurityCode([
     'invoice' => uniqid(),
     'originalTransactionKey' => '6C5DBB69E74644958F8C25199514DC6C',
     'name' => 'mastercard',
-    'securityCode' => '001u8gJNwngKubFCO6FmJod6aESlIFATkKYaj47KlgBp7f3NeVxUzChg1Aug7WD2vc5wut2KU9NPLUaO0tFmzhVLZoDWn7dX4AzGxSjPrsPmDMWYcEkIwMZfcyJqoRfFkF3j15mil3muXxhR1a609NfkTo11J3ENVsvU3k60z',
+    'securityCode' => '001u8gJNwngKubFCO6FmJod6aESlIFATkKYaj47KlgBp7f3NeVxUzChg1Aug7WD2vc5wut2KU9NPLUaO0tFmzhVLZoDW
+    n7dX4AzGxSjPrsPmDMWYcEkIwMZfcyJqoRfFkF3j15mil3muXxhR1a609NfkTo11J3ENVsvU3k60z',
 ]);
 
 //Refund
@@ -50,7 +52,8 @@ $response = $buckaroo->method('creditcard')->authorizeEncrypted([
     'amountDebit' => 10,
     'invoice' => uniqid(),
     'name' => 'mastercard',
-    'cardData' => '001u8gJNwngKubFCO6FmJod6aESlIFATkKYaj47KlgBp7f3NeVxUzChg1Aug7WD2vc5wut2KU9NPLUaO0tFmzhVLZoDWn7dX4AzGxSjPrsPmDMWYcEkIwMZfcyJqoRfFkF3j15mil3muXxhR1a609NfkTo11J3ENVsvU3k60z',
+    'cardData' => '001u8gJNwngKubFCO6FmJod6aESlIFATkKYaj47KlgBp7f3NeVxUzChg1Aug7WD2vc5wut2KU9NPLUaO0tFmzhVLZoDW
+    n7dX4AzGxSjPrsPmDMWYcEkIwMZfcyJqoRfFkF3j15mil3muXxhR1a609NfkTo11J3ENVsvU3k60z',
 ]);
 
 //Authorize with security code
@@ -59,7 +62,8 @@ $response = $buckaroo->method('creditcard')->authorizeWithSecurityCode([
     'invoice' => uniqid(),
     'originalTransactionKey' => '6C5DBB69E74644958F8C25199514DC6C',
     'name' => 'mastercard',
-    'securityCode' => '001u8gJNwngKubFCO6FmJod6aESlIFATkKYaj47KlgBp7f3NeVxUzChg1Aug7WD2vc5wut2KU9NPLUaO0tFmzhVLZoDWn7dX4AzGxSjPrsPmDMWYcEkIwMZfcyJqoRfFkF3j15mil3muXxhR1a609NfkTo11J3ENVsvU3k60z',
+    'securityCode' => '001u8gJNwngKubFCO6FmJod6aESlIFATkKYaj47KlgBp7f3NeVxUzChg1Aug7WD2vc5wut2KU9NPLUaO0tFmzhVLZoDW
+    n7dX4AzGxSjPrsPmDMWYcEkIwMZfcyJqoRfFkF3j15mil3muXxhR1a609NfkTo11J3ENVsvU3k60z',
 ]);
 
 //Capture
@@ -68,7 +72,8 @@ $response = $buckaroo->method('creditcard')->capture([
     'invoice' => uniqid(),
     'originalTransactionKey' => '6C5DBB69E74644958F8C25199514DC6C',
     'name' => 'mastercard',
-    'securityCode' => '001u8gJNwngKubFCO6FmJod6aESlIFATkKYaj47KlgBp7f3NeVxUzChg1Aug7WD2vc5wut2KU9NPLUaO0tFmzhVLZoDWn7dX4AzGxSjPrsPmDMWYcEkIwMZfcyJqoRfFkF3j15mil3muXxhR1a609NfkTo11J3ENVsvU3k60z',
+    'securityCode' => '001u8gJNwngKubFCO6FmJod6aESlIFATkKYaj47KlgBp7f3NeVxUzChg1Aug7WD2vc5wut2KU9NPLUaO0tFmzhVLZoDW
+    n7dX4AzGxSjPrsPmDMWYcEkIwMZfcyJqoRfFkF3j15mil3muXxhR1a609NfkTo11J3ENVsvU3k60z',
 ]);
 
 //Pay Recurrent
@@ -77,5 +82,6 @@ $response = $buckaroo->method('creditcard')->payRecurrent([
     'invoice' => uniqid(),
     'originalTransactionKey' => '6C5DBB69E74644958F8C25199514DC6C',
     'name' => 'mastercard',
-    'securityCode' => '001u8gJNwngKubFCO6FmJod6aESlIFATkKYaj47KlgBp7f3NeVxUzChg1Aug7WD2vc5wut2KU9NPLUaO0tFmzhVLZoDWn7dX4AzGxSjPrsPmDMWYcEkIwMZfcyJqoRfFkF3j15mil3muXxhR1a609NfkTo11J3ENVsvU3k60z',
+    'securityCode' => '001u8gJNwngKubFCO6FmJod6aESlIFATkKYaj47KlgBp7f3NeVxUzChg1Aug7WD2vc5wut2KU9NPLUaO0tFmzhVLZoDW
+    n7dX4AzGxSjPrsPmDMWYcEkIwMZfcyJqoRfFkF3j15mil3muXxhR1a609NfkTo11J3ENVsvU3k60z',
 ]);

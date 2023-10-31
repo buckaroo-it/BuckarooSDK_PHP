@@ -1,6 +1,6 @@
 <?php
 
-require('../bootstrap.php');
+require_once '../bootstrap.php';
 
 use Buckaroo\BuckarooClient;
 
@@ -60,7 +60,7 @@ $payload = [
             'identifier' => 'Articlenumber1',
             'type' => 'Physical',
             'description' => 'Blue Toy Car',
-            'category' => 'test product',
+            'category' => 'test product1',
             'vatPercentage' => '21',
             'quantity' => '2',
             'price' => '20.10',
@@ -69,7 +69,7 @@ $payload = [
             'identifier' => 'Articlenumber2',
             'type' => 'Physical',
             'description' => 'Red Toy Car',
-            'category' => 'test product',
+            'category' => 'test product2',
             'vatPercentage' => '21',
             'quantity' => '1',
             'price' => '10.10',
@@ -78,7 +78,7 @@ $payload = [
             'identifier' => 'USPShippingID',
             'type' => 'Physical',
             'description' => 'UPS',
-            'category' => 'test product',
+            'category' => 'test product3',
             'vatPercentage' => '21',
             'quantity' => '1',
             'price' => '2',

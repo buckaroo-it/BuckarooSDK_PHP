@@ -1,6 +1,6 @@
 <?php
 
-require('../bootstrap.php');
+require_once '../bootstrap.php';
 
 use Buckaroo\BuckarooClient;
 use Buckaroo\Resources\Constants\Gender;
@@ -55,7 +55,8 @@ $invoice = $buckaroo->method('credit_management')->manually()->createCombinedInv
                 ],
             ]);
 
-// In this case, we have the payload stored in the $invoice variable. We can now combine it with the next payment using the combine method
+// In this case, we have the payload stored in the $invoice variable.
+// We can now combine it with the next payment using the combine method.
 
 $response = $buckaroo->method('sepadirectdebit')->combine($invoice)->pay([
     'invoice' => uniqid(),

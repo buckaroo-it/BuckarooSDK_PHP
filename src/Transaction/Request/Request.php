@@ -95,7 +95,7 @@ class Request implements JsonSerializable, ArrayAccess, Arrayable
 
         if ($prefix === 'set')
         {
-            return $this->offsetSet($param, $arg);
+            $this->offsetSet($param, $arg);
         } elseif ($prefix === 'get')
         {
             return $this->offsetGet($param);

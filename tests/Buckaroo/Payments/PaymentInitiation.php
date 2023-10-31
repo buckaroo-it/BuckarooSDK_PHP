@@ -4,7 +4,7 @@ namespace Tests\Buckaroo\Payments;
 
 use Tests\Buckaroo\BuckarooTestCase;
 
-class PaymentInitiation extends BuckarooTestCase
+class PaymentInitiationTest extends BuckarooTestCase
 {
 
     /**

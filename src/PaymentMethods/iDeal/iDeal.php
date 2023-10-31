@@ -27,6 +27,7 @@ use Buckaroo\PaymentMethods\iDeal\Models\Pay;
 use Buckaroo\PaymentMethods\PayablePaymentMethod;
 use Buckaroo\Transaction\Request\TransactionRequest;
 use Buckaroo\Transaction\Response\TransactionResponse;
+use Buckaroo\Exceptions\BuckarooException;
 
 class iDeal extends PayablePaymentMethod
 {
@@ -72,7 +73,7 @@ class iDeal extends PayablePaymentMethod
 
     /**
      * @return array
-     * @throws \Buckaroo\Exceptions\BuckarooException
+     * @throws BuckarooException
      */
     public function issuers(): array
     {

@@ -49,7 +49,8 @@ class CreditcardTest extends BuckarooTestCase
             'amountDebit' => 10,
             'invoice' => uniqid(),
             'name' => 'mastercard',
-            'encryptedCardData' => '001u8gJNwngKubFCO6FmJod6aESlIFATkKYaj47KlgBp7f3NeVxUzChg1Aug7WD2vc5wut2KU9NPLUaO0tFmzhVLZoDWn7dX4AzGxSjPrsPmDMWYcEkIwMZfcyJqoRfFkF3j15mil3muXxhR1a609NfkTo11J3ENVsvU3k60z',
+            'encryptedCardData' => '001u8gJNwngKubFCO6FmJod6aESlIFATkKYaj47KlgBp7f3NeVxUzChg1Aug7WD2vc5wut2KU
+            9NPLUaO0tFmzhVLZoDWn7dX4AzGxSjPrsPmDMWYcEkIwMZfcyJqoRfFkF3j15mil3muXxhR1a609NfkTo11J3ENVsvU3k60z',
         ]);
 
         $this->assertTrue($response->isValidationFailure());
@@ -66,7 +67,8 @@ class CreditcardTest extends BuckarooTestCase
             'invoice' => uniqid(),
             'originalTransactionKey' => '6C5DBB69E74644958F8C25199514DC6C',
             'name' => 'mastercard',
-            'encryptedSecurityCode' => '001u8gJNwngKubFCO6FmJod6aESlIFATkKYaj47KlgBp7f3NeVxUzChg1Aug7WD2vc5wut2KU9NPLUaO0tFmzhVLZoDWn7dX4AzGxSjPrsPmDMWYcEkIwMZfcyJqoRfFkF3j15mil3muXxhR1a609NfkTo11J3ENVsvU3k60z',
+            'encryptedSecurityCode' => '001u8gJNwngKubFCO6FmJod6aESlIFATkKYaj47KlgBp7f3NeVxUzChg1Aug7WD2vc5wut2
+            KU9NPLUaO0tFmzhVLZoDWn7dX4AzGxSjPrsPmDMWYcEkIwMZfcyJqoRfFkF3j15mil3muXxhR1a609NfkTo11J3ENVsvU3k60z',
         ]);
 
         $this->assertTrue($response->isValidationFailure());
@@ -113,7 +115,8 @@ class CreditcardTest extends BuckarooTestCase
             'amountDebit' => 10,
             'invoice' => uniqid(),
             'name' => 'mastercard',
-            'encryptedCardData' => '001u8gJNwngKubFCO6FmJod6aESlIFATkKYaj47KlgBp7f3NeVxUzChg1Aug7WD2vc5wut2KU9NPLUaO0tFmzhVLZoDWn7dX4AzGxSjPrsPmDMWYcEkIwMZfcyJqoRfFkF3j15mil3muXxhR1a609NfkTo11J3ENVsvU3k60z',
+            'encryptedCardData' => '001u8gJNwngKubFCO6FmJod6aESlIFATkKYaj47KlgBp7f3NeVxUzChg1Aug7WD2vc5wut2KU
+            9NPLUaO0tFmzhVLZoDWn7dX4AzGxSjPrsPmDMWYcEkIwMZfcyJqoRfFkF3j15mil3muXxhR1a609NfkTo11J3ENVsvU3k60z',
         ]);
 
         $this->assertTrue($response->isValidationFailure());
@@ -130,7 +133,8 @@ class CreditcardTest extends BuckarooTestCase
             'invoice' => uniqid(),
             'originalTransactionKey' => '6C5DBB69E74644958F8C25199514DC6C',
             'name' => 'mastercard',
-            'encryptedSecurityCode' => '001u8gJNwngKubFCO6FmJod6aESlIFATkKYaj47KlgBp7f3NeVxUzChg1Aug7WD2vc5wut2KU9NPLUaO0tFmzhVLZoDWn7dX4AzGxSjPrsPmDMWYcEkIwMZfcyJqoRfFkF3j15mil3muXxhR1a609NfkTo11J3ENVsvU3k60z',
+            'encryptedSecurityCode' => '001u8gJNwngKubFCO6FmJod6aESlIFATkKYaj47KlgBp7f3NeVxUzChg1Aug7WD2vc5wut2KU
+            9NPLUaO0tFmzhVLZoDWn7dX4AzGxSjPrsPmDMWYcEkIwMZfcyJqoRfFkF3j15mil3muXxhR1a609NfkTo11J3ENVsvU3k60z',
         ]);
 
         $this->assertTrue($response->isValidationFailure());

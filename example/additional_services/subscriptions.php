@@ -1,6 +1,6 @@
 <?php
 
-require('../bootstrap.php');
+require_once '../bootstrap.php';
 
 use Buckaroo\BuckarooClient;
 use Buckaroo\Resources\Constants\Gender;
@@ -70,7 +70,7 @@ $subscriptions = $buckaroo->method('subscriptions')->manually()->createCombined(
         ],
     ],
     'phone' => [
-        'mobile' => '0612345678',
+        'mobile' => '0612345679',
     ],
     'debtor' => [
         'code' => 'johnsmith4',
@@ -113,7 +113,7 @@ $paypal_extra_info = $buckaroo->method('paypal')->manually()->extraInfo([
         'country' => 'NL',
     ],
     'phone' => [
-        'mobile' => '0612345678',
+        'mobile' => '0612345670',
     ],
 ]);
 
