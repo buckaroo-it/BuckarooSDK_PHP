@@ -80,6 +80,23 @@ class IdealTest extends BuckarooTestCase
      * @return void
      * @test
      */
+    public function it_get_ideal_issuers()
+    {
+        $response = $this->buckaroo->method('ideal')->issuers();
+
+        $this->assertIsArray($response);
+        foreach ($response as $item)
+        {
+            $this->assertIsArray($item);
+            $this->assertArrayHasKey('id', $item);
+            $this->assertArrayHasKey('name', $item);
+        }
+    }
+    
+    /**
+     * @return void
+     * @test
+     */
     public function it_creates_a_ideal_payment()
     {
         $response = $this->buckaroo->method('idealprocessing')->pay($this->paymentPayload);
