@@ -1,10 +1,6 @@
 <?php
 
-<<<<<<< HEAD
 require_once '../bootstrap.php';
-=======
-require('../bootstrap.php');
->>>>>>> master
 
 use Buckaroo\BuckarooClient;
 use Buckaroo\Resources\Constants\Gender;
