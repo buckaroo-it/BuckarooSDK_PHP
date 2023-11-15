@@ -60,11 +60,7 @@ $payload = [
             'identifier' => 'Articlenumber1',
             'type' => 'Physical',
             'description' => 'Blue Toy Car',
-<<<<<<< HEAD
             'category' => 'test product1',
-=======
-            'category' => 'test product',
->>>>>>> master
             'vatPercentage' => '21',
             'quantity' => '2',
             'price' => '20.10',
@@ -73,11 +69,7 @@ $payload = [
             'identifier' => 'Articlenumber2',
             'type' => 'Physical',
             'description' => 'Red Toy Car',
-<<<<<<< HEAD
             'category' => 'test product2',
-=======
-            'category' => 'test product',
->>>>>>> master
             'vatPercentage' => '21',
             'quantity' => '1',
             'price' => '10.10',
@@ -86,11 +78,7 @@ $payload = [
             'identifier' => 'USPShippingID',
             'type' => 'Physical',
             'description' => 'UPS',
-<<<<<<< HEAD
             'category' => 'test product3',
-=======
-            'category' => 'test product',
->>>>>>> master
             'vatPercentage' => '21',
             'quantity' => '1',
             'price' => '2',

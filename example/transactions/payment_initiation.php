@@ -1,10 +1,5 @@
 <?php
-
-<<<<<<< HEAD
 require_once '../bootstrap.php';
-=======
-require('../bootstrap.php');
->>>>>>> master
 
 use Buckaroo\BuckarooClient;
 
@@ -24,8 +19,4 @@ $response = $buckaroo->method('paybybank')->refund([
     'invoice' => '', //Set invoice number of the transaction to refund
     'originalTransactionKey' => '', //Set transaction key of the transaction to refund
     'amountCredit' => 10,
-<<<<<<< HEAD
 ]);
-=======
-]);
->>>>>>> master
