@@ -28,7 +28,6 @@ use Buckaroo\PaymentMethods\iDeal\Models\Pay;
 use Buckaroo\PaymentMethods\PayablePaymentMethod;
 use Buckaroo\Services\TraitHelpers\HasIssuers;
 use Buckaroo\Transaction\Response\TransactionResponse;
-use Buckaroo\Exceptions\BuckarooException;
 
 class iDeal extends PayablePaymentMethod
 {
