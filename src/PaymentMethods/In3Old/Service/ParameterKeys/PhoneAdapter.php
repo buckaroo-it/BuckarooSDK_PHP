@@ -25,6 +25,10 @@ use Buckaroo\Models\Adapters\ServiceParametersKeysAdapter;
 class PhoneAdapter extends ServiceParametersKeysAdapter
 {
     protected array $keys = [
+<<<<<<< HEAD
         'mobile' => 'Phone'
+=======
+        'mobile' => 'Phone',
+>>>>>>> master
     ];
 }
