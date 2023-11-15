@@ -1,3 +1,5 @@
+name: SonarQube PR Analysis
+
 on:
   push:
     branches:
@@ -6,7 +8,7 @@ on:
       - 'bugfix/**'
   pull_request:
     types: [opened, synchronize, reopened]
-name: SonarQube PR Analysis
+
 jobs:
   sonarqube:
     runs-on: ubuntu-latest
