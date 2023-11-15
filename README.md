@@ -56,7 +56,8 @@ You can find your credentials in plaza  [WEBSITE_KEY](https://plaza.buckaroo.nl/
 require __DIR__ . '/vendor/autoload.php';
 
 # Get your website & secret key in your plaza.
-# You can perform a test payment by giving the third param with the string "test", on default it is set on "live"
+# You can perform a test payment by giving the third param with the string "test", on default it is set on "test".
+# By changing the value of the third parameter to "live", a live transaction can be performed.
 $buckaroo = new \BuckarooClient('WEBSITE_KEY', 'SECRET_KEY', 'test');
 ```
 

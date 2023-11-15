@@ -1,6 +1,6 @@
 <?php
 
-require('../bootstrap.php');
+require_once '../bootstrap.php';
 
 use Buckaroo\BuckarooClient;
 use Buckaroo\Resources\Constants\RecipientCategory;
@@ -35,7 +35,7 @@ $response = $buckaroo->method('afterpay')->pay([
         ],
         'phone' => [
             'mobile' => '0698765433',
-            'landline' => '0109876543',
+            'landline' => '0109876541',
         ],
         'email' => 'test@buckaroo.nl',
     ],
@@ -103,7 +103,7 @@ $response = $buckaroo->method('afterpay')->authorize([
             'firstName' => 'Test',
             'lastName' => 'Acceptatie',
             'email' => 'billingcustomer@buckaroo.nl',
-            'phone' => '0109876543',
+            'phone' => '0109876542',
             'street' => 'Hoofdstraat',
             'streetNumber' => '80',
             'streetNumberAdditional' => 'A',

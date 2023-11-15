@@ -18,13 +18,13 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\In3Old\Service\ParameterKeys;
+declare(strict_types=1);
 
-use Buckaroo\Models\Adapters\ServiceParametersKeysAdapter;
+namespace Buckaroo\PaymentMethods\Multibanco;
 
-class PhoneAdapter extends ServiceParametersKeysAdapter
+use Buckaroo\PaymentMethods\PayablePaymentMethod;
+
+class Multibanco extends PayablePaymentMethod
 {
-    protected array $keys = [
-        'mobile' => 'Phone'
-    ];
+    protected string $paymentName = 'Multibanco';
 }

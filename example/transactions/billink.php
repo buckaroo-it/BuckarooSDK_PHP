@@ -1,6 +1,6 @@
 <?php
 
-require('../bootstrap.php');
+require_once '../bootstrap.php';
 
 use Buckaroo\BuckarooClient;
 
@@ -176,7 +176,8 @@ $response = $buckaroo->method('billink')->capture([
 
 //Cancel authorize
 $response = $buckaroo->method('billink')->cancelAuthorize([
-    'originalTransactionKey' => '74AD098CCFAA4F739FE16279B5059B6B', //Set transaction key of the authorized transaction to cancel
+    'originalTransactionKey' => '74AD098CCFAA4F739FE16279B5059B6B',
+    //Set transaction key of the authorized transaction to cancel
     'invoice' => '62905fa2650f4', //Set invoice id
     'AmountCredit' => 10, //set amount to capture
 ]);

@@ -22,21 +22,34 @@ namespace Tests\Buckaroo\Payments;
 
 use Tests\Buckaroo\BuckarooTestCase;
 
-class NoServiceSpecifiedPaymentTest extends BuckarooTestCase
+class MultibancoTest extends BuckarooTestCase
 {
+    /**
+     * @return void
+     * @test
+     */
+    public function it_creates_a_multibanco_payment()
+    {
+        $response = $this->buckaroo->method('multibanco')->pay([
+            'invoice' => uniqid(),
+            'amountDebit' => 10.10,
+        ]);
+
+        $this->assertTrue($response->isPendingProcessing());
+    }
+
     /**
      * @test
      */
-    public function it_creates_a_noservice_payment()
+    public function it_creates_a_multibanco_refund()
     {
-        $response = $this->buckaroo->method('noservice')->pay([
-            'amountDebit' => 10,
-            'invoice' => uniqid(),
-            'servicesSelectableByClient' => 'ideal,bancontactmrcash,paypal',
-            'servicesExcludedForClient' => 'ideal',
-            'continueOnIncomplete' => '1',
+        $response = $this->buckaroo->method('multibanco')->refund([
+            'amountCredit' => 10,
+            'invoice' => 'testinvoice 123',
+            'description' => 'refund',
+            'originalTransactionKey' => '2D04704995B74D679AACC59F87XXXXXX',
         ]);
 
-        $this->assertTrue($response->isWaitingOnUserInput());
+        $this->assertTrue($response->isFailed());
     }
 }

@@ -4,8 +4,24 @@ namespace Tests\Buckaroo\Payments;
 
 use Tests\Buckaroo\BuckarooTestCase;
 
-class PaymentInitiation extends BuckarooTestCase
+class PaymentInitiationTest extends BuckarooTestCase
 {
+    /**
+     * @return void
+     * @test
+     */
+    public function it_get_payment_initiation_issuers()
+    {
+        $response = $this->buckaroo->method('paybybank')->issuers();
+
+        $this->assertIsArray($response);
+        foreach ($response as $item)
+        {
+            $this->assertIsArray($item);
+            $this->assertArrayHasKey('id', $item);
+            $this->assertArrayHasKey('name', $item);
+        }
+    }
 
     /**
      * @test

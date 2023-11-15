@@ -60,21 +60,6 @@ class AfterpayDigiAcceptTest extends BuckarooTestCase
         $this->assertTrue($response->isFailed());
     }
 
-//    /**
-//     * @return void
-//     * @test
-//     */
-//    public function it_creates_a_afterpaydigiaccept_cancel_authorize()
-//    {
-//        $response = $this->buckaroo->method('afterpaydigiaccept')->cancelAuthorize([
-//            'amountCredit' => 10,
-//            'invoice' => '10000480',
-//            'originalTransactionKey' => '9AA4C81A08A84FA7B68E6A6A6291XXXX'
-//        ]);
-//
-//        $this->assertTrue($response->isFailed());
-//    }
-
     /**
      * @return void
      * @test

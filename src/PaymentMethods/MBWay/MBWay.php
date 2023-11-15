@@ -18,13 +18,13 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\In3Old\Service\ParameterKeys;
+declare(strict_types=1);
 
-use Buckaroo\Models\Adapters\ServiceParametersKeysAdapter;
+namespace Buckaroo\PaymentMethods\MBWay;
 
-class PhoneAdapter extends ServiceParametersKeysAdapter
+use Buckaroo\PaymentMethods\PayablePaymentMethod;
+
+class MBWay extends PayablePaymentMethod
 {
-    protected array $keys = [
-        'mobile' => 'Phone'
-    ];
+    protected string $paymentName = 'MBWay';
 }

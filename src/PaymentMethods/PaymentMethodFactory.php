@@ -36,6 +36,7 @@ use Buckaroo\PaymentMethods\CreditClick\CreditClick;
 use Buckaroo\PaymentMethods\CreditManagement\CreditManagement;
 use Buckaroo\PaymentMethods\Emandates\Emandates;
 use Buckaroo\PaymentMethods\EPS\EPS;
+use Buckaroo\PaymentMethods\MBWay\MBWay;
 use Buckaroo\PaymentMethods\GiftCard\GiftCard;
 use Buckaroo\PaymentMethods\Giropay\Giropay;
 use Buckaroo\PaymentMethods\iDeal\iDeal;
@@ -47,6 +48,7 @@ use Buckaroo\PaymentMethods\KBC\KBC;
 use Buckaroo\PaymentMethods\KlarnaKP\KlarnaKP;
 use Buckaroo\PaymentMethods\KlarnaPay\KlarnaPay;
 use Buckaroo\PaymentMethods\Marketplaces\Marketplaces;
+use Buckaroo\PaymentMethods\Multibanco\Multibanco;
 use Buckaroo\PaymentMethods\NoServiceSpecifiedPayment\NoServiceSpecifiedPayment;
 use Buckaroo\PaymentMethods\Payconiq\Payconiq;
 use Buckaroo\PaymentMethods\PaymentInitiation\PaymentInitiation;
@@ -95,6 +97,8 @@ class PaymentMethodFactory
         In3Old::class => ['in3old'],
         KlarnaPay::class => ['klarna', 'klarnain'],
         KlarnaKP::class => ['klarnakp'],
+        Multibanco::class => ['multibanco'],
+        MBWay::class => ['mbway'],
         Surepay::class => ['surepay'],
         Subscriptions::class => ['subscriptions'],
         SEPA::class => ['sepadirectdebit', 'sepa'],

@@ -22,14 +22,19 @@ declare(strict_types=1);
 
 namespace Buckaroo\PaymentMethods\iDeal;
 
+use Buckaroo\Exceptions\BuckarooException;
 use Buckaroo\Models\Model;
 use Buckaroo\PaymentMethods\iDeal\Models\Pay;
 use Buckaroo\PaymentMethods\PayablePaymentMethod;
-use Buckaroo\Transaction\Request\TransactionRequest;
+use Buckaroo\Services\TraitHelpers\HasIssuers;
 use Buckaroo\Transaction\Response\TransactionResponse;
 
 class iDeal extends PayablePaymentMethod
 {
+    use HasIssuers {
+        issuers as traitIssuers;
+    }
+
     /**
      * @var string
      */
@@ -72,33 +77,12 @@ class iDeal extends PayablePaymentMethod
 
     /**
      * @return array
-     * @throws \Buckaroo\Exceptions\BuckarooException
+     * @throws BuckarooException
      */
     public function issuers(): array
     {
-        $request = new TransactionRequest;
+        $this->serviceVersion = 2;
 
-        try
-        {
-            $response = $this->client->specification($request, 'ideal', 2);
-        } catch (BuckarooException $e)
-        {
-            return [];
-        }
-
-        $issuerList = [];
-        if (isset($response->data()['Actions']['0']['RequestParameters'][0]['ListItemDescriptions']))
-        {
-            $issuersData = $response->data()['Actions']['0']['RequestParameters'][0]['ListItemDescriptions'];
-            if (count($issuersData) > 0)
-            {
-                foreach ($issuersData as $issuer)
-                {
-                    $issuerList[] = ['id' => $issuer['Value'], 'name' => $issuer['Description']];
-                }
-            }
-        }
-
-        return $issuerList;
+        return $this->traitIssuers();
     }
 }

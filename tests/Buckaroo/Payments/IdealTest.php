@@ -63,7 +63,8 @@ class IdealTest extends BuckarooTestCase
 
         $this->refundPayload = [
             'invoice' => 'testinvoice 123', //Set invoice number of the transaction to refund
-            'originalTransactionKey' => '4E8BD922192746C3918BF4077CXXXXXX', //Set transaction key of the transaction to refund
+            'originalTransactionKey' => '4E8BD922192746C3918BF4077CXXXXXX',
+            //Set transaction key of the transaction to refund
             'amountCredit' => 1.23,
             'clientIP' => [
                 'address' => '123.456.789.123',
@@ -80,17 +81,28 @@ class IdealTest extends BuckarooTestCase
      * @return void
      * @test
      */
+    public function it_get_ideal_issuers()
+    {
+        $response = $this->buckaroo->method('ideal')->issuers();
+
+        $this->assertIsArray($response);
+        foreach ($response as $item)
+        {
+            $this->assertIsArray($item);
+            $this->assertArrayHasKey('id', $item);
+            $this->assertArrayHasKey('name', $item);
+        }
+    }
+    
+    /**
+     * @return void
+     * @test
+     */
     public function it_creates_a_ideal_payment()
     {
         $response = $this->buckaroo->method('idealprocessing')->pay($this->paymentPayload);
 
         $this->assertTrue($response->isPendingProcessing());
-
-//        $customConfig = new CustomConfig();
-//        $customConfig->currency('AUD');
-//
-//        $response = $this->buckaroo->setConfig($customConfig)->payment('ideal')->pay(json_encode($this->paymentPayload));
-//        $this->assertTrue($response->isPendingProcessing());
     }
 
     /**
