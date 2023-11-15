@@ -2,7 +2,6 @@ name: CheckStyleAndLint
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
     paths:
       - "src/**.php"
       - "example/**.php"
@@ -19,7 +18,7 @@ jobs:
     name: PHP ${{ matrix.php }} - ${{ matrix.stability }} - ${{ matrix.os }}
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v2
         with:
           fetch-depth: 0
 
