@@ -1,6 +1,6 @@
 <?php
 
-require('../bootstrap.php');
+require_once '../bootstrap.php';
 
 use Buckaroo\BuckarooClient;
 
@@ -10,7 +10,8 @@ $returnReponse = [
     "brq_customer_name" => "J. de Tèster",
     "brq_invoicenumber" => "SDKDevelopment.com_INVOICE_NO_628c6d032af90",
     "brq_ordernumber" => "SDKDevelopment.com_ORDER_NO_628c6d032af95",
-    "brq_payer_hash" => "2d26d34584a4eafeeaa97eed10cfdae22ae64cdce1649a80a55fafca8850e3e22cb32eb7c8fc95ef0c6f96669a21651d4734cc568816f9bd59c2092911e6c0da",
+    "brq_payer_hash" => "2d26d34584a4eafeeaa97eed10cfdae22ae64cdce1649a80a55fafca8850e3e22cb32eb7c8fc95ef0c6f966
+    69a21651d4734cc568816f9bd59c2092911e6c0da",
     "brq_payment" => "D44ACDD0F99D4A1C811D2CD3EFDB05BA",
     "brq_payment_method" => "ideal",
     "brq_SERVICE_ideal_consumerBIC" => "RABONL2U",

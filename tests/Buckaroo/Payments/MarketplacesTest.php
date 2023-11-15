@@ -98,7 +98,8 @@ class MarketplacesTest extends BuckarooTestCase
 
         $response = $this->buckaroo->method('ideal')->combine($marketplace)->refund([
             'invoice' => 'testinvoice 123', //Set invoice number of the transaction to refund
-            'originalTransactionKey' => '4E8BD922192746C3918BF4077CXXXXXX', //Set transaction key of the transaction to refund
+            'originalTransactionKey' => '4E8BD922192746C3918BF4077CXXXXXX',
+            //Set transaction key of the transaction to refund
             'amountCredit' => 30,
         ]);
 
