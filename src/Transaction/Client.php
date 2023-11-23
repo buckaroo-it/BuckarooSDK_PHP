@@ -31,7 +31,7 @@ use Buckaroo\Services\TransactionHeaders\ChannelHeader;
 use Buckaroo\Services\TransactionHeaders\DefaultHeader;
 use Buckaroo\Services\TransactionHeaders\HmacHeader;
 use Buckaroo\Services\TransactionHeaders\SoftwareHeader;
-use Buckaroo\Transaction\Request\HttpClient\HttpClientGuzzle;
+use Buckaroo\Transaction\Request\HttpClient\HttpClientFactory;
 use Buckaroo\Transaction\Request\HttpClient\HttpClientInterface;
 use Buckaroo\Transaction\Request\Request;
 use Buckaroo\Transaction\Response\Response;
@@ -43,7 +43,7 @@ class Client
     private const METHOD_POST = 'POST';
 
     /**
-     * @var HttpClientInterface|HttpClientGuzzle
+     * @var HttpClientInterface
      */
     protected HttpClientInterface $httpClient;
     /**
@@ -61,7 +61,7 @@ class Client
     public function __construct(?Config $config)
     {
         $this->config = $config;
-        $this->httpClient = new HttpClientGuzzle($config->getLogger());
+        $this->httpClient = HttpClientFactory::createClient($config->getLogger());
     }
 
     /**
