@@ -92,10 +92,31 @@ class ActiveSubscriptions
         foreach ($decoded as $subscription) {
             $formatedSubscription = [];
             foreach ($subscription as $key => $subscriptionData) {
-                $formatedSubscription[lcfirst($key)] = $subscriptionData;
+                $camelKey = lcfirst($key);
+                $formatedSubscription[$camelKey] = $this->formatValue($camelKey, $subscriptionData);
             }
             $formated[] = $formatedSubscription;
         }
         return $formated;
+    }
+
+    /**
+     * Format value for currency
+     *
+     * @param string $key
+     * @param string|array $value
+     *
+     * @return string|array
+     */
+    private function formatValue($key, $value)
+    {
+        if ($key === 'currencies') {
+            $value = $value["string"];
+            if (is_string($value)) {
+                $value = [$value];
+            }
+        }
+
+        return $value;
     }
 }
