@@ -88,7 +88,6 @@ class ActiveSubscriptions
         }
 
         $formated = [];
-
         foreach ($decoded as $subscription) {
             $formatedSubscription = [];
             foreach ($subscription as $key => $subscriptionData) {
