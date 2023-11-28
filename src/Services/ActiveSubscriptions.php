@@ -45,7 +45,6 @@ class ActiveSubscriptions
     public function get(): array
     {
         try {
-
             $xmlString = $this->client
                 ->dataRequest($this->buildTransaction())
                 ->getServiceParameters()[self::SERVICE_PARAM_KEY] ?? null;
