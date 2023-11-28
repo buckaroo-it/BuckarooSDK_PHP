@@ -32,7 +32,7 @@ class GetActiveSubscription extends BuckarooTestCase
     {
         $response = $this->buckaroo->getActiveSubscriptions();
         $this->assertIsArray($response);
-        $this->assertArrayHasKey('serviceCode',$response[0]);
-        $this->assertArrayHasKey('currencies',$response[0]);
+        $this->assertArrayHasKey('serviceCode', $response[0]);
+        $this->assertArrayHasKey('currencies', $response[0]);
     }
 }
