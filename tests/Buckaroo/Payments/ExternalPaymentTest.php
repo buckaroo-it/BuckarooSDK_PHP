@@ -42,7 +42,7 @@ class ExternalPaymentTest extends BuckarooTestCase
     /**
      * @test
      */
-    public function it_creates_a_external_payment_refund()
+    public function it_creates_a_external_refund()
     {
         $response = $this->buckaroo->method('externalPayment')->refund([
             'amountCredit' => 10,
