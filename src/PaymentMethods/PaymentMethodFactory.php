@@ -37,6 +37,18 @@ use Buckaroo\PaymentMethods\Sofort\Sofort;
 use Buckaroo\PaymentMethods\Thunes\Thunes;
 use Buckaroo\PaymentMethods\Belfius\Belfius;
 use Buckaroo\PaymentMethods\Billink\Billink;
+<<<<<<< HEAD
+=======
+use Buckaroo\PaymentMethods\BuckarooVoucher\BuckarooVoucher;
+use Buckaroo\PaymentMethods\BuckarooWallet\BuckarooWallet;
+use Buckaroo\PaymentMethods\CreditCard\CreditCard;
+use Buckaroo\PaymentMethods\CreditClick\CreditClick;
+use Buckaroo\PaymentMethods\CreditManagement\CreditManagement;
+use Buckaroo\PaymentMethods\Emandates\Emandates;
+use Buckaroo\PaymentMethods\EPS\EPS;
+use Buckaroo\PaymentMethods\MBWay\MBWay;
+use Buckaroo\PaymentMethods\GiftCard\GiftCard;
+>>>>>>> master
 use Buckaroo\PaymentMethods\Giropay\Giropay;
 use Buckaroo\PaymentMethods\iDealQR\iDealQR;
 use Buckaroo\PaymentMethods\Surepay\Surepay;
@@ -45,6 +57,13 @@ use Buckaroo\PaymentMethods\Afterpay\Afterpay;
 use Buckaroo\PaymentMethods\ApplePay\ApplePay;
 use Buckaroo\PaymentMethods\GiftCard\GiftCard;
 use Buckaroo\PaymentMethods\KlarnaKP\KlarnaKP;
+<<<<<<< HEAD
+=======
+use Buckaroo\PaymentMethods\KlarnaPay\KlarnaPay;
+use Buckaroo\PaymentMethods\Marketplaces\Marketplaces;
+use Buckaroo\PaymentMethods\Multibanco\Multibanco;
+use Buckaroo\PaymentMethods\NoServiceSpecifiedPayment\NoServiceSpecifiedPayment;
+>>>>>>> master
 use Buckaroo\PaymentMethods\Payconiq\Payconiq;
 use Buckaroo\PaymentMethods\Emandates\Emandates;
 use Buckaroo\PaymentMethods\KlarnaPay\KlarnaPay;
