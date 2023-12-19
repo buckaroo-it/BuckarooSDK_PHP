@@ -1,27 +1,8 @@
 <?php
-/*
- * NOTICE OF LICENSE
- *
- * This source file is subject to the MIT License
- * It is available through the world-wide-web at this URL:
- * https://tldrlegal.com/license/mit-license
- * If you are unable to obtain it through the world-wide-web, please send an email
- * to support@buckaroo.nl so we can send you a copy immediately.
- *
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade this module to newer
- * versions in the future. If you wish to customize this module for your
- * needs please contact support@buckaroo.nl for more information.
- *
- * @copyright Copyright (c) Buckaroo B.V.
- * @license   https://tldrlegal.com/license/mit-license
- */
-
-declare(strict_types=1);
 
 namespace Buckaroo\Transaction\Request\HttpClient;
 
+use Buckaroo\Exceptions\BuckarooException;
 use Buckaroo\Exceptions\TransferException;
 use Buckaroo\Handlers\Logging\Subject;
 use GuzzleHttp\Client;
@@ -30,7 +11,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\RequestOptions;
 
-class HttpClientGuzzle extends HttpClientAbstract
+class GuzzleHttpClientV7 extends HttpClientAbstract
 {
     /**
      * @var Subject
@@ -61,7 +42,7 @@ class HttpClientGuzzle extends HttpClientAbstract
      * @param string|null $data
      * @return array|mixed
      * @throws TransferException
-     * @throws \Buckaroo\Exceptions\BuckarooException
+     * @throws BuckarooException
      */
     public function call(string $url, array $headers, string $method, string $data = null)
     {
@@ -77,8 +58,7 @@ class HttpClientGuzzle extends HttpClientAbstract
 
             $this->logger->info('RESPONSE HEADERS: ' . json_encode($response->getHeaders()));
             $this->logger->info('RESPONSE BODY: ' . $response->getBody());
-        } catch (GuzzleException $e)
-        {
+        } catch (GuzzleException $e) {
             throw new TransferException($this->logger, "Transfer failed", 0, $e);
         }
 

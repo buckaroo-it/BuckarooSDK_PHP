@@ -20,51 +20,52 @@
 
 namespace Buckaroo\PaymentMethods;
 
+use Buckaroo\Transaction\Client;
+use Buckaroo\PaymentMethods\EPS\EPS;
+use Buckaroo\PaymentMethods\In3\In3;
+use Buckaroo\PaymentMethods\KBC\KBC;
+use Buckaroo\PaymentMethods\iDin\iDin;
+use Buckaroo\PaymentMethods\SEPA\SEPA;
+use Buckaroo\PaymentMethods\iDeal\iDeal;
+use Buckaroo\PaymentMethods\MBWay\MBWay;
+use Buckaroo\PaymentMethods\Tinka\Tinka;
 use Buckaroo\Exceptions\BuckarooException;
-use Buckaroo\PaymentMethods\Afterpay\Afterpay;
-use Buckaroo\PaymentMethods\AfterpayDigiAccept\AfterpayDigiAccept;
 use Buckaroo\PaymentMethods\Alipay\Alipay;
-use Buckaroo\PaymentMethods\ApplePay\ApplePay;
-use Buckaroo\PaymentMethods\Bancontact\Bancontact;
-use Buckaroo\PaymentMethods\BankTransfer\BankTransfer;
+use Buckaroo\PaymentMethods\In3Old\In3Old;
+use Buckaroo\PaymentMethods\Paypal\Paypal;
+use Buckaroo\PaymentMethods\Sofort\Sofort;
+use Buckaroo\PaymentMethods\Thunes\Thunes;
 use Buckaroo\PaymentMethods\Belfius\Belfius;
 use Buckaroo\PaymentMethods\Billink\Billink;
-use Buckaroo\PaymentMethods\BuckarooVoucher\BuckarooVoucher;
-use Buckaroo\PaymentMethods\BuckarooWallet\BuckarooWallet;
-use Buckaroo\PaymentMethods\CreditCard\CreditCard;
-use Buckaroo\PaymentMethods\CreditClick\CreditClick;
-use Buckaroo\PaymentMethods\CreditManagement\CreditManagement;
-use Buckaroo\PaymentMethods\Emandates\Emandates;
-use Buckaroo\PaymentMethods\EPS\EPS;
-use Buckaroo\PaymentMethods\MBWay\MBWay;
-use Buckaroo\PaymentMethods\GiftCard\GiftCard;
 use Buckaroo\PaymentMethods\Giropay\Giropay;
-use Buckaroo\PaymentMethods\iDeal\iDeal;
 use Buckaroo\PaymentMethods\iDealQR\iDealQR;
-use Buckaroo\PaymentMethods\iDin\iDin;
-use Buckaroo\PaymentMethods\In3\In3;
-use Buckaroo\PaymentMethods\In3Old\In3Old;
-use Buckaroo\PaymentMethods\KBC\KBC;
+use Buckaroo\PaymentMethods\Surepay\Surepay;
+use Buckaroo\PaymentMethods\Trustly\Trustly;
+use Buckaroo\PaymentMethods\Afterpay\Afterpay;
+use Buckaroo\PaymentMethods\ApplePay\ApplePay;
+use Buckaroo\PaymentMethods\GiftCard\GiftCard;
 use Buckaroo\PaymentMethods\KlarnaKP\KlarnaKP;
-use Buckaroo\PaymentMethods\KlarnaPay\KlarnaPay;
-use Buckaroo\PaymentMethods\Marketplaces\Marketplaces;
-use Buckaroo\PaymentMethods\Multibanco\Multibanco;
-use Buckaroo\PaymentMethods\NoServiceSpecifiedPayment\NoServiceSpecifiedPayment;
 use Buckaroo\PaymentMethods\Payconiq\Payconiq;
-use Buckaroo\PaymentMethods\PaymentInitiation\PaymentInitiation;
-use Buckaroo\PaymentMethods\Paypal\Paypal;
+use Buckaroo\PaymentMethods\Emandates\Emandates;
+use Buckaroo\PaymentMethods\KlarnaPay\KlarnaPay;
+use Buckaroo\PaymentMethods\WeChatPay\WeChatPay;
+use Buckaroo\PaymentMethods\Bancontact\Bancontact;
+use Buckaroo\PaymentMethods\CreditCard\CreditCard;
+use Buckaroo\PaymentMethods\Multibanco\Multibanco;
+use Buckaroo\PaymentMethods\Przelewy24\Przelewy24;
+use Buckaroo\PaymentMethods\CreditClick\CreditClick;
 use Buckaroo\PaymentMethods\PayPerEmail\PayPerEmail;
 use Buckaroo\PaymentMethods\PointOfSale\PointOfSale;
-use Buckaroo\PaymentMethods\Przelewy24\Przelewy24;
-use Buckaroo\PaymentMethods\SEPA\SEPA;
-use Buckaroo\PaymentMethods\Sofort\Sofort;
+use Buckaroo\PaymentMethods\BankTransfer\BankTransfer;
+use Buckaroo\PaymentMethods\Marketplaces\Marketplaces;
 use Buckaroo\PaymentMethods\Subscriptions\Subscriptions;
-use Buckaroo\PaymentMethods\Surepay\Surepay;
-use Buckaroo\PaymentMethods\Thunes\Thunes;
-use Buckaroo\PaymentMethods\Tinka\Tinka;
-use Buckaroo\PaymentMethods\Trustly\Trustly;
-use Buckaroo\PaymentMethods\WeChatPay\WeChatPay;
-use Buckaroo\Transaction\Client;
+use Buckaroo\PaymentMethods\BuckarooWallet\BuckarooWallet;
+use Buckaroo\PaymentMethods\BuckarooVoucher\BuckarooVoucher;
+use Buckaroo\PaymentMethods\ExternalPayment\ExternalPayment;
+use Buckaroo\PaymentMethods\CreditManagement\CreditManagement;
+use Buckaroo\PaymentMethods\PaymentInitiation\PaymentInitiation;
+use Buckaroo\PaymentMethods\AfterpayDigiAccept\AfterpayDigiAccept;
+use Buckaroo\PaymentMethods\NoServiceSpecifiedPayment\NoServiceSpecifiedPayment;
 
 class PaymentMethodFactory
 {
@@ -107,6 +108,7 @@ class PaymentMethodFactory
         PayPerEmail::class => ['payperemail'],
         PaymentInitiation::class => ['paymentinitiation','paybybank'],
         EPS::class => ['eps'],
+        ExternalPayment::class => ['externalpayment'],
         Emandates::class => ['emandates'],
         Sofort::class => ['sofort', 'sofortueberweisung'],
         Tinka::class => ['tinka'],

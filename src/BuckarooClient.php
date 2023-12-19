@@ -27,6 +27,7 @@ use Buckaroo\Handlers\Credentials;
 use Buckaroo\Handlers\Logging\Observer as LoggingObserver;
 use Buckaroo\PaymentMethods\BatchTransactions;
 use Buckaroo\PaymentMethods\PaymentFacade;
+use Buckaroo\Services\ActiveSubscriptions;
 use Buckaroo\Services\TransactionService;
 use Buckaroo\Transaction\Client;
 
@@ -71,6 +72,12 @@ class BuckarooClient
     public function method(string $method = null): PaymentFacade
     {
         return new PaymentFacade($this->client, $method);
+    }
+
+
+    public function getActiveSubscriptions(): array
+    {
+        return (new ActiveSubscriptions($this->client))->get();
     }
 
     /**
