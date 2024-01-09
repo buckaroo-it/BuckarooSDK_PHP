@@ -160,6 +160,12 @@ class Subscription extends ServiceParameter
         'address' => [
             'groupType' => 'Address',
         ],
+        'company' => [
+            'groupType' => 'Company',
+        ],
+        'phone' => [
+            'groupType' => 'Phone',
+        ],
         'addRatePlan' => [
             'groupType' => 'AddRatePlan',
         ],
