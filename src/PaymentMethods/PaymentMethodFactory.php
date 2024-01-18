@@ -65,6 +65,7 @@ use Buckaroo\PaymentMethods\ExternalPayment\ExternalPayment;
 use Buckaroo\PaymentMethods\CreditManagement\CreditManagement;
 use Buckaroo\PaymentMethods\PaymentInitiation\PaymentInitiation;
 use Buckaroo\PaymentMethods\AfterpayDigiAccept\AfterpayDigiAccept;
+use Buckaroo\PaymentMethods\iDeal\KnakenPay;
 use Buckaroo\PaymentMethods\NoServiceSpecifiedPayment\NoServiceSpecifiedPayment;
 
 class PaymentMethodFactory
@@ -98,6 +99,7 @@ class PaymentMethodFactory
         In3Old::class => ['in3old'],
         KlarnaPay::class => ['klarna', 'klarnain'],
         KlarnaKP::class => ['klarnakp'],
+        KnakenPay::class => ['knaken', 'knakenpay'],
         Multibanco::class => ['multibanco'],
         MBWay::class => ['mbway'],
         Surepay::class => ['surepay'],
