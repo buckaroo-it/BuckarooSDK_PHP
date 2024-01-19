@@ -31,7 +31,14 @@ class KnakenPayTest extends BuckarooTestCase
     public function it_creates_a_knaken_payment()
     {
         $response = $this->buckaroo->method('knaken')->pay([
-            
+            'invoice'               => uniqid(),
+            'amountDebit'           => 10.99,
+            'returnURL'             => 'https://buckaroo.dev./return',
+            'returnURLCancel'       => 'https://buckaroo.dev/cancel',
+            'returnURLError'        => 'https://buckaroo.dev/error',
+            'returnURLReject'       => 'https://buckaroo.dev/reject',
+            'pushURL'               => 'https://buckaroo.dev/push',
+            'pushURLFailure'        => 'https://buckaroo.dev/push-failure',
         ]);
 
         $this->assertTrue($response->isPendingProcessing());

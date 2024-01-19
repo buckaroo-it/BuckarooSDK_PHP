@@ -18,30 +18,11 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-declare(strict_types=1);
+namespace Buckaroo\PaymentMethods\KnakenPay\Models;
 
-namespace Buckaroo\PaymentMethods\KnakenPay;
-
-use Buckaroo\Models\Model;
-use Buckaroo\PaymentMethods\PayablePaymentMethod;
-use Buckaroo\Transaction\Response\TransactionResponse;
 use Buckaroo\Models\ServiceParameter;
 
-class KnakenPay extends PayablePaymentMethod
+class Pay extends ServiceParameter
 {
-    /**
-     * @var string
-     */
-    protected string $paymentName = 'knaken';
-
-    /**
-     * @param Model|null $model
-     * @return TransactionResponse
-     */
-    public function pay(?Model $model = null)
-    {
-        $this->serviceVersion = 1;
-
-        return parent::pay($model ?? new ServiceParameter($this->payload));
-    }
+    protected string $issuer;
 }
