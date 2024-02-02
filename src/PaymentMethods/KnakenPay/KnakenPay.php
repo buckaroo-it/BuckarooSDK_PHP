@@ -34,14 +34,14 @@ class KnakenPay extends PayablePaymentMethod
      */
     protected string $paymentName = 'knaken';
 
+    protected int $serviceVersion = 1;
+
     /**
      * @param Model|null $model
      * @return TransactionResponse
      */
     public function pay(?Model $model = null)
     {
-        $this->serviceVersion = 1;
-
         return parent::pay($model ?? new ServiceParameter($this->payload));
     }
 }

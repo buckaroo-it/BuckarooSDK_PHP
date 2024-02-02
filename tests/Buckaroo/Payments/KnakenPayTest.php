@@ -43,4 +43,19 @@ class KnakenPayTest extends BuckarooTestCase
 
         $this->assertTrue($response->isPendingProcessing());
     }
+
+    /**
+     * @test
+     */
+    public function it_creates_a_knaken_refund()
+    {
+        $response = $this->buckaroo->method('knaken')->refund([
+            'invoice' => '2024020209061234', //Set invoice number of the transaction to refund
+            'originalTransactionKey' => '2FBB9F43A0AF4AC8B49F9073C0EC828B',
+            //Set transaction key of the transaction to refund
+            'amountCredit' => 0.01
+        ]);
+
+        $this->assertTrue($response->isFailed());
+    }
 }
