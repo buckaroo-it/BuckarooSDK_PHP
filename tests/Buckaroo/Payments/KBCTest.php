@@ -24,6 +24,8 @@ use Tests\Buckaroo\BuckarooTestCase;
 
 class KBCTest extends BuckarooTestCase
 {
+    protected array $paymentPayload;
+
     protected function setUp(): void
     {
         $this->paymentPayload = ([
