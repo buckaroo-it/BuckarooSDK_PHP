@@ -71,6 +71,7 @@ $buckaroo->method('creditcard') // Input the desire payment method.
         'invoice'       => 'UNIQUE-INVOICE-NO', // Each payment must contain a unique invoice number
     ]);
 ```
+For more information about the payload of a transaction visit: [https://docs.buckaroo.io/docs/en/payment-methods](https://docs.buckaroo.io/docs/en/payment-methods)
 
 After you create a transaction, you can retrieve several transaction information on demand.
 ```php
