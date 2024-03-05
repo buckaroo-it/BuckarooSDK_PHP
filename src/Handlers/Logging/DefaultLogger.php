@@ -37,7 +37,10 @@ class DefaultLogger implements Subject, LoggerInterface
      */
     public function __construct()
     {
-        $this->attach(new Monolog());
+        if (($_ENV['BPE_LOG'] ?? false) === 'true')
+        {
+            $this->attach(new Monolog());
+        }
 
         if (($_ENV['BPE_REPORT_ERROR'] ?? false) === 'true')
         {

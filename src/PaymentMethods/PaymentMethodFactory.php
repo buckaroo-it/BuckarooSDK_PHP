@@ -45,6 +45,7 @@ use Buckaroo\PaymentMethods\Afterpay\Afterpay;
 use Buckaroo\PaymentMethods\ApplePay\ApplePay;
 use Buckaroo\PaymentMethods\GiftCard\GiftCard;
 use Buckaroo\PaymentMethods\KlarnaKP\KlarnaKP;
+use Buckaroo\PaymentMethods\KnakenPay\KnakenPay;
 use Buckaroo\PaymentMethods\Payconiq\Payconiq;
 use Buckaroo\PaymentMethods\Emandates\Emandates;
 use Buckaroo\PaymentMethods\KlarnaPay\KlarnaPay;
@@ -98,6 +99,7 @@ class PaymentMethodFactory
         In3Old::class => ['in3old'],
         KlarnaPay::class => ['klarna', 'klarnain'],
         KlarnaKP::class => ['klarnakp'],
+        KnakenPay::class => ['knaken', 'knakenpay'],
         Multibanco::class => ['multibanco'],
         MBWay::class => ['mbway'],
         Surepay::class => ['surepay'],

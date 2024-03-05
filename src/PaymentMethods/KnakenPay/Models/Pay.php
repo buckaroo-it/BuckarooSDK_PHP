@@ -18,13 +18,11 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\In3\Service\ParameterKeys;
+namespace Buckaroo\PaymentMethods\KnakenPay\Models;
 
-use Buckaroo\Models\Adapters\ServiceParametersKeysAdapter;
+use Buckaroo\Models\ServiceParameter;
 
-class PhoneAdapter extends ServiceParametersKeysAdapter
+class Pay extends ServiceParameter
 {
-    protected array $keys = [
-        'mobile' => 'Phone'
-    ];
+    protected string $issuer;
 }

@@ -6,6 +6,8 @@ use Tests\Buckaroo\BuckarooTestCase;
 
 class SepaTest extends BuckarooTestCase
 {
+    protected array $paymentPayload;
+
     protected function setUp(): void
     {
         $this->paymentPayload = ([

@@ -18,13 +18,30 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\In3\Service\ParameterKeys;
+declare(strict_types=1);
 
-use Buckaroo\Models\Adapters\ServiceParametersKeysAdapter;
+namespace Buckaroo\PaymentMethods\KnakenPay;
 
-class PhoneAdapter extends ServiceParametersKeysAdapter
+use Buckaroo\Models\Model;
+use Buckaroo\PaymentMethods\PayablePaymentMethod;
+use Buckaroo\Transaction\Response\TransactionResponse;
+use Buckaroo\Models\ServiceParameter;
+
+class KnakenPay extends PayablePaymentMethod
 {
-    protected array $keys = [
-        'mobile' => 'Phone'
-    ];
+    /**
+     * @var string
+     */
+    protected string $paymentName = 'knaken';
+
+    protected int $serviceVersion = 1;
+
+    /**
+     * @param Model|null $model
+     * @return TransactionResponse
+     */
+    public function pay(?Model $model = null)
+    {
+        return parent::pay($model ?? new ServiceParameter($this->payload));
+    }
 }
