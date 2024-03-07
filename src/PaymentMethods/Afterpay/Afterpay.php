@@ -51,6 +51,8 @@ class Afterpay extends PayablePaymentMethod
      */
     public function authorize(): TransactionResponse
     {
+        $this->serviceVersion = 2;
+        
         $pay = new Pay($this->payload);
 
         $this->setPayPayload();
