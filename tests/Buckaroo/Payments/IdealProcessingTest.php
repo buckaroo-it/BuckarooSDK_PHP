@@ -35,11 +35,9 @@ class CustomConfig extends Config
     }
 }
 
-class IdealTest extends BuckarooTestCase
+class IdealProcessingTest extends BuckarooTestCase
 {
     protected array $paymentPayload;
-    protected array $refundPayload;
-
     protected function setUp(): void
     {
         $this->paymentPayload = [
@@ -60,30 +58,15 @@ class IdealTest extends BuckarooTestCase
                 'service_action' => 'something',
             ],
         ];
-
-        $this->refundPayload = [
-            'invoice' => 'testinvoice 123', //Set invoice number of the transaction to refund
-            'originalTransactionKey' => '4E8BD922192746C3918BF4077CXXXXXX',
-            //Set transaction key of the transaction to refund
-            'amountCredit' => 1.23,
-            'clientIP' => [
-                'address' => '123.456.789.123',
-                'type' => 0,
-            ],
-            'additionalParameters' => [
-                'initiated_by_magento' => '1',
-                'service_action' => 'something',
-            ],
-        ];
     }
 
     /**
      * @return void
      * @test
      */
-    public function it_get_ideal_issuers()
+    public function it_get_idealprocessing_issuers()
     {
-        $response = $this->buckaroo->method('ideal')->issuers();
+        $response = $this->buckaroo->method('idealprocessing')->issuers();
 
         $this->assertIsArray($response);
         foreach ($response as $item)
@@ -98,20 +81,10 @@ class IdealTest extends BuckarooTestCase
      * @return void
      * @test
      */
-    public function it_creates_a_ideal_payment()
+    public function it_creates_a_idealprocessing_payment()
     {
-        $response = $this->buckaroo->method('ideal')->pay($this->paymentPayload);
+        $response = $this->buckaroo->method('idealprocessing')->pay($this->paymentPayload);
 
         $this->assertTrue($response->isPendingProcessing());
-    }
-
-    /**
-     * @test
-     */
-    public function it_creates_a_ideal_refund()
-    {
-        $response = $this->buckaroo->method('ideal')->refund($this->refundPayload);
-
-        $this->assertTrue($response->isFailed());
     }
 }
