@@ -166,10 +166,8 @@ class PaymentFacade
      */
     public function __call(?string $name, array $arguments)
     {
-        if (method_exists($this->paymentMethod, $name))
-        {
-            if($name === 'setServiceVersion') 
-            {
+        if (method_exists($this->paymentMethod, $name)) {
+            if($name === 'setServiceVersion') {
                 $this->paymentMethod->setServiceVersion($arguments[0]);
 
                 return $this;
