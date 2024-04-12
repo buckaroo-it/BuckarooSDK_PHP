@@ -16,6 +16,7 @@
         <exclude-pattern>src/PaymentMethods/iDeal/iDeal.php</exclude-pattern>
         <exclude-pattern>src/PaymentMethods/iDealQR/iDealQR.php</exclude-pattern>
         <exclude-pattern>src/PaymentMethods/iDin/iDin.php</exclude-pattern>
+        <exclude-pattern>src/PaymentMethods/iDealProcessing/iDealProcessing.php</exclude-pattern>
     </rule>
 
 
