@@ -86,6 +86,14 @@ class TransactionResponse extends Response
     /**
      * @return bool
      */
+    public function isPendingApproval(): bool
+    {
+        return $this->getStatusCode() == ResponseStatus::BUCKAROO_STATUSCODE_PENDING_APPROVAL;
+    }
+
+    /**
+     * @return bool
+     */
     public function isValidationFailure(): bool
     {
         return $this->getStatusCode() == ResponseStatus::BUCKAROO_STATUSCODE_VALIDATION_FAILURE;
