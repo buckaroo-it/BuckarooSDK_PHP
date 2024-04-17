@@ -18,20 +18,11 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\Tinka;
+namespace Buckaroo\PaymentMethods\iDealProcessing\Models;
 
-use Buckaroo\Models\Model;
+use Buckaroo\Models\ServiceParameter;
 
-use Buckaroo\PaymentMethods\PayablePaymentMethod;
-use Buckaroo\PaymentMethods\Tinka\Models\Pay;
-use Buckaroo\Transaction\Response\TransactionResponse;
-
-class Tinka extends PayablePaymentMethod
+class Pay extends ServiceParameter
 {
-    protected string $paymentName = 'Tinka';
-
-    public function pay(?Model $model = null): TransactionResponse
-    {
-        return parent::pay($model ?? new Pay($this->payload));
-    }
+    protected string $issuer;
 }

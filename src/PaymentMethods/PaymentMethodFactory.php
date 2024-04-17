@@ -27,8 +27,8 @@ use Buckaroo\PaymentMethods\KBC\KBC;
 use Buckaroo\PaymentMethods\iDin\iDin;
 use Buckaroo\PaymentMethods\SEPA\SEPA;
 use Buckaroo\PaymentMethods\iDeal\iDeal;
+use Buckaroo\PaymentMethods\iDealProcessing\iDealProcessing;
 use Buckaroo\PaymentMethods\MBWay\MBWay;
-use Buckaroo\PaymentMethods\Tinka\Tinka;
 use Buckaroo\Exceptions\BuckarooException;
 use Buckaroo\PaymentMethods\Alipay\Alipay;
 use Buckaroo\PaymentMethods\In3Old\In3Old;
@@ -92,7 +92,8 @@ class PaymentMethodFactory
             ],
         CreditClick::class => ['creditclick'],
         CreditManagement::class => ['credit_management'],
-        iDeal::class => ['ideal', 'idealprocessing'],
+        iDeal::class => ['ideal'],
+        iDealProcessing::class => ['idealprocessing'],
         iDealQR::class => ['ideal_qr'],
         iDin::class => ['idin'],
         In3::class => ['in3'],
@@ -113,14 +114,12 @@ class PaymentMethodFactory
         ExternalPayment::class => ['externalpayment'],
         Emandates::class => ['emandates'],
         Sofort::class => ['sofort', 'sofortueberweisung'],
-        Tinka::class => ['tinka'],
         Marketplaces::class => ['marketplaces'],
         NoServiceSpecifiedPayment::class => ['noservice'],
         Payconiq::class => ['payconiq'],
         Przelewy24::class => ['przelewy24'],
         PointOfSale::class => ['pospayment'],
         Giropay::class => ['giropay'],
-        NoServiceSpecifiedPayment::class => ['noservice'],
         GiftCard::class => [
             'giftcard', 'westlandbon', 'babygiftcard', 'babyparkgiftcard',
             'beautywellness', 'boekenbon', 'boekenvoordeel',

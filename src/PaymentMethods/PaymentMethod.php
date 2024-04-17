@@ -172,6 +172,16 @@ abstract class PaymentMethod implements PaymentInterface
     }
 
     /**
+     * @return PaymentInterface
+     */
+    public function setServiceVersion(int $serviceVersion): PaymentInterface
+    {
+        $this->serviceVersion = $serviceVersion;
+
+        return $this;
+    }
+
+    /**
      * @param bool|null $isManually
      * @return $this
      */
