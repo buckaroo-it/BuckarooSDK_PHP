@@ -57,6 +57,19 @@ class iDeal extends PayablePaymentMethod
      * @param Model|null $model
      * @return TransactionResponse
      */
+    public function payFastCheckout(?Model $model = null)
+    {
+        $this->setPayPayload();
+        
+        $this->setServiceList('PayFastCheckout', $model ?? new Pay($this->payload));
+
+        return $this->postRequest();
+    }
+
+    /**
+     * @param Model|null $model
+     * @return TransactionResponse
+     */
     public function payRemainder(?Model $model = null): TransactionResponse
     {
         return parent::payRemainder($model ?? new Pay($this->payload));
