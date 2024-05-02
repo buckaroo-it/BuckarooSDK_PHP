@@ -18,15 +18,11 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\CreditClick\Service\ParameterKeys;
+namespace Buckaroo\PaymentMethods\Billink\Models;
 
-use Buckaroo\Models\Adapters\ServiceParametersKeysAdapter;
+use Buckaroo\Models\ServiceParameter;
 
-class CustomerAdapter extends ServiceParametersKeysAdapter
+class Refund extends ServiceParameter
 {
-    protected array $keys = [
-        'firstName' => 'firstname',
-        'lastName' => 'lastname',
-        'email' => 'email',
-    ];
+    protected string $refundreason;
 }
