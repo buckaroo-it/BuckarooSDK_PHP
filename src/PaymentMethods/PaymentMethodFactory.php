@@ -66,6 +66,7 @@ use Buckaroo\PaymentMethods\ExternalPayment\ExternalPayment;
 use Buckaroo\PaymentMethods\CreditManagement\CreditManagement;
 use Buckaroo\PaymentMethods\PaymentInitiation\PaymentInitiation;
 use Buckaroo\PaymentMethods\AfterpayDigiAccept\AfterpayDigiAccept;
+use Buckaroo\PaymentMethods\Blik\Blik;
 use Buckaroo\PaymentMethods\NoServiceSpecifiedPayment\NoServiceSpecifiedPayment;
 
 class PaymentMethodFactory
@@ -80,6 +81,7 @@ class PaymentMethodFactory
         AfterpayDigiAccept::class => ['afterpaydigiaccept'],
         Bancontact::class => ['bancontact', 'bancontactmrcash'],
         Billink::class => ['billink'],
+        Blik::class => ['blik'],
         Belfius::class => ['belfius'],
         BuckarooWallet::class => ['buckaroo_wallet'],
         CreditCard::class =>

@@ -18,26 +18,11 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\Blik;
+namespace Buckaroo\PaymentMethods\Blik\Models;
 
-use Buckaroo\Models\Model;
-use Buckaroo\PaymentMethods\Blik\Models\Pay;
-use Buckaroo\PaymentMethods\PayablePaymentMethod;
-use Buckaroo\Transaction\Response\TransactionResponse;
+use Buckaroo\Models\ServiceParameter;
 
-class Blik extends PayablePaymentMethod
+class Pay extends ServiceParameter
 {
-    /**
-     * @var string
-     */
-    protected string $paymentName = 'Blik';
-
-    /**
-     * @param Model|null $model
-     * @return TransactionResponse
-     */
-    public function pay(?Model $model = null): TransactionResponse
-    {
-        return parent::pay($model ?? new Pay($this->payload));
-    }
+    protected string $email;
 }

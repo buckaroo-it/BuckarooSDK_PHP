@@ -18,26 +18,25 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\Blik;
+namespace Tests\Buckaroo\Payments;
 
-use Buckaroo\Models\Model;
-use Buckaroo\PaymentMethods\Blik\Models\Pay;
-use Buckaroo\PaymentMethods\PayablePaymentMethod;
-use Buckaroo\Transaction\Response\TransactionResponse;
+use Tests\Buckaroo\BuckarooTestCase;
 
-class Blik extends PayablePaymentMethod
+class BlikTest extends BuckarooTestCase
 {
     /**
-     * @var string
+     * @test
      */
-    protected string $paymentName = 'Blik';
-
-    /**
-     * @param Model|null $model
-     * @return TransactionResponse
-     */
-    public function pay(?Model $model = null): TransactionResponse
+    public function it_creates_a_blik_payment()
     {
-        return parent::pay($model ?? new Pay($this->payload));
+        $response = $this->buckaroo->method('blik')->pay([
+            'currency'      => 'PLN',
+            'amountDebit'   => 10.00,
+            'invoice'       => 'Blik Test Plugins Example',
+            'description'   => 'Blik Test Plugins Example',
+            'email'         => 'test@buckar00.nl'
+        ]);
+
+        $this->assertTrue($response->isPendingProcessing());
     }
 }
