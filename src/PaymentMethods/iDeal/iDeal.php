@@ -58,8 +58,10 @@ class iDeal extends PayablePaymentMethod
      * @return TransactionResponse
      */
     public function payFastCheckout(?Model $model = null)
-    {
+    {        
         $this->setPayPayload();
+        
+        $this->request->setData('order', '');
         
         $this->setServiceList('PayFastCheckout', $model ?? new Pay($this->payload));
 
