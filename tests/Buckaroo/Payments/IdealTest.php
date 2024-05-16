@@ -21,19 +21,6 @@
 namespace Tests\Buckaroo\Payments;
 
 use Tests\Buckaroo\BuckarooTestCase;
-use Buckaroo\Config\Config;
-
-
-// class CustomConfig extends Config
-// {
-//     public function __construct()
-//     {
-//         $websiteKey = 'Set Key';
-//         $secretKey = 'From other resources like DB/ENV/Platform Config';
-
-//         parent::__construct($websiteKey, $secretKey);
-//     }
-// }
 
 class IdealTest extends BuckarooTestCase
 {
