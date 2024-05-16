@@ -54,7 +54,6 @@ use Buckaroo\PaymentMethods\Bancontact\Bancontact;
 use Buckaroo\PaymentMethods\CreditCard\CreditCard;
 use Buckaroo\PaymentMethods\Multibanco\Multibanco;
 use Buckaroo\PaymentMethods\Przelewy24\Przelewy24;
-use Buckaroo\PaymentMethods\CreditClick\CreditClick;
 use Buckaroo\PaymentMethods\PayPerEmail\PayPerEmail;
 use Buckaroo\PaymentMethods\PointOfSale\PointOfSale;
 use Buckaroo\PaymentMethods\BankTransfer\BankTransfer;
@@ -92,7 +91,6 @@ class PaymentMethodFactory
                 'cartebancaire', 'dankort', 'nexi',
                 'postepay',
             ],
-        CreditClick::class => ['creditclick'],
         CreditManagement::class => ['credit_management'],
         iDeal::class => ['ideal'],
         iDealProcessing::class => ['idealprocessing'],

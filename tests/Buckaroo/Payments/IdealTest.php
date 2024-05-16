@@ -93,6 +93,20 @@ class IdealTest extends BuckarooTestCase
     }
 
     /**
+     * @return void
+     * @test
+     */
+    public function it_creates_a_ideal_fast_checkout_payment()
+    {
+        $response = $this->buckaroo->method('ideal')->payFastCheckout([
+            'amountDebit'    => 10.10,
+            'invoice'   => uniqid(),
+        ]);
+
+        $this->assertTrue($response->isWaitingOnUserInput());
+    }
+
+    /**
      * @test
      */
     public function it_creates_a_ideal_refund()
