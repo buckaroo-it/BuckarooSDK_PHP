@@ -54,7 +54,6 @@ use Buckaroo\PaymentMethods\Bancontact\Bancontact;
 use Buckaroo\PaymentMethods\CreditCard\CreditCard;
 use Buckaroo\PaymentMethods\Multibanco\Multibanco;
 use Buckaroo\PaymentMethods\Przelewy24\Przelewy24;
-use Buckaroo\PaymentMethods\CreditClick\CreditClick;
 use Buckaroo\PaymentMethods\PayPerEmail\PayPerEmail;
 use Buckaroo\PaymentMethods\PointOfSale\PointOfSale;
 use Buckaroo\PaymentMethods\BankTransfer\BankTransfer;
@@ -66,6 +65,7 @@ use Buckaroo\PaymentMethods\ExternalPayment\ExternalPayment;
 use Buckaroo\PaymentMethods\CreditManagement\CreditManagement;
 use Buckaroo\PaymentMethods\PaymentInitiation\PaymentInitiation;
 use Buckaroo\PaymentMethods\AfterpayDigiAccept\AfterpayDigiAccept;
+use Buckaroo\PaymentMethods\Blik\Blik;
 use Buckaroo\PaymentMethods\NoServiceSpecifiedPayment\NoServiceSpecifiedPayment;
 
 class PaymentMethodFactory
@@ -80,6 +80,7 @@ class PaymentMethodFactory
         AfterpayDigiAccept::class => ['afterpaydigiaccept'],
         Bancontact::class => ['bancontact', 'bancontactmrcash'],
         Billink::class => ['billink'],
+        Blik::class => ['blik'],
         Belfius::class => ['belfius'],
         BuckarooWallet::class => ['buckaroo_wallet'],
         CreditCard::class =>
@@ -90,7 +91,6 @@ class PaymentMethodFactory
                 'cartebancaire', 'dankort', 'nexi',
                 'postepay',
             ],
-        CreditClick::class => ['creditclick'],
         CreditManagement::class => ['credit_management'],
         iDeal::class => ['ideal'],
         iDealProcessing::class => ['idealprocessing'],

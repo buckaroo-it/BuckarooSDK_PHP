@@ -18,48 +18,11 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\CreditClick\Models;
+namespace Buckaroo\PaymentMethods\Blik\Models;
 
-use Buckaroo\Models\Email;
-use Buckaroo\Models\Person;
 use Buckaroo\Models\ServiceParameter;
 
 class Pay extends ServiceParameter
 {
-    /**
-     * @var Person
-     */
-    protected Person $customer;
-    /**
-     * @var Email
-     */
-    protected Email $email;
-
-    /**
-     * @param $customer
-     * @return Person
-     */
-    public function customer($customer = null)
-    {
-        if (is_array($customer))
-        {
-            $this->customer = new Person($customer);
-        }
-
-        return $this->customer;
-    }
-
-    /**
-     * @param $email
-     * @return Email
-     */
-    public function email($email = null)
-    {
-        if (is_string($email))
-        {
-            $this->email = new Email($email);
-        }
-
-        return $this->email;
-    }
+    protected string $email;
 }
