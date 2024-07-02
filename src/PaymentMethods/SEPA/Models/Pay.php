@@ -51,10 +51,6 @@ class Pay extends ServiceParameter
      * @var string
      */
     protected string $mandateDate;
-    /**
-     * @var string
-     */
-    protected string $startRecurrent;
 
     /**
      * @param $customer
