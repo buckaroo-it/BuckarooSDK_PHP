@@ -58,7 +58,7 @@ abstract class PaymentMethod implements PaymentInterface
     /**
      * @var array|string[]
      */
-    protected array $requiredConfigFields = ['currency', 'pushURL'];
+    protected array $requiredConfigFields = ['currency'];
     /**
      * @var string
      */
