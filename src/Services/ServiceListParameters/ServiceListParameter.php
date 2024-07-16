@@ -65,7 +65,7 @@ abstract class ServiceListParameter
     {
         if (! is_null($value))
         {
-            if (is_callable($value))
+            if (method_exists($this, $value))
             {
                 $this->serviceList->appendParameter($value($groupKey, $groupType));
 
