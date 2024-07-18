@@ -65,13 +65,6 @@ abstract class ServiceListParameter
     {
         if (! is_null($value))
         {
-            if (method_exists($this, $value))
-            {
-                $this->serviceList->appendParameter($value($groupKey, $groupType));
-
-                return $this;
-            }
-
             $this->serviceList->appendParameter([
                 "Name" => $name,
                 "Value" => $value,
