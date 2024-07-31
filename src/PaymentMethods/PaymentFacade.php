@@ -87,6 +87,7 @@ use Buckaroo\Transaction\Response\TransactionResponse;
  * @method TransactionResponse pause(array $data)
  * @method TransactionResponse resume(array $data)
  * @method TransactionResponse payOneClick(array $data)
+ * @method TransactionResponse setServiceVersion(int $versionId)
  */
 class PaymentFacade
 {
