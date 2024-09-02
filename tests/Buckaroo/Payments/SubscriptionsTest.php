@@ -96,6 +96,7 @@ class SubscriptionsTest extends BuckarooTestCase
             'address' => [
                 'street' => 'Hoofdstraat',
                 'houseNumber' => '90',
+                'houseNumberAdditional' => 'a',
                 'zipcode' => '8441ER',
                 'city' => 'Heerenveen',
                 'country' => 'NL',

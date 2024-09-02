@@ -29,6 +29,7 @@ use Buckaroo\Models\Email;
 use Buckaroo\Models\Person;
 use Buckaroo\Models\Phone;
 use Buckaroo\Models\ServiceParameter;
+use Buckaroo\PaymentMethods\Subscriptions\Service\ParameterKeys\AddressAdapter;
 use Buckaroo\PaymentMethods\Subscriptions\Service\ParameterKeys\CompanyAdapter;
 
 class Subscription extends ServiceParameter
@@ -96,9 +97,9 @@ class Subscription extends ServiceParameter
      */
     protected Phone $phone;
     /**
-     * @var Address
+     * @var AddressAdapter
      */
-    protected Address $address;
+    protected AddressAdapter $address;
     /**
      * @var Person
      */
@@ -247,13 +248,13 @@ class Subscription extends ServiceParameter
 
     /**
      * @param $address
-     * @return Address
+     * @return AddressAdapter
      */
     public function address($address = null)
     {
         if (is_array($address))
         {
-            $this->address = new Address($address);
+            $this->address = new AddressAdapter(new Address($address));
         }
 
         return $this->address;
