@@ -37,7 +37,6 @@ use Buckaroo\PaymentMethods\Sofort\Sofort;
 use Buckaroo\PaymentMethods\Thunes\Thunes;
 use Buckaroo\PaymentMethods\Belfius\Belfius;
 use Buckaroo\PaymentMethods\Billink\Billink;
-use Buckaroo\PaymentMethods\Giropay\Giropay;
 use Buckaroo\PaymentMethods\iDealQR\iDealQR;
 use Buckaroo\PaymentMethods\Surepay\Surepay;
 use Buckaroo\PaymentMethods\Trustly\Trustly;
@@ -119,7 +118,6 @@ class PaymentMethodFactory
         Payconiq::class => ['payconiq'],
         Przelewy24::class => ['przelewy24'],
         PointOfSale::class => ['pospayment'],
-        Giropay::class => ['giropay'],
         GiftCard::class => [
             'giftcard', 'westlandbon', 'babygiftcard', 'babyparkgiftcard',
             'beautywellness', 'boekenbon', 'boekenvoordeel',
