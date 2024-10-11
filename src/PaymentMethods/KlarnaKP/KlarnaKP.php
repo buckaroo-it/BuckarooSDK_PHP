@@ -69,6 +69,8 @@ class KlarnaKP extends PayablePaymentMethod
 
         $this->setServiceList('CancelReservation', $cancel);
 
+        $this->setPayPayload();
+
         return $this->dataRequest();
     }
 
