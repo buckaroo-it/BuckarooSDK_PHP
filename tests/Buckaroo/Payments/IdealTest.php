@@ -100,6 +100,7 @@ class IdealTest extends BuckarooTestCase
     {
         $response = $this->buckaroo->method('ideal')->payFastCheckout([
             'amountDebit'    => 10.10,
+            'shippingCost'   => 0.10,
             'invoice'   => uniqid(),
         ]);
 
