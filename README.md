@@ -1,6 +1,6 @@
 
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/7081446/178473472-c0c29ec5-762c-47de-9ed4-999e5ad6c70d.png" width="200px" position="center">
+  <img src="https://github.com/user-attachments/assets/c1720e40-715a-418c-949e-8ac833e01626" width="200px" position="center">
 </p>
 
 # Buckaroo PHP SDK
