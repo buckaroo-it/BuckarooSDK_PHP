@@ -33,7 +33,6 @@ use Buckaroo\Exceptions\BuckarooException;
 use Buckaroo\PaymentMethods\Alipay\Alipay;
 use Buckaroo\PaymentMethods\In3Old\In3Old;
 use Buckaroo\PaymentMethods\Paypal\Paypal;
-use Buckaroo\PaymentMethods\Sofort\Sofort;
 use Buckaroo\PaymentMethods\Thunes\Thunes;
 use Buckaroo\PaymentMethods\Belfius\Belfius;
 use Buckaroo\PaymentMethods\Billink\Billink;
@@ -112,7 +111,6 @@ class PaymentMethodFactory
         EPS::class => ['eps'],
         ExternalPayment::class => ['externalpayment'],
         Emandates::class => ['emandates'],
-        Sofort::class => ['sofort', 'sofortueberweisung'],
         Marketplaces::class => ['marketplaces'],
         NoServiceSpecifiedPayment::class => ['noservice'],
         Payconiq::class => ['payconiq'],
