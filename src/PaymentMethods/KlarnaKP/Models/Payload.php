@@ -20,7 +20,6 @@
 
 namespace Buckaroo\PaymentMethods\KlarnaKP\Models;
 
-use Buckaroo\Models\Article;
 use Buckaroo\Models\ServiceParameter;
 use Buckaroo\PaymentMethods\KlarnaKP\Service\ParameterKeys\ArticleAdapter;
 use Buckaroo\PaymentMethods\Traits\CountableGroupKey;

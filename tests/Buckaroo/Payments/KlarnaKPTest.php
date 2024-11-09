@@ -111,6 +111,8 @@ class KlarnaKPTest extends BuckarooTestCase
                     'vatPercentage' => '21',
                     'quantity' => '2',
                     'price' => '20.10',
+                    'imageUrl' => 'https://example.com/image',
+                    'productUrl' => 'https://example.com/product',
                 ],
                 [
                     'identifier' => 'Articlenumber2',
@@ -118,6 +120,8 @@ class KlarnaKPTest extends BuckarooTestCase
                     'vatPercentage' => '21',
                     'quantity' => '1',
                     'price' => '10.10',
+                    'imageUrl' => 'https://example.com/image',
+                    'productUrl' => 'https://example.com/product',
                 ],
             ],
         ]);
@@ -143,6 +147,7 @@ class KlarnaKPTest extends BuckarooTestCase
     private function getPaymentPayload(?array $additional = null): array
     {
         $payload = [
+            'clientIP' => '198.162.1.1',
             'currency' => 'EUR',
             'amountDebit' => 50.30,
             'order' => uniqid(),
@@ -187,6 +192,8 @@ class KlarnaKPTest extends BuckarooTestCase
                     'vatPercentage' => '21',
                     'quantity' => '2',
                     'price' => '20.10',
+                    'imageUrl' => 'https://example.com/image',
+                    'productUrl' => 'https://example.com/product',
                 ],
                 [
                     'identifier' => 'Articlenumber2',
@@ -194,6 +201,8 @@ class KlarnaKPTest extends BuckarooTestCase
                     'vatPercentage' => '21',
                     'quantity' => '1',
                     'price' => '10.10',
+                    'imageUrl' => 'https://example.com/image',
+                    'productUrl' => 'https://example.com/product',
                 ],
             ]
         ];
