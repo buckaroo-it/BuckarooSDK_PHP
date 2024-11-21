@@ -28,7 +28,8 @@ abstract class Hmac
      */
     public function uri($uri = null)
     {
-        if ($uri) {
+        if ($uri)
+        {
             $uri = preg_replace("#^[^:/.]*[:/]+#i", "", $uri);
 
             $this->uri = strtolower(urlencode($uri));
@@ -45,8 +46,10 @@ abstract class Hmac
     {
         $this->base64Data = '';
 
-        if ($data) {
-            if (is_array($data)) {
+        if ($data)
+        {
+            if (is_array($data))
+            {
                 $data = mb_convert_encoding(
                     json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
                     'UTF-8',
@@ -68,7 +71,8 @@ abstract class Hmac
      */
     public function nonce($nonce = null)
     {
-        if ($nonce) {
+        if ($nonce)
+        {
             $this->nonce = $nonce;
         }
 
@@ -81,7 +85,8 @@ abstract class Hmac
      */
     public function time($time = null)
     {
-        if ($time) {
+        if ($time)
+        {
             $this->time = $time;
         }
 
