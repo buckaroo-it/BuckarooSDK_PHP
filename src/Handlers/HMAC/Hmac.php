@@ -51,7 +51,7 @@ abstract class Hmac
             if (is_array($data))
             {
                 $data = mb_convert_encoding(
-                    json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
+                    json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRESERVE_ZERO_FRACTION),
                     'UTF-8',
                     'auto'
                 );
