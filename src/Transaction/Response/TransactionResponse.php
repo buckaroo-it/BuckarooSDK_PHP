@@ -105,9 +105,14 @@ class TransactionResponse extends Response
      */
     public function data(?string $key = null)
     {
-        if ($key && isset($this->data[$key]))
+        if ($key)
         {
-            return $this->data[$key];
+            if (isset($this->data[$key]))
+            {
+                return $this->data[$key];
+            }
+
+            return null;
         }
 
         return $this->data;
