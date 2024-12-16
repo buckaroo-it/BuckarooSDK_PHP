@@ -49,7 +49,7 @@ class Validator extends Hmac
     /**
      * @var string
      */
-    protected string $hash;
+    protected string $hash = '';
 
     /**
      * @param Config $config
@@ -101,5 +101,13 @@ class Validator extends Hmac
         }
 
         throw new BuckarooException($this->config->getLogger(), "HMAC validation failed.");
+    }
+
+    /**
+     * @return string
+     */
+    public function getHash(): string
+    {
+        return $this->hash;
     }
 }
