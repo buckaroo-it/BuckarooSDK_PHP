@@ -61,7 +61,7 @@ class Client
     public function __construct(?Config $config)
     {
         $this->config = $config;
-        $this->httpClient = HttpClientFactory::createClient($config->getLogger());
+        $this->httpClient = HttpClientFactory::createClient($config);
     }
 
     /**
