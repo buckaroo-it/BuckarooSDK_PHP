@@ -29,6 +29,7 @@ use Buckaroo\Models\Email;
 use Buckaroo\Models\Person;
 use Buckaroo\Models\Phone;
 use Buckaroo\Models\ServiceParameter;
+use Buckaroo\PaymentMethods\Subscriptions\Service\ParameterKeys\BankAccountAdapter;
 use Buckaroo\PaymentMethods\Subscriptions\Service\ParameterKeys\AddressAdapter;
 use Buckaroo\PaymentMethods\Subscriptions\Service\ParameterKeys\CompanyAdapter;
 
@@ -85,9 +86,9 @@ class Subscription extends ServiceParameter
      */
     protected Debtor $debtor;
     /**
-     * @var BankAccount
+     * @var BankAccountAdapter
      */
-    protected BankAccount $bankAccount;
+    protected BankAccountAdapter $bankAccount;
     /**
      * @var Email
      */
@@ -212,7 +213,7 @@ class Subscription extends ServiceParameter
     {
         if (is_array($bankAccount))
         {
-            $this->bankAccount = new BankAccount($bankAccount);
+            $this->bankAccount = new BankAccountAdapter(new BankAccount($bankAccount));
         }
 
         return $this->bankAccount;
