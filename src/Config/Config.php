@@ -99,6 +99,14 @@ abstract class Config implements Loggable
      * @var Subject
      */
     protected Subject $logger;
+    /**
+     * @var int|null
+     */
+    private ?int $timeout;
+    /**
+     * @var int|null
+     */
+    private ?int $connectTimeout;
 
     /**
      * @param string $websiteKey
@@ -116,6 +124,8 @@ abstract class Config implements Loggable
      * @param string|null $culture
      * @param string|null $channel
      * @param Subject|null $logger
+     * @param int|null $timeout
+     * @param int|null $connectTimeout
      */
     public function __construct(
         string  $websiteKey,
@@ -132,7 +142,9 @@ abstract class Config implements Loggable
         ?string $moduleVersion = null,
         ?string $culture = null,
         ?string $channel = null,
-        Subject $logger = null
+        Subject $logger = null,
+        ?int $timeout = null,
+        ?int $connectTimeout = null
     ) {
         $this->websiteKey = $websiteKey;
         $this->secretKey = $secretKey;
@@ -149,6 +161,8 @@ abstract class Config implements Loggable
         $this->moduleVersion = $_ENV['ModuleVersion'] ?? $moduleVersion ?? '1.0.0';
         $this->culture = $_ENV['Culture'] ?? $culture ?? '';
         $this->channel = $_ENV['Channel'] ?? $channel ?? '';
+        $this->timeout = $_ENV['BPE_HTTP_TIMEOUT'] ?? $timeout ?? null;
+        $this->connectTimeout = $_ENV['BPE_HTTP_CONNECT_TIMEOUT'] ?? $connectTimeout ?? null;
 
         $this->setLogger($logger ?? new DefaultLogger());
     }
@@ -356,5 +370,21 @@ abstract class Config implements Loggable
     public function getLogger(): ?Subject
     {
         return $this->logger;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getTimeout(): ?int
+    {
+        return $this->timeout;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getConnectTimeout(): ?int
+    {
+        return $this->connectTimeout;
     }
 }
