@@ -22,6 +22,7 @@ namespace Buckaroo\PaymentMethods\CreditCard;
 
 use Buckaroo\PaymentMethods\CreditCard\Models\CardData;
 use Buckaroo\PaymentMethods\CreditCard\Models\SecurityCode;
+use Buckaroo\PaymentMethods\CreditCard\Models\SessionData;
 use Buckaroo\PaymentMethods\Interfaces\Combinable;
 use Buckaroo\PaymentMethods\PayablePaymentMethod;
 use Buckaroo\Transaction\Response\TransactionResponse;
@@ -38,6 +39,34 @@ class CreditCard extends PayablePaymentMethod implements Combinable
         $this->setPayPayload();
 
         $this->setServiceList('PayEncrypted', $cardData);
+
+        return $this->postRequest();
+    }
+
+    /**
+     * @return TransactionResponse
+     */
+    public function authorizeWithToken(): TransactionResponse
+    {
+        $cardData = new SessionData($this->payload);
+
+        $this->setPayPayload();
+
+        $this->setServiceList('AuthorizeWithToken', $cardData);
+
+        return $this->postRequest();
+    }
+
+    /**
+     * @return TransactionResponse
+     */
+    public function payWithToken(): TransactionResponse
+    {
+        $cardData = new SessionData($this->payload);
+
+        $this->setPayPayload();
+
+        $this->setServiceList('PayWithToken', $cardData);
 
         return $this->postRequest();
     }
