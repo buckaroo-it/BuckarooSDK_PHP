@@ -64,6 +64,7 @@ use Buckaroo\PaymentMethods\CreditManagement\CreditManagement;
 use Buckaroo\PaymentMethods\PaymentInitiation\PaymentInitiation;
 use Buckaroo\PaymentMethods\AfterpayDigiAccept\AfterpayDigiAccept;
 use Buckaroo\PaymentMethods\Blik\Blik;
+use Buckaroo\PaymentMethods\ClickToPay\ClickToPay;
 use Buckaroo\PaymentMethods\NoServiceSpecifiedPayment\NoServiceSpecifiedPayment;
 
 class PaymentMethodFactory
@@ -81,6 +82,7 @@ class PaymentMethodFactory
         Blik::class => ['blik'],
         Belfius::class => ['belfius'],
         BuckarooWallet::class => ['buckaroo_wallet'],
+        ClickToPay::class => ['clicktopay'],
         CreditCard::class =>
             [
                 'creditcard', 'mastercard', 'visa',
