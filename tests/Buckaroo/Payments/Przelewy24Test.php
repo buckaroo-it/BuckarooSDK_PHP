@@ -29,15 +29,13 @@ class Przelewy24Test extends BuckarooTestCase
      */
     public function it_creates_przelewy24_payment()
     {
-        $response = $this->buckaroo->method("przelewy24")->pay([
-            'amountDebit' => 3.5,
-            'invoice' => uniqid(),
+        $response = $this->buckaroo->method("przelewy24")->pay($this->getBasePayPayload([],[
             'email' => 'test@test.nl',
             'customer' => [
                 'firstName' => 'John',
                 'lastName' => 'Smith',
             ],
-        ]);
+        ]));
 
         $this->assertTrue($response->isPendingProcessing());
     }
@@ -47,12 +45,10 @@ class Przelewy24Test extends BuckarooTestCase
      */
     public function it_creates_a_przelewy24_refund()
     {
-        $response = $this->buckaroo->method('przelewy24')->refund([
-            'amountCredit' => 10,
-            'invoice' => 'testinvoice 123',
-            'originalTransactionKey' => '2D04704995B74D679AACC59F87XXXXXX',
-        ]);
+        $response = $this->buckaroo->method('przelewy24')->refund($this->getRefundPayload([
+            'originalTransactionKey' => '2C3A786E7F2A40B0A070483B19BEF84A',
+        ]));
 
-        $this->assertTrue($response->isFailed());
+        $this->assertTrue($response->isSuccess());
     }
 }

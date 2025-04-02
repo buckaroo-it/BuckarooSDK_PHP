@@ -31,9 +31,10 @@ class SurepayTest extends BuckarooTestCase
     public function it_verify_with_surepay()
     {
         $response = $this->buckaroo->method('surepay')->verify([
+            'currency' => '',
             'bankAccount' => [
-                'iban' => 'NL13TEST0123456789',
-                'accountName' => 'John Doe',
+                'iban' => 'NLXXTESTXXXXXXXXXX',
+                'accountName' => 'Test Acceptatie',
             ]
         ]);
 

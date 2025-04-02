@@ -30,11 +30,9 @@ class PosTest extends BuckarooTestCase
      */
     public function it_creates_a_pos_payment()
     {
-        $response = $this->buckaroo->method('pospayment')->pay([
-            'invoice' => uniqid(),
-            'amountDebit' => 10.10,
+        $response = $this->buckaroo->method('pospayment')->pay($this->getBasePayPayload([],[
             'terminalID' => '50000001',
-        ]);
+        ]));
 
         $this->assertTrue($response->isSuccess());
     }

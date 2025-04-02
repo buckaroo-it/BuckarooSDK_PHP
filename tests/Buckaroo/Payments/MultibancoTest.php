@@ -30,10 +30,7 @@ class MultibancoTest extends BuckarooTestCase
      */
     public function it_creates_a_multibanco_payment()
     {
-        $response = $this->buckaroo->method('multibanco')->pay([
-            'invoice' => uniqid(),
-            'amountDebit' => 10.10,
-        ]);
+        $response = $this->buckaroo->method('multibanco')->pay($this->getBasePayPayload());
 
         $this->assertTrue($response->isPendingProcessing());
     }
@@ -43,13 +40,10 @@ class MultibancoTest extends BuckarooTestCase
      */
     public function it_creates_a_multibanco_refund()
     {
-        $response = $this->buckaroo->method('multibanco')->refund([
-            'amountCredit' => 10,
-            'invoice' => 'testinvoice 123',
-            'description' => 'refund',
-            'originalTransactionKey' => '2D04704995B74D679AACC59F87XXXXXX',
-        ]);
+        $response = $this->buckaroo->method('multibanco')->refund($this->getRefundPayload([
+            'originalTransactionKey' => 'D3CD8DB284E44A439024AA38C79D9BEB',
+        ]));
 
-        $this->assertTrue($response->isFailed());
+        $this->assertTrue($response->isSuccess());
     }
 }

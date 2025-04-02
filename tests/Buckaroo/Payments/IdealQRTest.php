@@ -29,12 +29,7 @@ class IdealQRTest extends BuckarooTestCase
      */
     public function it_creates_a_ideal_qr()
     {
-        $response = $this->buckaroo->method('ideal_qr')->generate([
-            'description' => 'Test purchase',
-            'returnURL'         => 'https://buckaroo.dev/return',
-            'returnURLCancel'   => 'https://buckaroo.dev/cancel',
-            'returnURLError'    => 'https://buckaroo.dev/error',
-            'returnURLReject'   => 'https://buckaroo.dev/reject',
+        $response = $this->buckaroo->method('ideal_qr')->generate($this->getBasePayPayload(['invoice'],[
             'minAmount' => '0.10',
             'maxAmount' => '10.0',
             'imageSize' => '2000',
@@ -44,11 +39,7 @@ class IdealQRTest extends BuckarooTestCase
             'amountIsChangeable' => true,
             'expiration' => '2030-09-30',
             'isProcessing' => false,
-            'additionalParameters' => [
-                'initiated_by_magento' => '1',
-                'service_action' => 'something',
-            ]
-        ]);
+        ]));
 
         $this->assertTrue($response->isSuccess());
     }

@@ -29,15 +29,13 @@ class TrustlyTest extends BuckarooTestCase
      */
     public function it_creates_a_trustly_payment()
     {
-        $response = $this->buckaroo->method('trustly')->pay([
-            'amountDebit' => 10,
-            'invoice' => uniqid(),
+        $response = $this->buckaroo->method('trustly')->pay($this->getBasePayPayload([], [
             'country' => 'DE',
             'customer' => [
                 'firstName' => 'Test',
                 'lastName' => 'Aflever',
             ],
-        ]);
+        ]));
 
         $this->assertTrue($response->isPendingProcessing());
     }
@@ -47,12 +45,10 @@ class TrustlyTest extends BuckarooTestCase
      */
     public function it_creates_a_trustly_refund()
     {
-        $response = $this->buckaroo->method('trustly')->refund([
-            'amountCredit' => 10,
-            'invoice' => 'testinvoice 123',
-            'originalTransactionKey' => '2D04704995B74D679AACC59F87XXXXXX',
-        ]);
+        $response = $this->buckaroo->method('trustly')->refund($this->getRefundPayload([
+            'originalTransactionKey' => '53544CC5794844BE9E82E424032FC84B',
+        ]));
 
-        $this->assertTrue($response->isFailed());
+        $this->assertTrue($response->isSuccess());
     }
 }
