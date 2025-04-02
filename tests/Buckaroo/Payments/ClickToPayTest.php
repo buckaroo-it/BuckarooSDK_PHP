@@ -39,7 +39,5 @@ class ClickToPayTest extends BuckarooTestCase
         );
 
         $this->assertTrue($response->isWaitingOnUserInput());
-
-        self::$payTransactionKey = $response->getTransactionKey();
     }
 }
