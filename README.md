@@ -33,7 +33,7 @@ Start accepting payments today with Buckaroo.
 To use the Buckaroo API client, the following things are required:
 
 + A Buckaroo account ([Dutch](https://www.buckaroo.nl/start) or [English](https://www.buckaroo.eu/solutions/request-form))
-+ PHP >= 8.1
++ PHP >= 7.4
 + Up-to-date OpenSSL (or other SSL/TLS toolkit)
 
 ### Composer Installation
