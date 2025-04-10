@@ -5,7 +5,7 @@
     "version": "1.17.1",
     "type": "library",
     "require": {
-        "php": "^8.1",
+        "php": ">=7.4|^8.0",
         "ext-json": "*",
         "ext-pcre": "*",
         "ext-fileinfo": "*",
