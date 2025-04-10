@@ -92,7 +92,10 @@ class ReplyHandler
             $data = json_decode($data, true);
         }
 
-        if (($this->contains('Transaction', $data) || $this->contains('DataRequest', $data)) && $this->auth_header && $this->uri)
+        if (($this->contains('Transaction', $data) || $this->contains('DataRequest', $data)) &&
+            $this->auth_header &&
+            $this->uri
+        )
         {
             $this->strategy = new Json($this->config, $data, $this->auth_header, $this->uri);
 
