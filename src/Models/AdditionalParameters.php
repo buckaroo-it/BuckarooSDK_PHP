@@ -28,12 +28,12 @@ class AdditionalParameters extends Model
     /**
      * @var array
      */
-    protected ?array $AdditionalParameter;
+    protected ?array $AdditionalParameter = [];
 
     /**
      * @var array
      */
-    protected ?array $List;
+    protected ?array $List = [];
 
     /**
      * @var bool
