@@ -21,8 +21,10 @@
 namespace Buckaroo\PaymentMethods\Trustly\Models;
 
 use Buckaroo\Models\Person;
+use Buckaroo\Models\Email;
 use Buckaroo\Models\ServiceParameter;
 use Buckaroo\PaymentMethods\Trustly\Service\ParameterKeys\CustomerAdapter;
+use Buckaroo\PaymentMethods\Trustly\Service\ParameterKeys\EmailAdapter;
 
 class Pay extends ServiceParameter
 {
@@ -30,6 +32,11 @@ class Pay extends ServiceParameter
      * @var CustomerAdapter
      */
     protected CustomerAdapter $customer;
+
+    /**
+     * @var EmailAdapter
+     */
+    protected EmailAdapter $email;
 
     /**
      * @var string
@@ -40,6 +47,8 @@ class Pay extends ServiceParameter
      * @param $customer
      * @return CustomerAdapter
      */
+
+
     public function customer($customer = null)
     {
         if (is_array($customer))
@@ -48,5 +57,19 @@ class Pay extends ServiceParameter
         }
 
         return $this->customer;
+    }
+
+    /**
+     * @param $email
+     * @return EmailAdapter
+     */
+    public function email($email = null)
+    {
+        if (is_string($email))
+        {
+            $this->email = new EmailAdapter(new Email($email));
+        }
+
+        return $this->email;
     }
 }
