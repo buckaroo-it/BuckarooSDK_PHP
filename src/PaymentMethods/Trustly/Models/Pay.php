@@ -47,8 +47,6 @@ class Pay extends ServiceParameter
      * @param $customer
      * @return CustomerAdapter
      */
-
-
     public function customer($customer = null)
     {
         if (is_array($customer))
