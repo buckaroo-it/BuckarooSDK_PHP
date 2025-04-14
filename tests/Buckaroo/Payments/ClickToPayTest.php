@@ -18,15 +18,26 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\Trustly\Service\ParameterKeys;
+namespace Tests\Buckaroo\Payments;
 
-use Buckaroo\Models\Adapters\ServiceParametersKeysAdapter;
+use Tests\Buckaroo\BuckarooTestCase;
 
-class CustomerAdapter extends ServiceParametersKeysAdapter
+class ClickToPayTest extends BuckarooTestCase
 {
-    protected array $keys = [
-        'firstName' => 'CustomerFirstName',
-        'lastName' => 'CustomerLastName',
-        'email' => 'ConsumerEmail',
-    ];
+    /**
+     * @return void
+     * @test
+     */
+    public function it_creates_a_click_to_pay_payment()
+    {
+        $response = $this->buckaroo->method('clicktopay')->pay(
+            [
+                'amountDebit' => 0.01,
+                'invoice' => uniqid(),
+                'continueOnIncomplete' => "1",
+            ]
+        );
+
+        $this->assertTrue($response->isWaitingOnUserInput());
+    }
 }

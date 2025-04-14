@@ -18,15 +18,11 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\Trustly\Service\ParameterKeys;
+namespace Buckaroo\PaymentMethods\CreditCard\Models;
 
-use Buckaroo\Models\Adapters\ServiceParametersKeysAdapter;
+use Buckaroo\Models\ServiceParameter;
 
-class CustomerAdapter extends ServiceParametersKeysAdapter
+class SessionData extends ServiceParameter
 {
-    protected array $keys = [
-        'firstName' => 'CustomerFirstName',
-        'lastName' => 'CustomerLastName',
-        'email' => 'ConsumerEmail',
-    ];
+    protected string $sessionId;
 }

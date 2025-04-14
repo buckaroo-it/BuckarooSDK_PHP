@@ -2,6 +2,7 @@
 
 namespace Buckaroo\Transaction\Request\HttpClient;
 
+use Buckaroo\Config\Config;
 use Buckaroo\Exceptions\BuckarooException;
 use Buckaroo\Exceptions\TransferException;
 use Buckaroo\Handlers\Logging\Subject;
@@ -18,14 +19,18 @@ class GuzzleHttpClientV5 extends HttpClientAbstract
     protected Subject $logger;
     protected ClientInterface $httpClient;
 
-    public function __construct(Subject $logger)
+    /**
+     * @param Config $config
+     */
+    public function __construct(Config $config)
     {
+        $logger = $config->getLogger();
         parent::__construct($logger);
         $this->logger = $logger;
 
         $this->httpClient = new Client([
-            'timeout' => self::TIMEOUT,
-            'connect_timeout' => self::CONNECT_TIMEOUT,
+            'timeout' => (int)($config->getTimeout() ?? self::TIMEOUT),
+            'connect_timeout' => (int)($config->getConnectTimeout() ?? self::CONNECT_TIMEOUT),
         ]);
     }
 

@@ -18,15 +18,14 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\Trustly\Service\ParameterKeys;
+declare(strict_types=1);
 
-use Buckaroo\Models\Adapters\ServiceParametersKeysAdapter;
+namespace Buckaroo\PaymentMethods\ClickToPay;
 
-class CustomerAdapter extends ServiceParametersKeysAdapter
+use Buckaroo\PaymentMethods\Interfaces\Combinable;
+use Buckaroo\PaymentMethods\PayablePaymentMethod;
+
+class ClickToPay extends PayablePaymentMethod implements Combinable
 {
-    protected array $keys = [
-        'firstName' => 'CustomerFirstName',
-        'lastName' => 'CustomerLastName',
-        'email' => 'ConsumerEmail',
-    ];
+    protected string $paymentName = 'ClickToPay';
 }

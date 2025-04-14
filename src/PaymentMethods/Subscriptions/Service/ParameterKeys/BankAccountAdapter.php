@@ -18,15 +18,18 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\Trustly\Service\ParameterKeys;
+namespace Buckaroo\PaymentMethods\Subscriptions\Service\ParameterKeys;
 
 use Buckaroo\Models\Adapters\ServiceParametersKeysAdapter;
 
-class CustomerAdapter extends ServiceParametersKeysAdapter
+class BankAccountAdapter extends ServiceParametersKeysAdapter
 {
+    /**
+     * @var array|string[]
+     */
     protected array $keys = [
-        'firstName' => 'CustomerFirstName',
-        'lastName' => 'CustomerLastName',
-        'email' => 'ConsumerEmail',
+        'iban'          => 'CustomerIBAN',
+        'accountName'   => 'CustomerAccountName',
+        'bic'           => 'CustomerBIC'
     ];
 }

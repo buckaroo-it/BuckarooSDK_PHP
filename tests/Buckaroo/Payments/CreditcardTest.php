@@ -187,4 +187,37 @@ class CreditcardTest extends BuckarooTestCase
 
         $this->assertTrue($response->isValidationFailure());
     }
+
+    /**
+     * @return void
+     * @test
+     */
+    public function it_creates_a_creditcard_token_authorize()
+    {
+        $response = $this->buckaroo->method('creditcard')->authorizeWithToken([
+            'amountDebit' => 10,
+            'invoice' => uniqid(),
+            'name' => 'visa',
+            'sessionId' => 'hf_23sASKvHadWu0ZZj',
+        ]);
+
+        $this->assertTrue($response->isPendingProcessing());
+    }
+
+
+    /**
+     * @return void
+     * @test
+     */
+    public function it_creates_a_creditcard_hosted_fields_payment()
+    {
+        $response = $this->buckaroo->method('creditcard')->payWithToken([
+            'amountDebit' => 10,
+            'invoice' => uniqid(),
+            'name' => 'visa',
+            'sessionId' => 'hf_23sASKvHadWu0ZZj',
+        ]);
+
+        $this->assertTrue($response->isPendingProcessing());
+    }
 }
