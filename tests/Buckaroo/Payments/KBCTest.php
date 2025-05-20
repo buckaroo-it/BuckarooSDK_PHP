@@ -24,23 +24,25 @@ use Tests\Buckaroo\BuckarooTestCase;
 
 class KBCTest extends BuckarooTestCase
 {
-    protected array $paymentPayload;
-
-    protected function setUp(): void
-    {
-        $this->paymentPayload = ([
-            'invoice' => uniqid(),
-            'amountDebit' => 10.10,
-        ]);
-    }
-
     /**
      * @return void
      * @test
      */
     public function it_creates_a_kbc_payment()
     {
-        $response = $this->buckaroo->method('kbcpaymentbutton')->pay($this->paymentPayload);
+        $response = $this->buckaroo->method('kbcpaymentbutton')->pay($this->getBasePayPayload());
         $this->assertTrue($response->isPendingProcessing());
+    }
+
+    /**
+     * @return void
+     * @test
+     */
+    public function it_creates_a_kbc_refund()
+    {
+        $response = $this->buckaroo->method('kbcpaymentbutton')->refund($this->getRefundPayload([
+            'originalTransactionKey' => '150355695CBD47CC8A0D7F14E994F202'
+        ]));
+        $this->assertTrue($response->isSuccess());
     }
 }

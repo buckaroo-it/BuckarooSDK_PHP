@@ -30,11 +30,32 @@ class AlipayTest extends BuckarooTestCase
      */
     public function it_creates_a_alipay_payment()
     {
-        $response = $this->buckaroo->method('alipay')->pay([
-            'amountDebit' => 10,
-            'invoice' => uniqid(),
+        $response = $this->buckaroo->method('alipay')->pay($this->getBasePayPayload([], [
             'useMobileView' => true,
-        ]);
+        ]));
+
+        $this->assertTrue($response->isPendingProcessing());
+    }
+
+    /**
+     * @test
+     */
+    public function it_creates_a_alipay_pay_remainder()
+    {
+        $giftCardResponse = $this->buckaroo->method('giftcard')->pay($this->getBasePayPayload([], [
+            'amountDebit' => 10,
+            'name' => 'boekenbon',
+            'intersolveCardnumber' => '0000000000000000001',
+            'intersolvePIN' => '500',
+        ]));
+
+        $this->assertTrue($giftCardResponse->isSuccess());
+
+        $response = $this->buckaroo->method('alipay')->payRemainder($this->getBasePayPayload([], [
+            'originalTransactionKey' => $giftCardResponse->data('RelatedTransactions')[0]['RelatedTransactionKey'],
+            'amountDebit' => 9.50,
+            'useMobileView' => true,
+        ]));
 
         $this->assertTrue($response->isPendingProcessing());
     }
@@ -44,12 +65,10 @@ class AlipayTest extends BuckarooTestCase
      */
     public function it_creates_a_alipay_refund()
     {
-        $response = $this->buckaroo->method('alipay')->refund([
-            'amountCredit' => 10,
-            'invoice' => 'testinvoice 123',
-            'originalTransactionKey' => '2D04704995B74D679AACC59F87XXXXXX',
-        ]);
+        $response = $this->buckaroo->method('alipay')->refund($this->getRefundPayload([
+            'originalTransactionKey' => 'CF16AD6BAB2F4B0C8C435654AE5E5740',
+        ]));
 
-        $this->assertTrue($response->isFailed());
+        $this->assertTrue($response->isSuccess());
     }
 }

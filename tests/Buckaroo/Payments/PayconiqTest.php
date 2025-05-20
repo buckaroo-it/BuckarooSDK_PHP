@@ -29,11 +29,7 @@ class PayconiqTest extends BuckarooTestCase
      */
     public function it_creates_a_payconiq_payment()
     {
-        $response = $this->buckaroo->method('payconiq')->pay([
-            'amountDebit' => 10,
-            'description' => 'Payment for testinvoice123',
-            'invoice' => uniqid(),
-        ]);
+        $response = $this->buckaroo->method('payconiq')->pay($this->getBasePayPayload());
 
         $this->assertTrue($response->isPendingProcessing());
     }
@@ -43,12 +39,10 @@ class PayconiqTest extends BuckarooTestCase
      */
     public function it_creates_a_payconiq_refund()
     {
-        $response = $this->buckaroo->method('payconiq')->refund([
-            'amountCredit' => 10,
-            'invoice' => 'testinvoice 123',
-            'originalTransactionKey' => '4E8BD922192746C3918BF4077CXXXXXX',
-        ]);
+        $response = $this->buckaroo->method('payconiq')->refund($this->getRefundPayload([
+            'originalTransactionKey' => '3531593A0AC04B449B6CAE51FE1D6DE7',
+        ]));
 
-        $this->assertTrue($response->isFailed());
+        $this->assertTrue($response->isSuccess());
     }
 }
