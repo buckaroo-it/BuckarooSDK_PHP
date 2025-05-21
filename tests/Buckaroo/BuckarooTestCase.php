@@ -226,9 +226,10 @@ class BuckarooTestCase extends TestCase
             'invoiceAmountVAT' => 1.00,
             'invoiceDate' => '2024-01-01',
             'dueDate' => '2030-01-01',
-            'schemeKey' => 'DefaultNone',
+            'schemeKey' => 's31w5d',
             'maxStepIndex' => 1,
             'allowedServices' => 'ideal,mastercard',
+            'allowedServicesAfterDueDate' => 'ideal,mastercard',
             'debtor' => [
                 'code' => 'johnsmith4',
             ],
