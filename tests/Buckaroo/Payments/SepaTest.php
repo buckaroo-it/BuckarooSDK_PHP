@@ -16,6 +16,7 @@ class SepaTest extends BuckarooTestCase
         $response = $this->buckaroo->method('sepadirectdebit')->pay($this->getBasePayPayload([], [
             'iban' => 'NL13TEST0123456789',
             'bic' => 'TESTNL2A',
+            'startRecurrent' => true,
             'collectdate' => '2022-12-01',
             'mandateReference' => '1DCtestreference',
             'mandateDate' => '2022-07-03',
@@ -64,7 +65,6 @@ class SepaTest extends BuckarooTestCase
         $this->assertTrue($response->isSuccess());
     }
 
-    //Todo: Failing
     /**
      * @return void
      * @test
@@ -72,12 +72,11 @@ class SepaTest extends BuckarooTestCase
     public function it_creates_a_sepa_recurrent_payment()
     {
         $response = $this->buckaroo->method('sepadirectdebit')->payRecurrent($this->getBasePayPayload([], [
-            'originalTransactionKey' => '9D2855A4ED164EE7954E71E3154873DE',
+            'originalTransactionKey' => '3CE4E4D07CE74B5BBD78809DE6671B75',
             'collectdate' => '2030-07-03',
-            'order' => '',
         ]));
 
-        $this->assertTrue($response->isFailed());
+        $this->assertTrue($response->isPendingProcessing());
     }
 
     /**
