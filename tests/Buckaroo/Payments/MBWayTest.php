@@ -30,10 +30,7 @@ class MBWayTest extends BuckarooTestCase
      */
     public function it_creates_a_mbway_payment()
     {
-        $response = $this->buckaroo->method('mbway')->pay([
-            'invoice' => uniqid(),
-            'amountDebit' => 10.10,
-        ]);
+        $response = $this->buckaroo->method('mbway')->pay($this->getBasePayPayload());
 
         $this->assertTrue($response->isPendingProcessing());
     }
@@ -43,13 +40,10 @@ class MBWayTest extends BuckarooTestCase
      */
     public function it_creates_a_mbway_refund()
     {
-        $response = $this->buckaroo->method('mbway')->refund([
-            'amountCredit' => 10,
-            'invoice' => 'testinvoice 123',
-            'description' => 'refund',
-            'originalTransactionKey' => '2D04704995B74D679AACC59F87XXXXXX',
-        ]);
+        $response = $this->buckaroo->method('mbway')->refund($this->getRefundPayload([
+            'originalTransactionKey' => '83A9AD305D71405FAC3D3E37DBA51D99',
+        ]));
 
-        $this->assertTrue($response->isFailed());
+        $this->assertTrue($response->isSuccess());
     }
 }

@@ -30,32 +30,32 @@ class KnakenPayTest extends BuckarooTestCase
      */
     public function it_creates_a_knaken_payment()
     {
-        $response = $this->buckaroo->method('knaken')->pay([
+        $response = $this->buckaroo->method('knaken')->pay($this->getBasePayPayload([],[
+            'returnURL'=> 'https://example.com/buckaroo/return',
+            'returnURLCancel' => 'https://example.com/buckaroo/cancel',
+            'returnURLError' => 'https://example.com/buckaroo/error',
+            'returnURLReject' => 'https://example.com/buckaroo/reject',
+            'pushURL' => 'https://example.com/buckaroo/push',
+            'returnURLCancel' => 'https://example.com/buckaroo/cancel',
+            'pushURLFailure' => 'https://example.com/buckaroo/push-failure',
             'invoice'               => uniqid(),
-            'amountDebit'           => 10.99,
-            'returnURL'             => 'https://buckaroo.dev./return',
-            'returnURLCancel'       => 'https://buckaroo.dev/cancel',
-            'returnURLError'        => 'https://buckaroo.dev/error',
-            'returnURLReject'       => 'https://buckaroo.dev/reject',
-            'pushURL'               => 'https://buckaroo.dev/push',
-            'pushURLFailure'        => 'https://buckaroo.dev/push-failure',
-        ]);
+            'amountDebit'           => 0.1,
+            "CustomerName"=> "Rico",
+        ]));
 
         $this->assertTrue($response->isPendingProcessing());
     }
 
+    // Only one refund allowed per transaction
     /**
      * @test
      */
     public function it_creates_a_knaken_refund()
     {
-        $response = $this->buckaroo->method('knaken')->refund([
-            'invoice' => '2024020209061234', //Set invoice number of the transaction to refund
-            'originalTransactionKey' => '2FBB9F43A0AF4AC8B49F9073C0EC828B',
-            //Set transaction key of the transaction to refund
-            'amountCredit' => 0.01
-        ]);
+        $response = $this->buckaroo->method('knaken')->refund($this->getRefundPayload([
+            'originalTransactionKey' => 'E29EB7DF6EA8448A87FC6A03E6EFA0A3',
+        ]));
 
-        $this->assertTrue($response->isFailed());
+        $this->assertTrue($response->isSuccess());
     }
 }

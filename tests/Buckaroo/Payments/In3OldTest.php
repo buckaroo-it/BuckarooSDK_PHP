@@ -25,16 +25,17 @@ use Buckaroo\Resources\Constants\Gender;
 
 class In3OldTest extends BuckarooTestCase
 {
-    /**
-     * @return void
-     * @test
-     */
-    public function it_creates_a_in3old_payment()
-    {
-        $response = $this->buckaroo->method('in3old')->pay($this->getPaymentPayload());
+    // // 491 - Action Pay is no longer available for Capayable
+    // /**
+    //  * @return void
+    //  * @test
+    //  */
+    // public function it_creates_a_in3old_payment()
+    // {
+    //     $response = $this->buckaroo->method('in3old')->pay($this->getPaymentPayload());
 
-        $this->assertTrue($response->isSuccess());
-    }
+    //     $this->assertTrue($response->isSuccess());
+    // }
 
     /**
      * @return void
@@ -53,71 +54,60 @@ class In3OldTest extends BuckarooTestCase
      */
     public function it_creates_a_in3old_refund()
     {
-        $response = $this->buckaroo->method('in3Old')->refund([
-            'amountCredit' => 10,
-            'invoice' => '10000480',
-            'originalTransactionKey' => '9AA4C81A08A84FA7B68E6A6A6291XXXX',
-        ]);
+        $response = $this->buckaroo->method('in3Old')->refund($this->getRefundPayload([
+            'originalTransactionKey' => 'C1311F77EB3F48CDB5774F7C6842FE12',
+        ]));
 
-        $this->assertTrue($response->isFailed());
+        $this->assertTrue($response->isSuccess());
     }
 
     private function getPaymentPayload(): array
     {
-        return [
-            'amountDebit' => 9.5,
-            'order' => uniqid(),
-            'invoice' => uniqid(),
-            'description' => 'This is a test order',
-            'invoiceDate' => '22-01-2018',
-            'customerType' => 'Company',
-            'email' => 'test@buckaroo.nl',
-            'phone' => [
-                'mobile' => '0612345678',
-            ],
-            'articles' => [
-                [
-                    'identifier' => uniqid(),
-                    'description' => 'Blue Toy Car',
-                    'quantity' => '1',
-                    'price' => 10.00,
+        return $this->getPayPayload(
+            [
+                'invoiceDate' => '22-01-2018',
+                'customerType' => 'Company',
+                'articles' => $this->getArticlesPayload(['vatPercentage']),
+                'email' => 'test@buckaroo.nl',
+                'phone' => [
+                    'mobile' => '0612345678',
                 ],
-            ],
-            'company' => [
-                'companyName' => 'My Company B.V.',
-                'chamberOfCommerce' => '123456',
-            ],
-            'customer' => [
-                'gender' => Gender::FEMALE,
-                'initials' => 'J.S.',
-                'lastName' => 'Aflever',
-                'email' => 'billingcustomer@buckaroo.nl',
-                'phone' => '0610000000',
-                'culture' => 'nl-NL',
-                'birthDate' => '1990-01-01',
-            ],
-            'address' => [
-                'street' => 'Hoofdstraat',
-                'houseNumber' => '2',
-                'houseNumberAdditional' => 'a',
-                'zipcode' => '8441EE',
-                'city' => 'Heerenveen',
-                'country' => 'NL',
-            ],
-            'subtotals' => [
-                [
-                    'name' => 'Korting',
-                    'value' => -2.00,
+                'company' => [
+                    'companyName' => 'My Company B.V.',
+                    'chamberOfCommerce' => '123456',
                 ],
-                [
-                    'name' => 'Betaaltoeslag',
-                    'value' => 0.50,
+                'customer' => [
+                    'gender' => Gender::FEMALE,
+                    'initials' => 'J.S.',
+                    'lastName' => 'Aflever',
+                    'email' => 'billingcustomer@buckaroo.nl',
+                    'phone' => '0610000000',
+                    'culture' => 'nl-NL',
+                    'birthDate' => '1990-01-01',
                 ],
-                [
-                    'name' => 'Verzendkosten',
-                    'value' => 1.00,
+                'address' => [
+                    'street' => 'Hoofdstraat',
+                    'houseNumber' => '2',
+                    'houseNumberAdditional' => 'a',
+                    'zipcode' => '8441EE',
+                    'city' => 'Heerenveen',
+                    'country' => 'NL',
                 ],
-            ],
-        ];
+                'subtotals' => [
+                    [
+                        'name' => 'Korting',
+                        'value' => -2.00,
+                    ],
+                    [
+                        'name' => 'Betaaltoeslag',
+                        'value' => 0.50,
+                    ],
+                    [
+                        'name' => 'Verzendkosten',
+                        'value' => 1.00,
+                    ],
+                ],
+            ]
+        );
     }
 }

@@ -48,7 +48,7 @@ class EmandatesTest extends BuckarooTestCase
             'debtorbankid' => 'INGBNL2A',
             'debtorreference' => 'klant1234',
             'language' => 'nl',
-            'mandateid' => '1DC1234567890',
+            'mandateid' => '1DC' . strtoupper(uniqid(mt_rand())),
         ]);
 
         $this->assertTrue($response->isPendingProcessing());
@@ -64,7 +64,7 @@ class EmandatesTest extends BuckarooTestCase
             'mandateid' => '1DC1234567890',
         ]);
 
-        $this->assertTrue($response->isPendingProcessing());
+        $this->assertTrue($response->isSuccess());
     }
 
     /**
@@ -78,9 +78,10 @@ class EmandatesTest extends BuckarooTestCase
             'debtorbankid' => 'ABNANL2A',
         ]);
 
-        $this->assertTrue($response->isFailed());
+        $this->assertTrue($response->isPendingProcessing());
     }
 
+    //todo: "Unknown action 'CancelMandate' used on service 'emandate'."
     /**
      * @return void
      * @test
@@ -88,11 +89,11 @@ class EmandatesTest extends BuckarooTestCase
     public function it_cancels_mandante_on_emandates()
     {
         $response = $this->buckaroo->method('emandates')->cancelMandate([
-            'mandateid' => '1DC1234567890',
+            'mandateid' => '1DC169627947667DC2DB3C7DEA',
             'emandatereason' => 'testing cancel',
-            'purchaseid' => 'purchaseid1234',
+            'purchaseid' => 'purchaseid 1234',
         ]);
 
-        $this->assertTrue($response->isValidationFailure());
+        $this->assertTrue($response->isSuccess());
     }
 }

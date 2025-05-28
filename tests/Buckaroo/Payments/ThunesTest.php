@@ -21,7 +21,6 @@
 namespace Tests\Buckaroo\Payments;
 
 use Tests\Buckaroo\BuckarooTestCase;
-use Buckaroo\Resources\Constants\RecipientCategory;
 
 class ThunesTest extends BuckarooTestCase
 {
@@ -31,42 +30,10 @@ class ThunesTest extends BuckarooTestCase
      */
     public function it_creates_a_thunes_paymentit_creates_a_thunes_payment()
     {
-        $response = $this->buckaroo->method('thunes')->pay($this->getPaymentPayload());
+        $response = $this->buckaroo->method('thunes')->pay($this->getPayPayload([
+            'name' => 'belfius',
+        ]));
 
-        $this->assertTrue($response->isValidationFailure());
-    }
-
-    /**
-     * @return void
-     * @test
-     */
-    private function getPaymentPayload(?array $additional = null): array
-    {
-        $payload = [
-            'amountDebit'       => 3,
-            'order'             => uniqid(),
-            'invoice'           => uniqid(),
-            'name' => 'monizzeecovoucher',
-            'clientIP'      => '127.0.0.1',
-            'articles' => [
-                [
-                    'identifier' => 'Articlenumber1',
-                    'description' => 'Articledesciption1',
-                    'price' => '1',
-                ],
-                [
-                    'identifier' => 'Articlenumber2',
-                    'description' => 'Articledesciption2',
-                    'price' => '2',
-                ],
-            ]
-        ];
-
-        if ($additional)
-        {
-            return array_merge($additional, $payload);
-        }
-
-        return $payload;
+        $this->assertTrue($response->isPendingProcessing());
     }
 }

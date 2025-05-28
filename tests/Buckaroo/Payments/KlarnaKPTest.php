@@ -20,22 +20,10 @@
 
 namespace Tests\Buckaroo\Payments;
 
-use Buckaroo\Resources\Constants\RecipientCategory;
 use Tests\Buckaroo\BuckarooTestCase;
 
 class KlarnaKPTest extends BuckarooTestCase
 {
-    /**
-     * @return void
-     * @test
-     */
-    public function it_creates_a_klarnakp_payment()
-    {
-        $response = $this->buckaroo->method('klarnakp')->pay($this->getPaymentPayload());
-
-        $this->assertTrue($response->isSuccess());
-    }
-
     /**
      * @return void
      * @test
@@ -45,6 +33,19 @@ class KlarnaKPTest extends BuckarooTestCase
         $response = $this->buckaroo->method('klarnakp')->reserve($this->getPaymentPayload());
 
         $this->assertTrue($response->isPendingProcessing());
+    }
+
+    /**
+     * @return void
+     * @test
+     */
+    public function it_creates_a_klarnakp_payment()
+    {
+        $response = $this->buckaroo->method('klarnakp')->pay($this->getPaymentPayload([
+            'reservationNumber' => 'f055e53d-6da2-4f90-945e-73e65fa391ad',
+        ]));
+
+        $this->assertTrue($response->isSuccess());
     }
 
     /**
@@ -67,27 +68,8 @@ class KlarnaKPTest extends BuckarooTestCase
     public function it_creates_a_klarnakp_update_reservation()
     {
         $response = $this->buckaroo->method('klarnakp')->updateReserve([
-            'invoice' => 'testinvoice 1234',
-            'billing' => [
-                'recipient' => [
-                    'careOf' => 'Person',
-                    'firstName' => 'John',
-                    'lastName' => 'Do',
-                ],
-                'address' => [
-                    'street' => 'Hoofdstraat',
-                    'houseNumber' => '13',
-                    'houseNumberAdditional' => 'a',
-                    'zipcode' => '1234AB',
-                    'city' => 'Heerenveen',
-                    'country' => 'GB',
-                ],
-                'phone' => [
-                    'mobile' => '0698765433',
-                    'landLine' => '0109876543',
-                ],
-                'email' => 'test@buckaroo.nl',
-            ],
+            'reservationNumber' => '3a9c8f5d-ffef-4f53-af40-2c1198539d6d',
+            'invoice' => 'testinvoice 12345',
             'shipping' => [
                 'recipient' => [
                     'careOf' => 'Company',
@@ -111,8 +93,6 @@ class KlarnaKPTest extends BuckarooTestCase
                     'vatPercentage' => '21',
                     'quantity' => '2',
                     'price' => '20.10',
-                    'imageUrl' => 'https://example.com/image',
-                    'productUrl' => 'https://example.com/product',
                 ],
                 [
                     'identifier' => 'Articlenumber2',
@@ -120,13 +100,11 @@ class KlarnaKPTest extends BuckarooTestCase
                     'vatPercentage' => '21',
                     'quantity' => '1',
                     'price' => '10.10',
-                    'imageUrl' => 'https://example.com/image',
-                    'productUrl' => 'https://example.com/product',
                 ],
             ],
         ]);
 
-        $this->assertTrue($response->isValidationFailure());
+        $this->assertTrue($response->isSuccess());
     }
 
     /**
@@ -135,77 +113,27 @@ class KlarnaKPTest extends BuckarooTestCase
      */
     public function it_creates_a_klarnakp_refund()
     {
-        $response = $this->buckaroo->method('klarnakp')->refund([
-            'amountCredit' => 10,
-            'invoice' => '10000480',
-            'originalTransactionKey' => '9AA4C81A08A84FA7B68E6A6A6291XXXX',
-        ]);
+        $response = $this->buckaroo->method('klarnakp')->refund($this->getRefundPayload([
+            'originalTransactionKey' => 'FB4E1A0F4D714B19BF9272D3B826E09A',
+        ]));
 
-        $this->assertTrue($response->isValidationFailure());
+        $this->assertTrue($response->isSuccess());
     }
 
     private function getPaymentPayload(?array $additional = null): array
     {
-        $payload = [
-            'clientIP' => '198.162.1.1',
-            'currency' => 'EUR',
-            'amountDebit' => 50.30,
-            'order' => uniqid(),
-            'invoice' => uniqid(),
-            'gender' => "1",
-            'operatingCountry' => 'NL',
-            'billing' => [
-                'recipient' => [
-                    'firstName' => 'John',
-                    'lastName' => 'Do',
-                ],
-                'address' => [
-                    'street' => 'Neherkade',
-                    'houseNumber' => '1',
-                    'zipcode' => '2521VA',
-                    'city' => 'Gravenhage',
-                    'country' => 'NL',
-                ],
-                'phone' => [
-                    'mobile' => '0612345678',
-                ],
-                'email' => 'youremail@example.nl',
-            ],
-            'shipping' => [
-                'recipient' => [
-                    'firstName' => 'John',
-                    'lastName' => 'Do',
-                ],
-                'address' => [
-                    'street' => 'Rosenburglaan',
-                    'houseNumber' => '216',
-                    'zipcode' => '4385 JM',
-                    'city' => 'Vlissingen',
-                    'country' => 'NL',
-                ],
-                'email' => 'test@buckaroo.nl',
-            ],
-            'articles' => [
-                [
-                    'identifier' => 'Articlenumber1',
-                    'description' => 'Blue Toy Car',
-                    'vatPercentage' => '21',
-                    'quantity' => '2',
-                    'price' => '20.10',
-                    'imageUrl' => 'https://example.com/image',
-                    'productUrl' => 'https://example.com/product',
-                ],
-                [
-                    'identifier' => 'Articlenumber2',
-                    'description' => 'Red Toy Car',
-                    'vatPercentage' => '21',
-                    'quantity' => '1',
-                    'price' => '10.10',
-                    'imageUrl' => 'https://example.com/image',
-                    'productUrl' => 'https://example.com/product',
-                ],
+        $payload = array_merge(
+            $this->getBasePayPayload([], [
+                'clientIP' => '198.162.1.1',
+                'gender' => "1",
+                'operatingCountry' => 'NL',
+            ]),
+            [
+                'billing' => $this->getBillingPayload(['careOf', 'title', 'initials', 'category', 'birthDate']),
+                'shipping' => $this->getShippingPayload(['careOf', 'title', 'initials', 'category', 'birthDate']),
+                'articles' => $this->getArticlesPayload(),
             ]
-        ];
+        );
 
         if ($additional) {
             return array_merge($additional, $payload);

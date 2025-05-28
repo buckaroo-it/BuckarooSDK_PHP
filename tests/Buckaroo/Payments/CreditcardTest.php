@@ -30,11 +30,9 @@ class CreditcardTest extends BuckarooTestCase
      */
     public function it_creates_a_creditcard_payment()
     {
-        $response = $this->buckaroo->method('creditcard')->pay([
-            'amountDebit' => 10,
-            'invoice' => uniqid(),
+        $response = $this->buckaroo->method('creditcard')->pay($this->getBasePayPayload([],[
             'name' => 'visa',
-        ]);
+        ]));
 
         $this->assertTrue($response->isWaitingOnUserInput());
     }
@@ -45,15 +43,12 @@ class CreditcardTest extends BuckarooTestCase
      */
     public function it_creates_a_creditcard_encrypted_payment()
     {
-        $response = $this->buckaroo->method('creditcard')->payEncrypted([
-            'amountDebit' => 10,
-            'invoice' => uniqid(),
+        $response = $this->buckaroo->method('creditcard')->payEncrypted($this->getBasePayPayload([],[
             'name' => 'mastercard',
-            'encryptedCardData' => '001u8gJNwngKubFCO6FmJod6aESlIFATkKYaj47KlgBp7f3NeVxUzChg1Aug7WD2vc5wut2KU
-            9NPLUaO0tFmzhVLZoDWn7dX4AzGxSjPrsPmDMWYcEkIwMZfcyJqoRfFkF3j15mil3muXxhR1a609NfkTo11J3ENVsvU3k60z',
-        ]);
+            'encryptedCardData' => '001u8gJNwngKubFCO6FmJod6aESlIFATkKYaj47KlgBp7f3NeVxUzChg1Aug7WD2vc5wut2KU9NPLUaO0tFmzhVLZoDWn7dX4AzGxSjPrsPmDMWYcEkIwMZfcyJqoRfFkF3j15mil3muXxhR1a609NfkTo11J3ENVsvU3k60z+x0jCw6NjzbrweVQhBRkrbs7TBJkS4tR38JiDsXyH2E1JmRHE+o2P9qz4at6w3zggmwImvjt5IIjEr6g8KfsIDXfv7YjEzhJ3P+7uuGoyG2WYm/Pr0+iEmTj5Q/ijkxu1+cDqv5eiB+80KgffPItUZDrnv9sKlVBAr+f53nm1G+Sxp0Q==',
+        ]));
 
-        $this->assertTrue($response->isValidationFailure());
+        $this->assertTrue($response->isPendingProcessing());
     }
 
     /**
@@ -62,16 +57,13 @@ class CreditcardTest extends BuckarooTestCase
      */
     public function it_creates_a_creditcard_security_code_payment()
     {
-        $response = $this->buckaroo->method('creditcard')->payWithSecurityCode([
-            'amountDebit' => 10,
-            'invoice' => uniqid(),
-            'originalTransactionKey' => '6C5DBB69E74644958F8C25199514DC6C',
+        $response = $this->buckaroo->method('creditcard')->payWithSecurityCode($this->getBasePayPayload([],[
+            'originalTransactionKey' => '4D81D54DAA77407689208A7609795B8F',
             'name' => 'mastercard',
-            'encryptedSecurityCode' => '001u8gJNwngKubFCO6FmJod6aESlIFATkKYaj47KlgBp7f3NeVxUzChg1Aug7WD2vc5wut2
-            KU9NPLUaO0tFmzhVLZoDWn7dX4AzGxSjPrsPmDMWYcEkIwMZfcyJqoRfFkF3j15mil3muXxhR1a609NfkTo11J3ENVsvU3k60z',
-        ]);
+            'encryptedSecurityCode' => '001F3AJT7wkJa04zE8c78P7spOAgHSKH1YKgPlOwXhW049VfIXMwZO32RYna9xZRyUCtfODIoCL8GRQoaZbStlBT4rbF5e4PPvWFSKdvua4rq+GQDNAghfa+ZQz0BzBPfjS0WBdFape9n3zH2vC/0m+wI3QZiDpYYgyWC1/Y3udJDU7JRTVMq/BDHGet+IZ2CDnkeGl813kkYymzYon/QeuQRQ0Wsec5bmVQNYGx62fz70/vLgs0ffff+6DtZtnZWfByRkTwMNebJotlOsSkbhVR5FrHpAbNPCJI+LvJcJL7Eoo+ZuX5/LWGmsT6qnR/uLiIw1DI7mTKGy6/P7IljAE+g==',
+        ]));
 
-        $this->assertTrue($response->isValidationFailure());
+        $this->assertTrue($response->isPendingProcessing());
     }
 
     /**
@@ -80,14 +72,12 @@ class CreditcardTest extends BuckarooTestCase
      */
     public function it_creates_a_creditcard_refund()
     {
-        $response = $this->buckaroo->method('creditcard')->refund([
-            'amountCredit' => 10,
-            'invoice' => 'testinvoice 123',
-            'originalTransactionKey' => '13FAF43579D94F5FB8119A6819XXXXXX',
+        $response = $this->buckaroo->method('creditcard')->refund($this->getRefundPayload([
+            'originalTransactionKey' => '3D40E227D336441689092DDFC388810B',
             'name' => 'mastercard',
-        ]);
+        ]));
 
-        $this->assertTrue($response->isFailed());
+        $this->assertTrue($response->isSuccess());
     }
 
     /**
@@ -96,11 +86,9 @@ class CreditcardTest extends BuckarooTestCase
      */
     public function it_creates_a_creditcard_authorize()
     {
-        $response = $this->buckaroo->method('creditcard')->authorize([
-            'amountDebit' => 10,
-            'invoice' => 'testinvoice 123',
+        $response = $this->buckaroo->method('creditcard')->authorize($this->getBasePayPayload([],[
             'name' => 'mastercard',
-        ]);
+        ]));
 
         $this->assertTrue($response->isWaitingOnUserInput());
     }
@@ -111,33 +99,28 @@ class CreditcardTest extends BuckarooTestCase
      */
     public function it_creates_a_creditcard_encrypted_authorize()
     {
-        $response = $this->buckaroo->method('creditcard')->authorizeEncrypted([
-            'amountDebit' => 10,
-            'invoice' => uniqid(),
+        $response = $this->buckaroo->method('creditcard')->authorizeEncrypted($this->getBasePayPayload([],[
             'name' => 'mastercard',
-            'encryptedCardData' => '001u8gJNwngKubFCO6FmJod6aESlIFATkKYaj47KlgBp7f3NeVxUzChg1Aug7WD2vc5wut2KU
-            9NPLUaO0tFmzhVLZoDWn7dX4AzGxSjPrsPmDMWYcEkIwMZfcyJqoRfFkF3j15mil3muXxhR1a609NfkTo11J3ENVsvU3k60z',
-        ]);
+            'encryptedCardData' => '001u8gJNwngKubFCO6FmJod6aESlIFATkKYaj47KlgBp7f3NeVxUzChg1Aug7WD2vc5wut2KU9NPLUaO0tFmzhVLZoDWn7dX4AzGxSjPrsPmDMWYcEkIwMZfcyJqoRfFkF3j15mil3muXxhR1a609NfkTo11J3ENVsvU3k60z+x0jCw6NjzbrweVQhBRkrbs7TBJkS4tR38JiDsXyH2E1JmRHE+o2P9qz4at6w3zggmwImvjt5IIjEr6g8KfsIDXfv7YjEzhJ3P+7uuGoyG2WYm/Pr0+iEmTj5Q/ijkxu1+cDqv5eiB+80KgffPItUZDrnv9sKlVBAr+f53nm1G+Sxp0Q==',
+        ]));
 
-        $this->assertTrue($response->isValidationFailure());
+        $this->assertTrue($response->isPendingProcessing());
     }
 
+    // 492 - Technical failure
     /**
      * @return void
      * @test
      */
     public function it_creates_a_creditcard_security_code_authorize()
     {
-        $response = $this->buckaroo->method('creditcard')->authorizeWithSecurityCode([
-            'amountDebit' => 10,
-            'invoice' => uniqid(),
-            'originalTransactionKey' => '6C5DBB69E74644958F8C25199514DC6C',
+        $response = $this->buckaroo->method('creditcard')->authorizeWithSecurityCode($this->getBasePayPayload([],[
+            'originalTransactionKey' => '4D81D54DAA77407689208A7609795B8F',
             'name' => 'mastercard',
-            'encryptedSecurityCode' => '001u8gJNwngKubFCO6FmJod6aESlIFATkKYaj47KlgBp7f3NeVxUzChg1Aug7WD2vc5wut2KU
-            9NPLUaO0tFmzhVLZoDWn7dX4AzGxSjPrsPmDMWYcEkIwMZfcyJqoRfFkF3j15mil3muXxhR1a609NfkTo11J3ENVsvU3k60z',
-        ]);
+            'encryptedSecurityCode' => '001F3AJT7wkJa04zE8c78P7spOAgHSKH1YKgPlOwXhW049VfIXMwZO32RYna9xZRyUCtfODIoCL8GRQoaZbStlBT4rbF5e4PPvWFSKdvua4rq+GQDNAghfa+ZQz0BzBPfjS0WBdFape9n3zH2vC/0m+wI3QZiDpYYgyWC1/Y3udJDU7JRTVMq/BDHGet+IZ2CDnkeGl813kkYymzYon/QeuQRQ0Wsec5bmVQNYGx62fz70/vLgs0ffff+6DtZtnZWfByRkTwMNebJotlOsSkbhVR5FrHpAbNPCJI+LvJcJL7Eoo+ZuX5/LWGmsT6qnR/uLiIw1DI7mTKGy6/P7IljAE+g==',
+        ]));
 
-        $this->assertTrue($response->isValidationFailure());
+        $this->assertTrue($response->isPendingProcessing());
     }
 
     /**
@@ -146,28 +129,10 @@ class CreditcardTest extends BuckarooTestCase
      */
     public function it_creates_a_creditcard_capture()
     {
-        $response = $this->buckaroo->method('creditcard')->capture([
-            'amountDebit' => 10,
-            'invoice' => uniqid(),
-            'originalTransactionKey' => '6C5DBB69E74644958F8C25199514DC6C',
+        $response = $this->buckaroo->method('creditcard')->capture($this->getBasePayPayload([],[
+            'originalTransactionKey' => '78ADA073DAD74E14BFC83EE308B70374',
             'name' => 'mastercard',
-        ]);
-
-        $this->assertTrue($response->isFailed());
-    }
-
-    /**
-     * @return void
-     * @test
-     */
-    public function it_creates_a_creditcard_pay_recurrent()
-    {
-        $response = $this->buckaroo->method('creditcard')->payRecurrent([
-            'amountDebit' => 10,
-            'invoice' => uniqid(),
-            'originalTransactionKey' => '6C5DBB69E74644958F8C25199514DC6C',
-            'name' => 'mastercard',
-        ]);
+        ]));
 
         $this->assertTrue($response->isSuccess());
     }
@@ -176,16 +141,29 @@ class CreditcardTest extends BuckarooTestCase
      * @return void
      * @test
      */
+    public function it_creates_a_creditcard_pay_recurrent()
+    {
+        $response = $this->buckaroo->method('creditcard')->payRecurrent($this->getBasePayPayload([],[
+            'originalTransactionKey' => '6C5DBB69E74644958F8C25199514DC6C',
+            'name' => 'mastercard',
+        ]));
+
+        $this->assertTrue($response->isSuccess());
+    }
+
+    // 491 - Validation failure (no info)
+    /**
+     * @return void
+     * @test
+     */
     public function it_creates_a_creditcard_cancel_authorize()
     {
-        $response = $this->buckaroo->method('creditcard')->cancelAuthorize([
+        $response = $this->buckaroo->method('creditcard')->cancelAuthorize($this->getBasePayPayload([],[
+            'originalTransactionKey' => '41733E4210684988939CEE58AC899602',
             'name' => 'mastercard',
-            'amountCredit' => 10,
-            'originalTransactionKey' => 'F86579ECED1D493887ECAE7C287BXXXX',
-            'invoice' => 'testinvoice12345cvx',
-        ]);
+        ]));
 
-        $this->assertTrue($response->isValidationFailure());
+        $this->assertTrue($response->isPendingProcessing());
     }
 
     /**
@@ -194,12 +172,10 @@ class CreditcardTest extends BuckarooTestCase
      */
     public function it_creates_a_creditcard_token_authorize()
     {
-        $response = $this->buckaroo->method('creditcard')->authorizeWithToken([
-            'amountDebit' => 10,
-            'invoice' => uniqid(),
+        $response = $this->buckaroo->method('creditcard')->authorizeWithToken($this->getBasePayPayload([],[
             'name' => 'visa',
-            'sessionId' => 'hf_23sASKvHadWu0ZZj',
-        ]);
+            'sessionId' => 'hf_43ab37u53XIDOpJg',
+        ]));
 
         $this->assertTrue($response->isPendingProcessing());
     }
@@ -211,12 +187,10 @@ class CreditcardTest extends BuckarooTestCase
      */
     public function it_creates_a_creditcard_hosted_fields_payment()
     {
-        $response = $this->buckaroo->method('creditcard')->payWithToken([
-            'amountDebit' => 10,
-            'invoice' => uniqid(),
+        $response = $this->buckaroo->method('creditcard')->payWithToken($this->getBasePayPayload([],[
             'name' => 'visa',
-            'sessionId' => 'hf_23sASKvHadWu0ZZj',
-        ]);
+            'sessionId' => 'hf_43ab37u53XIDOpJg',
+        ]));
 
         $this->assertTrue($response->isPendingProcessing());
     }

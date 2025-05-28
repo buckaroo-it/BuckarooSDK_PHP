@@ -30,13 +30,10 @@ class ClickToPayTest extends BuckarooTestCase
      */
     public function it_creates_a_click_to_pay_payment()
     {
-        $response = $this->buckaroo->method('clicktopay')->pay(
-            [
-                'amountDebit' => 0.01,
-                'invoice' => uniqid(),
-                'continueOnIncomplete' => "1",
-            ]
-        );
+        $response = $this->buckaroo->method('clicktopay')->pay($this->getBasePayPayload([], [
+            'amountDebit' => 0.01,
+            'continueOnIncomplete' => "1",
+        ]));
 
         $this->assertTrue($response->isWaitingOnUserInput());
     }

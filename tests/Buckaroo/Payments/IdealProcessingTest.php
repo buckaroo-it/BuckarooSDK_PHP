@@ -21,45 +21,9 @@
 namespace Tests\Buckaroo\Payments;
 
 use Tests\Buckaroo\BuckarooTestCase;
-use Buckaroo\Config\Config;
-
-
-class CustomConfig extends Config
-{
-    public function __construct()
-    {
-        $websiteKey = 'Set Key';
-        $secretKey = 'From other resources like DB/ENV/Platform Config';
-
-        parent::__construct($websiteKey, $secretKey);
-    }
-}
 
 class IdealProcessingTest extends BuckarooTestCase
 {
-    protected array $paymentPayload;
-    protected function setUp(): void
-    {
-        $this->paymentPayload = [
-            'invoice' => uniqid(),
-            'amountDebit' => 10.10,
-            'issuer' => 'ABNANL2A',
-            'pushURL' => 'https://buckaroo.dev/push',
-            'returnURL' => 'https://buckaroo.dev/return',
-            'clientIP' => [
-                'address' => '123.456.789.123',
-                'type' => 0,
-            ],
-            'customParameters' => [
-                'CustomerBillingFirstName' => 'test'
-            ],
-            'additionalParameters' => [
-                'initiated_by_magento' => 1,
-                'service_action' => 'something',
-            ],
-        ];
-    }
-
     /**
      * @return void
      * @test
@@ -81,9 +45,15 @@ class IdealProcessingTest extends BuckarooTestCase
      * @return void
      * @test
      */
-    public function it_creates_a_idealprocessing_payment()
+    public function it_creates_an_idealprocessing_payment()
     {
-        $response = $this->buckaroo->method('idealprocessing')->pay($this->paymentPayload);
+        $response = $this->buckaroo->method('idealprocessing')->pay($this->getBasePayPayload([],[
+            'pushURL' => 'https://buckaroo.dev/push',
+            'issuer' => 'ABNANL2A',
+            'customParameters' => [
+                'CustomerBillingFirstName' => 'Test'
+            ],
+        ]));
 
         $this->assertTrue($response->isPendingProcessing());
     }

@@ -31,19 +31,17 @@ class TransferTest extends BuckarooTestCase
      */
     public function it_creates_a_transfer_payment()
     {
-        $response = $this->buckaroo->method('transfer')->pay([
-            'invoice' => uniqid(),
-            'amountDebit' => 10.10,
+        $response = $this->buckaroo->method('transfer')->pay($this->getBasePayPayload([],[
             'email' => 'your@email.com',
             'country' => 'NL',
             'dateDue' => date("Y-m-d"),
-            'sendMail' => true,
+            'sendMail' => false,
             'customer' => [
                 'gender' => Gender::MALE,
                 'firstName' => 'John',
                 'lastName' => 'Smith',
             ],
-        ]);
+        ]));
 
         $this->assertTrue($response->isAwaitingConsumer());
     }
@@ -53,12 +51,10 @@ class TransferTest extends BuckarooTestCase
      */
     public function it_creates_a_transfer_refund()
     {
-        $response = $this->buckaroo->method('transfer')->refund([
-            'amountCredit' => 10,
-            'invoice' => 'testinvoice 123',
-            'originalTransactionKey' => '2D04704995B74D679AACC59F87XXXXXX',
-        ]);
+        $response = $this->buckaroo->method('transfer')->refund($this->getRefundPayload([
+            'originalTransactionKey' => 'CA18006C913A47E58D830C7D7CC42A6E',
+        ]));
 
-        $this->assertTrue($response->isFailed());
+        $this->assertTrue($response->isSuccess());
     }
 }
