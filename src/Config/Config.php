@@ -142,7 +142,7 @@ abstract class Config implements Loggable
         ?string $moduleVersion = null,
         ?string $culture = null,
         ?string $channel = null,
-        Subject $logger = null,
+        ?Subject $logger = null,
         ?int $timeout = null,
         ?int $connectTimeout = null
     ) {

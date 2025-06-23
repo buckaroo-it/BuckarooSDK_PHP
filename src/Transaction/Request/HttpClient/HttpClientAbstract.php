@@ -56,7 +56,7 @@ abstract class HttpClientAbstract implements HttpClientInterface
      * @param string|null $data
      * @return mixed
      */
-    abstract public function call(string $url, array $headers, string $method, string $data = null);
+    abstract public function call(string $url, array $headers, string $method, ?string $data = null);
 
     /**
      * @param $result
