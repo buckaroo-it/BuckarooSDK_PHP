@@ -50,7 +50,7 @@ class Subscription extends ServiceParameter
     /**
      * @var string
      */
-    protected string $subscriptionGuid;
+    protected ?string $subscriptionGuid;
     /**
      * @var int
      */
