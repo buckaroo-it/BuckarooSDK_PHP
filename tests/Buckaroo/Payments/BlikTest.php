@@ -29,14 +29,26 @@ class BlikTest extends BuckarooTestCase
      */
     public function it_creates_a_blik_payment()
     {
-        $response = $this->buckaroo->method('blik')->pay([
-            'currency'      => 'PLN',
-            'amountDebit'   => 10.00,
-            'invoice'       => 'Blik Test Plugins Example',
-            'description'   => 'Blik Test Plugins Example',
+        $response = $this->buckaroo->method('blik')->pay($this->getBasePayPayload([], [
+            'currency' => 'PLN',
             'email'         => 'test@buckar00.nl'
-        ]);
+        ]));
 
         $this->assertTrue($response->isPendingProcessing());
+    }
+
+    /**
+     * @test
+     */
+    public function it_creates_a_blik_refund()
+    {
+        $response = $this->buckaroo->method('blik')->refund(
+            $this->getRefundPayload([
+                'originalTransactionKey' => 'C3B303C9DEA4401BA6732055030C2BD8',
+                'currency' => 'PLN'
+            ])
+        );
+
+        $this->assertTrue($response->isSuccess());
     }
 }

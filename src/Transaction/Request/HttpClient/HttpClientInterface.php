@@ -31,5 +31,5 @@ interface HttpClientInterface
      * @param string|null $data
      * @return mixed
      */
-    public function call(string $url, array $headers, string $method, string $data = null);
+    public function call(string $url, array $headers, string $method, ?string $data = null);
 }

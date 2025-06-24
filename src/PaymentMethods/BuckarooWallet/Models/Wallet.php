@@ -38,7 +38,7 @@ class Wallet extends ServiceParameter
     /**
      * @var string
      */
-    protected string $walletId;
+    protected ?string $walletId;
     /**
      * @var string
      */

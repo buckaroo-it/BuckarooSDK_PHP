@@ -24,6 +24,9 @@ use Tests\Buckaroo\BuckarooTestCase;
 
 class BuckarooWalletTest extends BuckarooTestCase
 {
+    private static ?string $walletId = null;
+    private static ?string $reservationId = null;
+
     /**
      * @return void
      * @test
@@ -32,10 +35,11 @@ class BuckarooWalletTest extends BuckarooTestCase
     {
         $response = $this->buckaroo->method('buckaroo_wallet')->createWallet([
             'walletId' => uniqid(),
-            'email' => 'test@buckaroo.nl',
+            'currency' => 'EUR',
             'customer' => [
                 'firstName' => 'John',
                 'lastName' => 'Doe',
+                'email' => 'test@buckaroo.nl',
             ],
             'bankAccount' => [
                 'iban' => 'NL13TEST0123456789',
@@ -43,6 +47,8 @@ class BuckarooWalletTest extends BuckarooTestCase
         ]);
 
         $this->assertTrue($response->isSuccess());
+
+        self::$walletId = $response->getServiceParameters()['walletid'];
     }
 
     /**
@@ -52,12 +58,12 @@ class BuckarooWalletTest extends BuckarooTestCase
     public function it_updates_a_buckaroo_wallet()
     {
         $response = $this->buckaroo->method('buckaroo_wallet')->updateWallet([
-            'walletId' => 10,
-            'email' => 'test@buckaroo.nl',
-            'status' => 'Disabled',
+            'walletId' => self::$walletId,
+            'status' => 'Active',
             'customer' => [
                 'firstName' => 'John',
                 'lastName' => 'Doe',
+                'email' => 'test@buckaroo.nl',
             ],
             'bankAccount' => [
                 'iban' => 'NL13TEST0123456789',
@@ -71,11 +77,45 @@ class BuckarooWalletTest extends BuckarooTestCase
      * @return void
      * @test
      */
-    public function it_get_buckaroo_wallet_info()
+    public function it_gets_buckaroo_wallet_info()
     {
         $response = $this->buckaroo->method('buckaroo_wallet')->getInfo([
-            'walletId' => 10,
+            'walletId' => self::$walletId,
         ]);
+
+        $this->assertTrue($response->isSuccess());
+    }
+
+    /**
+     * @return void
+     * @test
+     */
+    public function it_deposit_to_buckaroo_wallet()
+    {
+        $response = $this->buckaroo->method('buckaroo_wallet')->deposit([
+            'invoice' => 'BuckarooWalletInvoiceId',
+            'originalTransactionKey' => '46CA38B421194B6FAE5AFD42619715FD',
+            'amountCredit' => 10,
+            'walletId' => self::$walletId,
+        ]);
+
+        $this->assertTrue($response->isSuccess());
+    }
+
+    /**
+     * @return void
+     * @test
+     */
+    public function it_reserve_to_buckaroo_wallet()
+    {
+        $response = $this->buckaroo->method('buckaroo_wallet')->reserve([
+            'invoice' => 'BuckarooWalletInvoiceId',
+            'originalTransactionKey' => '46CA38B421194B6FAE5AFD42619715FD',
+            'amountCredit' => 10,
+            'walletId' => self::$walletId,
+        ]);
+
+        self::$reservationId = $response->getTransactionKey();
 
         $this->assertTrue($response->isSuccess());
     }
@@ -87,44 +127,11 @@ class BuckarooWalletTest extends BuckarooTestCase
     public function it_releases_buckaroo_wallet()
     {
         $response = $this->buckaroo->method('buckaroo_wallet')->release([
-            'amountCredit' => 1,
-            'walletId' => 10,
-            'walletMutationGuid' => '1757B313E57E4973997DD8C5235A',
+            'amountCredit' => 10,
+            'walletId' => self::$walletId,
         ]);
 
-        $this->assertTrue($response->isValidationFailure());
-    }
-
-    /**
-     * @return void
-     * @test
-     */
-    public function it_deposit_to_buckaroo_wallet()
-    {
-        $response = $this->buckaroo->method('buckaroo_wallet')->deposit([
-            'invoice' => 'BuckarooWalletInvoiceId',
-            'originalTransactionKey' => '46FB241693914AA4AE7A8B6DB33DE',
-            'amountCredit' => 1,
-            'walletId' => 10,
-        ]);
-
-        $this->assertTrue($response->isValidationFailure());
-    }
-
-    /**
-     * @return void
-     * @test
-     */
-    public function it_reserve_to_buckaroo_wallet()
-    {
-        $response = $this->buckaroo->method('buckaroo_wallet')->reserve([
-            'invoice' => 'BuckarooWalletInvoiceId',
-            'originalTransactionKey' => '46FB241693914AA4AE7A8B6DB33DE',
-            'amountCredit' => 1,
-            'walletId' => 10,
-        ]);
-
-        $this->assertTrue($response->isValidationFailure());
+        $this->assertTrue($response->isSuccess());
     }
 
     /**
@@ -135,28 +142,13 @@ class BuckarooWalletTest extends BuckarooTestCase
     {
         $response = $this->buckaroo->method('buckaroo_wallet')->withdrawal([
             'invoice' => 'BuckarooWalletInvoiceId',
-            'originalTransactionKey' => '46FB241693914AA4AE7A8B6DB33DE',
+            'originalTransactionKey' => self::$reservationId,
             'amountDebit' => 1,
-            'walletId' => 10,
+            'walletId' => self::$walletId,
+            'order' => ''
         ]);
 
-        $this->assertTrue($response->isValidationFailure());
-    }
-
-    /**
-     * @return void
-     * @test
-     */
-    public function it_cancel_from_buckaroo_wallet()
-    {
-        $response = $this->buckaroo->method('buckaroo_wallet')->cancel([
-            'invoice' => 'BuckarooWalletInvoiceId',
-            'originalTransactionKey' => '46FB241693914AA4AE7A8B6DB33DE',
-            'amountDebit' => 1,
-            'walletMutationGuid' => '49B018248ECE4346AC20B902',
-        ]);
-
-        $this->assertTrue($response->isValidationFailure());
+        $this->assertTrue($response->isSuccess());
     }
 
     /**
@@ -169,10 +161,12 @@ class BuckarooWalletTest extends BuckarooTestCase
             'invoice' => 'BuckarooWalletInvoiceId',
             'description' => 'Test',
             'amountDebit' => 1,
-            'walletId' => 10,
+            'walletId' => self::$walletId,
         ]);
 
-        $this->assertTrue($response->isValidationFailure());
+        $this->assertTrue($response->isSuccess());
+
+        self::$payTransactionKey = $response->getTransactionKey();
     }
 
     /**
@@ -182,11 +176,11 @@ class BuckarooWalletTest extends BuckarooTestCase
     public function it_creates_a_refund_on_buckaroo_wallet()
     {
         $response = $this->buckaroo->method('buckaroo_wallet')->refund([
-            'amountCredit' => 10,
+            'amountCredit' => 1,
             'invoice' => 'testinvoice 123',
-            'originalTransactionKey' => '2D04704995B74D679AACC59F87XXXXXX',
+            'originalTransactionKey' => self::$payTransactionKey,
         ]);
 
-        $this->assertTrue($response->isFailed());
+        $this->assertTrue($response->isSuccess());
     }
 }

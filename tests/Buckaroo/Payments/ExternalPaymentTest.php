@@ -30,13 +30,13 @@ class ExternalPaymentTest extends BuckarooTestCase
      */
     public function it_creates_a_external_payment()
     {
-        $response = $this->buckaroo->method('externalPayment')->pay([
-            'invoice' => uniqid(),
-            'amountDebit' => 11.10,
+        $response = $this->buckaroo->method('externalPayment')->pay($this->getBasePayPayload([], [
             'channel' => 'BACKOFFICE'
-        ]);
+        ]));
 
         $this->assertTrue($response->isSuccess());
+
+        self::$payTransactionKey = $response->getTransactionKey();
     }
 
     /**
@@ -44,13 +44,13 @@ class ExternalPaymentTest extends BuckarooTestCase
      */
     public function it_creates_a_external_refund()
     {
-        $response = $this->buckaroo->method('externalPayment')->refund([
-            'amountCredit' => 10,
-            'invoice' => 'testinvoice 123',
-            'description' => 'refund',
-            'originalTransactionKey' => '2D04704995B74D679AACC59F87XXXXXX',
-        ]);
+        $response = $this->buckaroo->method('externalPayment')->refund(
+            $this->getRefundPayload([
+                'channel' => 'BACKOFFICE',
+                'originalTransactionKey' => self::$payTransactionKey,
+            ])
+        );
 
-        $this->assertTrue($response->isFailed());
+        $this->assertTrue($response->isSuccess());
     }
 }

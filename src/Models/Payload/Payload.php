@@ -73,7 +73,7 @@ class Payload extends Model
     /**
      * @var string
      */
-    protected string $originalTransactionKey;
+    protected ?string $originalTransactionKey;
     /**
      * @var string
      */

@@ -50,15 +50,15 @@ By far the easiest way to install the Buckaroo API client is to require it with 
 
 ### Example
 Create and config the Buckaroo object. 
-You can find your credentials in plaza  [WEBSITE_KEY](https://plaza.buckaroo.nl/Configuration/Website/Index/) and [SECRET_KEY](https://admin.buckaroo.nl/Configuration/Merchant/SecretKey)
+You can find your credentials in [Buckaroo Plaza](https://plaza.buckaroo.nl/Configuration/Merchant/ApiKeys)
 
 ```php
 require __DIR__ . '/vendor/autoload.php';
 
-# Get your website & secret key in your plaza.
+# Get your store & secret key in your plaza.
 # You can perform a test payment by giving the third param with the string "test", on default it is set on "test".
 # By changing the value of the third parameter to "live", a live transaction can be performed.
-$buckaroo = new \BuckarooClient('WEBSITE_KEY', 'SECRET_KEY', 'test');
+$buckaroo = new \BuckarooClient('STORE_KEY', 'SECRET_KEY', 'test');
 ```
 
 Create a payment with all the available payment methods. In this example, we show how to create a credit card payment. Each payment has a slightly different payload.

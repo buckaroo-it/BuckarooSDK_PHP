@@ -46,7 +46,7 @@ class GuzzleHttpClientV7 extends HttpClientAbstract
      * @throws TransferException
      * @throws BuckarooException
      */
-    public function call(string $url, array $headers, string $method, string $data = null)
+    public function call(string $url, array $headers, string $method, ?string $data = null)
     {
         $headers = $this->convertHeadersFormat($headers);
 

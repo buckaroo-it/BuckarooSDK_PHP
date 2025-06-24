@@ -35,7 +35,7 @@ trait HasIssuers
 
         try
         {
-            $response = $this->client->specification($request, $this->paymentName, $this->serviceVersion());
+            $response = $this->client->specification($this->paymentName, $this->serviceVersion(), $request);
         } catch (BuckarooException $e)
         {
             return [];

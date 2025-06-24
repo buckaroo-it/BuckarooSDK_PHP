@@ -30,11 +30,9 @@ class BancontactTest extends BuckarooTestCase
      */
     public function it_creates_a_bancontact_payment()
     {
-        $response = $this->buckaroo->method('bancontactmrcash')->pay([
-            'invoice' => uniqid(),
-            'amountDebit' => 10.10,
+        $response = $this->buckaroo->method('bancontactmrcash')->pay($this->getBasePayPayload([],[
             'saveToken' => true,
-        ]);
+        ]));
 
         $this->assertTrue($response->isWaitingOnUserInput());
     }
@@ -44,13 +42,11 @@ class BancontactTest extends BuckarooTestCase
      */
     public function it_creates_a_bancontact_refund()
     {
-        $response = $this->buckaroo->method('bancontactmrcash')->refund([
-            'amountCredit' => 10,
-            'invoice' => '10000480',
-            'originalTransactionKey' => '0EF39AA94BD64FF38F1540DEB6XXXXXX',
-        ]);
+        $response = $this->buckaroo->method('bancontactmrcash')->refund($this->getRefundPayload([
+            'originalTransactionKey' => '77FDD0E0CF9C4AF1B85CEA2942DE27DC',
+        ]));
 
-        $this->assertTrue($response->isFailed());
+        $this->assertTrue($response->isSuccess());
     }
 
     /**
@@ -59,15 +55,12 @@ class BancontactTest extends BuckarooTestCase
      */
     public function it_creates_a_bancontact_encrypted_payment()
     {
-        $response = $this->buckaroo->method('bancontactmrcash')->payEncrypted([
-            'invoice' => uniqid(),
-            'amountDebit' => 10.10,
-            'description' => 'Bancontact PayEncrypted Test 123',
+        $response = $this->buckaroo->method('bancontactmrcash')->payEncrypted($this->getBasePayPayload([],[
             'encryptedCardData' => '001SlXfd8MbiTd/JFwCiGVs3f6o4x6xt0aN29NzOSNZHPKlVsz/EWeQmyhb1gGZ86VY88DP7gf
             DV+UyjcPfpVfHZd7u+WkO71hnV2QfYILCBNqE1aiPv2GQVGdaGbuoQloKu1o3o3I1UDmVxivXTMQX76ovot89geA6hqbtakmpm
             vxeiwwea3l4htNoX1IlD1hfYkDDl9rzSu5ypcjvVs6aRGXK5iMHnyrmEsEnfdj/Q5XWbsD5xAm4u3y6J8d4UP7LB31VLECzZUT
             iJOtKKcCQlT01YThIkQlj8PWBBMtt4H52VN3IH2+wPYtR8HiOZzcA2HA7UxozogIpS53tIURj/g==',
-        ]);
+        ]));
 
         $this->assertTrue($response->isPendingProcessing());
     }
@@ -78,13 +71,12 @@ class BancontactTest extends BuckarooTestCase
      */
     public function it_creates_a_bancontact_recurring_payment()
     {
-        $response = $this->buckaroo->method('bancontactmrcash')->payRecurring([
-            'invoice' => 'testinvoice 123',
-            'amountDebit' => 10.50,
-            'originalTransactionKey' => '91D08EC01F414926A4CA29C059XXXXXX',
-        ]);
+        $response = $this->buckaroo->method('bancontactmrcash')->payRecurring($this->getBasePayPayload([], [
+            'originalTransactionKey' => '77FDD0E0CF9C4AF1B85CEA2942DE27DC',
+            'order' => '',
+        ]));
 
-        $this->assertTrue($response->isValidationFailure());
+        $this->assertTrue($response->isSuccess());
     }
 
     /**
@@ -93,13 +85,12 @@ class BancontactTest extends BuckarooTestCase
      */
     public function it_creates_a_bancontact_pay_one_click_payment()
     {
-        $response = $this->buckaroo->method('bancontactmrcash')->payOneClick([
-            'invoice' => 'testinvoice 123',
-            'amountDebit' => 10.50,
-            'originalTransactionKey' => '91D08EC01F414926A4CA29C059XXXXXX',
-        ]);
+        $response = $this->buckaroo->method('bancontactmrcash')->payOneClick($this->getBasePayPayload([],[
+            'originalTransactionKey' => '77FDD0E0CF9C4AF1B85CEA2942DE27DC',
+            'order' => '',
+        ]));
 
-        $this->assertTrue($response->isValidationFailure());
+        $this->assertTrue($response->isSuccess());
     }
 
     /**
@@ -108,12 +99,11 @@ class BancontactTest extends BuckarooTestCase
      */
     public function it_creates_a_bancontact_authorize()
     {
-        $response = $this->buckaroo->method('bancontactmrcash')->authorize([
-            'invoice' => 'Bancontact Authenticate SaveToken',
-            'description' => 'Bancontact Authenticate SaveToken',
-            'amountDebit' => 0.02,
+        $response = $this->buckaroo->method('bancontactmrcash')->authorize($this->getBasePayPayload([], [
             'savetoken' => false,
-        ]);
+        ]));
+
+        self::$authorizeTransactionKey = $response->getTransactionKey();
 
         $this->assertTrue($response->isWaitingOnUserInput());
     }
@@ -122,30 +112,37 @@ class BancontactTest extends BuckarooTestCase
      * @return void
      * @test
      */
-    public function it_creates_a_bancontact_capture()
-    {
-        $response = $this->buckaroo->method('bancontactmrcash')->capture([
-            'invoice' => 'Bancontact Authenticate SaveToken',
-            'description' => 'Bancontact Authenticate SaveToken',
-            'originalTransactionKey'    => 'D3EEF5279D9047A0B202334D8050B6CF',
-            'amountDebit' => 0.02,
-        ]);
-
-        $this->assertTrue($response->isWaitingOnUserInput());
-    }
-
-    /**
-     * @return void
-     * @test
-     */
+    // Replace the transaction key with the key from a successful authorization
     public function it_creates_a_bancontact_cancel_authorize()
     {
-        $response = $this->buckaroo->method('bancontactmrcash')->cancelAuthorize([
-            'invoice'                   => 'Bancontact Authenticate SaveToken',
-            'description'               => 'Bancontact Authenticate SaveToken',
-            'originalTransactionKey'    => '122862F217D44C4DAF4012D93301E168',
-        ]);
+        $response = $this->buckaroo->method('bancontactmrcash')->cancelAuthorize($this->getRefundPayload([
+            'originalTransactionKey' => self::$authorizeTransactionKey,
+            'amountCredit' => 100.30,
+            'amount' => 100.30,
+            'creditAmount' => 100.30,
 
-        $this->assertTrue($response->isValidationFailure());
+        ]));
+
+        $this->assertTrue($response->isSuccess());
+    }
+
+    /**
+     * @return void
+     * @test
+     */
+    // Replace the transaction key with the key from a successful authorization
+    public function it_creates_a_bancontact_capture()
+    {
+        $response = $this->buckaroo->method('bancontactmrcash')->authorize($this->getBasePayPayload([], [
+            'savetoken' => false,
+        ]));
+
+        self::$authorizeTransactionKey = $response->getTransactionKey();
+
+        $response = $this->buckaroo->method('bancontactmrcash')->capture($this->getBasePayPayload([], [
+            'originalTransactionKey' => self::$authorizeTransactionKey,
+        ]));
+
+        $this->assertTrue($response->isSuccess());
     }
 }

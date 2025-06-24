@@ -60,7 +60,7 @@ class Credentials
 
         try
         {
-            $response = $this->client->specification($request, 'ideal', 2);
+            $response = $this->client->specification('ideal', 2, $request);
         } catch (BuckarooException $e)
         {
             return false;

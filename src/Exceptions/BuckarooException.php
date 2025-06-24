@@ -35,7 +35,7 @@ class BuckarooException extends Exception
 
     protected ?Subject $logger;
 
-    public function __construct(?Subject $logger, string $message = "", int $code = 0, Throwable $previous = null)
+    public function __construct(?Subject $logger, string $message = "", int $code = 0, ?Throwable $previous = null)
     {
         $message = $this->message($message);
 

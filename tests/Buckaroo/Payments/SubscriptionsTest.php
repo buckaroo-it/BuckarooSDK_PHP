@@ -33,26 +33,37 @@ class SubscriptionsTest extends BuckarooTestCase
         $response = $this->buckaroo->method('subscriptions')->create([
             'startDate' => date('Y-m-d'),
             'ratePlans' => [
-                'update' => [
-                    'startDate' => date('Y-m-d', strtotime(date('Y-m-d'). ' + 60 days')),
-                    'ratePlanCode' => 'zfv59mmy',
+                'add' => [
+                    'startDate' => date('Y-m-d'),
+                    'billingTiming' => 1,
+                    'ratePlanName' => 'Test Rate Plan',
+                    'ratePlanDescription' => 'Test Rate Plan',
+                    'currency' => 'EUR',
+                    'billingInterval' => 'Weekly',
+                    'termStartDay' => '1',
                 ],
             ],
             'ratePlanCharges' => [
                 'add' => [
-                    'ratePlanChargeCode' => 'test',
+                    'ratePlanChargeName' => 'Rate Plan Charge',
+                    'rateplanChargeDescription' => 'Rate Plan Charge Description',
+                    'unitOfMeasure' => 'Quantity',
+                    'baseNumberOfUnits' => '1',
+                    'partialBilling' => 'Billfull',
+                    'pricePerUnit' => '2',
+                    'priceIncludesVat' => true,
+                    'vatPercentage' => '21',
+                    'ratePlanChargeType' => 'Recurring',
                 ],
-            ],
-            'configurationCode' => 'gfyh9fe4',
-            'configuration'     => [
-                'name'          => 'owiejr'
             ],
             'debtor' => [
                 'code' => 'johnsmith4',
             ],
         ]);
 
-        $this->assertTrue($response->isValidationFailure());
+        self::$payTransactionKey = $response->getServiceParameters()['subscriptionguid'];
+
+        $this->assertTrue($response->isSuccess());
     }
 
     /**
@@ -62,14 +73,14 @@ class SubscriptionsTest extends BuckarooTestCase
     public function it_creates_a_combined_subscription()
     {
         $subscriptions = $this->buckaroo->method('subscriptions')->manually()->createCombined([
-            'pushURL' => 'https://buckaroo.dev/push',
+            'pushURL' => 'https://example.com/buckaroo/push',
             'includeTransaction' => false,
             'transactionVatPercentage' => 5,
-            'configurationCode' => 'gfyh9fe4',
+            'configurationCode' => '7esem6f7',
             'email' => 'test@buckaroo.nl',
             'ratePlans' => [
                 'add' => [
-                    'startDate' => '2033-01-01',
+                    'startDate' => date('Y-m-d'),
                     'ratePlanCode' => '9863hdcj',
                 ],
             ],
@@ -79,13 +90,6 @@ class SubscriptionsTest extends BuckarooTestCase
             'debtor' => [
                 'code' => 'johnsmith4',
             ],
-//            'person'                    => [
-//                'firstName'         => 'John',
-//                'lastName'          => 'Do',
-//                'gender'            => Gender::FEMALE,
-//                'culture'           => 'nl-NL',
-//                'birthDate'         => '1990-01-01'
-//            ],
             'company' => [
                 'culture' => 'nl-NL',
                 'companyName' => 'My Company Coporation',
@@ -110,7 +114,7 @@ class SubscriptionsTest extends BuckarooTestCase
             'issuer' => 'ABNANL2A',
         ]);
 
-        $this->assertTrue($response->isPendingProcessing());
+        $this->assertTrue($response->isWaitingOnUserInput());
     }
 
     /**
@@ -120,23 +124,22 @@ class SubscriptionsTest extends BuckarooTestCase
     public function it_updates_subscription()
     {
         $response = $this->buckaroo->method('subscriptions')->update([
-            'subscriptionGuid' => 'FC512FC9CC3A485D8CF3D1804FF6xxxx',
-            'configurationCode' => '9wqe32ew',
+            'subscriptionGuid' => self::$payTransactionKey,
+            'configurationCode' => '7esem6f7',
             'ratePlans' => [
                 'update' => [
-                    'ratePlanGuid' => 'F075470B1BB24B9291943A888A2Fxxxx',
-                    'startDate' => '2022-01-01',
+                    'ratePlanGuid' => '56CC308A1D694CF19F808993DD42BE7B',
                     'endDate' => '2030-01-01',
                     'charge' => [
-                        'ratePlanChargeGuid' => 'AD375E2E188747159673440898B9xxxx',
+                        'ratePlanChargeGuid' => '15C2CEEB39E34C86AAD0038ED73807B0',
                         'baseNumberOfUnits' => '1',
-                        'pricePerUnit' => 10,
+                        'pricePerUnit' => 5,
                     ],
                 ],
             ],
         ]);
 
-        $this->assertTrue($response->isFailed());
+        $this->assertTrue($response->isSuccess());
     }
 
     /**
@@ -147,7 +150,7 @@ class SubscriptionsTest extends BuckarooTestCase
     {
         $subscription = $this->buckaroo->method('subscriptions')->manually()->updateCombined([
             'startRecurrent' => true,
-            'subscriptionGuid' => '65EB06079D854B0C9A9ECB0E2C1Cxxxx',
+            'subscriptionGuid' => '36F17939D56549BD91C64A00FAE8161A',
         ]);
 
         $response = $this->buckaroo->method('ideal')->combine($subscription)->pay([
@@ -157,73 +160,78 @@ class SubscriptionsTest extends BuckarooTestCase
         ]);
 
 
-        $this->assertTrue($response->isRejected());
+        $this->assertTrue($response->isWaitingOnUserInput());
     }
 
     /**
      * @return void
+     * @depends it_creates_a_subscription
      * @test
      */
     public function it_stops_subscription()
     {
         $response = $this->buckaroo->method('subscriptions')->stop([
-            'subscriptionGuid' => 'A8A3DF828F0E4706B50191D3D1C88xxx',
+            'subscriptionGuid' => self::$payTransactionKey,
         ]);
 
-        $this->assertTrue($response->isFailed());
+        $this->assertTrue($response->isSuccess());
     }
 
     /**
      * @return void
+     * @depends it_creates_a_subscription
      * @test
      */
     public function it_get_info_of_subscription()
     {
         $response = $this->buckaroo->method('subscriptions')->info([
-            'subscriptionGuid' => '6ABDB214C4944B5C8638420CE9ECxxxx',
+            'subscriptionGuid' => self::$payTransactionKey,
         ]);
 
-        $this->assertTrue($response->isFailed());
+        $this->assertTrue($response->isSuccess());
     }
 
     /**
      * @return void
+     * @depends it_creates_a_subscription
      * @test
      */
     public function it_delete_payment_config_of_subscription()
     {
         $response = $this->buckaroo->method('subscriptions')->deletePaymentConfig([
-            'subscriptionGuid' => '6ABDB214C4944B5C8638420CE9ECxxxx',
+            'subscriptionGuid' => self::$payTransactionKey,
         ]);
 
-        $this->assertTrue($response->isFailed());
+        $this->assertTrue($response->isSuccess());
     }
 
     /**
      * @return void
+     * @depends it_creates_a_subscription
      * @test
      */
     public function it_pauses_of_subscription()
     {
         $response = $this->buckaroo->method('subscriptions')->pause([
             'resumeDate' => '2030-01-01',
-            'subscriptionGuid' => '6ABDB214C4944B5C8638420CE9ECxxxx',
+            'subscriptionGuid' => self::$payTransactionKey,
         ]);
 
-        $this->assertTrue($response->isFailed());
+        $this->assertTrue($response->isSuccess());
     }
 
     /**
      * @return void
+     * @depends it_creates_a_subscription
      * @test
      */
     public function it_resumes_of_subscription()
     {
         $response = $this->buckaroo->method('subscriptions')->resume([
             'resumeDate' => '2030-01-01',
-            'subscriptionGuid' => '6ABDB214C4944B5C8638420CE9ECxxxx',
+            'subscriptionGuid' => self::$payTransactionKey,
         ]);
 
-        $this->assertTrue($response->isFailed());
+        $this->assertTrue($response->isSuccess());
     }
 }
