@@ -3,21 +3,26 @@
 namespace Buckaroo\Transaction\Request\HttpClient;
 
 use Buckaroo\Config\Config;
-use Composer\InstalledVersions;
+use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
+use function defined;
 
 class HttpClientFactory
 {
     public static function createClient(Config $config)
     {
-        // Detect the installed GuzzleHttp version
-        $versionString  = InstalledVersions::getVersion('guzzlehttp/guzzle');
-        // Extract the major version number
-        $majorVersion = (int) explode('.', $versionString)[0];
-
-        // Instantiate the appropriate client based on the major version
-        if ($majorVersion === 5) {
-            return new GuzzleHttpClientV5($config);
+        if (defined(ClientInterface::class . '::MAJOR_VERSION')) {
+            $major = ClientInterface::MAJOR_VERSION;
+        } elseif (defined(ClientInterface::class . '::VERSION')) {
+            $major = (int)explode('.', ClientInterface::VERSION)[0];
+        } elseif (defined(Client::class . '::VERSION')) {
+            $major = (int)explode('.', Client::VERSION)[0];
+        } else {
+            $major = 7;
         }
-        return new GuzzleHttpClientV7($config);
+
+        return $major === 5
+            ? new GuzzleHttpClientV5($config)
+            : new GuzzleHttpClientV7($config);
     }
 }
