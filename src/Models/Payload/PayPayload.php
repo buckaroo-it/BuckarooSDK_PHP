@@ -32,6 +32,10 @@ class PayPayload extends Payload
      * @var float
      */
     protected float $amountDebit;
+    /**
+     * @var string
+     */
+    protected string $email;
 
     /**
      * @param array|null $payload
