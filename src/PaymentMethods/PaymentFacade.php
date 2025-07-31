@@ -37,6 +37,7 @@ use Buckaroo\Transaction\Response\TransactionResponse;
  * @method TransactionResponse payEncrypted(array $data)
  * @method TransactionResponse payWithToken(array $data)
  * @method TransactionResponse authorizeWithToken(array $data)
+ * @method TransactionResponse payReminderWithToken(array $data)
  * @method TransactionResponse authenticate(array $data)
  * @method TransactionResponse createWallet(array $data)
  * @method TransactionResponse updateWallet(array $data)
