@@ -74,6 +74,20 @@ class CreditCard extends PayablePaymentMethod implements Combinable
     /**
      * @return TransactionResponse
      */
+    public function payRemainderWithToken(): TransactionResponse
+    {
+        $cardData = new SessionData($this->payload);
+
+        $this->setPayPayload();
+
+        $this->setServiceList('PayRemainderWithToken', $cardData);
+
+        return $this->postRequest();
+    }
+
+    /**
+     * @return TransactionResponse
+     */
     public function authorizeEncrypted(): TransactionResponse
     {
         $cardData = new CardData($this->payload);
