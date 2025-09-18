@@ -80,7 +80,7 @@ class BuckarooTestCase extends TestCase
         $payload =  [
             'clientIP' => '127.0.0.1',
             'invoice' => uniqid(),
-            'currency' => 'EUR',
+            'currency' => 'CHF',
             'amountDebit' => 100.30,
             'order' => uniqid(),
             'description' => 'Buckaroo SDK Test Transaction',

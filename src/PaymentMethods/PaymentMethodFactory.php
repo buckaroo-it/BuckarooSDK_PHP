@@ -65,6 +65,7 @@ use Buckaroo\PaymentMethods\PaymentInitiation\PaymentInitiation;
 use Buckaroo\PaymentMethods\AfterpayDigiAccept\AfterpayDigiAccept;
 use Buckaroo\PaymentMethods\Blik\Blik;
 use Buckaroo\PaymentMethods\ClickToPay\ClickToPay;
+use Buckaroo\PaymentMethods\Twint\Twint;
 use Buckaroo\PaymentMethods\NoServiceSpecifiedPayment\NoServiceSpecifiedPayment;
 
 class PaymentMethodFactory
@@ -133,6 +134,7 @@ class PaymentMethodFactory
             'sodexomealvoucher', 'sodexoecovoucher', 'sodexogiftvoucher',
         ],
         Trustly::class => ['trustly'],
+        Twint::class => ['twint'],
         BankTransfer::class => ['transfer'],
         WeChatPay::class => ['wechatpay'],
         BuckarooVoucher::class => ['buckaroovoucher'],
