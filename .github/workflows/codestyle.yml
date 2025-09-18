@@ -32,4 +32,4 @@ jobs:
         run: phplint --no-configuration --no-cache --no-interaction ./src/* ./example/*
 
       - name: Run phpcs
-        run: phpcs -q --report=checkstyle --extensions=php ./src/* | cs2pr
+        run: phpcs -q --report=checkstyle --standard=phpcs.xml --extensions=php ./src/* | cs2pr
