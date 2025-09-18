@@ -29,7 +29,9 @@ class TwintTest extends BuckarooTestCase
      */
     public function it_creates_a_twint_payment()
     {
-        $response = $this->buckaroo->method('twint')->pay($this->getBasePayPayload());
+        $response = $this->buckaroo->method('twint')->pay($this->getBasePayPayload([], [
+            'currency' => 'CHF',
+        ]));
 
         $this->assertTrue($response->isPendingProcessing());
     }
