@@ -74,6 +74,11 @@ class Pay extends ServiceParameter
     protected array $articles = [];
 
     /**
+     * @var string|null
+     */
+    protected ?string $route = null;
+
+    /**
      * @var array|\string[][]
      */
     protected array $groupData = [
