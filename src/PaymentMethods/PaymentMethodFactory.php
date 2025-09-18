@@ -38,6 +38,7 @@ use Buckaroo\PaymentMethods\Belfius\Belfius;
 use Buckaroo\PaymentMethods\Billink\Billink;
 use Buckaroo\PaymentMethods\iDealQR\iDealQR;
 use Buckaroo\PaymentMethods\Surepay\Surepay;
+use Buckaroo\PaymentMethods\Swish\Swish;
 use Buckaroo\PaymentMethods\Trustly\Trustly;
 use Buckaroo\PaymentMethods\Afterpay\Afterpay;
 use Buckaroo\PaymentMethods\ApplePay\ApplePay;
@@ -105,6 +106,7 @@ class PaymentMethodFactory
         Multibanco::class => ['multibanco'],
         MBWay::class => ['mbway'],
         Surepay::class => ['surepay'],
+        Swish::class => ['swish'],
         Subscriptions::class => ['subscriptions'],
         SEPA::class => ['sepadirectdebit', 'sepa'],
         KBC::class => ['kbc', 'kbcpaymentbutton'],
