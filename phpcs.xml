@@ -12,7 +12,8 @@
         <exclude-pattern>*.php</exclude-pattern>
     </rule>
 
-    <rule ref="Squiz.Classes.ValidClassName.NotCamelCaps">
+    <rule ref="Squiz.Classes.ValidClassName">
+        <exclude name="Squiz.Classes.ValidClassName.NotCamelCaps"/>
         <exclude-pattern>src/PaymentMethods/iDeal/iDeal.php</exclude-pattern>
         <exclude-pattern>src/PaymentMethods/iDealQR/iDealQR.php</exclude-pattern>
         <exclude-pattern>src/PaymentMethods/iDin/iDin.php</exclude-pattern>
