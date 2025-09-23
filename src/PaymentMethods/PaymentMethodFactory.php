@@ -69,6 +69,7 @@ use Buckaroo\PaymentMethods\Blik\Blik;
 use Buckaroo\PaymentMethods\ClickToPay\ClickToPay;
 use Buckaroo\PaymentMethods\Twint\Twint;
 use Buckaroo\PaymentMethods\NoServiceSpecifiedPayment\NoServiceSpecifiedPayment;
+use Buckaroo\PaymentMethods\Wero\Wero;
 
 class PaymentMethodFactory
 {
@@ -142,6 +143,7 @@ class PaymentMethodFactory
         BankTransfer::class => ['transfer'],
         WeChatPay::class => ['wechatpay'],
         BuckarooVoucher::class => ['buckaroovoucher'],
+        Wero::class => ['wero'],
     ];
 
     /**
