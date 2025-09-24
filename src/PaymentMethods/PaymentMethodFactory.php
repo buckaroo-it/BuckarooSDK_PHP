@@ -38,6 +38,7 @@ use Buckaroo\PaymentMethods\Belfius\Belfius;
 use Buckaroo\PaymentMethods\Billink\Billink;
 use Buckaroo\PaymentMethods\iDealQR\iDealQR;
 use Buckaroo\PaymentMethods\Surepay\Surepay;
+use Buckaroo\PaymentMethods\Swish\Swish;
 use Buckaroo\PaymentMethods\Trustly\Trustly;
 use Buckaroo\PaymentMethods\Afterpay\Afterpay;
 use Buckaroo\PaymentMethods\ApplePay\ApplePay;
@@ -49,6 +50,7 @@ use Buckaroo\PaymentMethods\Emandates\Emandates;
 use Buckaroo\PaymentMethods\KlarnaPay\KlarnaPay;
 use Buckaroo\PaymentMethods\WeChatPay\WeChatPay;
 use Buckaroo\PaymentMethods\Bancontact\Bancontact;
+use Buckaroo\PaymentMethods\Bizum\Bizum;
 use Buckaroo\PaymentMethods\CreditCard\CreditCard;
 use Buckaroo\PaymentMethods\Multibanco\Multibanco;
 use Buckaroo\PaymentMethods\Przelewy24\Przelewy24;
@@ -65,7 +67,9 @@ use Buckaroo\PaymentMethods\PaymentInitiation\PaymentInitiation;
 use Buckaroo\PaymentMethods\AfterpayDigiAccept\AfterpayDigiAccept;
 use Buckaroo\PaymentMethods\Blik\Blik;
 use Buckaroo\PaymentMethods\ClickToPay\ClickToPay;
+use Buckaroo\PaymentMethods\Twint\Twint;
 use Buckaroo\PaymentMethods\NoServiceSpecifiedPayment\NoServiceSpecifiedPayment;
+use Buckaroo\PaymentMethods\Wero\Wero;
 
 class PaymentMethodFactory
 {
@@ -78,6 +82,7 @@ class PaymentMethodFactory
         Afterpay::class => ['afterpay'],
         AfterpayDigiAccept::class => ['afterpaydigiaccept'],
         Bancontact::class => ['bancontact', 'bancontactmrcash'],
+        Bizum::class => ['bizum'],
         Billink::class => ['billink'],
         Blik::class => ['blik'],
         Belfius::class => ['belfius'],
@@ -104,6 +109,7 @@ class PaymentMethodFactory
         Multibanco::class => ['multibanco'],
         MBWay::class => ['mbway'],
         Surepay::class => ['surepay'],
+        Swish::class => ['swish'],
         Subscriptions::class => ['subscriptions'],
         SEPA::class => ['sepadirectdebit', 'sepa'],
         KBC::class => ['kbc', 'kbcpaymentbutton'],
@@ -133,9 +139,11 @@ class PaymentMethodFactory
             'sodexomealvoucher', 'sodexoecovoucher', 'sodexogiftvoucher',
         ],
         Trustly::class => ['trustly'],
+        Twint::class => ['twint'],
         BankTransfer::class => ['transfer'],
         WeChatPay::class => ['wechatpay'],
         BuckarooVoucher::class => ['buckaroovoucher'],
+        Wero::class => ['wero'],
     ];
 
     /**
