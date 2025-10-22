@@ -82,6 +82,11 @@ class Subscription extends ServiceParameter
     protected string $allowedServices;
 
     /**
+     * @var string
+     */
+    protected string $tokenPaymentMethod;
+
+    /**
      * @var Debtor
      */
     protected Debtor $debtor;
