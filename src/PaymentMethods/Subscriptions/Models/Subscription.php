@@ -140,6 +140,11 @@ class Subscription extends ServiceParameter
     protected RatePlanCharge $addRatePlanCharge;
 
     /**
+     * @var RatePlanCharge
+     */
+    protected RatePlanCharge $updateRatePlanCharge;
+
+    /**
      * @var string
      */
     protected string $customerIBAN;
