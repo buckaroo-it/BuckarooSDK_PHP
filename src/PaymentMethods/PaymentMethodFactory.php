@@ -42,6 +42,7 @@ use Buckaroo\PaymentMethods\Swish\Swish;
 use Buckaroo\PaymentMethods\Trustly\Trustly;
 use Buckaroo\PaymentMethods\Afterpay\Afterpay;
 use Buckaroo\PaymentMethods\ApplePay\ApplePay;
+use Buckaroo\PaymentMethods\GooglePay\GooglePay;
 use Buckaroo\PaymentMethods\GiftCard\GiftCard;
 use Buckaroo\PaymentMethods\KlarnaKP\KlarnaKP;
 use Buckaroo\PaymentMethods\KnakenPay\KnakenPay;
@@ -78,6 +79,7 @@ class PaymentMethodFactory
      */
     private static array $payments = [
         ApplePay::class => ['applepay'],
+        GooglePay::class => ['googlepay'],
         Alipay::class => ['alipay'],
         Afterpay::class => ['afterpay'],
         AfterpayDigiAccept::class => ['afterpaydigiaccept'],

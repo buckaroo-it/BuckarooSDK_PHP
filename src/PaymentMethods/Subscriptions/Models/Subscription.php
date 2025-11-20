@@ -82,6 +82,11 @@ class Subscription extends ServiceParameter
     protected string $allowedServices;
 
     /**
+     * @var string
+     */
+    protected string $tokenPaymentMethod;
+
+    /**
      * @var Debtor
      */
     protected Debtor $debtor;
@@ -133,6 +138,11 @@ class Subscription extends ServiceParameter
      * @var RatePlanCharge
      */
     protected RatePlanCharge $addRatePlanCharge;
+
+    /**
+     * @var RatePlanCharge
+     */
+    protected RatePlanCharge $updateRatePlanCharge;
 
     /**
      * @var string
