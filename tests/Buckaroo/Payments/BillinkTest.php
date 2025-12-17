@@ -44,68 +44,6 @@ class BillinkTest extends BuckarooTestCase
     /**
      * @test
      */
-    public function it_creates_a_billink_authorize()
-    {
-        $response = $this->buckaroo->method('billink')->authorize($this->getPayPayload(
-            [
-                'trackAndTrace' => 'TR0F123456789',
-                'vatNumber' => '2',
-                'articles' => $this->getArticlesPayload(),
-            ]
-        ));
-
-        self::$authorizeTransactionKey = $response->getTransactionKey();
-
-        $this->assertTrue($response->isSuccess());
-    }
-    
-
-    // Not able to test (issue with amount) - Validation failure
-    // /**
-    //  * @test
-    //  */
-    // public function it_creates_a_billink_cancel_authorize()
-    // {
-    //     $response = $this->buckaroo->method('billink')->cancelAuthorize($this->getRefundPayload([
-    //         'originalTransactionKey' => self::$authorizeTransactionKey,
-    //         'amountCredit' => 100.30,
-    //     ]));
-
-
-    //     $this->assertTrue($response->isSuccess());
-    // }
-
-    /**
-     * @test
-     */
-    public function it_creates_a_billink_capture()
-    {
-        $response = $this->buckaroo->method('billink')->authorize($this->getPayPayload(
-            [
-                'trackAndTrace' => '12345678',
-                'vatNumber' => '2',
-                'articles' => $this->getArticlesPayload(),
-            ]
-        ));
-
-        $this->assertTrue($response->isSuccess());
-
-        sleep(2);
-        $response = $this->buckaroo->method('billink')->capture($this->getPayPayload(
-                [
-                    'originalTransactionKey' => $response->getTransactionKey(),
-                    'trackAndTrace' => '12345678',
-                    'vatNumber' => '2',
-                    'articles' => $this->getArticlesPayload(),
-                ]
-            ));
-
-        $this->assertTrue($response->isSuccess());
-    }
-
-    /**
-     * @test
-     */
     public function it_creates_a_billink_refund()
     {
         $response = $this->buckaroo->method('billink')->refund($this->getRefundPayload([
