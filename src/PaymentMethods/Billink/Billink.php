@@ -21,7 +21,6 @@
 namespace Buckaroo\PaymentMethods\Billink;
 
 use Buckaroo\Models\Model;
-use Buckaroo\PaymentMethods\Billink\Models\Capture;
 use Buckaroo\PaymentMethods\Billink\Models\Pay;
 use Buckaroo\PaymentMethods\Billink\Models\Refund;
 use Buckaroo\PaymentMethods\PayablePaymentMethod;
@@ -41,47 +40,5 @@ class Billink extends PayablePaymentMethod
     public function pay(?Model $model = null): TransactionResponse
     {
         return parent::pay($model ?? new Pay($this->payload));
-    }
-
-    /**
-     * @return TransactionResponse
-     */
-    public function authorize(): TransactionResponse
-    {
-        $pay = new Pay($this->payload);
-
-        $this->setPayPayload();
-
-        $this->setServiceList('Authorize', $pay);
-
-        return $this->postRequest();
-    }
-
-    /**
-     * @return TransactionResponse
-     */
-    public function capture(): TransactionResponse
-    {
-        $capture = new Capture($this->payload);
-
-        $this->setPayPayload();
-
-        $this->setServiceList('Capture', $capture);
-
-        return $this->postRequest();
-    }
-
-    /**
-     * @return TransactionResponse
-     */
-    public function cancelAuthorize(): TransactionResponse
-    {
-        $cancel = new Refund($this->payload);
-
-        $this->setPayPayload();
-
-        $this->setServiceList('CancelAuthorize', $cancel);
-
-        return $this->postRequest();
     }
 }
