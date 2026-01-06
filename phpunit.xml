@@ -1,12 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <phpunit bootstrap="./vendor/autoload.php" colors="true">
     <testsuites>
-        <testsuite name="Unit tests">
-            <directory>tests</directory>
+        <testsuite name="Unit">
+            <directory>tests/Unit</directory>
+        </testsuite>
+        <testsuite name="Integration">
+            <directory>tests/Integration</directory>
         </testsuite>
     </testsuites>
 
     <php>
         <ini name="display_errors" value="stderr"/>
         <ini name="error_log" value="/dev/null"/>
+        <env name="BPE_WEBSITE_KEY" value="test_website_key_12345"/>
+        <env name="BPE_SECRET_KEY" value="test_secret_key_67890abcdef"/>
     </php>
 </phpunit>

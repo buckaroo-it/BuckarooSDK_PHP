@@ -19,7 +19,8 @@
         "symfony/var-dumper": "^5.4.9",
         "phpunit/phpunit": "^9.5",
         "vlucas/phpdotenv": "^5.4",
-        "friendsofphp/php-cs-fixer": "^3.13"
+        "friendsofphp/php-cs-fixer": "^3.13",
+        "mockery/mockery": "^1.6"
     },
     "authors": [{
         "name": "Buckaroo",
@@ -36,5 +37,12 @@
         "psr-4": {
             "Tests\\": "tests/"
         }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "test:unit": "phpunit --testsuite Unit",
+        "test:integration": "phpunit --testsuite Integration",
+        "cs": "php-cs-fixer fix --dry-run --diff",
+        "cs:fix": "php-cs-fixer fix"
     }
 }
