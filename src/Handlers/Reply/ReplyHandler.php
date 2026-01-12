@@ -126,7 +126,7 @@ class ReplyHandler
                 return true;
             }
 
-            if (! $strict && str_contains($key, $needle))
+            if (! $strict && strpos($key, $needle) !== false)
             {
                 return true;
             }

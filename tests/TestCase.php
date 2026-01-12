@@ -12,29 +12,24 @@ use Tests\Support\MockBuckaroo;
 abstract class TestCase extends BaseTestCase
 {
     protected BuckarooClient $buckaroo;
-    protected ?MockBuckaroo $mockBuckaroo = null;
+    protected MockBuckaroo $mockBuckaroo;
 
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->mockBuckaroo = new MockBuckaroo();
+        $this->mockBuckaroo->install();
+
         $this->buckaroo = $this->createBuckarooClient();
     }
 
     protected function tearDown(): void
     {
-        if ($this->mockBuckaroo) {
-            $this->mockBuckaroo->assertAllConsumed();
-            MockBuckaroo::clearInstance();
-        }
+        $this->mockBuckaroo->assertAllConsumed();
+        MockBuckaroo::clearInstance();
 
-        Mockery::close();
         parent::tearDown();
-    }
-
-    protected function useMock(): void
-    {
-        $this->mockBuckaroo = new MockBuckaroo();
-        $this->mockBuckaroo->install();
     }
 
     protected function createBuckarooClient(array $overrides = []): BuckarooClient

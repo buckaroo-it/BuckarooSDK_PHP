@@ -2,7 +2,7 @@
 $finder = Symfony\Component\Finder\Finder::create()
     ->in([
         __DIR__ . '/src',
-        __DIR__ . '/example'
+        __DIR__ . '/example',
     ])
     ->name('*.php')
     ->notPath('bootstrap/*')
@@ -33,7 +33,7 @@ return (new PhpCsFixer\Config())
         ],
         'curly_braces_position' => [
             'classes_opening_brace' => 'next_line_unless_newline_at_signature_end',
-            'control_structures_opening_brace'  => 'next_line_unless_newline_at_signature_end'
+            'control_structures_opening_brace' => 'next_line_unless_newline_at_signature_end',
         ],
         'phpdoc_single_line_var_spacing' => true,
         'phpdoc_var_without_name' => true,

@@ -18,6 +18,7 @@ use Mockery;
 final class MockBuckaroo
 {
     private static ?MockBuckaroo $instance = null;
+    private static bool $mockInstalled = false;
 
     /** @var BuckarooMockRequest[] */
     private array $queue = [];
@@ -41,6 +42,12 @@ final class MockBuckaroo
         if ($left > 0) {
             throw new LogicException("{$left} Buckaroo request(s) were not called");
         }
+    }
+
+    public function resetQueue(): void
+    {
+        $this->queue = [];
+        $this->index = 0;
     }
 
     /** internal dispatch called by the fake client */
@@ -76,6 +83,14 @@ final class MockBuckaroo
     {
         self::$instance = $this;
 
+        // Only install the overload mock once per PHP process
+        // The class can only be mocked before it's loaded
+        if (self::$mockInstalled) {
+            return;
+        }
+
+        self::$mockInstalled = true;
+
         /** Create a fresh overload mock for HttpClientFactory used by Client */
         $factoryOverload = Mockery::mock('overload:' . HttpClientFactory::class);
 
@@ -109,6 +124,9 @@ final class MockBuckaroo
 
     public static function clearInstance(): void
     {
+        if (self::$instance) {
+            self::$instance->resetQueue();
+        }
         self::$instance = null;
     }
 }

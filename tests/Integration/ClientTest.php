@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
+use Tests\Support\BuckarooMockRequest;
 use Tests\TestCase;
 
 /**
  * Integration tests for BuckarooClient.
- * These tests make real API calls and require valid credentials.
+ * These tests use MockBuckaroo to simulate API responses.
  */
 class ClientTest extends TestCase
 {
@@ -24,8 +25,39 @@ class ClientTest extends TestCase
      */
     public function it_can_fetch_ideal_issuers(): void
     {
+        $this->mockBuckaroo->mockTransportRequests([
+            BuckarooMockRequest::json('GET', '*/json/Transaction/Specification/ideal*', [
+                'Actions' => [
+                    [
+                        'RequestParameters' => [
+                            [
+                                'ListItemDescriptions' => [
+                                    [
+                                        'Value' => 'ABNANL2A',
+                                        'Description' => 'ABN AMRO Bank',
+                                    ],
+                                    [
+                                        'Value' => 'INGBNL2A',
+                                        'Description' => 'ING Bank',
+                                    ],
+                                    [
+                                        'Value' => 'RABONL2U',
+                                        'Description' => 'Rabobank',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ])
+        ]);
+
         $issuers = $this->buckaroo->method('ideal')->issuers();
 
         $this->assertIsArray($issuers);
+        $this->assertNotEmpty($issuers);
+        $this->assertCount(3, $issuers);
+        $this->assertSame('ABNANL2A', $issuers[0]['id']);
+        $this->assertSame('ABN AMRO Bank', $issuers[0]['name']);
     }
 }
