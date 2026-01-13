@@ -25,6 +25,13 @@ return (new PhpCsFixer\Config())
         'blank_line_before_statement' => [
             'statements' => ['break', 'continue', 'declare', 'return', 'throw', 'try'],
         ],
+        'no_extra_blank_lines' => [
+            'tokens' => [
+                'extra',
+                'throw',
+                'use',
+            ],
+        ],
         'braces' => [
             'allow_single_line_closure' => false,
             'position_after_functions_and_oop_constructs' => 'next',
