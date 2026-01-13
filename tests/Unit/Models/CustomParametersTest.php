@@ -13,7 +13,7 @@ class CustomParametersTest extends TestCase
     {
         $params = new CustomParameters([
             'key1' => 'value1',
-            'key2' => 'value2'
+            'key2' => 'value2',
         ]);
 
         $array = $params->toArray();
@@ -33,7 +33,7 @@ class CustomParametersTest extends TestCase
         $array = $params->toArray();
 
         $this->assertTrue(
-            !isset($array['List']) || empty($array['List']),
+            ! isset($array['List']) || empty($array['List']),
             'Empty parameters should result in empty or missing List'
         );
     }
@@ -45,7 +45,7 @@ class CustomParametersTest extends TestCase
         $array = $params->toArray();
 
         $this->assertTrue(
-            !isset($array['List']) || empty($array['List']),
+            ! isset($array['List']) || empty($array['List']),
             'Null parameters should result in empty or missing List'
         );
     }
@@ -66,7 +66,7 @@ class CustomParametersTest extends TestCase
     {
         $params = new CustomParameters([
             'amount' => '100.50',
-            'quantity' => '5'
+            'quantity' => '5',
         ]);
 
         $array = $params->toArray();
@@ -80,7 +80,7 @@ class CustomParametersTest extends TestCase
     {
         $params = new CustomParameters([
             'description' => 'Test & Payment <special>',
-            'reference' => 'REF/123/456'
+            'reference' => 'REF/123/456',
         ]);
 
         $array = $params->toArray();
@@ -94,7 +94,7 @@ class CustomParametersTest extends TestCase
         $params = new CustomParameters([
             'CamelCaseKey' => 'value1',
             'snake_case_key' => 'value2',
-            'mixedCase_Key' => 'value3'
+            'mixedCase_Key' => 'value3',
         ]);
 
         $array = $params->toArray();
@@ -127,15 +127,13 @@ class CustomParametersTest extends TestCase
     {
         $params = new CustomParameters([
             'isActive' => true,
-            'isDeleted' => false
+            'isDeleted' => false,
         ]);
 
         $array = $params->toArray();
 
         $this->assertSame(true, $array['List'][0]['Value']);
         $this->assertSame(false, $array['List'][1]['Value']);
-        $this->assertIsBool($array['List'][0]['Value']);
-        $this->assertIsBool($array['List'][1]['Value']);
     }
 
     public function test_preserves_integer_types(): void
@@ -143,7 +141,7 @@ class CustomParametersTest extends TestCase
         $params = new CustomParameters([
             'count' => 42,
             'negative' => -100,
-            'zero' => 0
+            'zero' => 0,
         ]);
 
         $array = $params->toArray();
@@ -151,9 +149,6 @@ class CustomParametersTest extends TestCase
         $this->assertSame(42, $array['List'][0]['Value']);
         $this->assertSame(-100, $array['List'][1]['Value']);
         $this->assertSame(0, $array['List'][2]['Value']);
-        $this->assertIsInt($array['List'][0]['Value']);
-        $this->assertIsInt($array['List'][1]['Value']);
-        $this->assertIsInt($array['List'][2]['Value']);
     }
 
     public function test_preserves_float_types(): void
@@ -161,7 +156,7 @@ class CustomParametersTest extends TestCase
         $params = new CustomParameters([
             'price' => 99.99,
             'rate' => 0.15,
-            'zero' => 0.0
+            'zero' => 0.0,
         ]);
 
         $array = $params->toArray();
@@ -169,8 +164,6 @@ class CustomParametersTest extends TestCase
         $this->assertSame(99.99, $array['List'][0]['Value']);
         $this->assertSame(0.15, $array['List'][1]['Value']);
         $this->assertSame(0.0, $array['List'][2]['Value']);
-        $this->assertIsFloat($array['List'][0]['Value']);
-        $this->assertIsFloat($array['List'][1]['Value']);
         $this->assertIsFloat($array['List'][2]['Value']);
     }
 
@@ -178,7 +171,7 @@ class CustomParametersTest extends TestCase
     {
         $params = new CustomParameters([
             'optional' => null,
-            'another' => null
+            'another' => null,
         ]);
 
         $array = $params->toArray();
@@ -196,20 +189,16 @@ class CustomParametersTest extends TestCase
             'intZero' => 0,
             'floatZero' => 0.0,
             'stringZero' => '0',
-            'emptyString' => ''
+            'emptyString' => '',
         ]);
 
         $array = $params->toArray();
 
         $this->assertCount(4, $array['List']);
         $this->assertSame(0, $array['List'][0]['Value']);
-        $this->assertIsInt($array['List'][0]['Value']);
         $this->assertSame(0.0, $array['List'][1]['Value']);
-        $this->assertIsFloat($array['List'][1]['Value']);
         $this->assertSame('0', $array['List'][2]['Value']);
-        $this->assertIsString($array['List'][2]['Value']);
         $this->assertSame('', $array['List'][3]['Value']);
-        $this->assertIsString($array['List'][3]['Value']);
     }
 
     public function test_preserves_empty_string_values(): void
@@ -217,7 +206,7 @@ class CustomParametersTest extends TestCase
         $params = new CustomParameters([
             'empty' => '',
             'whitespace' => '   ',
-            'tab' => "\t"
+            'tab' => "\t",
         ]);
 
         $array = $params->toArray();
@@ -233,7 +222,7 @@ class CustomParametersTest extends TestCase
             'emoji' => '🎉💳',
             'chinese' => '支付宝',
             'arabic' => 'الدفع',
-            'currency' => '€ £ ¥'
+            'currency' => '€ £ ¥',
         ]);
 
         $array = $params->toArray();
@@ -250,7 +239,7 @@ class CustomParametersTest extends TestCase
             'key-with-dash' => 'value1',
             'key.with.dot' => 'value2',
             'key_with_underscore' => 'value3',
-            'key:with:colon' => 'value4'
+            'key:with:colon' => 'value4',
         ]);
 
         $array = $params->toArray();
@@ -268,7 +257,7 @@ class CustomParametersTest extends TestCase
         $params = new CustomParameters([
             '0' => 'zero',
             '1' => 'one',
-            '10' => 'ten'
+            '10' => 'ten',
         ]);
 
         $array = $params->toArray();
@@ -283,7 +272,8 @@ class CustomParametersTest extends TestCase
     public function test_handles_large_parameter_sets(): void
     {
         $largeSet = [];
-        for ($i = 0; $i < 100; $i++) {
+        for ($i = 0; $i < 100; $i++)
+        {
             $largeSet['param' . $i] = 'value' . $i;
         }
 
@@ -301,7 +291,7 @@ class CustomParametersTest extends TestCase
     {
         $params = new CustomParameters([
             'key1' => 'value1',
-            'key2' => 'value2'
+            'key2' => 'value2',
         ]);
 
         $list = $params->List;
@@ -315,7 +305,7 @@ class CustomParametersTest extends TestCase
     public function test_get_object_vars_includes_list(): void
     {
         $params = new CustomParameters([
-            'key1' => 'value1'
+            'key1' => 'value1',
         ]);
 
         $vars = $params->getObjectVars();
@@ -334,7 +324,7 @@ class CustomParametersTest extends TestCase
             'bool' => true,
             'null' => null,
             'zero' => 0,
-            'empty' => ''
+            'empty' => '',
         ]);
 
         $array = $params->toArray();

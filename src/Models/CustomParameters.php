@@ -25,7 +25,7 @@ class CustomParameters extends Model
     /**
      * @var array
      */
-    protected array $List;
+    protected array $List = [];
 
     /**
      * @param array|null $data

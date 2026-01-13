@@ -6,8 +6,8 @@ namespace Tests\Unit\Models;
 
 use Buckaroo\Models\Address;
 use Buckaroo\Models\Person;
-use Buckaroo\Models\Services;
 use Buckaroo\Models\ServiceList;
+use Buckaroo\Models\Services;
 use Tests\TestCase;
 
 class ModelTest extends TestCase
@@ -18,7 +18,7 @@ class ModelTest extends TestCase
             'street' => 'Main Street',
             'houseNumber' => '123',
             'city' => 'Amsterdam',
-            'country' => 'NL'
+            'country' => 'NL',
         ]);
 
         $this->assertSame('Main Street', $address->street);
@@ -31,7 +31,7 @@ class ModelTest extends TestCase
     {
         $address = new Address([
             'street' => 'Test Street',
-            'zipcode' => '1234AB'
+            'zipcode' => '1234AB',
         ]);
 
         $this->assertSame('Test Street', $address->street);
@@ -41,7 +41,7 @@ class ModelTest extends TestCase
     public function test_returns_null_for_missing_properties(): void
     {
         $address = new Address([
-            'street' => 'Test Street'
+            'street' => 'Test Street',
         ]);
 
         $this->assertNull($address->city);
@@ -77,7 +77,7 @@ class ModelTest extends TestCase
             'street' => 'Main Street',
             'houseNumber' => '123',
             'city' => 'Amsterdam',
-            'country' => 'NL'
+            'country' => 'NL',
         ]);
 
         $array = $address->toArray();
@@ -103,7 +103,7 @@ class ModelTest extends TestCase
     {
         $address = new Address([
             'street' => 'Main Street',
-            'city' => 'Amsterdam'
+            'city' => 'Amsterdam',
         ]);
 
         $vars = $address->getObjectVars();
@@ -122,7 +122,7 @@ class ModelTest extends TestCase
         $address->setProperties([
             'street' => 'Updated Street',
             'houseNumber' => '789',
-            'city' => 'Utrecht'
+            'city' => 'Utrecht',
         ]);
 
         $this->assertSame('Updated Street', $address->street);
@@ -141,7 +141,7 @@ class ModelTest extends TestCase
     public function test_handles_null_in_set_properties(): void
     {
         $address = new Address([
-            'street' => 'Initial Street'
+            'street' => 'Initial Street',
         ]);
 
         $address->setProperties(null);
@@ -154,7 +154,7 @@ class ModelTest extends TestCase
         $address = new Address();
 
         $result = $address->setProperties([
-            'street' => 'Test'
+            'street' => 'Test',
         ]);
 
         $this->assertSame($address, $result);
@@ -173,7 +173,7 @@ class ModelTest extends TestCase
     {
         $address = new Address([
             'street' => 'Original Street',
-            'city' => 'Original City'
+            'city' => 'Original City',
         ]);
 
         $address->setProperties([]);
@@ -186,12 +186,12 @@ class ModelTest extends TestCase
     {
         $address = new Address([
             'street' => 'First Street',
-            'city' => 'First City'
+            'city' => 'First City',
         ]);
 
         $address->setProperties([
             'street' => 'Second Street',
-            'city' => 'Second City'
+            'city' => 'Second City',
         ]);
 
         $this->assertSame('Second Street', $address->street);
@@ -204,7 +204,7 @@ class ModelTest extends TestCase
         $person = new Person([
             'firstName' => 'John',
             'initials' => 'J.D.',
-            'birthDate' => '1990-01-01'
+            'birthDate' => '1990-01-01',
         ]);
 
         $person->initials = null;
@@ -234,16 +234,16 @@ class ModelTest extends TestCase
 
         $address1 = new Address([
             'street' => 'Street 1',
-            'city' => 'City 1'
+            'city' => 'City 1',
         ]);
 
         $address2 = new Address([
             'street' => 'Street 2',
-            'city' => 'City 2'
+            'city' => 'City 2',
         ]);
 
         $services->setProperties([
-            'ServiceList' => [$address1, $address2]
+            'ServiceList' => [$address1, $address2],
         ]);
 
         $array = $services->toArray();
@@ -270,9 +270,9 @@ class ModelTest extends TestCase
             'ServiceList' => [
                 'level1' => [
                     'level2' => 'deep value',
-                    'level2b' => ['level3' => 'deeper']
-                ]
-            ]
+                    'level2b' => ['level3' => 'deeper'],
+                ],
+            ],
         ]);
 
         $array = $services->toArray();
@@ -290,21 +290,21 @@ class ModelTest extends TestCase
 
         $innerAddress = new Address([
             'street' => 'Inner Street',
-            'city' => 'Inner City'
+            'city' => 'Inner City',
         ]);
 
         $middleData = [
             'address' => $innerAddress,
             'metadata' => [
                 'created' => '2024-01-01',
-                'updated' => '2024-01-02'
-            ]
+                'updated' => '2024-01-02',
+            ],
         ];
 
         $services->setProperties([
             'ServiceList' => [
-                'outer' => $middleData
-            ]
+                'outer' => $middleData,
+            ],
         ]);
 
         $array = $services->toArray();
@@ -334,7 +334,7 @@ class ModelTest extends TestCase
             'firstName' => 'John',
             'lastName' => 'Doe',
             'initials' => null,
-            'birthDate' => null
+            'birthDate' => null,
         ]);
 
         $array = $person->toArray();
@@ -354,9 +354,9 @@ class ModelTest extends TestCase
                 'metadata' => [
                     'valid' => true,
                     'verified' => null,
-                    'score' => 100
-                ]
-            ]
+                    'score' => 100,
+                ],
+            ],
         ]);
 
         $array = $services->toArray();
@@ -395,7 +395,7 @@ class ModelTest extends TestCase
         $address = new Address([
             'street' => 'Test Street',
             'city' => 'Amsterdam',
-            'country' => 'NL'
+            'country' => 'NL',
         ]);
 
         $vars = $address->getObjectVars();
