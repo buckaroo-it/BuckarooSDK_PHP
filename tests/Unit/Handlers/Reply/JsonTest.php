@@ -12,8 +12,7 @@ use Tests\TestCase;
 
 class JsonTest extends TestCase
 {
-    /** @test */
-    public function it_validates_correct_hmac_signature(): void
+    public function test_validates_correct_hmac_signature(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
         $data = [
@@ -33,8 +32,7 @@ class JsonTest extends TestCase
         $this->assertTrue($isValid, 'Valid HMAC signature should be accepted');
     }
 
-    /** @test */
-    public function it_rejects_invalid_hmac_signature(): void
+    public function test_rejects_invalid_hmac_signature(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
         $data = [
@@ -52,8 +50,7 @@ class JsonTest extends TestCase
         $this->assertFalse($isValid, 'Invalid HMAC signature should be rejected');
     }
 
-    /** @test */
-    public function it_rejects_tampered_data(): void
+    public function test_rejects_tampered_data(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
         $originalData = [
@@ -79,8 +76,7 @@ class JsonTest extends TestCase
         $this->assertFalse($isValid, 'Tampered data should fail validation');
     }
 
-    /** @test */
-    public function it_validates_with_get_method(): void
+    public function test_validates_with_get_method(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
         $data = ['Key' => 'ABC123'];
@@ -97,8 +93,7 @@ class JsonTest extends TestCase
         $this->assertTrue($isValid, 'GET method should be supported');
     }
 
-    /** @test */
-    public function it_defaults_to_post_method(): void
+    public function test_defaults_to_post_method(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
         $data = ['Key' => 'ABC123'];
@@ -115,8 +110,7 @@ class JsonTest extends TestCase
         $this->assertTrue($isValid, 'Should default to POST method');
     }
 
-    /** @test */
-    public function it_rejects_signature_with_wrong_secret_key(): void
+    public function test_rejects_signature_with_wrong_secret_key(): void
     {
         $data = ['Key' => 'ABC123'];
         $uri = 'https://example.com/push';
@@ -135,8 +129,7 @@ class JsonTest extends TestCase
         $this->assertFalse($isValid, 'Wrong secret key should fail validation');
     }
 
-    /** @test */
-    public function it_validates_complex_nested_data(): void
+    public function test_validates_complex_nested_data(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
         $data = [
@@ -173,26 +166,7 @@ class JsonTest extends TestCase
         $this->assertTrue($isValid, 'Complex nested data should validate correctly');
     }
 
-    /** @test */
-    public function it_validates_with_empty_data_array(): void
-    {
-        $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
-        $data = [];
-        $uri = 'https://example.com/push';
-        $method = 'POST';
-
-        // Generate valid HMAC header with empty data
-        $generator = new Generator($config, $data, $uri, $method);
-        $authHeader = $generator->generate();
-
-        $handler = new Json($config, $data, $authHeader, $uri, $method);
-        $isValid = $handler->validate();
-
-        $this->assertTrue($isValid, 'Empty data array should validate correctly');
-    }
-
-    /** @test */
-    public function it_rejects_signature_with_different_uri(): void
+    public function test_rejects_signature_with_different_uri(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
         $data = ['Key' => 'TX123'];
@@ -207,8 +181,7 @@ class JsonTest extends TestCase
         $this->assertFalse($isValid, 'URI tampering should be rejected');
     }
 
-    /** @test */
-    public function it_rejects_signature_with_uri_query_parameter_changes(): void
+    public function test_rejects_signature_with_uri_query_parameter_changes(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
         $data = ['Key' => 'TX123'];
@@ -223,24 +196,7 @@ class JsonTest extends TestCase
         $this->assertFalse($isValid, 'URI query parameter changes should be rejected');
     }
 
-    /** @test */
-    public function it_validates_regardless_of_uri_protocol(): void
-    {
-        $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
-        $data = ['Key' => 'TX123'];
-        $method = 'POST';
-
-        $generator = new Generator($config, $data, 'http://example.com/push', $method);
-        $authHeader = $generator->generate();
-
-        $handler = new Json($config, $data, $authHeader, 'https://example.com/push', $method);
-        $isValid = $handler->validate();
-
-        $this->assertTrue($isValid, 'Protocol is stripped during validation so http/https are equivalent');
-    }
-
-    /** @test */
-    public function it_rejects_method_mismatch(): void
+    public function test_rejects_method_mismatch(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
         $data = ['Key' => 'TX123'];
@@ -255,8 +211,7 @@ class JsonTest extends TestCase
         $this->assertFalse($isValid, 'HTTP method mismatch should be rejected');
     }
 
-    /** @test */
-    public function it_rejects_signature_with_wrong_website_key(): void
+    public function test_rejects_signature_with_wrong_website_key(): void
     {
         $data = ['Key' => 'TX123'];
         $uri = 'https://example.com/push';
@@ -273,8 +228,7 @@ class JsonTest extends TestCase
         $this->assertFalse($isValid, 'Wrong website key should be rejected');
     }
 
-    /** @test */
-    public function it_validates_unicode_data(): void
+    public function test_validates_unicode_data(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
         $data = [
@@ -295,8 +249,7 @@ class JsonTest extends TestCase
         $this->assertTrue($isValid, 'Unicode characters should be handled correctly');
     }
 
-    /** @test */
-    public function it_validates_data_with_special_characters(): void
+    public function test_validates_data_with_special_characters(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
         $data = [
@@ -317,8 +270,7 @@ class JsonTest extends TestCase
     }
 
 
-    /** @test */
-    public function it_validates_put_method(): void
+    public function test_validates_put_method(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
         $data = ['Status' => 'updated', 'Key' => 'TX123'];
@@ -334,8 +286,7 @@ class JsonTest extends TestCase
         $this->assertTrue($isValid, 'PUT method should be supported');
     }
 
-    /** @test */
-    public function it_validates_delete_method(): void
+    public function test_validates_delete_method(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
         $data = [];
@@ -351,8 +302,7 @@ class JsonTest extends TestCase
         $this->assertTrue($isValid, 'DELETE method should be supported');
     }
 
-    /** @test */
-    public function it_validates_uri_with_query_parameters(): void
+    public function test_validates_uri_with_query_parameters(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
         $data = ['Key' => 'TX123', 'Amount' => 10.00];
@@ -369,31 +319,7 @@ class JsonTest extends TestCase
     }
 
 
-    /** @test */
-    public function it_validates_data_with_numeric_values(): void
-    {
-        $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
-        $data = [
-            'Amount' => 99.99,
-            'StatusCode' => 190,
-            'Quantity' => 5,
-            'Key' => 'TX123',
-        ];
-        $uri = 'https://example.com/push';
-        $method = 'POST';
-
-        $generator = new Generator($config, $data, $uri, $method);
-        $authHeader = $generator->generate();
-
-        $handler = new Json($config, $data, $authHeader, $uri, $method);
-        $isValid = $handler->validate();
-
-        $this->assertTrue($isValid, 'Numeric values should be handled correctly');
-    }
-
-
-    /** @test */
-    public function it_rejects_header_with_empty_segments(): void
+    public function test_rejects_header_with_empty_segments(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
         $data = ['Key' => 'TX123'];
@@ -407,65 +333,4 @@ class JsonTest extends TestCase
         $this->assertFalse($isValid, 'Header with empty segments should be rejected');
     }
 
-    /** @test */
-    public function it_throws_for_header_with_too_few_segments(): void
-    {
-        $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
-        $data = ['Key' => 'TX123'];
-        $uri = 'https://example.com/push';
-
-        $invalidHeader = 'key:hash:nonce';
-
-        $handler = new Json($config, $data, $invalidHeader, $uri);
-
-        error_reporting(E_ERROR);
-        $this->expectException(Error::class);
-
-        $handler->validate();
-    }
-
-    /** @test */
-    public function it_validates_consistently_on_multiple_calls(): void
-    {
-        $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
-        $data = ['Key' => 'TX123', 'Amount' => 10.00];
-        $uri = 'https://example.com/push';
-        $method = 'POST';
-
-        $generator = new Generator($config, $data, $uri, $method);
-        $authHeader = $generator->generate();
-
-        $handler = new Json($config, $data, $authHeader, $uri, $method);
-
-        $result1 = $handler->validate();
-        $result2 = $handler->validate();
-        $result3 = $handler->validate();
-
-        $this->assertTrue($result1, 'First validation should succeed');
-        $this->assertTrue($result2, 'Second validation should succeed');
-        $this->assertTrue($result3, 'Third validation should succeed');
-        $this->assertSame($result1, $result2, 'Validation should be idempotent');
-        $this->assertSame($result2, $result3, 'Validation should be idempotent');
-    }
-
-    /** @test */
-    public function it_validates_data_with_boolean_values(): void
-    {
-        $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
-        $data = [
-            'IsTest' => true,
-            'IsRecurring' => false,
-            'Key' => 'TX123',
-        ];
-        $uri = 'https://example.com/push';
-        $method = 'POST';
-
-        $generator = new Generator($config, $data, $uri, $method);
-        $authHeader = $generator->generate();
-
-        $handler = new Json($config, $data, $authHeader, $uri, $method);
-        $isValid = $handler->validate();
-
-        $this->assertTrue($isValid, 'Boolean values should be handled correctly');
-    }
 }

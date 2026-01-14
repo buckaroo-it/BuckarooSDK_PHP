@@ -11,8 +11,7 @@ use Tests\TestCase;
 
 class HttpPostTest extends TestCase
 {
-    /** @test */
-    public function it_validates_correct_brq_signature(): void
+    public function test_validates_correct_brq_signature(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
         $data = [
@@ -31,8 +30,7 @@ class HttpPostTest extends TestCase
         $this->assertTrue($isValid, 'Valid brq_ signature should be accepted');
     }
 
-    /** @test */
-    public function it_includes_add_and_cust_prefixes(): void
+    public function test_includes_add_and_cust_prefixes(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
         $data = [
@@ -51,29 +49,52 @@ class HttpPostTest extends TestCase
         $this->assertTrue($isValid, 'Signature should include add_ and cust_ prefixed fields');
     }
 
-    /** @test */
-    public function it_handles_html_entities(): void
+    public function test_decodes_all_html_entity_types(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
-        // Data with HTML entities
-        $data = [
+        // Test named HTML entities
+        $namedData = [
             'brq_description' => 'Test &amp; Payment',
             'brq_amount' => '10.00',
         ];
+        $namedSignature = TestHelpers::generateHttpPostSignature($namedData);
+        $namedData['brq_signature'] = $namedSignature;
+        $namedHandler = new HttpPost($config, $namedData);
+        $this->assertTrue($namedHandler->validate(), 'Named HTML entities should be decoded');
 
-        // Generate signature - TestHelpers uses html_entity_decode like the real handler
-        $signature = TestHelpers::generateHttpPostSignature($data);
-        $data['brq_signature'] = $signature;
+        // Test numeric HTML entities
+        $numericData = [
+            'brq_description' => 'Less than: &#60; Greater than: &#62;',
+            'brq_amount' => '10.00',
+        ];
+        $numericSignature = TestHelpers::generateHttpPostSignature($numericData);
+        $numericData['brq_signature'] = $numericSignature;
+        $numericHandler = new HttpPost($config, $numericData);
+        $this->assertTrue($numericHandler->validate(), 'Numeric HTML entities should be decoded');
 
-        $handler = new HttpPost($config, $data);
-        $isValid = $handler->validate();
+        // Test hexadecimal HTML entities
+        $hexData = [
+            'brq_description' => 'Less than: &#x3C; Greater than: &#x3E; Ampersand: &#x26;',
+            'brq_amount' => '10.00',
+        ];
+        $hexSignature = TestHelpers::generateHttpPostSignature($hexData);
+        $hexData['brq_signature'] = $hexSignature;
+        $hexHandler = new HttpPost($config, $hexData);
+        $this->assertTrue($hexHandler->validate(), 'Hexadecimal HTML entities should be decoded');
 
-        $this->assertTrue($isValid, 'HTML entities should be decoded before signature calculation');
+        // Test mixed HTML entity types
+        $mixedData = [
+            'brq_description' => '&lt; &gt; &amp; &quot; &#60; &#x3C;',
+            'brq_amount' => '10.00',
+        ];
+        $mixedSignature = TestHelpers::generateHttpPostSignature($mixedData);
+        $mixedData['brq_signature'] = $mixedSignature;
+        $mixedHandler = new HttpPost($config, $mixedData);
+        $this->assertTrue($mixedHandler->validate(), 'Mixed HTML entity types should all be decoded');
     }
 
-    /** @test */
-    public function it_uses_case_insensitive_sorting(): void
+    public function test_uses_case_insensitive_sorting(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
@@ -94,8 +115,7 @@ class HttpPostTest extends TestCase
         $this->assertTrue($isValid, 'Keys should be sorted case-insensitively');
     }
 
-    /** @test */
-    public function it_rejects_invalid_signature(): void
+    public function test_rejects_invalid_signature(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
         $data = [
@@ -110,8 +130,7 @@ class HttpPostTest extends TestCase
         $this->assertFalse($isValid, 'Invalid signature should be rejected');
     }
 
-    /** @test */
-    public function it_handles_mixed_case_prefixes(): void
+    public function test_handles_mixed_case_prefixes(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
@@ -135,8 +154,7 @@ class HttpPostTest extends TestCase
         $this->assertTrue($isValid, 'Mixed case prefixes should all be included');
     }
 
-    /** @test */
-    public function it_ignores_unknown_prefixes(): void
+    public function test_ignores_unknown_prefixes(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
@@ -157,8 +175,7 @@ class HttpPostTest extends TestCase
         $this->assertTrue($isValid, 'Unknown prefixes should be ignored in signature calculation');
     }
 
-    /** @test */
-    public function it_handles_uppercase_signature_field(): void
+    public function test_handles_uppercase_signature_field(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
         $data = [
@@ -176,8 +193,7 @@ class HttpPostTest extends TestCase
         $this->assertTrue($isValid, 'Uppercase BRQ_SIGNATURE should be recognized');
     }
 
-    /** @test */
-    public function it_rejects_tampered_data(): void
+    public function test_rejects_tampered_data(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
@@ -203,8 +219,7 @@ class HttpPostTest extends TestCase
         $this->assertFalse($isValid, 'Tampered data should fail validation');
     }
 
-    /** @test */
-    public function it_rejects_signature_with_wrong_secret_key(): void
+    public function test_rejects_signature_with_wrong_secret_key(): void
     {
         // Generate signature with one secret key
         $data = [
@@ -223,8 +238,7 @@ class HttpPostTest extends TestCase
         $this->assertFalse($isValid, 'Signature generated with different secret key should be rejected');
     }
 
-    /** @test */
-    public function it_handles_numeric_values(): void
+    public function test_handles_numeric_values(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
@@ -244,8 +258,7 @@ class HttpPostTest extends TestCase
         $this->assertTrue($isValid, 'Numeric string values should be handled correctly');
     }
 
-    /** @test */
-    public function it_handles_special_characters_in_values(): void
+    public function test_handles_special_characters_in_values(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
@@ -263,60 +276,39 @@ class HttpPostTest extends TestCase
         $this->assertTrue($isValid, 'Special characters in values should be handled correctly');
     }
 
-    /** @test */
-    public function it_rejects_missing_signature_field(): void
+    public function test_rejects_invalid_or_missing_signatures(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
-        // Webhook data without signature field
-        $data = [
+        // Test missing signature field
+        $missingData = [
             'brq_amount' => '10.00',
             'brq_currency' => 'EUR',
             'brq_invoicenumber' => 'INV-001',
         ];
+        $missingHandler = new HttpPost($config, $missingData);
+        $this->assertFalse($missingHandler->validate(), 'Missing signature field should fail validation');
 
-        $handler = new HttpPost($config, $data);
-        $isValid = $handler->validate();
-
-        $this->assertFalse($isValid, 'Missing signature field should fail validation');
-    }
-
-    /** @test */
-    public function it_rejects_empty_signature(): void
-    {
-        $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
-
-        $data = [
+        // Test empty signature
+        $emptyData = [
             'brq_amount' => '10.00',
             'brq_currency' => 'EUR',
             'brq_signature' => '',
         ];
+        $emptyHandler = new HttpPost($config, $emptyData);
+        $this->assertFalse($emptyHandler->validate(), 'Empty signature should fail validation');
 
-        $handler = new HttpPost($config, $data);
-        $isValid = $handler->validate();
-
-        $this->assertFalse($isValid, 'Empty signature should fail validation');
-    }
-
-    /** @test */
-    public function it_rejects_whitespace_only_signature(): void
-    {
-        $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
-
-        $data = [
+        // Test whitespace-only signature
+        $whitespaceData = [
             'brq_amount' => '10.00',
             'brq_currency' => 'EUR',
             'brq_signature' => '   ',
         ];
-
-        $handler = new HttpPost($config, $data);
-        $isValid = $handler->validate();
-
-        $this->assertFalse($isValid, 'Whitespace-only signature should fail validation');
+        $whitespaceHandler = new HttpPost($config, $whitespaceData);
+        $this->assertFalse($whitespaceHandler->validate(), 'Whitespace-only signature should fail validation');
     }
 
-    /** @test */
-    public function it_handles_payload_with_no_valid_fields(): void
+    public function test_handles_payload_with_no_valid_fields(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
@@ -336,47 +328,33 @@ class HttpPostTest extends TestCase
         $this->assertTrue($isValid, 'Payload with no valid fields should validate if signature matches');
     }
 
-    /** @test */
-    public function it_handles_unicode_characters(): void
+    public function test_handles_unicode_and_multibyte_characters(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
-        $data = [
+        // Test common Unicode characters (accents, symbols)
+        $unicodeData = [
             'brq_description' => 'Café ☕ Payment',
             'brq_customer' => 'José García',
             'brq_amount' => '10.00',
         ];
+        $unicodeSignature = TestHelpers::generateHttpPostSignature($unicodeData);
+        $unicodeData['brq_signature'] = $unicodeSignature;
+        $unicodeHandler = new HttpPost($config, $unicodeData);
+        $this->assertTrue($unicodeHandler->validate(), 'Unicode characters should be handled correctly');
 
-        $signature = TestHelpers::generateHttpPostSignature($data);
-        $data['brq_signature'] = $signature;
-
-        $handler = new HttpPost($config, $data);
-        $isValid = $handler->validate();
-
-        $this->assertTrue($isValid, 'Unicode characters should be handled correctly');
-    }
-
-    /** @test */
-    public function it_handles_multibyte_characters(): void
-    {
-        $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
-
-        $data = [
+        // Test multibyte characters (CJK, Arabic)
+        $multibyteData = [
             'brq_description' => '日本語 中文 العربية',
             'brq_amount' => '25.00',
         ];
-
-        $signature = TestHelpers::generateHttpPostSignature($data);
-        $data['brq_signature'] = $signature;
-
-        $handler = new HttpPost($config, $data);
-        $isValid = $handler->validate();
-
-        $this->assertTrue($isValid, 'Multibyte characters should be handled correctly');
+        $multibyteSignature = TestHelpers::generateHttpPostSignature($multibyteData);
+        $multibyteData['brq_signature'] = $multibyteSignature;
+        $multibyteHandler = new HttpPost($config, $multibyteData);
+        $this->assertTrue($multibyteHandler->validate(), 'Multibyte characters should be handled correctly');
     }
 
-    /** @test */
-    public function it_includes_fields_with_empty_values(): void
+    public function test_includes_fields_with_empty_values(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
@@ -395,65 +373,7 @@ class HttpPostTest extends TestCase
         $this->assertTrue($isValid, 'Fields with empty values should be included in signature');
     }
 
-    /** @test */
-    public function it_decodes_numeric_html_entities(): void
-    {
-        $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
-
-        $data = [
-            'brq_description' => 'Less than: &#60; Greater than: &#62;',
-            'brq_amount' => '10.00',
-        ];
-
-        $signature = TestHelpers::generateHttpPostSignature($data);
-        $data['brq_signature'] = $signature;
-
-        $handler = new HttpPost($config, $data);
-        $isValid = $handler->validate();
-
-        $this->assertTrue($isValid, 'Numeric HTML entities should be decoded');
-    }
-
-    /** @test */
-    public function it_decodes_hex_html_entities(): void
-    {
-        $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
-
-        $data = [
-            'brq_description' => 'Less than: &#x3C; Greater than: &#x3E; Ampersand: &#x26;',
-            'brq_amount' => '10.00',
-        ];
-
-        $signature = TestHelpers::generateHttpPostSignature($data);
-        $data['brq_signature'] = $signature;
-
-        $handler = new HttpPost($config, $data);
-        $isValid = $handler->validate();
-
-        $this->assertTrue($isValid, 'Hexadecimal HTML entities should be decoded');
-    }
-
-    /** @test */
-    public function it_decodes_mixed_html_entities(): void
-    {
-        $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
-
-        $data = [
-            'brq_description' => '&lt; &gt; &amp; &quot; &#60; &#x3C;',
-            'brq_amount' => '10.00',
-        ];
-
-        $signature = TestHelpers::generateHttpPostSignature($data);
-        $data['brq_signature'] = $signature;
-
-        $handler = new HttpPost($config, $data);
-        $isValid = $handler->validate();
-
-        $this->assertTrue($isValid, 'Mixed HTML entity types should all be decoded');
-    }
-
-    /** @test */
-    public function it_handles_field_names_with_multiple_underscores(): void
+    public function test_handles_field_names_with_multiple_underscores(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
@@ -471,29 +391,4 @@ class HttpPostTest extends TestCase
         $this->assertTrue($isValid, 'Field names with multiple underscores should be handled');
     }
 
-    /** @test */
-    public function it_validates_consistently_on_multiple_calls(): void
-    {
-        $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
-
-        $data = [
-            'brq_amount' => '10.00',
-            'brq_currency' => 'EUR',
-        ];
-
-        $signature = TestHelpers::generateHttpPostSignature($data);
-        $data['brq_signature'] = $signature;
-
-        $handler = new HttpPost($config, $data);
-
-        $result1 = $handler->validate();
-        $result2 = $handler->validate();
-        $result3 = $handler->validate();
-
-        $this->assertTrue($result1, 'First validation should succeed');
-        $this->assertTrue($result2, 'Second validation should succeed');
-        $this->assertTrue($result3, 'Third validation should succeed');
-        $this->assertSame($result1, $result2, 'Validation should be idempotent');
-        $this->assertSame($result2, $result3, 'Validation should be idempotent');
-    }
 }

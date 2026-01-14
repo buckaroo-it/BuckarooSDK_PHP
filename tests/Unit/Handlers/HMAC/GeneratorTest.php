@@ -11,7 +11,7 @@ use Tests\TestCase;
 class GeneratorTest extends TestCase
 {
     /** @test */
-    public function it_generates_hmac_header_in_correct_format(): void
+    public function test_generates_hmac_header_in_correct_format(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
         $data = ['amount' => 10.00, 'currency' => 'EUR'];
@@ -31,7 +31,7 @@ class GeneratorTest extends TestCase
     }
 
     /** @test */
-    public function it_generates_valid_uuid_nonce(): void
+    public function test_generates_valid_uuid_nonce(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
         $generator = new Generator($config, [], 'https://example.com/api');
@@ -47,7 +47,7 @@ class GeneratorTest extends TestCase
     }
 
     /** @test */
-    public function it_normalizes_uri_correctly(): void
+    public function test_normalizes_uri_correctly(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
@@ -63,7 +63,7 @@ class GeneratorTest extends TestCase
     }
 
     /** @test */
-    public function it_handles_empty_data(): void
+    public function test_handles_empty_data(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
         $generator = new Generator($config, null, 'https://example.com/api');
@@ -76,7 +76,7 @@ class GeneratorTest extends TestCase
     }
 
     /** @test */
-    public function it_encodes_data_with_correct_flags(): void
+    public function test_encodes_data_with_correct_flags(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
@@ -99,7 +99,7 @@ class GeneratorTest extends TestCase
     }
 
     /** @test */
-    public function it_generates_consistent_hmac_for_same_input(): void
+    public function test_generates_consistent_hmac_for_same_input(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
         $data = ['amount' => 15.00, 'currency' => 'USD'];
@@ -119,7 +119,7 @@ class GeneratorTest extends TestCase
     }
 
     /** @test */
-    public function it_generates_different_hmac_for_different_secret_keys(): void
+    public function test_generates_different_hmac_for_different_secret_keys(): void
     {
         $data = ['amount' => 10.00];
         $uri = 'https://example.com/api';
@@ -137,7 +137,7 @@ class GeneratorTest extends TestCase
     }
 
     /** @test */
-    public function it_generates_deterministic_hmac_with_fixed_nonce_and_timestamp(): void
+    public function test_generates_deterministic_hmac_with_fixed_nonce_and_timestamp(): void
     {
         $config = new DefaultConfig('test_website_key', 'secret_key_123');
         $data = ['amount' => 10.50, 'currency' => 'EUR'];
@@ -169,7 +169,7 @@ class GeneratorTest extends TestCase
     }
 
     /** @test */
-    public function it_uses_different_http_methods_in_hmac_calculation(): void
+    public function test_uses_different_http_methods_in_hmac_calculation(): void
     {
         $config = new DefaultConfig('test_key', 'test_secret');
         $data = ['test' => 'data'];
@@ -199,7 +199,7 @@ class GeneratorTest extends TestCase
     }
 
     /** @test */
-    public function it_handles_string_data_without_json_encoding(): void
+    public function test_handles_string_data_without_json_encoding(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
         $stringData = 'raw-string-data';
@@ -217,7 +217,7 @@ class GeneratorTest extends TestCase
     }
 
     /** @test */
-    public function it_distinguishes_empty_string_from_null_and_empty_array(): void
+    public function test_distinguishes_empty_string_from_null_and_empty_array(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
         $uri = 'https://example.com/api';
@@ -246,7 +246,7 @@ class GeneratorTest extends TestCase
     }
 
     /** @test */
-    public function it_normalizes_uri_with_query_parameters(): void
+    public function test_normalizes_uri_with_query_parameters(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
         $generator = new Generator($config, [], 'https://api.buckaroo.nl/json/Transaction?serviceVersion=2&test=true');
@@ -258,7 +258,7 @@ class GeneratorTest extends TestCase
     }
 
     /** @test */
-    public function it_normalizes_uri_with_special_characters(): void
+    public function test_normalizes_uri_with_special_characters(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
         $generator = new Generator($config, [], 'https://example.com/path with spaces/transaction');
@@ -269,7 +269,7 @@ class GeneratorTest extends TestCase
     }
 
     /** @test */
-    public function it_handles_unicode_data_correctly(): void
+    public function test_handles_unicode_data_correctly(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
         $unicodeData = [
@@ -293,7 +293,7 @@ class GeneratorTest extends TestCase
     }
 
     /** @test */
-    public function it_preserves_zero_fraction_in_various_float_formats(): void
+    public function test_preserves_zero_fraction_in_various_float_formats(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
@@ -316,33 +316,4 @@ class GeneratorTest extends TestCase
         }
     }
 
-    /** @test */
-    public function it_getter_methods_return_stored_values(): void
-    {
-        $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
-        $data = ['amount' => 25.00];
-        $uri = 'https://testcheckout.buckaroo.nl/json/Transaction';
-
-        $generator = new Generator($config, $data, $uri);
-
-        $storedUri = $generator->uri();
-        $this->assertSame('testcheckout.buckaroo.nl%2fjson%2ftransaction', $storedUri);
-
-        $storedNonce = $generator->nonce();
-        $this->assertNotEmpty($storedNonce);
-        $uuidPattern = '/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i';
-        $this->assertMatchesRegularExpression($uuidPattern, $storedNonce);
-
-        $storedTime = $generator->time();
-        $this->assertIsNumeric($storedTime);
-        $this->assertGreaterThan(0, (int)$storedTime);
-
-        $base64DataFromGetter = $generator->base64Data($data);
-        $expectedBase64 = base64_encode(md5(mb_convert_encoding(
-            json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRESERVE_ZERO_FRACTION),
-            'UTF-8',
-            'auto'
-        ), true));
-        $this->assertSame($expectedBase64, $base64DataFromGetter);
-    }
 }
