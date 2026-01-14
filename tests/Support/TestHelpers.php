@@ -70,6 +70,18 @@ class TestHelpers
     }
 
     /**
+     * Generate a realistic Buckaroo transaction key
+     * Format: 32-character alphanumeric string (uppercase)
+     *
+     * @param string|null $suffix Optional suffix for specific test scenarios
+     * @return string Transaction key in Buckaroo format
+     */
+    public static function generateTransactionKey(?string $suffix = null): string
+    {
+        return strtoupper(bin2hex(random_bytes(16)));
+    }
+
+    /**
      * Create a successful transaction response fixture
      *
      * @param array $overrides Override specific fields
@@ -78,7 +90,7 @@ class TestHelpers
     public static function successResponse(array $overrides = []): array
     {
         return array_merge([
-            'Key' => 'TEST_TX_' . uniqid(),
+            'Key' => self::generateTransactionKey(),
             'Status' => [
                 'Code' => ['Code' => 190, 'Description' => 'Success'],
                 'SubCode' => ['Code' => 'S001', 'Description' => 'Transaction successful'],
