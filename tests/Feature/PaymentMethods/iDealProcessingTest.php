@@ -59,6 +59,9 @@ class iDealProcessingTest extends TestCase
         $this->assertEquals($redirectUrl, $response->getRedirectUrl());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
         $this->assertEquals('INV-IDPRO-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(85.00, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -102,6 +105,11 @@ class iDealProcessingTest extends TestCase
         $this->assertTrue($response->isPendingProcessing());
         $this->assertTrue($response->hasRedirect());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertEquals('INV-IDPRO-REMAINDER-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(40.00, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
+        $this->assertEquals($redirectUrl, $response->getRedirectUrl());
     }
 
     /** @test */
@@ -141,6 +149,10 @@ class iDealProcessingTest extends TestCase
 
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertEquals('INV-IDPRO-REFUND-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(20.00, $response->getAmountCredit());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */

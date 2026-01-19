@@ -55,6 +55,9 @@ class GiftCardTest extends TestCase
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
         $this->assertEquals('INV-GIFTCARD-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(25.00, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -99,6 +102,9 @@ class GiftCardTest extends TestCase
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
         $this->assertEquals('INV-FASHION-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(50.00, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -139,6 +145,9 @@ class GiftCardTest extends TestCase
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
         $this->assertEquals('INV-REFUND-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(10.00, $response->getAmountCredit());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -183,6 +192,9 @@ class GiftCardTest extends TestCase
         $this->assertEquals($redirectUrl, $response->getRedirectUrl());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
         $this->assertEquals('INV-REDIRECT-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(30.00, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -223,6 +235,9 @@ class GiftCardTest extends TestCase
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
         $this->assertEquals('INV-REMAINDER-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(15.00, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /**

@@ -51,6 +51,9 @@ class In3Test extends TestCase
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
         $this->assertEquals('INV-IN3-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(250.00, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -109,6 +112,9 @@ class In3Test extends TestCase
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
         $this->assertEquals('INV-IN3-BILLING-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(180.00, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -164,6 +170,9 @@ class In3Test extends TestCase
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
         $this->assertEquals('INV-IN3-ARTICLES-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(299.99, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -232,6 +241,9 @@ class In3Test extends TestCase
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
         $this->assertEquals('INV-IN3-SHIPPING-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(199.99, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -272,6 +284,9 @@ class In3Test extends TestCase
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
         $this->assertEquals('INV-IN3-REMAINDER-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(75.00, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -312,6 +327,9 @@ class In3Test extends TestCase
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
         $this->assertEquals('INV-IN3-REFUND-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(100.00, $response->getAmountCredit());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -361,6 +379,9 @@ class In3Test extends TestCase
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
         $this->assertEquals('INV-IN3-REFUND-ARTICLES-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(50.00, $response->getAmountCredit());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /**

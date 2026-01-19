@@ -40,9 +40,6 @@ class TwintTest extends TestCase
                     ]
                 ],
                 'Invoice' => 'INV-TWINT-001',
-                'Currency' => 'CHF',
-                'AmountDebit' => 100.00,
-                'IsTest' => true,
             ]),
         ]);
 
@@ -72,7 +69,6 @@ class TwintTest extends TestCase
                     'SubCode' => ['Code' => 'S001', 'Description' => 'Refund successful'],
                     'DateTime' => date('Y-m-d\TH:i:s'),
                 ],
-                'RequiredAction' => null,
                 'Services' => [
                     [
                         'Name' => 'Twint',
@@ -81,9 +77,6 @@ class TwintTest extends TestCase
                     ]
                 ],
                 'Invoice' => 'INV-REFUND-001',
-                'Currency' => 'CHF',
-                'AmountCredit' => 50.00,
-                'IsTest' => true,
             ]),
         ]);
 
@@ -95,6 +88,7 @@ class TwintTest extends TestCase
 
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertEquals('INV-REFUND-001', $response->getInvoice());
     }
 
     /** @test */
@@ -123,9 +117,6 @@ class TwintTest extends TestCase
                     ]
                 ],
                 'Invoice' => 'INV-REMAINDER-001',
-                'Currency' => 'CHF',
-                'AmountDebit' => 25.00,
-                'IsTest' => true,
             ]),
         ]);
 
@@ -137,6 +128,8 @@ class TwintTest extends TestCase
         $this->assertTrue($response->isPendingProcessing());
         $this->assertTrue($response->hasRedirect());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertEquals('INV-REMAINDER-001', $response->getInvoice());
+        $this->assertEquals($redirectUrl, $response->getRedirectUrl());
     }
 
     /**
@@ -155,7 +148,6 @@ class TwintTest extends TestCase
                     'SubCode' => ['Code' => 'S001', 'Description' => 'Sub status'],
                     'DateTime' => date('Y-m-d\TH:i:s'),
                 ],
-                'RequiredAction' => null,
                 'Services' => [
                     [
                         'Name' => 'Twint',
@@ -164,9 +156,6 @@ class TwintTest extends TestCase
                     ]
                 ],
                 'Invoice' => 'INV-STATUS-001',
-                'Currency' => 'CHF',
-                'AmountDebit' => 10.00,
-                'IsTest' => true,
             ]),
         ]);
 

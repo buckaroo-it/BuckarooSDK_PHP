@@ -53,6 +53,7 @@ class iDinTest extends TestCase
         $this->assertEquals('ABNANL2A', $params['issuer']);
         $this->assertEquals('ABC123XYZ', $params['consumerbin']);
         $this->assertEquals('J. Doe', $params['consumername']);
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -94,6 +95,7 @@ class iDinTest extends TestCase
         $this->assertEquals('INGBNL2A', $params['issuer']);
         $this->assertEquals('XYZ789ABC', $params['consumerbin']);
         $this->assertEquals('true', $params['iseighteenorolder']);
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -135,6 +137,7 @@ class iDinTest extends TestCase
         $this->assertEquals('RABONL2U', $params['issuer']);
         $this->assertEquals('LOGIN123BIN', $params['consumerbin']);
         $this->assertEquals('SESSION-456-XYZ', $params['sessionid']);
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /**
@@ -171,8 +174,7 @@ class iDinTest extends TestCase
         if ($assertMethod === 'getStatusCode')
         {
             $this->assertEquals($statusCode, $response->getStatusCode());
-        } else
-        {
+        } else {
             $this->assertTrue($response->$assertMethod());
         }
     }

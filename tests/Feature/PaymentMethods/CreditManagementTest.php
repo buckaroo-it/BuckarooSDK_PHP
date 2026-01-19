@@ -52,6 +52,7 @@ class CreditManagementTest extends TestCase
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
         $this->assertEquals($invoiceNumber, $response->getInvoice());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -91,6 +92,7 @@ class CreditManagementTest extends TestCase
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
         $this->assertEquals($invoiceNumber, $response->getInvoice());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -130,6 +132,7 @@ class CreditManagementTest extends TestCase
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
         $this->assertEquals($creditNoteNumber, $response->getInvoice());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -170,6 +173,7 @@ class CreditManagementTest extends TestCase
 
         $params = $response->getServiceParameters();
         $this->assertEquals('DEBTOR-UPDATE-001', $params['code']);
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -204,6 +208,7 @@ class CreditManagementTest extends TestCase
 
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -237,6 +242,7 @@ class CreditManagementTest extends TestCase
 
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -272,6 +278,7 @@ class CreditManagementTest extends TestCase
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
         $this->assertEquals($invoiceNumber, $response->getInvoice());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -307,6 +314,7 @@ class CreditManagementTest extends TestCase
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
         $this->assertEquals($invoiceNumber, $response->getInvoice());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -351,6 +359,7 @@ class CreditManagementTest extends TestCase
         $this->assertEquals($invoiceNumber, $params['invoicenumber']);
         $this->assertEquals('Open', $params['status']);
         $this->assertEquals('150.00', $params['amount']);
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -394,6 +403,7 @@ class CreditManagementTest extends TestCase
         $this->assertEquals('Jane', $params['firstname']);
         $this->assertEquals('Smith', $params['lastname']);
         $this->assertEquals('jane.smith@example.com', $params['email']);
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -434,6 +444,7 @@ class CreditManagementTest extends TestCase
 
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -466,6 +477,7 @@ class CreditManagementTest extends TestCase
 
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -498,6 +510,7 @@ class CreditManagementTest extends TestCase
 
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /**
@@ -538,8 +551,7 @@ class CreditManagementTest extends TestCase
         if ($assertMethod === 'getStatusCode')
         {
             $this->assertEquals($statusCode, $response->getStatusCode());
-        } else
-        {
+        } else {
             $this->assertTrue($response->$assertMethod());
         }
     }

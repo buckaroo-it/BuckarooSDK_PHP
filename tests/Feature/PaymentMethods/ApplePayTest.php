@@ -55,6 +55,9 @@ class ApplePayTest extends TestCase
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
         $this->assertEquals('INV-APPLEPAY-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(99.99, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -99,6 +102,9 @@ class ApplePayTest extends TestCase
         $this->assertEquals($redirectUrl, $response->getRedirectUrl());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
         $this->assertEquals('INV-APPLEPAY-REDIRECT-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(75.50, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -139,6 +145,9 @@ class ApplePayTest extends TestCase
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
         $this->assertEquals('INV-REFUND-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(25.00, $response->getAmountCredit());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /**

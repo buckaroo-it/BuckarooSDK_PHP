@@ -56,6 +56,9 @@ class WeroTest extends TestCase
         $this->assertEquals($redirectUrl, $response->getRedirectUrl());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
         $this->assertEquals('INV-WERO-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(75.00, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -95,6 +98,10 @@ class WeroTest extends TestCase
 
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertEquals('INV-REFUND-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(40.00, $response->getAmountCredit());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -137,6 +144,11 @@ class WeroTest extends TestCase
         $this->assertTrue($response->isPendingProcessing());
         $this->assertTrue($response->hasRedirect());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertEquals('INV-REMAINDER-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(25.00, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
+        $this->assertEquals($redirectUrl, $response->getRedirectUrl());
     }
 
     /** @test */
@@ -181,6 +193,9 @@ class WeroTest extends TestCase
         $this->assertEquals($redirectUrl, $response->getRedirectUrl());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
         $this->assertEquals('INV-AUTH-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(100.00, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -220,6 +235,10 @@ class WeroTest extends TestCase
 
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertEquals('INV-CANCEL-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(100.00, $response->getAmountCredit());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -260,6 +279,9 @@ class WeroTest extends TestCase
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
         $this->assertEquals('INV-CAPTURE-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(100.00, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /**

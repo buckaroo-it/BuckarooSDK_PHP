@@ -55,6 +55,8 @@ class iDealQRTest extends TestCase
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
         $this->assertEquals('INV-QR-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -99,6 +101,9 @@ class iDealQRTest extends TestCase
 
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertEquals('INV-QR-002', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -138,6 +143,10 @@ class iDealQRTest extends TestCase
         ]);
 
         $this->assertTrue($response->isSuccess());
+        $this->assertEquals('INV-QR-003', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertTrue($response->get('IsTest'));
+        $this->assertEquals($transactionKey, $response->getTransactionKey());
     }
 
     /** @test */
@@ -178,6 +187,10 @@ class iDealQRTest extends TestCase
         ]);
 
         $this->assertTrue($response->isSuccess());
+        $this->assertEquals('INV-QR-004', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertTrue($response->get('IsTest'));
+        $this->assertEquals($transactionKey, $response->getTransactionKey());
     }
 
     /** @test */
@@ -217,6 +230,10 @@ class iDealQRTest extends TestCase
         ]);
 
         $this->assertTrue($response->isSuccess());
+        $this->assertEquals('INV-QR-005', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertTrue($response->get('IsTest'));
+        $this->assertEquals($transactionKey, $response->getTransactionKey());
     }
 
     /** @test */
@@ -256,6 +273,10 @@ class iDealQRTest extends TestCase
         ]);
 
         $this->assertTrue($response->isSuccess());
+        $this->assertEquals('INV-QR-006', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertTrue($response->get('IsTest'));
+        $this->assertEquals($transactionKey, $response->getTransactionKey());
     }
 
     /**

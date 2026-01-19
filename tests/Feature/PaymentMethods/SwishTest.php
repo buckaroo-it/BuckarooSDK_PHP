@@ -56,6 +56,9 @@ class SwishTest extends TestCase
         $this->assertEquals($redirectUrl, $response->getRedirectUrl());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
         $this->assertEquals('INV-SWISH-001', $response->getInvoice());
+        $this->assertEquals('SEK', $response->getCurrency());
+        $this->assertEquals(150.00, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -95,6 +98,10 @@ class SwishTest extends TestCase
 
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertEquals('INV-REFUND-001', $response->getInvoice());
+        $this->assertEquals('SEK', $response->getCurrency());
+        $this->assertEquals(75.00, $response->getAmountCredit());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -137,6 +144,11 @@ class SwishTest extends TestCase
         $this->assertTrue($response->isPendingProcessing());
         $this->assertTrue($response->hasRedirect());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertEquals('INV-REMAINDER-001', $response->getInvoice());
+        $this->assertEquals('SEK', $response->getCurrency());
+        $this->assertEquals(50.00, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
+        $this->assertEquals($redirectUrl, $response->getRedirectUrl());
     }
 
     /**

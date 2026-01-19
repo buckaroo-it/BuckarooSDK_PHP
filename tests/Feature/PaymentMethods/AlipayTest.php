@@ -56,6 +56,9 @@ class AlipayTest extends TestCase
         $this->assertEquals($redirectUrl, $response->getRedirectUrl());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
         $this->assertEquals('INV-ALIPAY-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(45.00, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -101,6 +104,11 @@ class AlipayTest extends TestCase
         $this->assertTrue($response->isPendingProcessing());
         $this->assertTrue($response->hasRedirect());
         $this->assertEquals($redirectUrl, $response->getRedirectUrl());
+        $this->assertEquals('INV-ALIPAY-MOBILE-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(99.99, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
+        $this->assertEquals($transactionKey, $response->getTransactionKey());
     }
 
     /** @test */
@@ -142,6 +150,12 @@ class AlipayTest extends TestCase
 
         $this->assertTrue($response->isPendingProcessing());
         $this->assertTrue($response->hasRedirect());
+        $this->assertEquals('INV-REMAINDER-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(30.00, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
+        $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertEquals($redirectUrl, $response->getRedirectUrl());
     }
 
     /**

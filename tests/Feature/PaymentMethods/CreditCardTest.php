@@ -57,6 +57,10 @@ class CreditCardTest extends TestCase
         $this->assertTrue($response->hasRedirect());
         $this->assertEquals($redirectUrl, $response->getRedirectUrl());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertEquals('INV-123456', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(100.30, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -97,6 +101,11 @@ class CreditCardTest extends TestCase
 
         $this->assertTrue($response->isPendingProcessing());
         $this->assertFalse($response->hasRedirect());
+        $this->assertEquals('INV-123456', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(50.00, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
+        $this->assertEquals($transactionKey, $response->getTransactionKey());
     }
 
     /** @test */
@@ -136,6 +145,11 @@ class CreditCardTest extends TestCase
         ]);
 
         $this->assertTrue($response->isSuccess());
+        $this->assertEquals('INV-TOKEN-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(45.00, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
+        $this->assertEquals($transactionKey, $response->getTransactionKey());
     }
 
     /** @test */
@@ -176,6 +190,11 @@ class CreditCardTest extends TestCase
         ]);
 
         $this->assertTrue($response->isPendingProcessing());
+        $this->assertEquals('INV-SEC-CODE-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(50.00, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
+        $this->assertEquals($transactionKey, $response->getTransactionKey());
     }
 
     /** @test */
@@ -216,6 +235,11 @@ class CreditCardTest extends TestCase
         ]);
 
         $this->assertTrue($response->isSuccess());
+        $this->assertEquals('INV-RECURRENT-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(29.99, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
+        $this->assertEquals($transactionKey, $response->getTransactionKey());
     }
 
     /** @test */
@@ -259,6 +283,12 @@ class CreditCardTest extends TestCase
 
         $this->assertTrue($response->isWaitingOnUserInput());
         $this->assertTrue($response->hasRedirect());
+        $this->assertEquals('INV-AUTH-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(200.00, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
+        $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertEquals($redirectUrl, $response->getRedirectUrl());
     }
 
     /** @test */
@@ -298,6 +328,11 @@ class CreditCardTest extends TestCase
         ]);
 
         $this->assertTrue($response->isPendingProcessing());
+        $this->assertEquals('INV-AUTH-ENC-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(75.00, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
+        $this->assertEquals($transactionKey, $response->getTransactionKey());
     }
 
     /** @test */
@@ -338,6 +373,11 @@ class CreditCardTest extends TestCase
         ]);
 
         $this->assertTrue($response->isSuccess());
+        $this->assertEquals('INV-CAPTURE-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(150.00, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
+        $this->assertEquals($transactionKey, $response->getTransactionKey());
     }
 
     /** @test */
@@ -377,6 +417,11 @@ class CreditCardTest extends TestCase
         ]);
 
         $this->assertTrue($response->isSuccess());
+        $this->assertEquals('INV-REFUND-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(25.00, $response->getAmountCredit());
+        $this->assertTrue($response->get('IsTest'));
+        $this->assertEquals($transactionKey, $response->getTransactionKey());
     }
 
     /** @test */
@@ -416,6 +461,11 @@ class CreditCardTest extends TestCase
         ]);
 
         $this->assertTrue($response->isPendingProcessing());
+        $this->assertEquals('INV-CANCEL-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(100.00, $response->getAmountCredit());
+        $this->assertTrue($response->get('IsTest'));
+        $this->assertEquals($transactionKey, $response->getTransactionKey());
     }
 
     /** @test */
@@ -460,6 +510,11 @@ class CreditCardTest extends TestCase
         $params = $response->getServiceParameters();
         $this->assertEquals('1234', $params['cardnumberending']);
         $this->assertEquals('2025-12', $params['cardexpirationdate']);
+        $this->assertEquals('INV-PARAMS-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(100.00, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
+        $this->assertEquals($transactionKey, $response->getTransactionKey());
     }
 
     /** @test */

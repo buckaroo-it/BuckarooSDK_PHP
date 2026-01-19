@@ -49,6 +49,7 @@ class EmandatesTest extends TestCase
         $params = $response->getServiceParameters();
         $this->assertEquals('ABNANL2A', $params['issuer']);
         $this->assertEquals('ABN AMRO', $params['issuername']);
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -93,6 +94,7 @@ class EmandatesTest extends TestCase
         $params = $response->getServiceParameters();
         $this->assertEquals('MANDATE-123', $params['mandateid']);
         $this->assertEquals('DEBTOR-REF-456', $params['debtorreference']);
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -133,6 +135,7 @@ class EmandatesTest extends TestCase
         $params = $response->getServiceParameters();
         $this->assertEquals('MANDATE-STATUS-123', $params['mandateid']);
         $this->assertEquals('Active', $params['status']);
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -174,6 +177,7 @@ class EmandatesTest extends TestCase
         $params = $response->getServiceParameters();
         $this->assertEquals('MANDATE-MODIFY-789', $params['mandateid']);
         $this->assertEquals('500.00', $params['maxamount']);
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -212,6 +216,7 @@ class EmandatesTest extends TestCase
 
         $params = $response->getServiceParameters();
         $this->assertEquals('MANDATE-CANCEL-456', $params['mandateid']);
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /**
@@ -249,8 +254,7 @@ class EmandatesTest extends TestCase
         if ($assertMethod === 'getStatusCode')
         {
             $this->assertEquals($statusCode, $response->getStatusCode());
-        } else
-        {
+        } else {
             $this->assertTrue($response->$assertMethod());
         }
     }

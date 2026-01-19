@@ -45,6 +45,7 @@ class SubscriptionsTest extends TestCase
 
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -81,6 +82,7 @@ class SubscriptionsTest extends TestCase
 
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -114,6 +116,7 @@ class SubscriptionsTest extends TestCase
 
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -148,6 +151,7 @@ class SubscriptionsTest extends TestCase
 
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -180,6 +184,7 @@ class SubscriptionsTest extends TestCase
 
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -219,6 +224,7 @@ class SubscriptionsTest extends TestCase
         $params = $response->getServiceParameters();
         $this->assertEquals('SUBSCRIPTION-GUID-INFO', $params['subscriptionguid']);
         $this->assertEquals('Active', $params['status']);
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -251,6 +257,7 @@ class SubscriptionsTest extends TestCase
 
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -284,6 +291,7 @@ class SubscriptionsTest extends TestCase
 
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -317,6 +325,7 @@ class SubscriptionsTest extends TestCase
 
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /**
@@ -353,8 +362,7 @@ class SubscriptionsTest extends TestCase
         if ($assertMethod === 'getStatusCode')
         {
             $this->assertEquals($statusCode, $response->getStatusCode());
-        } else
-        {
+        } else {
             $this->assertTrue($response->$assertMethod());
         }
     }

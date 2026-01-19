@@ -56,6 +56,9 @@ class WeChatPayTest extends TestCase
         $this->assertEquals($redirectUrl, $response->getRedirectUrl());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
         $this->assertEquals('INV-WECHAT-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(88.88, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -101,6 +104,11 @@ class WeChatPayTest extends TestCase
         $this->assertTrue($response->isPendingProcessing());
         $this->assertTrue($response->hasRedirect());
         $this->assertEquals($redirectUrl, $response->getRedirectUrl());
+        $this->assertEquals('INV-WECHAT-LOCALE-001', $response->getInvoice());
+        $this->assertEquals('CNY', $response->getCurrency());
+        $this->assertEquals(100.00, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
+        $this->assertEquals($transactionKey, $response->getTransactionKey());
     }
 
     /**

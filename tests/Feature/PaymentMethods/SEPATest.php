@@ -56,6 +56,9 @@ class SEPATest extends TestCase
         ]);
 
         $this->assertTrue($response->isSuccess());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(100.00, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
         $this->assertSame($transactionKey, $response->getTransactionKey());
         $this->assertSame('INV-SEPA-001', $response->getInvoice());
     }
@@ -101,6 +104,9 @@ class SEPATest extends TestCase
         ]);
 
         $this->assertTrue($response->isSuccess());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(75.00, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
         $this->assertSame($transactionKey, $response->getTransactionKey());
         $this->assertSame('INV-AUTH-001', $response->getInvoice());
     }
@@ -141,6 +147,9 @@ class SEPATest extends TestCase
         ]);
 
         $this->assertTrue($response->isSuccess());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(29.99, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
         $this->assertSame($transactionKey, $response->getTransactionKey());
         $this->assertSame('INV-RECUR-001', $response->getInvoice());
     }
@@ -197,6 +206,9 @@ class SEPATest extends TestCase
         ]);
 
         $this->assertTrue($response->isSuccess());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(150.00, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
         $this->assertSame($transactionKey, $response->getTransactionKey());
         $this->assertSame('INV-EXTRA-001', $response->getInvoice());
     }
@@ -236,6 +248,9 @@ class SEPATest extends TestCase
         ]);
 
         $this->assertTrue($response->isSuccess());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(200.00, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
         $this->assertSame($transactionKey, $response->getTransactionKey());
         $this->assertSame('INV-EMANDATE-001', $response->getInvoice());
     }
@@ -276,6 +291,9 @@ class SEPATest extends TestCase
         ]);
 
         $this->assertTrue($response->isSuccess());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(25.00, $response->getAmountCredit());
+        $this->assertTrue($response->get('IsTest'));
         $this->assertSame($transactionKey, $response->getTransactionKey());
         $this->assertSame('INV-REFUND-001', $response->getInvoice());
     }

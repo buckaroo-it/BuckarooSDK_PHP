@@ -54,6 +54,7 @@ class MarketplacesTest extends TestCase
 
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -101,6 +102,7 @@ class MarketplacesTest extends TestCase
 
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -143,6 +145,7 @@ class MarketplacesTest extends TestCase
 
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -185,6 +188,7 @@ class MarketplacesTest extends TestCase
 
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /**
@@ -231,8 +235,7 @@ class MarketplacesTest extends TestCase
         if ($assertMethod === 'getStatusCode')
         {
             $this->assertEquals($statusCode, $response->getStatusCode());
-        } else
-        {
+        } else {
             $this->assertTrue($response->$assertMethod());
         }
     }

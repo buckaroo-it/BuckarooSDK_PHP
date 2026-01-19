@@ -48,6 +48,7 @@ class BuckarooWalletTest extends TestCase
 
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -84,6 +85,7 @@ class BuckarooWalletTest extends TestCase
 
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -123,6 +125,7 @@ class BuckarooWalletTest extends TestCase
         $params = $response->getServiceParameters();
         $this->assertEquals('WALLET-INFO-123', $params['walletid']);
         $this->assertEquals('Active', $params['status']);
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -156,6 +159,7 @@ class BuckarooWalletTest extends TestCase
 
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -193,6 +197,8 @@ class BuckarooWalletTest extends TestCase
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
         $this->assertEquals('INV-DEPOSIT-123', $response->getInvoice());
+        $this->assertEquals(50.00, $response->getAmountCredit());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -230,6 +236,8 @@ class BuckarooWalletTest extends TestCase
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
         $this->assertEquals('INV-RESERVE-123', $response->getInvoice());
+        $this->assertEquals(75.00, $response->getAmountCredit());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -265,6 +273,7 @@ class BuckarooWalletTest extends TestCase
 
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -297,6 +306,7 @@ class BuckarooWalletTest extends TestCase
 
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -334,6 +344,8 @@ class BuckarooWalletTest extends TestCase
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
         $this->assertEquals('INV-PAY-123', $response->getInvoice());
+        $this->assertEquals(100.00, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /**
@@ -373,8 +385,7 @@ class BuckarooWalletTest extends TestCase
         if ($assertMethod === 'getStatusCode')
         {
             $this->assertEquals($statusCode, $response->getStatusCode());
-        } else
-        {
+        } else {
             $this->assertTrue($response->$assertMethod());
         }
     }

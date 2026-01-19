@@ -56,6 +56,9 @@ class Przelewy24Test extends TestCase
         $this->assertEquals($redirectUrl, $response->getRedirectUrl());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
         $this->assertEquals('INV-P24-001', $response->getInvoice());
+        $this->assertEquals('PLN', $response->getCurrency());
+        $this->assertEquals(100.00, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -104,6 +107,12 @@ class Przelewy24Test extends TestCase
 
         $this->assertTrue($response->isPendingProcessing());
         $this->assertTrue($response->hasRedirect());
+        $this->assertEquals('INV-P24-CUST-001', $response->getInvoice());
+        $this->assertEquals('PLN', $response->getCurrency());
+        $this->assertEquals(150.00, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
+        $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertEquals($redirectUrl, $response->getRedirectUrl());
     }
 
     /** @test */
@@ -148,6 +157,12 @@ class Przelewy24Test extends TestCase
 
         $this->assertTrue($response->isPendingProcessing());
         $this->assertTrue($response->hasRedirect());
+        $this->assertEquals('INV-P24-EMAIL-001', $response->getInvoice());
+        $this->assertEquals('PLN', $response->getCurrency());
+        $this->assertEquals(200.00, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
+        $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertEquals($redirectUrl, $response->getRedirectUrl());
     }
 
     /** @test */
@@ -186,6 +201,11 @@ class Przelewy24Test extends TestCase
         ]);
 
         $this->assertTrue($response->isSuccess());
+        $this->assertEquals('INV-REFUND-001', $response->getInvoice());
+        $this->assertEquals('PLN', $response->getCurrency());
+        $this->assertEquals(50.00, $response->getAmountCredit());
+        $this->assertTrue($response->get('IsTest'));
+        $this->assertEquals($transactionKey, $response->getTransactionKey());
     }
 
     /** @test */
@@ -227,6 +247,12 @@ class Przelewy24Test extends TestCase
 
         $this->assertTrue($response->isPendingProcessing());
         $this->assertTrue($response->hasRedirect());
+        $this->assertEquals('INV-REMAINDER-001', $response->getInvoice());
+        $this->assertEquals('PLN', $response->getCurrency());
+        $this->assertEquals(75.00, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
+        $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertEquals($redirectUrl, $response->getRedirectUrl());
     }
 
     /**
