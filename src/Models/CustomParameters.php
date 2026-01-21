@@ -33,8 +33,7 @@ class CustomParameters extends Model
      */
     public function setProperties(?array $data)
     {
-        foreach ($data ?? [] as $name => $value)
-        {
+        foreach ($data ?? [] as $name => $value) {
             $this->List[] = [
                 'Value' => $value,
                 'Name' => $name,

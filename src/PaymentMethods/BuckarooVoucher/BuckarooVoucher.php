@@ -49,7 +49,6 @@ class BuckarooVoucher extends PayablePaymentMethod
         return parent::pay($model ?? $pay);
     }
 
-
     /**
      * @param Model|null $model
      * @return TransactionResponse

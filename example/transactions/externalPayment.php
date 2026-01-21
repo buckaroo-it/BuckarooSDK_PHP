@@ -9,7 +9,7 @@ $buckaroo = new BuckarooClient($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']
 $response = $buckaroo->method('externalPayment')->pay([
     'invoice' => uniqid(),
     'amountDebit' => 10.10,
-    'channel' => 'BackOffice'
+    'channel' => 'BackOffice',
 ]);
 
 $buckaroo->method('externalPayment')->refund([

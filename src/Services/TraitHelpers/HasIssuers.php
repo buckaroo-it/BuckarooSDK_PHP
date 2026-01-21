@@ -33,22 +33,17 @@ trait HasIssuers
     {
         $request = new TransactionRequest;
 
-        try
-        {
+        try {
             $response = $this->client->specification($this->paymentName, $this->serviceVersion(), $request);
-        } catch (BuckarooException $e)
-        {
+        } catch (BuckarooException $e) {
             return [];
         }
 
         $issuerList = [];
-        if (isset($response->data()['Actions']['0']['RequestParameters'][0]['ListItemDescriptions']))
-        {
+        if (isset($response->data()['Actions']['0']['RequestParameters'][0]['ListItemDescriptions'])) {
             $issuersData = $response->data()['Actions']['0']['RequestParameters'][0]['ListItemDescriptions'];
-            if (count($issuersData) > 0)
-            {
-                foreach ($issuersData as $issuer)
-                {
+            if (count($issuersData) > 0) {
+                foreach ($issuersData as $issuer) {
                     $issuerList[] = ['id' => $issuer['Value'], 'name' => $issuer['Description']];
                 }
             }

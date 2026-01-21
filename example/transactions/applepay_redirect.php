@@ -15,7 +15,6 @@ $response = $buckaroo->method('applepay')->payRedirect([
     'continueOnIncomplete' => '1',
 ]);
 
-
 //Refund
 $response = $buckaroo->method('applepay')->refund([
     'amountCredit' => 10,

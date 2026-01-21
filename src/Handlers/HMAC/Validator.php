@@ -95,8 +95,7 @@ class Validator extends Hmac
      */
     public function validateOrFail(string $header, string $uri, string $method, $data)
     {
-        if ($this->validate($header, $uri, $method, $data))
-        {
+        if ($this->validate($header, $uri, $method, $data)) {
             return true;
         }
 

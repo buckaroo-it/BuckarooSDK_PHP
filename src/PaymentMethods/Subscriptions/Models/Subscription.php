@@ -29,8 +29,8 @@ use Buckaroo\Models\Email;
 use Buckaroo\Models\Person;
 use Buckaroo\Models\Phone;
 use Buckaroo\Models\ServiceParameter;
-use Buckaroo\PaymentMethods\Subscriptions\Service\ParameterKeys\BankAccountAdapter;
 use Buckaroo\PaymentMethods\Subscriptions\Service\ParameterKeys\AddressAdapter;
+use Buckaroo\PaymentMethods\Subscriptions\Service\ParameterKeys\BankAccountAdapter;
 use Buckaroo\PaymentMethods\Subscriptions\Service\ParameterKeys\CompanyAdapter;
 
 class Subscription extends ServiceParameter
@@ -207,8 +207,7 @@ class Subscription extends ServiceParameter
      */
     public function debtor($debtor = null)
     {
-        if (is_array($debtor))
-        {
+        if (is_array($debtor)) {
             $this->debtor = new Debtor($debtor);
         }
 
@@ -221,8 +220,7 @@ class Subscription extends ServiceParameter
      */
     public function bankAccount($bankAccount = null)
     {
-        if (is_array($bankAccount))
-        {
+        if (is_array($bankAccount)) {
             $this->bankAccount = new BankAccountAdapter(new BankAccount($bankAccount));
         }
 
@@ -235,8 +233,7 @@ class Subscription extends ServiceParameter
      */
     public function email($email = null)
     {
-        if (is_string($email))
-        {
+        if (is_string($email)) {
             $this->email = new Email($email);
         }
 
@@ -249,8 +246,7 @@ class Subscription extends ServiceParameter
      */
     public function phone($phone = null)
     {
-        if (is_array($phone))
-        {
+        if (is_array($phone)) {
             $this->phone = new Phone($phone);
         }
 
@@ -263,8 +259,7 @@ class Subscription extends ServiceParameter
      */
     public function address($address = null)
     {
-        if (is_array($address))
-        {
+        if (is_array($address)) {
             $this->address = new AddressAdapter(new Address($address));
         }
 
@@ -277,8 +272,7 @@ class Subscription extends ServiceParameter
      */
     public function person($person = null)
     {
-        if (is_array($person))
-        {
+        if (is_array($person)) {
             $this->person = new Person($person);
         }
 
@@ -291,8 +285,7 @@ class Subscription extends ServiceParameter
      */
     public function company($company = null)
     {
-        if (is_array($company))
-        {
+        if (is_array($company)) {
             $this->company = new CompanyAdapter(new Company($company));
         }
 
@@ -305,8 +298,7 @@ class Subscription extends ServiceParameter
      */
     public function configuration($configuration = null)
     {
-        if (is_array($configuration))
-        {
+        if (is_array($configuration)) {
             $this->configuration = new Configuration($configuration);
         }
 
@@ -319,10 +311,8 @@ class Subscription extends ServiceParameter
      */
     public function ratePlans($rate_plans = null)
     {
-        if (is_array($rate_plans))
-        {
-            foreach ($rate_plans as $type => $rate_plan)
-            {
+        if (is_array($rate_plans)) {
+            foreach ($rate_plans as $type => $rate_plan) {
                 $property = $type . 'RatePlan';
 
                 $this->$property = new RatePlan($rate_plan);
@@ -338,10 +328,8 @@ class Subscription extends ServiceParameter
      */
     public function ratePlanCharges($rate_plan_charges = null)
     {
-        if (is_array($rate_plan_charges))
-        {
-            foreach ($rate_plan_charges as $type => $rate_plan_charge)
-            {
+        if (is_array($rate_plan_charges)) {
+            foreach ($rate_plan_charges as $type => $rate_plan_charge) {
                 $property = $type . 'RatePlanCharge';
 
                 $this->$property = new RatePlanCharge($rate_plan_charge);

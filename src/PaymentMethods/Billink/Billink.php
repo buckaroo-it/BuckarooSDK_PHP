@@ -22,7 +22,6 @@ namespace Buckaroo\PaymentMethods\Billink;
 
 use Buckaroo\Models\Model;
 use Buckaroo\PaymentMethods\Billink\Models\Pay;
-use Buckaroo\PaymentMethods\Billink\Models\Refund;
 use Buckaroo\PaymentMethods\PayablePaymentMethod;
 use Buckaroo\Transaction\Response\TransactionResponse;
 

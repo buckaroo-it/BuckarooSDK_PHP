@@ -7,23 +7,23 @@ use Buckaroo\BuckarooClient;
 $buckaroo = new BuckarooClient($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
 $payload = [
-    'amountDebit'       => 52.30,
-    'description'       => 'in3 pay',
-    'order'             => uniqid(),
-    'invoice'           => uniqid(),
-    'clientIP'      => '127.0.0.1',
-    'billing'       => [
-        'recipient'        => [
-            'category'      => 'B2C',
-            'initials'      => 'J',
-            'firstName'      => 'John',
-            'lastName'      => 'Dona',
-            'birthDate'     => '1990-01-01',
-            'customerNumber'        => '12345',
-            'phone'                 => '0612345678',
-            'country'               => 'NL',
+    'amountDebit' => 52.30,
+    'description' => 'in3 pay',
+    'order' => uniqid(),
+    'invoice' => uniqid(),
+    'clientIP' => '127.0.0.1',
+    'billing' => [
+        'recipient' => [
+            'category' => 'B2C',
+            'initials' => 'J',
+            'firstName' => 'John',
+            'lastName' => 'Dona',
+            'birthDate' => '1990-01-01',
+            'customerNumber' => '12345',
+            'phone' => '0612345678',
+            'country' => 'NL',
             'companyName' => 'My Company B.V.',
-            'chamberOfCommerce' => '123456'
+            'chamberOfCommerce' => '123456',
         ],
         'address' => [
             'street' => 'Hoofdstraat',
@@ -44,7 +44,7 @@ $payload = [
             'careOf' => 'John Smith',
             'firstName' => 'John',
             'lastName' => 'Do',
-            'chamberOfCommerce' => '123456'
+            'chamberOfCommerce' => '123456',
         ],
         'address' => [
             'street' => 'Kalverstraat',
@@ -83,7 +83,7 @@ $payload = [
             'quantity' => '1',
             'price' => '2',
         ],
-    ]
+    ],
 ];
 
 //Also accepts json

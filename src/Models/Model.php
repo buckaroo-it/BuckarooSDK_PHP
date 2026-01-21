@@ -38,8 +38,7 @@ abstract class Model implements Arrayable
      */
     public function __get($property)
     {
-        if (property_exists($this, $property) && isset($this->$property))
-        {
+        if (property_exists($this, $property) && isset($this->$property)) {
             return $this->$property;
         }
 
@@ -53,8 +52,7 @@ abstract class Model implements Arrayable
      */
     public function __set($property, $value)
     {
-        if (property_exists($this, $property))
-        {
+        if (property_exists($this, $property)) {
             $this->$property = $value;
         }
 
@@ -75,10 +73,8 @@ abstract class Model implements Arrayable
      */
     public function setProperties(?array $data)
     {
-        if ($data)
-        {
-            foreach ($data ?? [] as $property => $value)
-            {
+        if ($data) {
+            foreach ($data ?? [] as $property => $value) {
                 $this->$property = $value;
             }
         }
@@ -109,15 +105,12 @@ abstract class Model implements Arrayable
      */
     private function recursiveToArray(array $array) : array
     {
-        foreach ($array as $key => $value)
-        {
-            if (is_array($value))
-            {
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
                 $array[$key] = $this->recursiveToArray($value);
             }
 
-            if (is_a($value, Arrayable::class))
-            {
+            if (is_a($value, Arrayable::class)) {
                 $array[$key] = $value->toArray();
             }
         }

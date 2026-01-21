@@ -20,57 +20,57 @@
 
 namespace Buckaroo\PaymentMethods;
 
-use Buckaroo\Transaction\Client;
-use Buckaroo\PaymentMethods\EPS\EPS;
-use Buckaroo\PaymentMethods\In3\In3;
-use Buckaroo\PaymentMethods\KBC\KBC;
-use Buckaroo\PaymentMethods\iDin\iDin;
-use Buckaroo\PaymentMethods\SEPA\SEPA;
-use Buckaroo\PaymentMethods\iDeal\iDeal;
-use Buckaroo\PaymentMethods\iDealProcessing\iDealProcessing;
-use Buckaroo\PaymentMethods\MBWay\MBWay;
 use Buckaroo\Exceptions\BuckarooException;
+use Buckaroo\PaymentMethods\Afterpay\Afterpay;
+use Buckaroo\PaymentMethods\AfterpayDigiAccept\AfterpayDigiAccept;
 use Buckaroo\PaymentMethods\Alipay\Alipay;
-use Buckaroo\PaymentMethods\In3Old\In3Old;
-use Buckaroo\PaymentMethods\Paypal\Paypal;
-use Buckaroo\PaymentMethods\Thunes\Thunes;
+use Buckaroo\PaymentMethods\ApplePay\ApplePay;
+use Buckaroo\PaymentMethods\Bancontact\Bancontact;
+use Buckaroo\PaymentMethods\BankTransfer\BankTransfer;
 use Buckaroo\PaymentMethods\Belfius\Belfius;
 use Buckaroo\PaymentMethods\Billink\Billink;
-use Buckaroo\PaymentMethods\iDealQR\iDealQR;
-use Buckaroo\PaymentMethods\Surepay\Surepay;
-use Buckaroo\PaymentMethods\Swish\Swish;
-use Buckaroo\PaymentMethods\Trustly\Trustly;
-use Buckaroo\PaymentMethods\Afterpay\Afterpay;
-use Buckaroo\PaymentMethods\ApplePay\ApplePay;
-use Buckaroo\PaymentMethods\GooglePay\GooglePay;
-use Buckaroo\PaymentMethods\GiftCard\GiftCard;
-use Buckaroo\PaymentMethods\KlarnaKP\KlarnaKP;
-use Buckaroo\PaymentMethods\KnakenPay\KnakenPay;
-use Buckaroo\PaymentMethods\Payconiq\Payconiq;
-use Buckaroo\PaymentMethods\Emandates\Emandates;
-use Buckaroo\PaymentMethods\KlarnaPay\KlarnaPay;
-use Buckaroo\PaymentMethods\WeChatPay\WeChatPay;
-use Buckaroo\PaymentMethods\Bancontact\Bancontact;
 use Buckaroo\PaymentMethods\Bizum\Bizum;
+use Buckaroo\PaymentMethods\Blik\Blik;
+use Buckaroo\PaymentMethods\BuckarooVoucher\BuckarooVoucher;
+use Buckaroo\PaymentMethods\BuckarooWallet\BuckarooWallet;
+use Buckaroo\PaymentMethods\ClickToPay\ClickToPay;
 use Buckaroo\PaymentMethods\CreditCard\CreditCard;
+use Buckaroo\PaymentMethods\CreditManagement\CreditManagement;
+use Buckaroo\PaymentMethods\Emandates\Emandates;
+use Buckaroo\PaymentMethods\EPS\EPS;
+use Buckaroo\PaymentMethods\ExternalPayment\ExternalPayment;
+use Buckaroo\PaymentMethods\GiftCard\GiftCard;
+use Buckaroo\PaymentMethods\GooglePay\GooglePay;
+use Buckaroo\PaymentMethods\iDeal\iDeal;
+use Buckaroo\PaymentMethods\iDealProcessing\iDealProcessing;
+use Buckaroo\PaymentMethods\iDealQR\iDealQR;
+use Buckaroo\PaymentMethods\iDin\iDin;
+use Buckaroo\PaymentMethods\In3\In3;
+use Buckaroo\PaymentMethods\In3Old\In3Old;
+use Buckaroo\PaymentMethods\KBC\KBC;
+use Buckaroo\PaymentMethods\KlarnaKP\KlarnaKP;
+use Buckaroo\PaymentMethods\KlarnaPay\KlarnaPay;
+use Buckaroo\PaymentMethods\KnakenPay\KnakenPay;
+use Buckaroo\PaymentMethods\Marketplaces\Marketplaces;
+use Buckaroo\PaymentMethods\MBWay\MBWay;
 use Buckaroo\PaymentMethods\Multibanco\Multibanco;
-use Buckaroo\PaymentMethods\Przelewy24\Przelewy24;
+use Buckaroo\PaymentMethods\NoServiceSpecifiedPayment\NoServiceSpecifiedPayment;
+use Buckaroo\PaymentMethods\Payconiq\Payconiq;
+use Buckaroo\PaymentMethods\PaymentInitiation\PaymentInitiation;
+use Buckaroo\PaymentMethods\Paypal\Paypal;
 use Buckaroo\PaymentMethods\PayPerEmail\PayPerEmail;
 use Buckaroo\PaymentMethods\PointOfSale\PointOfSale;
-use Buckaroo\PaymentMethods\BankTransfer\BankTransfer;
-use Buckaroo\PaymentMethods\Marketplaces\Marketplaces;
+use Buckaroo\PaymentMethods\Przelewy24\Przelewy24;
+use Buckaroo\PaymentMethods\SEPA\SEPA;
 use Buckaroo\PaymentMethods\Subscriptions\Subscriptions;
-use Buckaroo\PaymentMethods\BuckarooWallet\BuckarooWallet;
-use Buckaroo\PaymentMethods\BuckarooVoucher\BuckarooVoucher;
-use Buckaroo\PaymentMethods\ExternalPayment\ExternalPayment;
-use Buckaroo\PaymentMethods\CreditManagement\CreditManagement;
-use Buckaroo\PaymentMethods\PaymentInitiation\PaymentInitiation;
-use Buckaroo\PaymentMethods\AfterpayDigiAccept\AfterpayDigiAccept;
-use Buckaroo\PaymentMethods\Blik\Blik;
-use Buckaroo\PaymentMethods\ClickToPay\ClickToPay;
+use Buckaroo\PaymentMethods\Surepay\Surepay;
+use Buckaroo\PaymentMethods\Swish\Swish;
+use Buckaroo\PaymentMethods\Thunes\Thunes;
+use Buckaroo\PaymentMethods\Trustly\Trustly;
 use Buckaroo\PaymentMethods\Twint\Twint;
-use Buckaroo\PaymentMethods\NoServiceSpecifiedPayment\NoServiceSpecifiedPayment;
+use Buckaroo\PaymentMethods\WeChatPay\WeChatPay;
 use Buckaroo\PaymentMethods\Wero\Wero;
+use Buckaroo\Transaction\Client;
 
 class PaymentMethodFactory
 {
@@ -173,12 +173,9 @@ class PaymentMethodFactory
      */
     public function getPaymentMethod(): PaymentMethod
     {
-        if ($this->paymentMethod)
-        {
-            foreach (self::$payments as $class => $alias)
-            {
-                if (in_array($this->paymentMethod, $alias))
-                {
+        if ($this->paymentMethod) {
+            foreach (self::$payments as $class => $alias) {
+                if (in_array($this->paymentMethod, $alias)) {
                     return new $class($this->client, $this->paymentMethod);
                 }
             }

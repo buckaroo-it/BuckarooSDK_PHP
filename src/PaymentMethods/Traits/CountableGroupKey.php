@@ -29,8 +29,7 @@ trait CountableGroupKey
      */
     public function getGroupKey(string $key, ?int $keyCount = 0): ?int
     {
-        if ($this->countable($key, $keyCount))
-        {
+        if ($this->countable($key, $keyCount)) {
             return intval($keyCount) + 1;
         }
 
