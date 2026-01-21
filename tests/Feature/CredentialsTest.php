@@ -2,16 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Handlers;
+namespace Tests\Feature;
 
 use Buckaroo\Handlers\Credentials;
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
-use Tests\TestCase;
 
-class CredentialsTest extends TestCase
+/**
+ * @runTestsInSeparateProcesses
+ * @preserveGlobalState disabled
+ */
+class CredentialsTest extends FeatureTestCase
 {
-    public function test_confirms_valid_credentials_with_200_response(): void
+    /** @test */
+    public function it_confirms_valid_credentials_with_200_response(): void
     {
         $this->mockBuckaroo->mockTransportRequests([
             BuckarooMockRequest::json(
@@ -27,7 +32,7 @@ class CredentialsTest extends TestCase
                     ],
                 ]),
                 200
-            )
+            ),
         ]);
 
         $credentials = new Credentials($this->buckaroo->client(), $this->buckaroo->client()->config());
@@ -36,7 +41,8 @@ class CredentialsTest extends TestCase
         $this->assertTrue($isValid);
     }
 
-    public function test_rejects_credentials_for_non_200_status_codes(): void
+    /** @test */
+    public function it_rejects_credentials_for_non_200_status_codes(): void
     {
         $statusCodes = [400, 401, 403, 404, 500, 503];
 
@@ -47,7 +53,7 @@ class CredentialsTest extends TestCase
                     '*/Transaction/Specification/ideal*',
                     TestHelpers::failedResponse("HTTP {$statusCode}"),
                     $statusCode
-                )
+                ),
             ]);
 
             $credentials = new Credentials($this->buckaroo->client(), $this->buckaroo->client()->config());
