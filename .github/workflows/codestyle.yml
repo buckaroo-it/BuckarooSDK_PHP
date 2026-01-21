@@ -4,12 +4,7 @@ on:
   pull_request:
     branches:
       - master
-      - main
-  push:
-    branches:
-      - master
-      - main
-
+      - develop
 jobs:
   php-cs-fixer:
     runs-on: ubuntu-latest
