@@ -41,35 +41,6 @@ class TestHelpers
     }
 
     /**
-     * Generate HMAC authentication header for API requests
-     * Mirrors the logic in Handlers\HMAC\Generator
-     *
-     * @param array $data Request payload
-     * @param string $uri Request URI
-     * @param string|null $secretKey Optional secret key override
-     * @param string|null $websiteKey Optional website key override
-     * @return string HMAC header in format: websiteKey:hmac:nonce:timestamp
-     */
-    public static function generateHmacHeader(array $data, string $uri, ?string $secretKey = null, ?string $websiteKey = null): string
-    {
-        $secretKey = $secretKey ?? $_ENV['BPE_SECRET_KEY'];
-        $websiteKey = $websiteKey ?? $_ENV['BPE_WEBSITE_KEY'];
-
-        $nonce = bin2hex(random_bytes(16));
-        $time = (string) time();
-        $method = 'POST';
-
-        $jsonData = json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRESERVE_ZERO_FRACTION);
-        $base64Data = base64_encode(md5(mb_convert_encoding($jsonData, 'UTF-8', 'auto'), true));
-
-        $normalizedUri = strtolower(urlencode(preg_replace('#^[^:/.]*[:/]+#i', '', $uri)));
-        $hmacData = $websiteKey . $method . $normalizedUri . $time . $nonce . $base64Data;
-        $hmac = base64_encode(hash_hmac('sha256', $hmacData, $secretKey, true));
-
-        return "{$websiteKey}:{$hmac}:{$nonce}:{$time}";
-    }
-
-    /**
      * Generate a realistic Buckaroo transaction key
      * Format: 32-character alphanumeric string (uppercase)
      *
@@ -104,45 +75,6 @@ class TestHelpers
             'Currency' => 'EUR',
             'AmountDebit' => 10.00,
         ], $overrides);
-    }
-
-    /**
-     * Create a redirect response fixture (e.g., 3D Secure, iDEAL)
-     *
-     * @param string $url Redirect URL
-     * @param array $overrides Override specific fields
-     * @return array
-     */
-    public static function redirectResponse(string $url, array $overrides = []): array
-    {
-        return self::successResponse(array_merge([
-            'Status' => [
-                'Code' => ['Code' => 791, 'Description' => 'Pending input'],
-                'SubCode' => ['Code' => 'S002', 'Description' => 'Waiting for user'],
-                'DateTime' => date('Y-m-d\TH:i:s'),
-            ],
-            'RequiredAction' => [
-                'Name' => 'Redirect',
-                'RedirectURL' => $url,
-            ],
-        ], $overrides));
-    }
-
-    /**
-     * Create a pending response fixture
-     *
-     * @param array $overrides Override specific fields
-     * @return array
-     */
-    public static function pendingResponse(array $overrides = []): array
-    {
-        return self::successResponse(array_merge([
-            'Status' => [
-                'Code' => ['Code' => 792, 'Description' => 'Pending processing'],
-                'SubCode' => ['Code' => 'S003', 'Description' => 'Pending processing'],
-                'DateTime' => date('Y-m-d\TH:i:s'),
-            ],
-        ], $overrides));
     }
 
     /**

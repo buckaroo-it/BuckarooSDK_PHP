@@ -9,6 +9,12 @@
         </testsuite>
     </testsuites>
 
+    <coverage processUncoveredFiles="true">
+        <include>
+            <directory suffix=".php">src</directory>
+        </include>
+    </coverage>
+
     <php>
         <ini name="display_errors" value="stderr"/>
         <ini name="error_log" value="/dev/null"/>
