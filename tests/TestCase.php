@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests;
 
 use Buckaroo\BuckarooClient;
-use Mockery;
 use PHPUnit\Framework\TestCase as BaseTestCase;
 use Tests\Support\MockBuckaroo;
 
@@ -13,20 +12,32 @@ abstract class TestCase extends BaseTestCase
 {
     protected BuckarooClient $buckaroo;
     protected MockBuckaroo $mockBuckaroo;
+    private bool $mockEnabled = false;
 
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->mockBuckaroo = new MockBuckaroo();
-        $this->mockBuckaroo->install();
+    }
 
+    /**
+     * Enable HTTP mocking for this test.
+     * Call this method before using mockTransportRequests().
+     * IMPORTANT: Must be called before createBuckarooClient().
+     */
+    protected function useMock(): void
+    {
+        $this->mockEnabled = true;
+        $this->mockBuckaroo->install();
         $this->buckaroo = $this->createBuckarooClient();
     }
 
     protected function tearDown(): void
     {
-        $this->mockBuckaroo->assertAllConsumed();
+        if ($this->mockEnabled) {
+            $this->mockBuckaroo->assertAllConsumed();
+        }
         MockBuckaroo::clearInstance();
 
         parent::tearDown();
