@@ -95,7 +95,7 @@ class BatchTransactionsTest extends TestCase
         return $payment;
     }
 
-    private function getProperty(object $object, string $property): mixed
+    private function getProperty(object $object, string $property)
     {
         $reflection = new ReflectionClass($object);
         $prop = $reflection->getProperty($property);

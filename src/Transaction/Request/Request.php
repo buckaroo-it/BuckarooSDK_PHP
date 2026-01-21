@@ -67,13 +67,13 @@ class Request implements JsonSerializable, ArrayAccess, Arrayable
     }
 
     /** Implement ArrayAccess */
-    public function offsetGet($offset): mixed
+    public function offsetGet($offset)
     {
         return isset($this->data[$offset]) ? $this->data[$offset] : null;
     }
 
     /** Implement JsonSerializable */
-    public function jsonSerialize(): mixed
+    public function jsonSerialize()
     {
         return $this->data;
     }
