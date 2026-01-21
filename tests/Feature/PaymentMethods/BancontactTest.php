@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Feature\PaymentMethods;
 
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
-use Tests\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class BancontactTest extends TestCase
+class BancontactTest extends FeatureTestCase
 {
     /** @test */
     public function it_creates_a_bancontact_payment_with_redirect(): void
@@ -37,7 +37,7 @@ class BancontactTest extends TestCase
                         'Name' => 'bancontactmrcash',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-BANCONTACT-001',
                 'Currency' => 'EUR',
@@ -84,7 +84,7 @@ class BancontactTest extends TestCase
                         'Name' => 'bancontactmrcash',
                         'Action' => 'PayEncrypted',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-ENCRYPTED-001',
                 'Currency' => 'EUR',
@@ -127,7 +127,7 @@ class BancontactTest extends TestCase
                         'Name' => 'bancontactmrcash',
                         'Action' => 'PayRecurring',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-RECURRING-001',
                 'Currency' => 'EUR',
@@ -168,7 +168,7 @@ class BancontactTest extends TestCase
                         'Name' => 'bancontactmrcash',
                         'Action' => 'PayOneClick',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-ONE-CLICK-001',
                 'Currency' => 'EUR',
@@ -213,7 +213,7 @@ class BancontactTest extends TestCase
                         'Name' => 'bancontactmrcash',
                         'Action' => 'Authorize',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-AUTHORIZE-001',
                 'Currency' => 'EUR',
@@ -257,7 +257,7 @@ class BancontactTest extends TestCase
                         'Name' => 'bancontactmrcash',
                         'Action' => 'Capture',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-CAPTURE-001',
                 'Currency' => 'EUR',
@@ -300,7 +300,7 @@ class BancontactTest extends TestCase
                         'Name' => 'bancontactmrcash',
                         'Action' => 'CancelAuthorize',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-CANCEL-001',
                 'Currency' => 'EUR',
@@ -340,7 +340,7 @@ class BancontactTest extends TestCase
                         'Name' => 'bancontactmrcash',
                         'Action' => 'Refund',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-REFUND-001',
                 'Currency' => 'EUR',
@@ -385,7 +385,7 @@ class BancontactTest extends TestCase
                         'Name' => 'bancontactmrcash',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-STATUS-001',
                 'Currency' => 'EUR',

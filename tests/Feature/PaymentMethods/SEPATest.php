@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Feature\PaymentMethods;
 
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
-use Tests\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class SEPATest extends TestCase
+class SEPATest extends FeatureTestCase
 {
     /** @test */
     public function it_creates_a_sepa_direct_debit_payment(): void
@@ -33,7 +33,7 @@ class SEPATest extends TestCase
                         'Name' => 'SepaDirectDebit',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-SEPA-001',
                 'Currency' => 'EUR',
@@ -82,7 +82,7 @@ class SEPATest extends TestCase
                         'Name' => 'SepaDirectDebit',
                         'Action' => 'Authorize',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-AUTH-001',
                 'Currency' => 'EUR',
@@ -131,7 +131,7 @@ class SEPATest extends TestCase
                         'Name' => 'SepaDirectDebit',
                         'Action' => 'PayRecurrent',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-RECUR-001',
                 'Currency' => 'EUR',
@@ -173,7 +173,7 @@ class SEPATest extends TestCase
                         'Name' => 'SepaDirectDebit',
                         'Action' => 'Pay,ExtraInfo',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-EXTRA-001',
                 'Currency' => 'EUR',
@@ -232,7 +232,7 @@ class SEPATest extends TestCase
                         'Name' => 'SepaDirectDebit',
                         'Action' => 'PayWithEmandate',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-EMANDATE-001',
                 'Currency' => 'EUR',
@@ -275,7 +275,7 @@ class SEPATest extends TestCase
                         'Name' => 'SepaDirectDebit',
                         'Action' => 'Refund',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-REFUND-001',
                 'Currency' => 'EUR',
@@ -320,7 +320,7 @@ class SEPATest extends TestCase
                         'Name' => 'SepaDirectDebit',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-STATUS-001',
                 'Currency' => 'EUR',

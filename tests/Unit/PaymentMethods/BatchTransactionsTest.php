@@ -10,8 +10,18 @@ use Buckaroo\Transaction\Request\BatchRequest;
 use ReflectionClass;
 use Tests\TestCase;
 
+/**
+ * @runTestsInSeparateProcesses
+ * @preserveGlobalState disabled
+ */
 class BatchTransactionsTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->useMock();
+    }
+
     public function test_creates_instance_with_empty_transactions(): void
     {
         $batch = new BatchTransactions($this->buckaroo->client(), []);

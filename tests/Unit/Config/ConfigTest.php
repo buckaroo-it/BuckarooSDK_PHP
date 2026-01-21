@@ -12,8 +12,7 @@ use Tests\TestCase;
 
 class ConfigTest extends TestCase
 {
-    /** @test */
-    public function it_creates_config_with_required_parameters(): void
+    public function test_creates_config_with_required_parameters(): void
     {
         $config = new DefaultConfig('websiteKey', 'secretKey');
 
@@ -21,8 +20,7 @@ class ConfigTest extends TestCase
         $this->assertSame('secretKey', $config->secretKey());
     }
 
-    /** @test */
-    public function it_defaults_to_test_mode(): void
+    public function test_defaults_to_test_mode(): void
     {
         $config = new DefaultConfig('websiteKey', 'secretKey');
 
@@ -30,8 +28,7 @@ class ConfigTest extends TestCase
         $this->assertFalse($config->isLiveMode());
     }
 
-    /** @test */
-    public function it_can_set_live_mode(): void
+    public function test_can_set_live_mode(): void
     {
         $config = new DefaultConfig('websiteKey', 'secretKey', 'live');
 
@@ -39,16 +36,14 @@ class ConfigTest extends TestCase
         $this->assertTrue($config->isLiveMode());
     }
 
-    /** @test */
-    public function it_defaults_currency_to_eur(): void
+    public function test_defaults_currency_to_eur(): void
     {
         $config = new DefaultConfig('websiteKey', 'secretKey');
 
         $this->assertSame('EUR', $config->currency());
     }
 
-    /** @test */
-    public function it_sets_optional_url_parameters(): void
+    public function test_sets_optional_url_parameters(): void
     {
         $config = new DefaultConfig(
             'websiteKey',
@@ -65,8 +60,7 @@ class ConfigTest extends TestCase
         $this->assertSame('https://example.com/push', $config->pushURL());
     }
 
-    /** @test */
-    public function it_merges_additional_config(): void
+    public function test_merges_additional_config(): void
     {
         $config = new DefaultConfig('websiteKey', 'secretKey');
 
@@ -79,8 +73,7 @@ class ConfigTest extends TestCase
         $this->assertSame('https://merged.com/return', $config->returnURL());
     }
 
-    /** @test */
-    public function it_prevents_merging_credentials(): void
+    public function test_prevents_merging_credentials(): void
     {
         $config = new DefaultConfig('originalWebsiteKey', 'originalSecretKey');
 
@@ -97,24 +90,21 @@ class ConfigTest extends TestCase
         $this->assertSame('GBP', $config->currency());
     }
 
-    /** @test */
-    public function it_returns_default_culture(): void
+    public function test_returns_default_culture(): void
     {
         $config = new DefaultConfig('websiteKey', 'secretKey');
 
         $this->assertSame('en-GB', $config->culture());
     }
 
-    /** @test */
-    public function it_returns_default_channel(): void
+    public function test_returns_default_channel(): void
     {
         $config = new DefaultConfig('websiteKey', 'secretKey');
 
         $this->assertSame('Web', $config->channel());
     }
 
-    /** @test */
-    public function it_can_change_mode_via_mode_method(): void
+    public function test_can_change_mode_via_mode_method(): void
     {
         $config = new DefaultConfig('websiteKey', 'secretKey', 'test');
 
@@ -131,8 +121,7 @@ class ConfigTest extends TestCase
         $this->assertFalse($config->isLiveMode());
     }
 
-    /** @test */
-    public function it_ignores_invalid_mode_values(): void
+    public function test_ignores_invalid_mode_values(): void
     {
         $config = new DefaultConfig('websiteKey', 'secretKey', 'test');
 
@@ -143,8 +132,7 @@ class ConfigTest extends TestCase
         $this->assertSame('test', $config->mode());
     }
 
-    /** @test */
-    public function it_gets_multiple_properties(): void
+    public function test_gets_multiple_properties(): void
     {
         $config = new DefaultConfig(
             'websiteKey',
@@ -164,8 +152,7 @@ class ConfigTest extends TestCase
         $this->assertSame('test', $properties['mode']);
     }
 
-    /** @test */
-    public function it_sets_platform_information(): void
+    public function test_sets_platform_information(): void
     {
         $config = new DefaultConfig(
             'websiteKey',
@@ -189,8 +176,7 @@ class ConfigTest extends TestCase
         $this->assertSame('1.5.0', $config->moduleVersion());
     }
 
-    /** @test */
-    public function it_returns_null_timeout_by_default(): void
+    public function test_returns_null_timeout_by_default(): void
     {
         $config = new DefaultConfig('websiteKey', 'secretKey');
 
@@ -198,8 +184,7 @@ class ConfigTest extends TestCase
         $this->assertNull($config->getConnectTimeout());
     }
 
-    /** @test */
-    public function it_sets_timeout_values(): void
+    public function test_sets_timeout_values(): void
     {
         $config = new DefaultConfig(
             'websiteKey',
@@ -225,8 +210,7 @@ class ConfigTest extends TestCase
         $this->assertSame(10, $config->getConnectTimeout());
     }
 
-    /** @test */
-    public function it_creates_default_logger_automatically(): void
+    public function test_creates_default_logger_automatically(): void
     {
         $config = new DefaultConfig('websiteKey', 'secretKey');
 
@@ -237,8 +221,7 @@ class ConfigTest extends TestCase
         $this->assertInstanceOf(DefaultLogger::class, $logger);
     }
 
-    /** @test */
-    public function it_accepts_custom_logger(): void
+    public function test_accepts_custom_logger(): void
     {
         $customLogger = new DefaultLogger();
 
@@ -263,8 +246,7 @@ class ConfigTest extends TestCase
         $this->assertSame($customLogger, $config->getLogger());
     }
 
-    /** @test */
-    public function it_can_change_logger_via_setter(): void
+    public function test_can_change_logger_via_setter(): void
     {
         $config = new DefaultConfig('websiteKey', 'secretKey');
         $originalLogger = $config->getLogger();
@@ -276,8 +258,7 @@ class ConfigTest extends TestCase
         $this->assertSame($newLogger, $config->getLogger());
     }
 
-    /** @test */
-    public function it_returns_self_from_set_logger(): void
+    public function test_returns_self_from_set_logger(): void
     {
         $config = new DefaultConfig('websiteKey', 'secretKey');
         $newLogger = new DefaultLogger();
@@ -287,8 +268,7 @@ class ConfigTest extends TestCase
         $this->assertSame($config, $result);
     }
 
-    /** @test */
-    public function it_allows_logger_to_attach_observers(): void
+    public function test_allows_logger_to_attach_observers(): void
     {
         $config = new DefaultConfig('websiteKey', 'secretKey');
         $logger = $config->getLogger();
@@ -312,8 +292,7 @@ class ConfigTest extends TestCase
         $this->assertSame(['key' => 'value'], $observer->messages[0]['context']);
     }
 
-    /** @test */
-    public function it_allows_logger_to_detach_observers(): void
+    public function test_allows_logger_to_detach_observers(): void
     {
         $config = new DefaultConfig('websiteKey', 'secretKey');
         $logger = $config->getLogger();
@@ -339,15 +318,13 @@ class ConfigTest extends TestCase
         $this->assertCount(1, $observer->messages);
     }
 
-    /** @test */
-    public function it_defines_mode_constants(): void
+    public function test_defines_mode_constants(): void
     {
         $this->assertSame('live', DefaultConfig::LIVE_MODE);
         $this->assertSame('test', DefaultConfig::TEST_MODE);
     }
 
-    /** @test */
-    public function it_uses_environment_variable_for_mode(): void
+    public function test_uses_environment_variable_for_mode(): void
     {
         $_ENV['BPE_MODE'] = 'live';
 
@@ -358,8 +335,7 @@ class ConfigTest extends TestCase
         $this->assertTrue($config->isLiveMode());
     }
 
-    /** @test */
-    public function it_uses_environment_variable_for_currency(): void
+    public function test_uses_environment_variable_for_currency(): void
     {
         $_ENV['BPE_CURRENCY_CODE'] = 'USD';
 
@@ -369,8 +345,7 @@ class ConfigTest extends TestCase
         $this->assertSame('USD', $config->currency());
     }
 
-    /** @test */
-    public function it_uses_environment_variables_for_urls(): void
+    public function test_uses_environment_variables_for_urls(): void
     {
         $_ENV['BPE_RETURN_URL'] = 'https://env.example.com/return';
         $_ENV['BPE_RETURN_URL_CANCEL'] = 'https://env.example.com/cancel';
@@ -392,8 +367,7 @@ class ConfigTest extends TestCase
         $this->assertSame('https://env.example.com/push', $config->pushURL());
     }
 
-    /** @test */
-    public function it_uses_environment_variables_for_platform_information(): void
+    public function test_uses_environment_variables_for_platform_information(): void
     {
         $_ENV['PlatformName'] = 'EnvPlatform';
         $_ENV['PlatformVersion'] = '3.0.0';
@@ -424,8 +398,7 @@ class ConfigTest extends TestCase
         $this->assertSame('2.5.0', $config->moduleVersion());
     }
 
-    /** @test */
-    public function it_uses_environment_variables_for_culture_and_channel(): void
+    public function test_uses_environment_variables_for_culture_and_channel(): void
     {
         $_ENV['Culture'] = 'nl-NL';
         $_ENV['Channel'] = 'Mobile';
@@ -452,8 +425,7 @@ class ConfigTest extends TestCase
         $this->assertSame('Mobile', $config->channel());
     }
 
-    /** @test */
-    public function it_falls_back_to_constructor_when_no_environment_variable(): void
+    public function test_falls_back_to_constructor_when_no_environment_variable(): void
     {
         // Ensure no environment variables are set
         unset(
@@ -475,8 +447,7 @@ class ConfigTest extends TestCase
         $this->assertSame('https://example.com/return', $config->returnURL());
     }
 
-    /** @test */
-    public function it_sets_custom_culture_via_constructor(): void
+    public function test_sets_custom_culture_via_constructor(): void
     {
         $config = new DefaultConfig(
             'websiteKey',
@@ -497,8 +468,7 @@ class ConfigTest extends TestCase
         $this->assertSame('nl-NL', $config->culture());
     }
 
-    /** @test */
-    public function it_sets_custom_channel_via_constructor(): void
+    public function test_sets_custom_channel_via_constructor(): void
     {
         $config = new DefaultConfig(
             'websiteKey',
@@ -520,8 +490,7 @@ class ConfigTest extends TestCase
         $this->assertSame('Mobile', $config->channel());
     }
 
-    /** @test */
-    public function it_returns_self_from_merge(): void
+    public function test_returns_self_from_merge(): void
     {
         $config = new DefaultConfig('websiteKey', 'secretKey');
 
@@ -530,8 +499,7 @@ class ConfigTest extends TestCase
         $this->assertSame($config, $result);
     }
 
-    /** @test */
-    public function it_ignores_non_existent_properties_in_merge(): void
+    public function test_ignores_non_existent_properties_in_merge(): void
     {
         $config = new DefaultConfig('websiteKey', 'secretKey');
 
@@ -546,8 +514,7 @@ class ConfigTest extends TestCase
         $this->assertFalse(property_exists($config, 'anotherFake'));
     }
 
-    /** @test */
-    public function it_merges_empty_array_without_errors(): void
+    public function test_merges_empty_array_without_errors(): void
     {
         $config = new DefaultConfig('websiteKey', 'secretKey');
         $originalMode = $config->mode();
@@ -558,8 +525,7 @@ class ConfigTest extends TestCase
         $this->assertSame($originalMode, $config->mode());
     }
 
-    /** @test */
-    public function it_accumulates_multiple_merge_operations(): void
+    public function test_accumulates_multiple_merge_operations(): void
     {
         $config = new DefaultConfig('websiteKey', 'secretKey');
 
@@ -571,8 +537,7 @@ class ConfigTest extends TestCase
         $this->assertSame('https://example.com', $config->returnURL());
     }
 
-    /** @test */
-    public function it_merges_culture_and_channel_values(): void
+    public function test_merges_culture_and_channel_values(): void
     {
         $config = new DefaultConfig('websiteKey', 'secretKey');
 
@@ -585,8 +550,7 @@ class ConfigTest extends TestCase
         $this->assertSame('API', $config->channel());
     }
 
-    /** @test */
-    public function it_gets_empty_array_when_called_with_empty_array(): void
+    public function test_gets_empty_array_when_called_with_empty_array(): void
     {
         $config = new DefaultConfig('websiteKey', 'secretKey');
 
@@ -596,8 +560,7 @@ class ConfigTest extends TestCase
         $this->assertEmpty($properties);
     }
 
-    /** @test */
-    public function it_ignores_non_existent_method_names_in_get(): void
+    public function test_ignores_non_existent_method_names_in_get(): void
     {
         $config = new DefaultConfig('websiteKey', 'secretKey');
 
@@ -609,8 +572,7 @@ class ConfigTest extends TestCase
         $this->assertCount(2, $properties);
     }
 
-    /** @test */
-    public function it_gets_only_valid_methods_from_mixed_input(): void
+    public function test_gets_only_valid_methods_from_mixed_input(): void
     {
         $config = new DefaultConfig('websiteKey', 'secretKey');
 

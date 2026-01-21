@@ -179,6 +179,7 @@ class ValidatorTest extends TestCase
         $this->assertFalse($isValid);
     }
 
+    /** @test */
     public function test_validates_multiple_http_methods(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
@@ -255,6 +256,7 @@ class ValidatorTest extends TestCase
         $this->assertFalse($validator->validate($mismatchHeader, 'https://api.buckaroo.nl/json/Different', $method, $data));
     }
 
+    /** @test */
     public function test_validates_various_data_types(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);

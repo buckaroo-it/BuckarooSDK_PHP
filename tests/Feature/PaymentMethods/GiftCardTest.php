@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Feature\PaymentMethods;
 
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
-use Tests\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class GiftCardTest extends TestCase
+class GiftCardTest extends FeatureTestCase
 {
     /** @test */
     public function it_creates_a_giftcard_payment(): void
@@ -36,7 +36,7 @@ class GiftCardTest extends TestCase
                             ['Name' => 'cardNumber', 'Value' => '1234567890123456'],
                             ['Name' => 'pin', 'Value' => '1234'],
                         ],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-GIFTCARD-001',
                 'Currency' => 'EUR',
@@ -82,7 +82,7 @@ class GiftCardTest extends TestCase
                             ['Name' => 'fashionChequeCardNumber', 'Value' => '1234567890123456'],
                             ['Name' => 'fashionChequePin', 'Value' => '1234'],
                         ],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-FASHION-001',
                 'Currency' => 'EUR',
@@ -127,7 +127,7 @@ class GiftCardTest extends TestCase
                         'Name' => 'giftcard',
                         'Action' => 'Refund',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-REFUND-001',
                 'Currency' => 'EUR',
@@ -173,7 +173,7 @@ class GiftCardTest extends TestCase
                         'Name' => 'giftcard',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-REDIRECT-001',
                 'Currency' => 'EUR',
@@ -216,7 +216,7 @@ class GiftCardTest extends TestCase
                         'Name' => 'giftcard',
                         'Action' => 'PayRemainder',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-REMAINDER-001',
                 'Currency' => 'EUR',
@@ -262,7 +262,7 @@ class GiftCardTest extends TestCase
                         'Name' => 'giftcard',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-STATUS-001',
                 'Currency' => 'EUR',

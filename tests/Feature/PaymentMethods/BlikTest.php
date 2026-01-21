@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Feature\PaymentMethods;
 
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
-use Tests\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class BlikTest extends TestCase
+class BlikTest extends FeatureTestCase
 {
     /** @test */
     public function it_creates_a_blik_payment_with_redirect(): void
@@ -37,7 +37,7 @@ class BlikTest extends TestCase
                         'Name' => 'Blik',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-BLIK-001',
                 'Currency' => 'PLN',
@@ -86,7 +86,7 @@ class BlikTest extends TestCase
                         'Parameters' => [
                             ['Name' => 'CustomerEmail', 'Value' => 'jan.kowalski@example.pl'],
                         ],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-BLIK-EMAIL-001',
                 'Currency' => 'PLN',
@@ -131,7 +131,7 @@ class BlikTest extends TestCase
                         'Name' => 'Blik',
                         'Action' => 'Refund',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-REFUND-001',
                 'Currency' => 'PLN',
@@ -177,7 +177,7 @@ class BlikTest extends TestCase
                         'Name' => 'Blik',
                         'Action' => 'PayRemainder',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-REMAINDER-001',
                 'Currency' => 'PLN',
@@ -223,7 +223,7 @@ class BlikTest extends TestCase
                         'Name' => 'Blik',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-STATUS-001',
                 'Currency' => 'PLN',

@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Feature\PaymentMethods;
 
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
-use Tests\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class ThunesTest extends TestCase
+class ThunesTest extends FeatureTestCase
 {
     /** @test */
     public function it_creates_thunes_payment(): void
@@ -33,7 +33,7 @@ class ThunesTest extends TestCase
                         'Name' => 'thunes',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-THUNES-001',
                 'Currency' => 'EUR',
@@ -74,7 +74,7 @@ class ThunesTest extends TestCase
                         'Name' => 'monizzemealvoucher',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-MONIZZE-001',
                 'Currency' => 'EUR',
@@ -116,7 +116,7 @@ class ThunesTest extends TestCase
                         'Name' => 'sodexomealvoucher',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-SODEXO-001',
                 'Currency' => 'EUR',
@@ -159,7 +159,7 @@ class ThunesTest extends TestCase
                         'Name' => 'thunes',
                         'Action' => 'Refund',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-THUNES-REFUND-001',
                 'Currency' => 'EUR',
@@ -204,7 +204,7 @@ class ThunesTest extends TestCase
                         'Name' => 'thunes',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-STATUS-001',
                 'Currency' => 'EUR',

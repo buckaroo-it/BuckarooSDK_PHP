@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Feature\PaymentMethods;
 
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
-use Tests\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class ClickToPayTest extends TestCase
+class ClickToPayTest extends FeatureTestCase
 {
     /** @test */
     public function it_creates_clicktopay_payment(): void
@@ -33,7 +33,7 @@ class ClickToPayTest extends TestCase
                         'Name' => 'ClickToPay',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-CTP-001',
                 'Currency' => 'EUR',
@@ -75,7 +75,7 @@ class ClickToPayTest extends TestCase
                         'Name' => 'ClickToPay',
                         'Action' => 'Refund',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-CTP-REFUND-001',
                 'Currency' => 'EUR',
@@ -120,7 +120,7 @@ class ClickToPayTest extends TestCase
                         'Name' => 'ClickToPay',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-STATUS-001',
                 'Currency' => 'EUR',

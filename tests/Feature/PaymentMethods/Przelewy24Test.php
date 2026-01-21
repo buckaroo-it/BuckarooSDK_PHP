@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Feature\PaymentMethods;
 
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
-use Tests\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class Przelewy24Test extends TestCase
+class Przelewy24Test extends FeatureTestCase
 {
     /** @test */
     public function it_creates_a_przelewy24_payment_with_redirect(): void
@@ -37,7 +37,7 @@ class Przelewy24Test extends TestCase
                         'Name' => 'Przelewy24',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-P24-001',
                 'Currency' => 'PLN',
@@ -87,7 +87,7 @@ class Przelewy24Test extends TestCase
                             ['Name' => 'CustomerFirstName', 'Value' => 'Jan'],
                             ['Name' => 'CustomerLastName', 'Value' => 'Kowalski'],
                         ],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-P24-CUST-001',
                 'Currency' => 'PLN',
@@ -140,7 +140,7 @@ class Przelewy24Test extends TestCase
                         'Parameters' => [
                             ['Name' => 'CustomerEmail', 'Value' => 'jan.kowalski@example.pl'],
                         ],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-P24-EMAIL-001',
                 'Currency' => 'PLN',
@@ -185,7 +185,7 @@ class Przelewy24Test extends TestCase
                         'Name' => 'Przelewy24',
                         'Action' => 'Refund',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-REFUND-001',
                 'Currency' => 'PLN',
@@ -231,7 +231,7 @@ class Przelewy24Test extends TestCase
                         'Name' => 'Przelewy24',
                         'Action' => 'PayRemainder',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-REMAINDER-001',
                 'Currency' => 'PLN',
@@ -277,7 +277,7 @@ class Przelewy24Test extends TestCase
                         'Name' => 'Przelewy24',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-STATUS-001',
                 'Currency' => 'PLN',

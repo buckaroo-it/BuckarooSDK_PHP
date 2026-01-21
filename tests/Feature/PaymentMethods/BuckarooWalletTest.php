@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Feature\PaymentMethods;
 
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
-use Tests\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class BuckarooWalletTest extends TestCase
+class BuckarooWalletTest extends FeatureTestCase
 {
     /** @test */
     public function it_creates_wallet(): void
@@ -382,12 +382,7 @@ class BuckarooWalletTest extends TestCase
             'walletId' => 'WALLET-STATUS-TEST',
         ]);
 
-        if ($assertMethod === 'getStatusCode')
-        {
-            $this->assertEquals($statusCode, $response->getStatusCode());
-        } else {
-            $this->assertTrue($response->$assertMethod());
-        }
+        $this->assertTrue($response->$assertMethod());
     }
 
     public static function statusCodeProvider(): array

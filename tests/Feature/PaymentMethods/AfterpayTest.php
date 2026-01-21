@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Feature\PaymentMethods;
 
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
-use Tests\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class AfterpayTest extends TestCase
+class AfterpayTest extends FeatureTestCase
 {
     /** @test */
     public function it_creates_pay_transaction(): void
@@ -33,7 +33,7 @@ class AfterpayTest extends TestCase
                         'Name' => 'afterpay',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-AFTERPAY-001',
                 'Currency' => 'EUR',
@@ -75,7 +75,7 @@ class AfterpayTest extends TestCase
                         'Name' => 'afterpay',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-AFTERPAY-FULL-001',
                 'Currency' => 'EUR',
@@ -144,7 +144,7 @@ class AfterpayTest extends TestCase
                         'Name' => 'afterpay',
                         'Action' => 'Authorize',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-AFTERPAY-AUTH-001',
                 'Currency' => 'EUR',
@@ -187,7 +187,7 @@ class AfterpayTest extends TestCase
                         'Name' => 'afterpay',
                         'Action' => 'Capture',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-AFTERPAY-CAPTURE-001',
                 'Currency' => 'EUR',
@@ -231,7 +231,7 @@ class AfterpayTest extends TestCase
                         'Name' => 'afterpay',
                         'Action' => 'CancelAuthorize',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-AFTERPAY-CANCEL-001',
                 'Currency' => 'EUR',
@@ -274,7 +274,7 @@ class AfterpayTest extends TestCase
                         'Name' => 'afterpay',
                         'Action' => 'Refund',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-AFTERPAY-REFUND-001',
                 'Currency' => 'EUR',
@@ -317,7 +317,7 @@ class AfterpayTest extends TestCase
                         'Name' => 'afterpay',
                         'Action' => 'PayRemainder',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-AFTERPAY-REMAINDER-001',
                 'Currency' => 'EUR',
@@ -359,7 +359,7 @@ class AfterpayTest extends TestCase
                         'Name' => 'afterpay',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-AFTERPAY-MULTI-001',
                 'Currency' => 'EUR',
@@ -424,7 +424,7 @@ class AfterpayTest extends TestCase
                         'Name' => 'afterpay',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-AFTERPAY-SHIPPING-001',
                 'Currency' => 'EUR',
@@ -498,7 +498,7 @@ class AfterpayTest extends TestCase
                         'Name' => 'afterpay',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-AFTERPAY-STATUS-001',
                 'Currency' => 'EUR',
@@ -513,11 +513,7 @@ class AfterpayTest extends TestCase
             'currency' => 'EUR',
         ]);
 
-        if ($assertMethod === 'getStatusCode') {
-            $this->assertEquals($statusCode, $response->getStatusCode());
-        } else {
-            $this->assertTrue($response->$assertMethod());
-        }
+        $this->assertTrue($response->$assertMethod());
     }
 
     public static function statusCodeProvider(): array

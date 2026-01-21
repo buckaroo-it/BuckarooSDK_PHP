@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Feature\PaymentMethods;
 
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
-use Tests\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class iDealQRTest extends TestCase
+class iDealQRTest extends FeatureTestCase
 {
     /** @test */
     public function it_generates_an_ideal_qr_code(): void
@@ -37,7 +37,7 @@ class iDealQRTest extends TestCase
                             ['Name' => 'PurchaseId', 'Value' => 'PURCHASE-001'],
                             ['Name' => 'Description', 'Value' => 'QR code payment'],
                         ],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-QR-001',
                 'Currency' => 'EUR',
@@ -83,7 +83,7 @@ class iDealQRTest extends TestCase
                             ['Name' => 'MinAmount', 'Value' => 10.00],
                             ['Name' => 'MaxAmount', 'Value' => 100.00],
                         ],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-QR-002',
                 'Currency' => 'EUR',
@@ -128,7 +128,7 @@ class iDealQRTest extends TestCase
                             ['Name' => 'Amount', 'Value' => 15.00],
                             ['Name' => 'IsOneOff', 'Value' => true],
                         ],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-QR-003',
                 'Currency' => 'EUR',
@@ -172,7 +172,7 @@ class iDealQRTest extends TestCase
                             ['Name' => 'Amount', 'Value' => 30.00],
                             ['Name' => 'Expiration', 'Value' => $expiration],
                         ],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-QR-004',
                 'Currency' => 'EUR',
@@ -215,7 +215,7 @@ class iDealQRTest extends TestCase
                             ['Name' => 'Amount', 'Value' => 20.00],
                             ['Name' => 'ImageSize', 'Value' => 500],
                         ],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-QR-005',
                 'Currency' => 'EUR',
@@ -258,7 +258,7 @@ class iDealQRTest extends TestCase
                             ['Name' => 'Amount', 'Value' => 40.00],
                             ['Name' => 'IsProcessing', 'Value' => true],
                         ],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-QR-006',
                 'Currency' => 'EUR',
@@ -301,7 +301,7 @@ class iDealQRTest extends TestCase
                         'Name' => 'idealqr',
                         'Action' => 'Generate',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-STATUS-001',
                 'Currency' => 'EUR',

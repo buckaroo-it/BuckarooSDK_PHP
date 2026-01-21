@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Feature\PaymentMethods;
 
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
-use Tests\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class CreditCardTest extends TestCase
+class CreditCardTest extends FeatureTestCase
 {
     /** @test */
     public function it_creates_a_visa_payment_with_redirect(): void
@@ -37,7 +37,7 @@ class CreditCardTest extends TestCase
                         'Name' => 'visa',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-123456',
                 'Currency' => 'EUR',
@@ -82,7 +82,7 @@ class CreditCardTest extends TestCase
                         'Name' => 'mastercard',
                         'Action' => 'PayEncrypted',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-123456',
                 'Currency' => 'EUR',
@@ -127,7 +127,7 @@ class CreditCardTest extends TestCase
                         'Name' => 'mastercard',
                         'Action' => 'PayWithToken',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-TOKEN-001',
                 'Currency' => 'EUR',
@@ -171,7 +171,7 @@ class CreditCardTest extends TestCase
                         'Name' => 'mastercard',
                         'Action' => 'PayWithSecurityCode',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-SEC-CODE-001',
                 'Currency' => 'EUR',
@@ -217,7 +217,7 @@ class CreditCardTest extends TestCase
                         'Name' => 'mastercard',
                         'Action' => 'PayRecurrent',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-RECURRENT-001',
                 'Currency' => 'EUR',
@@ -265,7 +265,7 @@ class CreditCardTest extends TestCase
                         'Name' => 'mastercard',
                         'Action' => 'Authorize',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-AUTH-001',
                 'Currency' => 'EUR',
@@ -310,7 +310,7 @@ class CreditCardTest extends TestCase
                         'Name' => 'mastercard',
                         'Action' => 'AuthorizeEncrypted',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-AUTH-ENC-001',
                 'Currency' => 'EUR',
@@ -355,7 +355,7 @@ class CreditCardTest extends TestCase
                         'Name' => 'mastercard',
                         'Action' => 'Capture',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-CAPTURE-001',
                 'Currency' => 'EUR',
@@ -400,7 +400,7 @@ class CreditCardTest extends TestCase
                         'Name' => 'mastercard',
                         'Action' => 'Refund',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-REFUND-001',
                 'Currency' => 'EUR',
@@ -444,7 +444,7 @@ class CreditCardTest extends TestCase
                         'Name' => 'mastercard',
                         'Action' => 'CancelAuthorize',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-CANCEL-001',
                 'Currency' => 'EUR',
@@ -490,7 +490,7 @@ class CreditCardTest extends TestCase
                             ['Name' => 'CardNumberEnding', 'Value' => '1234'],
                             ['Name' => 'CardExpirationDate', 'Value' => '2025-12'],
                         ],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-PARAMS-001',
                 'Currency' => 'EUR',
@@ -552,7 +552,7 @@ class CreditCardTest extends TestCase
                         'Name' => 'visa',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-STATUS-001',
                 'Currency' => 'EUR',
@@ -568,11 +568,7 @@ class CreditCardTest extends TestCase
             'name' => 'visa',
         ]);
 
-        if ($assertMethod === 'getStatusCode') {
-            $this->assertEquals($statusCode, $response->getStatusCode());
-        } else {
-            $this->assertTrue($response->$assertMethod());
-        }
+        $this->assertTrue($response->$assertMethod());
     }
 
     public static function statusCodeProvider(): array
@@ -614,7 +610,7 @@ class CreditCardTest extends TestCase
                         'Name' => $cardType,
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-CARD-001',
                 'Currency' => 'EUR',

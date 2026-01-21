@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Feature\PaymentMethods;
 
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
-use Tests\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class BankTransferTest extends TestCase
+class BankTransferTest extends FeatureTestCase
 {
     /** @test */
     public function it_creates_bank_transfer_payment(): void
@@ -33,7 +33,7 @@ class BankTransferTest extends TestCase
                         'Name' => 'transfer',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-TRANSFER-001',
                 'Currency' => 'EUR',
@@ -75,7 +75,7 @@ class BankTransferTest extends TestCase
                         'Name' => 'transfer',
                         'Action' => 'Refund',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-TRANSFER-REFUND-001',
                 'Currency' => 'EUR',
@@ -120,7 +120,7 @@ class BankTransferTest extends TestCase
                         'Name' => 'transfer',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-STATUS-001',
                 'Currency' => 'EUR',

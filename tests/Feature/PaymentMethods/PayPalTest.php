@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Feature\PaymentMethods;
 
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
-use Tests\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class PayPalTest extends TestCase
+class PayPalTest extends FeatureTestCase
 {
     /** @test */
     public function it_creates_a_paypal_payment_with_redirect(): void
@@ -37,7 +37,7 @@ class PayPalTest extends TestCase
                         'Name' => 'paypal',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-PAYPAL-001',
                 'Currency' => 'EUR',
@@ -81,7 +81,7 @@ class PayPalTest extends TestCase
                         'Name' => 'paypal',
                         'Action' => 'Refund',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-REFUND-001',
                 'Currency' => 'EUR',
@@ -124,7 +124,7 @@ class PayPalTest extends TestCase
                         'Name' => 'paypal',
                         'Action' => 'PayRecurrent',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-RECURRENT-001',
                 'Currency' => 'EUR',
@@ -173,7 +173,7 @@ class PayPalTest extends TestCase
                             ['Name' => 'CustomerEmail', 'Value' => 'customer@example.com'],
                             ['Name' => 'CustomerPhoneNumber', 'Value' => '+31612345678'],
                         ],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-EXTRA-INFO-001',
                 'Currency' => 'EUR',
@@ -222,7 +222,7 @@ class PayPalTest extends TestCase
                         'Name' => 'paypal',
                         'Action' => 'PayRemainder',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-REMAINDER-001',
                 'Currency' => 'EUR',
@@ -268,7 +268,7 @@ class PayPalTest extends TestCase
                         'Name' => 'paypal',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-STATUS-001',
                 'Currency' => 'EUR',

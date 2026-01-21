@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Feature\PaymentMethods;
 
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
-use Tests\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class WeroTest extends TestCase
+class WeroTest extends FeatureTestCase
 {
     /** @test */
     public function it_creates_a_wero_payment_with_redirect(): void
@@ -37,7 +37,7 @@ class WeroTest extends TestCase
                         'Name' => 'Wero',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-WERO-001',
                 'Currency' => 'EUR',
@@ -81,7 +81,7 @@ class WeroTest extends TestCase
                         'Name' => 'Wero',
                         'Action' => 'Refund',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-REFUND-001',
                 'Currency' => 'EUR',
@@ -127,7 +127,7 @@ class WeroTest extends TestCase
                         'Name' => 'Wero',
                         'Action' => 'PayRemainder',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-REMAINDER-001',
                 'Currency' => 'EUR',
@@ -174,7 +174,7 @@ class WeroTest extends TestCase
                         'Name' => 'Wero',
                         'Action' => 'Authorize',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-AUTH-001',
                 'Currency' => 'EUR',
@@ -218,7 +218,7 @@ class WeroTest extends TestCase
                         'Name' => 'Wero',
                         'Action' => 'CancelAuthorize',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-CANCEL-001',
                 'Currency' => 'EUR',
@@ -261,7 +261,7 @@ class WeroTest extends TestCase
                         'Name' => 'Wero',
                         'Action' => 'Capture',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-CAPTURE-001',
                 'Currency' => 'EUR',
@@ -306,7 +306,7 @@ class WeroTest extends TestCase
                         'Name' => 'Wero',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-STATUS-001',
                 'Currency' => 'EUR',

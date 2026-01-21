@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Feature\PaymentMethods;
 
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
-use Tests\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class AfterpayDigiAcceptTest extends TestCase
+class AfterpayDigiAcceptTest extends FeatureTestCase
 {
     /** @test */
     public function it_creates_pay_transaction(): void
@@ -33,7 +33,7 @@ class AfterpayDigiAcceptTest extends TestCase
                         'Name' => 'afterpaydigiaccept',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-DIGIACCEPT-001',
                 'Currency' => 'EUR',
@@ -75,7 +75,7 @@ class AfterpayDigiAcceptTest extends TestCase
                         'Name' => 'afterpaydigiaccept',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-DIGIACCEPT-FULL-001',
                 'Currency' => 'EUR',
@@ -144,7 +144,7 @@ class AfterpayDigiAcceptTest extends TestCase
                         'Name' => 'afterpaydigiaccept',
                         'Action' => 'Authorize',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-DIGIACCEPT-AUTH-001',
                 'Currency' => 'EUR',
@@ -187,7 +187,7 @@ class AfterpayDigiAcceptTest extends TestCase
                         'Name' => 'afterpaydigiaccept',
                         'Action' => 'Capture',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-DIGIACCEPT-CAPTURE-001',
                 'Currency' => 'EUR',
@@ -231,7 +231,7 @@ class AfterpayDigiAcceptTest extends TestCase
                         'Name' => 'afterpaydigiaccept',
                         'Action' => 'CancelAuthorize',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-DIGIACCEPT-CANCEL-001',
                 'Currency' => 'EUR',
@@ -274,7 +274,7 @@ class AfterpayDigiAcceptTest extends TestCase
                         'Name' => 'afterpaydigiaccept',
                         'Action' => 'Refund',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-DIGIACCEPT-REFUND-001',
                 'Currency' => 'EUR',
@@ -316,7 +316,7 @@ class AfterpayDigiAcceptTest extends TestCase
                         'Name' => 'afterpaydigiaccept',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-DIGIACCEPT-MULTI-001',
                 'Currency' => 'EUR',
@@ -381,7 +381,7 @@ class AfterpayDigiAcceptTest extends TestCase
                         'Name' => 'afterpaydigiaccept',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-DIGIACCEPT-SHIPPING-001',
                 'Currency' => 'EUR',
@@ -455,7 +455,7 @@ class AfterpayDigiAcceptTest extends TestCase
                         'Name' => 'afterpaydigiaccept',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-DIGIACCEPT-STATUS-001',
                 'Currency' => 'EUR',
@@ -470,11 +470,7 @@ class AfterpayDigiAcceptTest extends TestCase
             'currency' => 'EUR',
         ]);
 
-        if ($assertMethod === 'getStatusCode') {
-            $this->assertEquals($statusCode, $response->getStatusCode());
-        } else {
-            $this->assertTrue($response->$assertMethod());
-        }
+        $this->assertTrue($response->$assertMethod());
     }
 
     public static function statusCodeProvider(): array

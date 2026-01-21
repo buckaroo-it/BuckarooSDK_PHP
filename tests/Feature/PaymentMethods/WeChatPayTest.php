@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Feature\PaymentMethods;
 
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
-use Tests\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class WeChatPayTest extends TestCase
+class WeChatPayTest extends FeatureTestCase
 {
     /** @test */
     public function it_creates_a_wechatpay_payment_with_redirect(): void
@@ -37,7 +37,7 @@ class WeChatPayTest extends TestCase
                         'Name' => 'wechatpay',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-WECHAT-001',
                 'Currency' => 'EUR',
@@ -86,7 +86,7 @@ class WeChatPayTest extends TestCase
                         'Parameters' => [
                             ['Name' => 'Locale', 'Value' => 'zh_CN'],
                         ],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-WECHAT-LOCALE-001',
                 'Currency' => 'CNY',
@@ -133,7 +133,7 @@ class WeChatPayTest extends TestCase
                         'Name' => 'wechatpay',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-STATUS-001',
                 'Currency' => 'EUR',

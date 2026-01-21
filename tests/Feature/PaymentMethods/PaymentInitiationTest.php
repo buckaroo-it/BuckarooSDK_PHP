@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Feature\PaymentMethods;
 
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
-use Tests\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class PaymentInitiationTest extends TestCase
+class PaymentInitiationTest extends FeatureTestCase
 {
     /** @test */
     public function it_creates_a_payment_initiation_with_redirect(): void
@@ -40,7 +40,7 @@ class PaymentInitiationTest extends TestCase
                             ['Name' => 'issuer', 'Value' => 'BANK123'],
                             ['Name' => 'countryCode', 'Value' => 'NL'],
                         ],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-PBI-001',
                 'Currency' => 'EUR',
@@ -78,7 +78,7 @@ class PaymentInitiationTest extends TestCase
                             ['Name' => 'issuer', 'ListItemDescription' => 'Test Bank NL', 'ListItemID' => 'TESTNL01'],
                             ['Name' => 'issuer', 'ListItemDescription' => 'Test Bank DE', 'ListItemID' => 'TESTDE01'],
                         ],
-                    ]
+                    ],
                 ],
             ]),
         ]);
@@ -110,7 +110,7 @@ class PaymentInitiationTest extends TestCase
                         'Name' => 'PayByBank',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-STATUS-001',
                 'Currency' => 'EUR',
@@ -172,7 +172,7 @@ class PaymentInitiationTest extends TestCase
                         'Name' => 'PayByBank',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-COUNTRY-001',
                 'Currency' => 'EUR',

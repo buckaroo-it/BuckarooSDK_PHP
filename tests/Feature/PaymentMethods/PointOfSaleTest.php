@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Feature\PaymentMethods;
 
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
-use Tests\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class PointOfSaleTest extends TestCase
+class PointOfSaleTest extends FeatureTestCase
 {
     /** @test */
     public function it_creates_pos_payment(): void
@@ -33,7 +33,7 @@ class PointOfSaleTest extends TestCase
                         'Name' => 'pospayment',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-POS-001',
                 'Currency' => 'EUR',
@@ -75,7 +75,7 @@ class PointOfSaleTest extends TestCase
                         'Name' => 'pospayment',
                         'Action' => 'Refund',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-POS-REFUND-001',
                 'Currency' => 'EUR',
@@ -120,7 +120,7 @@ class PointOfSaleTest extends TestCase
                         'Name' => 'pospayment',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-STATUS-001',
                 'Currency' => 'EUR',

@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Feature\PaymentMethods;
 
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
-use Tests\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class BillinkTest extends TestCase
+class BillinkTest extends FeatureTestCase
 {
     /** @test */
     public function it_creates_pay_transaction(): void
@@ -33,7 +33,7 @@ class BillinkTest extends TestCase
                         'Name' => 'billink',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-BILLINK-001',
                 'Currency' => 'EUR',
@@ -75,7 +75,7 @@ class BillinkTest extends TestCase
                         'Name' => 'billink',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-BILLINK-BILLING-001',
                 'Currency' => 'EUR',
@@ -137,7 +137,7 @@ class BillinkTest extends TestCase
                         'Name' => 'billink',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-BILLINK-SHIPPING-001',
                 'Currency' => 'EUR',
@@ -208,7 +208,7 @@ class BillinkTest extends TestCase
                         'Name' => 'billink',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-BILLINK-ARTICLES-001',
                 'Currency' => 'EUR',
@@ -267,7 +267,7 @@ class BillinkTest extends TestCase
                         'Name' => 'billink',
                         'Action' => 'PayRemainder',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-BILLINK-REMAINDER-001',
                 'Currency' => 'EUR',
@@ -310,7 +310,7 @@ class BillinkTest extends TestCase
                         'Name' => 'billink',
                         'Action' => 'Refund',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-BILLINK-REFUND-001',
                 'Currency' => 'EUR',
@@ -355,7 +355,7 @@ class BillinkTest extends TestCase
                         'Name' => 'billink',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-BILLINK-STATUS-001',
                 'Currency' => 'EUR',
@@ -370,11 +370,7 @@ class BillinkTest extends TestCase
             'currency' => 'EUR',
         ]);
 
-        if ($assertMethod === 'getStatusCode') {
-            $this->assertEquals($statusCode, $response->getStatusCode());
-        } else {
-            $this->assertTrue($response->$assertMethod());
-        }
+        $this->assertTrue($response->$assertMethod());
     }
 
     public static function statusCodeProvider(): array

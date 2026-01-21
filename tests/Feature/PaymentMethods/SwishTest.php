@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Feature\PaymentMethods;
 
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
-use Tests\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class SwishTest extends TestCase
+class SwishTest extends FeatureTestCase
 {
     /** @test */
     public function it_creates_a_swish_payment_with_redirect(): void
@@ -37,7 +37,7 @@ class SwishTest extends TestCase
                         'Name' => 'Swish',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-SWISH-001',
                 'Currency' => 'SEK',
@@ -81,7 +81,7 @@ class SwishTest extends TestCase
                         'Name' => 'Swish',
                         'Action' => 'Refund',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-REFUND-001',
                 'Currency' => 'SEK',
@@ -127,7 +127,7 @@ class SwishTest extends TestCase
                         'Name' => 'Swish',
                         'Action' => 'PayRemainder',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-REMAINDER-001',
                 'Currency' => 'SEK',
@@ -173,7 +173,7 @@ class SwishTest extends TestCase
                         'Name' => 'Swish',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-STATUS-001',
                 'Currency' => 'SEK',

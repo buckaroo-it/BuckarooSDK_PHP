@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Feature\PaymentMethods;
 
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
-use Tests\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class BizumTest extends TestCase
+class BizumTest extends FeatureTestCase
 {
     /** @test */
     public function it_creates_a_bizum_payment_with_redirect(): void
@@ -37,7 +37,7 @@ class BizumTest extends TestCase
                         'Name' => 'Bizum',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-BIZUM-001',
                 'Currency' => 'EUR',
@@ -81,7 +81,7 @@ class BizumTest extends TestCase
                         'Name' => 'Bizum',
                         'Action' => 'Refund',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-REFUND-001',
                 'Currency' => 'EUR',
@@ -127,7 +127,7 @@ class BizumTest extends TestCase
                         'Name' => 'Bizum',
                         'Action' => 'PayRemainder',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-REMAINDER-001',
                 'Currency' => 'EUR',
@@ -173,7 +173,7 @@ class BizumTest extends TestCase
                         'Name' => 'Bizum',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-STATUS-001',
                 'Currency' => 'EUR',

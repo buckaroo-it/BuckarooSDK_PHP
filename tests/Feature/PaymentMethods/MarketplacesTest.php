@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Feature\PaymentMethods;
 
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
-use Tests\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class MarketplacesTest extends TestCase
+class MarketplacesTest extends FeatureTestCase
 {
     /** @test */
     public function it_splits_marketplace_transaction(): void
@@ -232,12 +232,7 @@ class MarketplacesTest extends TestCase
             ],
         ]);
 
-        if ($assertMethod === 'getStatusCode')
-        {
-            $this->assertEquals($statusCode, $response->getStatusCode());
-        } else {
-            $this->assertTrue($response->$assertMethod());
-        }
+        $this->assertTrue($response->$assertMethod());
     }
 
     public static function statusCodeProvider(): array

@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Feature\PaymentMethods;
 
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
-use Tests\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class iDealProcessingTest extends TestCase
+class iDealProcessingTest extends FeatureTestCase
 {
     /** @test */
     public function it_creates_ideal_processing_payment_with_redirect(): void
@@ -39,7 +39,7 @@ class iDealProcessingTest extends TestCase
                         'Parameters' => [
                             ['Name' => 'consumerIssuer', 'Value' => 'RABONL2U'],
                         ],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-IDPRO-001',
                 'Currency' => 'EUR',
@@ -87,7 +87,7 @@ class iDealProcessingTest extends TestCase
                         'Name' => 'idealprocessing',
                         'Action' => 'PayRemainder',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-IDPRO-REMAINDER-001',
                 'Currency' => 'EUR',
@@ -132,7 +132,7 @@ class iDealProcessingTest extends TestCase
                         'Name' => 'idealprocessing',
                         'Action' => 'Refund',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-IDPRO-REFUND-001',
                 'Currency' => 'EUR',
@@ -170,7 +170,7 @@ class iDealProcessingTest extends TestCase
                                 ],
                             ],
                         ],
-                    ]
+                    ],
                 ],
             ]),
         ]);
@@ -203,7 +203,7 @@ class iDealProcessingTest extends TestCase
                         'Name' => 'idealprocessing',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-STATUS-001',
                 'Currency' => 'EUR',
@@ -264,7 +264,7 @@ class iDealProcessingTest extends TestCase
                         'Name' => 'idealprocessing',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-ISSUER-001',
                 'Currency' => 'EUR',

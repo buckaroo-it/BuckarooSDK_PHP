@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Feature\PaymentMethods;
 
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
-use Tests\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class KlarnaKPTest extends TestCase
+class KlarnaKPTest extends FeatureTestCase
 {
     /** @test */
     public function it_creates_pay_transaction(): void
@@ -33,7 +33,7 @@ class KlarnaKPTest extends TestCase
                         'Name' => 'klarnakp',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-KLARNA-001',
                 'Currency' => 'EUR',
@@ -80,7 +80,7 @@ class KlarnaKPTest extends TestCase
                         'Parameters' => [
                             ['Name' => 'ReservationNumber', 'Value' => 'RES-123456'],
                         ],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-KLARNA-RESERVE-001',
                 'Currency' => 'EUR',
@@ -127,7 +127,7 @@ class KlarnaKPTest extends TestCase
                         'Name' => 'klarnakp',
                         'Action' => 'CancelReservation',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-KLARNA-CANCEL-001',
                 'Currency' => 'EUR',
@@ -169,7 +169,7 @@ class KlarnaKPTest extends TestCase
                         'Name' => 'klarnakp',
                         'Action' => 'UpdateReservation',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-KLARNA-UPDATE-001',
                 'Currency' => 'EUR',
@@ -212,7 +212,7 @@ class KlarnaKPTest extends TestCase
                         'Name' => 'klarnakp',
                         'Action' => 'Refund',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-KLARNA-REFUND-001',
                 'Currency' => 'EUR',
@@ -254,7 +254,7 @@ class KlarnaKPTest extends TestCase
                         'Name' => 'klarnakp',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-KLARNA-FULL-001',
                 'Currency' => 'EUR',
@@ -335,7 +335,7 @@ class KlarnaKPTest extends TestCase
                         'Name' => 'klarnakp',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-KLARNA-STATUS-001',
                 'Currency' => 'EUR',
@@ -353,11 +353,7 @@ class KlarnaKPTest extends TestCase
             'gender' => 1,
         ]);
 
-        if ($assertMethod === 'getStatusCode') {
-            $this->assertEquals($statusCode, $response->getStatusCode());
-        } else {
-            $this->assertTrue($response->$assertMethod());
-        }
+        $this->assertTrue($response->$assertMethod());
     }
 
     public static function statusCodeProvider(): array

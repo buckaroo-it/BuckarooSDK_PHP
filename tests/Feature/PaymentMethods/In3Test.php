@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Feature\PaymentMethods;
 
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
-use Tests\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class In3Test extends TestCase
+class In3Test extends FeatureTestCase
 {
     /** @test */
     public function it_creates_pay_transaction(): void
@@ -33,7 +33,7 @@ class In3Test extends TestCase
                         'Name' => 'in3',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-IN3-001',
                 'Currency' => 'EUR',
@@ -75,7 +75,7 @@ class In3Test extends TestCase
                         'Name' => 'in3',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-IN3-BILLING-001',
                 'Currency' => 'EUR',
@@ -136,7 +136,7 @@ class In3Test extends TestCase
                         'Name' => 'in3',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-IN3-ARTICLES-001',
                 'Currency' => 'EUR',
@@ -194,7 +194,7 @@ class In3Test extends TestCase
                         'Name' => 'in3',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-IN3-SHIPPING-001',
                 'Currency' => 'EUR',
@@ -266,7 +266,7 @@ class In3Test extends TestCase
                         'Name' => 'in3',
                         'Action' => 'PayRemainder',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-IN3-REMAINDER-001',
                 'Currency' => 'EUR',
@@ -309,7 +309,7 @@ class In3Test extends TestCase
                         'Name' => 'in3',
                         'Action' => 'Refund',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-IN3-REFUND-001',
                 'Currency' => 'EUR',
@@ -352,7 +352,7 @@ class In3Test extends TestCase
                         'Name' => 'in3',
                         'Action' => 'Refund',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-IN3-REFUND-ARTICLES-001',
                 'Currency' => 'EUR',
@@ -406,7 +406,7 @@ class In3Test extends TestCase
                         'Name' => 'in3',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-IN3-STATUS-001',
                 'Currency' => 'EUR',
@@ -421,11 +421,7 @@ class In3Test extends TestCase
             'currency' => 'EUR',
         ]);
 
-        if ($assertMethod === 'getStatusCode') {
-            $this->assertEquals($statusCode, $response->getStatusCode());
-        } else {
-            $this->assertTrue($response->$assertMethod());
-        }
+        $this->assertTrue($response->$assertMethod());
     }
 
     public static function statusCodeProvider(): array

@@ -4,14 +4,17 @@ declare(strict_types=1);
 
 namespace Tests\Feature;
 
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
-use Tests\TestCase;
 
 /**
  * Feature tests for BuckarooClient.
  * These tests use MockBuckaroo to simulate API responses.
+ *
+ * @runTestsInSeparateProcesses
+ * @preserveGlobalState disabled
  */
-class ClientTest extends TestCase
+class ClientTest extends FeatureTestCase
 {
     /** @test */
     public function it_can_create_client_with_credentials(): void
@@ -49,7 +52,7 @@ class ClientTest extends TestCase
                         ],
                     ],
                 ],
-            ])
+            ]),
         ]);
 
         $issuers = $this->buckaroo->method('ideal')->issuers();

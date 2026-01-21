@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Feature\PaymentMethods;
 
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
-use Tests\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class BuckarooVoucherTest extends TestCase
+class BuckarooVoucherTest extends FeatureTestCase
 {
     /** @test */
     public function it_creates_a_voucher_payment(): void
@@ -35,7 +35,7 @@ class BuckarooVoucherTest extends TestCase
                         'Parameters' => [
                             ['Name' => 'vouchercode', 'Value' => 'VOUCHER-123456'],
                         ],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-VOUCHER-001',
                 'Currency' => 'EUR',
@@ -79,7 +79,7 @@ class BuckarooVoucherTest extends TestCase
                         'Parameters' => [
                             ['Name' => 'vouchercode', 'Value' => 'VOUCHER-123456'],
                         ],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-REMAINDER-001',
                 'Currency' => 'EUR',
@@ -124,7 +124,7 @@ class BuckarooVoucherTest extends TestCase
                             ['Name' => 'vouchercode', 'Value' => 'VOUCHER-123456'],
                             ['Name' => 'balance', 'Value' => '75.00'],
                         ],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-BALANCE-001',
                 'Currency' => 'EUR',
@@ -168,7 +168,7 @@ class BuckarooVoucherTest extends TestCase
                             ['Name' => 'validUntil', 'Value' => '2026-12-31'],
                             ['Name' => 'creationBalance', 'Value' => '100.00'],
                         ],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-CREATE-001',
                 'Currency' => 'EUR',
@@ -212,7 +212,7 @@ class BuckarooVoucherTest extends TestCase
                         'Parameters' => [
                             ['Name' => 'vouchercode', 'Value' => 'VOUCHER-123456'],
                         ],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-DEACTIVATE-001',
                 'Currency' => 'EUR',
@@ -253,7 +253,7 @@ class BuckarooVoucherTest extends TestCase
                         'Name' => 'buckaroovoucher',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-STATUS-001',
                 'Currency' => 'EUR',

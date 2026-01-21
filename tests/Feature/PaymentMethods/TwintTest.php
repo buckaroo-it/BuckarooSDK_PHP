@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Feature\PaymentMethods;
 
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
-use Tests\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class TwintTest extends TestCase
+class TwintTest extends FeatureTestCase
 {
     /** @test */
     public function it_creates_a_twint_payment_with_redirect(): void
@@ -37,7 +37,7 @@ class TwintTest extends TestCase
                         'Name' => 'Twint',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-TWINT-001',
             ]),
@@ -74,7 +74,7 @@ class TwintTest extends TestCase
                         'Name' => 'Twint',
                         'Action' => 'Refund',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-REFUND-001',
             ]),
@@ -114,7 +114,7 @@ class TwintTest extends TestCase
                         'Name' => 'Twint',
                         'Action' => 'PayRemainder',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-REMAINDER-001',
             ]),
@@ -153,7 +153,7 @@ class TwintTest extends TestCase
                         'Name' => 'Twint',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-STATUS-001',
             ]),

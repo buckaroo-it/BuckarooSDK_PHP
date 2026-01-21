@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Feature\PaymentMethods;
 
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
-use Tests\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class EmandatesTest extends TestCase
+class EmandatesTest extends FeatureTestCase
 {
     /** @test */
     public function it_retrieves_issuer_list(): void
@@ -251,12 +251,7 @@ class EmandatesTest extends TestCase
             'debtorbankid' => 'ABNANL2A',
         ]);
 
-        if ($assertMethod === 'getStatusCode')
-        {
-            $this->assertEquals($statusCode, $response->getStatusCode());
-        } else {
-            $this->assertTrue($response->$assertMethod());
-        }
+        $this->assertTrue($response->$assertMethod());
     }
 
     public static function statusCodeProvider(): array

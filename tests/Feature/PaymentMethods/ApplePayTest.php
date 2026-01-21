@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Feature\PaymentMethods;
 
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
-use Tests\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class ApplePayTest extends TestCase
+class ApplePayTest extends FeatureTestCase
 {
     /** @test */
     public function it_creates_an_applepay_payment(): void
@@ -36,7 +36,7 @@ class ApplePayTest extends TestCase
                             ['Name' => 'paymentData', 'Value' => 'encrypted_payment_data'],
                             ['Name' => 'customerCardName', 'Value' => 'John Doe'],
                         ],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-APPLEPAY-001',
                 'Currency' => 'EUR',
@@ -83,7 +83,7 @@ class ApplePayTest extends TestCase
                         'Name' => 'applepay',
                         'Action' => 'PayRedirect',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-APPLEPAY-REDIRECT-001',
                 'Currency' => 'EUR',
@@ -127,7 +127,7 @@ class ApplePayTest extends TestCase
                         'Name' => 'applepay',
                         'Action' => 'Refund',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-REFUND-001',
                 'Currency' => 'EUR',
@@ -172,7 +172,7 @@ class ApplePayTest extends TestCase
                         'Name' => 'applepay',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-STATUS-001',
                 'Currency' => 'EUR',

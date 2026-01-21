@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Feature\PaymentMethods;
 
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
-use Tests\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class iDealTest extends TestCase
+class iDealTest extends FeatureTestCase
 {
     /** @test */
     public function it_creates_an_ideal_payment_with_redirect(): void
@@ -39,7 +39,7 @@ class iDealTest extends TestCase
                         'Parameters' => [
                             ['Name' => 'consumerIssuer', 'Value' => 'RABONL2U'],
                         ],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-IDEAL-001',
                 'Currency' => 'EUR',
@@ -84,7 +84,7 @@ class iDealTest extends TestCase
                         'Name' => 'ideal',
                         'Action' => 'Refund',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-REFUND-001',
                 'Currency' => 'EUR',
@@ -127,7 +127,7 @@ class iDealTest extends TestCase
                         'Name' => 'ideal',
                         'Action' => 'instantRefund',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-INSTANT-REFUND-001',
                 'Currency' => 'EUR',
@@ -173,7 +173,7 @@ class iDealTest extends TestCase
                         'Name' => 'ideal',
                         'Action' => 'PayRemainder',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-REMAINDER-001',
                 'Currency' => 'EUR',
@@ -221,7 +221,7 @@ class iDealTest extends TestCase
                         'Name' => 'ideal',
                         'Action' => 'PayFastCheckout',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-FAST-001',
                 'Currency' => 'EUR',
@@ -257,7 +257,7 @@ class iDealTest extends TestCase
                         'Parameters' => [
                             ['Name' => 'issuer', 'ListItemDescription' => 'Rabobank', 'ListItemID' => 'RABONL2U'],
                         ],
-                    ]
+                    ],
                 ],
             ]),
         ]);
@@ -289,7 +289,7 @@ class iDealTest extends TestCase
                         'Name' => 'ideal',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-STATUS-001',
                 'Currency' => 'EUR',
@@ -350,7 +350,7 @@ class iDealTest extends TestCase
                         'Name' => 'ideal',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-ISSUER-001',
                 'Currency' => 'EUR',

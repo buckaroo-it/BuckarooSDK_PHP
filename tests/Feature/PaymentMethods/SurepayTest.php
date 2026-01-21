@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace Tests\Feature\PaymentMethods;
 
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
-use Tests\Support\TestHelpers;
-use Tests\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class SurepayTest extends TestCase
+class SurepayTest extends FeatureTestCase
 {
     /** @test */
     public function it_verifies_account_details(): void
@@ -33,7 +32,7 @@ class SurepayTest extends TestCase
                             ['Name' => 'IBAN', 'Value' => 'NL91ABNA0417164300'],
                             ['Name' => 'Result', 'Value' => 'Match'],
                         ],
-                    ]
+                    ],
                 ],
             ]),
         ]);
@@ -64,7 +63,7 @@ class SurepayTest extends TestCase
                         'Name' => 'surepay',
                         'Action' => 'verify',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
             ]),
         ]);

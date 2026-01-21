@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Feature\PaymentMethods;
 
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
-use Tests\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class KnakenPayTest extends TestCase
+class KnakenPayTest extends FeatureTestCase
 {
     /** @test */
     public function it_creates_knakenpay_payment(): void
@@ -33,7 +33,7 @@ class KnakenPayTest extends TestCase
                         'Name' => 'knaken',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-KNAKEN-001',
                 'Currency' => 'EUR',
@@ -74,7 +74,7 @@ class KnakenPayTest extends TestCase
                         'Name' => 'knaken',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-KNAKENPAY-001',
                 'Currency' => 'EUR',
@@ -116,7 +116,7 @@ class KnakenPayTest extends TestCase
                         'Name' => 'knaken',
                         'Action' => 'Refund',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-KNAKEN-REFUND-001',
                 'Currency' => 'EUR',
@@ -161,7 +161,7 @@ class KnakenPayTest extends TestCase
                         'Name' => 'knaken',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-STATUS-001',
                 'Currency' => 'EUR',

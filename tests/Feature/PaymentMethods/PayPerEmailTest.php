@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Feature\PaymentMethods;
 
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
-use Tests\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class PayPerEmailTest extends TestCase
+class PayPerEmailTest extends FeatureTestCase
 {
     /** @test */
     public function it_creates_payment_invitation(): void
@@ -35,7 +35,7 @@ class PayPerEmailTest extends TestCase
                         'Parameters' => [
                             ['Name' => 'CustomerEmail', 'Value' => 'customer@example.com'],
                         ],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-PPE-001',
                 'Currency' => 'EUR',
@@ -80,7 +80,7 @@ class PayPerEmailTest extends TestCase
                         'Name' => 'payperemail',
                         'Action' => 'PaymentInvitation',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-STATUS-001',
                 'Currency' => 'EUR',

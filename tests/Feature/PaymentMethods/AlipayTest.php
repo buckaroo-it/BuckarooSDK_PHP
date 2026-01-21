@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Feature\PaymentMethods;
 
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
-use Tests\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class AlipayTest extends TestCase
+class AlipayTest extends FeatureTestCase
 {
     /** @test */
     public function it_creates_an_alipay_payment_with_redirect(): void
@@ -37,7 +37,7 @@ class AlipayTest extends TestCase
                         'Name' => 'alipay',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-ALIPAY-001',
                 'Currency' => 'EUR',
@@ -86,7 +86,7 @@ class AlipayTest extends TestCase
                         'Parameters' => [
                             ['Name' => 'UseMobileView', 'Value' => true],
                         ],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-ALIPAY-MOBILE-001',
                 'Currency' => 'EUR',
@@ -134,7 +134,7 @@ class AlipayTest extends TestCase
                         'Name' => 'alipay',
                         'Action' => 'PayRemainder',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-REMAINDER-001',
                 'Currency' => 'EUR',
@@ -180,7 +180,7 @@ class AlipayTest extends TestCase
                         'Name' => 'alipay',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-STATUS-001',
                 'Currency' => 'EUR',

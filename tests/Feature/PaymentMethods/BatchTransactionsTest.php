@@ -7,20 +7,26 @@ namespace Tests\Feature\PaymentMethods;
 use Buckaroo\PaymentMethods\BatchTransactions;
 use Buckaroo\PaymentMethods\iDeal\iDeal;
 use Buckaroo\Transaction\Response\TransactionResponse;
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
-use Tests\TestCase;
 
-class BatchTransactionsTest extends TestCase
+/**
+ * @runTestsInSeparateProcesses
+ * @preserveGlobalState disabled
+ */
+class BatchTransactionsTest extends FeatureTestCase
 {
-    public function test_batch_created_via_client(): void
+    /** @test */
+    public function it_creates_batch_via_client(): void
     {
         $batch = $this->buckaroo->batch([]);
 
         $this->assertInstanceOf(BatchTransactions::class, $batch);
     }
 
-    public function test_batch_accepts_payment_methods(): void
+    /** @test */
+    public function it_accepts_payment_methods(): void
     {
         $client = $this->buckaroo->client();
 
@@ -38,18 +44,20 @@ class BatchTransactionsTest extends TestCase
         $this->assertInstanceOf(BatchTransactions::class, $batch);
     }
 
-    public function test_execute_sends_to_batch_endpoint(): void
+    /** @test */
+    public function it_sends_to_batch_endpoint(): void
     {
         $this->mockBuckaroo->mockTransportRequests([
             BuckarooMockRequest::json('POST', '*/json/batch/DataRequests', []),
         ]);
 
-        $this->buckaroo->batch([])->execute();
+        $response = $this->buckaroo->batch([])->execute();
 
-        $this->assertTrue(true);
+        $this->assertInstanceOf(TransactionResponse::class, $response);
     }
 
-    public function test_execute_returns_response(): void
+    /** @test */
+    public function it_returns_response(): void
     {
         $this->mockBuckaroo->mockTransportRequests([
             BuckarooMockRequest::json('POST', '*/json/batch/DataRequests', [
@@ -62,7 +70,8 @@ class BatchTransactionsTest extends TestCase
         $this->assertInstanceOf(TransactionResponse::class, $response);
     }
 
-    public function test_execute_with_multiple_payments(): void
+    /** @test */
+    public function it_executes_with_multiple_payments(): void
     {
         $this->mockBuckaroo->mockTransportRequests([
             BuckarooMockRequest::json('POST', '*/json/batch/DataRequests', [
@@ -81,7 +90,8 @@ class BatchTransactionsTest extends TestCase
         $this->assertInstanceOf(TransactionResponse::class, $response);
     }
 
-    public function test_execute_with_three_payments(): void
+    /** @test */
+    public function it_executes_with_three_payments(): void
     {
         $this->mockBuckaroo->mockTransportRequests([
             BuckarooMockRequest::json('POST', '*/json/batch/DataRequests', [
@@ -102,7 +112,8 @@ class BatchTransactionsTest extends TestCase
         $this->assertInstanceOf(TransactionResponse::class, $batch->execute());
     }
 
-    public function test_handles_failed_transaction(): void
+    /** @test */
+    public function it_handles_failed_transaction(): void
     {
         $this->mockBuckaroo->mockTransportRequests([
             BuckarooMockRequest::json('POST', '*/json/batch/DataRequests', [
@@ -115,7 +126,8 @@ class BatchTransactionsTest extends TestCase
         $this->assertInstanceOf(TransactionResponse::class, $response);
     }
 
-    public function test_handles_partial_failure(): void
+    /** @test */
+    public function it_handles_partial_failure(): void
     {
         $this->mockBuckaroo->mockTransportRequests([
             BuckarooMockRequest::json('POST', '*/json/batch/DataRequests', [
@@ -134,7 +146,8 @@ class BatchTransactionsTest extends TestCase
         $this->assertInstanceOf(TransactionResponse::class, $batch->execute());
     }
 
-    public function test_handles_all_failed(): void
+    /** @test */
+    public function it_handles_all_failed(): void
     {
         $this->mockBuckaroo->mockTransportRequests([
             BuckarooMockRequest::json('POST', '*/json/batch/DataRequests', [
@@ -153,7 +166,8 @@ class BatchTransactionsTest extends TestCase
         $this->assertInstanceOf(TransactionResponse::class, $batch->execute());
     }
 
-    public function test_handles_pending_transaction(): void
+    /** @test */
+    public function it_handles_pending_transaction(): void
     {
         $this->mockBuckaroo->mockTransportRequests([
             BuckarooMockRequest::json('POST', '*/json/batch/DataRequests', [
@@ -166,7 +180,8 @@ class BatchTransactionsTest extends TestCase
         $this->assertInstanceOf(TransactionResponse::class, $response);
     }
 
-    public function test_execute_empty_batch(): void
+    /** @test */
+    public function it_executes_empty_batch(): void
     {
         $this->mockBuckaroo->mockTransportRequests([
             BuckarooMockRequest::json('POST', '*/json/batch/DataRequests', []),

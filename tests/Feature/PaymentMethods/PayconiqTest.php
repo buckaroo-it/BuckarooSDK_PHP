@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Tests\Feature\PaymentMethods;
 
+use Tests\FeatureTestCase;
 use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
-use Tests\TestCase;
 
 /**
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class PayconiqTest extends TestCase
+class PayconiqTest extends FeatureTestCase
 {
     /** @test */
     public function it_creates_a_payconiq_payment_with_redirect(): void
@@ -37,7 +37,7 @@ class PayconiqTest extends TestCase
                         'Name' => 'payconiq',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-PAYCONIQ-001',
                 'Currency' => 'EUR',
@@ -81,7 +81,7 @@ class PayconiqTest extends TestCase
                         'Name' => 'payconiq',
                         'Action' => 'Refund',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-REFUND-001',
                 'Currency' => 'EUR',
@@ -124,7 +124,7 @@ class PayconiqTest extends TestCase
                         'Name' => 'payconiq',
                         'Action' => 'instantRefund',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-INSTANT-REFUND-001',
                 'Currency' => 'EUR',
@@ -170,7 +170,7 @@ class PayconiqTest extends TestCase
                         'Name' => 'payconiq',
                         'Action' => 'PayRemainder',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-REMAINDER-001',
                 'Currency' => 'EUR',
@@ -216,7 +216,7 @@ class PayconiqTest extends TestCase
                         'Name' => 'payconiq',
                         'Action' => 'Pay',
                         'Parameters' => [],
-                    ]
+                    ],
                 ],
                 'Invoice' => 'INV-STATUS-001',
                 'Currency' => 'EUR',
