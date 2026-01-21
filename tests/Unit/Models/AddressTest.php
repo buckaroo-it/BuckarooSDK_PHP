@@ -196,8 +196,7 @@ class AddressTest extends TestCase
     {
         $variations = ['A', 'B2', 'III', 'bis', '1/2', 'Apt 5', 'Unit 12', 'rear', 'top floor'];
 
-        foreach ($variations as $suffix)
-        {
+        foreach ($variations as $suffix) {
             $address = new Address([
                 'street' => 'Test Street',
                 'houseNumber' => '100',

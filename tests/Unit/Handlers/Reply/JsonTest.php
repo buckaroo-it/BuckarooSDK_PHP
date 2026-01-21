@@ -7,7 +7,6 @@ namespace Tests\Unit\Handlers\Reply;
 use Buckaroo\Config\DefaultConfig;
 use Buckaroo\Handlers\HMAC\Generator;
 use Buckaroo\Handlers\Reply\Json;
-use Error;
 use Tests\TestCase;
 
 class JsonTest extends TestCase
@@ -269,7 +268,6 @@ class JsonTest extends TestCase
         $this->assertTrue($isValid, 'Special characters should be handled correctly');
     }
 
-
     public function test_validates_put_method(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
@@ -318,7 +316,6 @@ class JsonTest extends TestCase
         $this->assertTrue($isValid, 'URI with query parameters should be supported');
     }
 
-
     public function test_rejects_header_with_empty_segments(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
@@ -332,5 +329,4 @@ class JsonTest extends TestCase
 
         $this->assertFalse($isValid, 'Header with empty segments should be rejected');
     }
-
 }

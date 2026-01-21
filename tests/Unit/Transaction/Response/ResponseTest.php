@@ -39,7 +39,7 @@ class ResponseTest extends TestCase
             'Key' => 'TX-123',
             'Status' => ['Code' => ['Code' => 190]],
             'Invoice' => 'INV-001',
-            'Currency' => 'EUR'
+            'Currency' => 'EUR',
         ];
 
         $response = new Response(null, $data);
@@ -52,7 +52,7 @@ class ResponseTest extends TestCase
         $data = [
             'Key' => 'TX-456',
             'Invoice' => 'INV-002',
-            'Currency' => 'USD'
+            'Currency' => 'USD',
         ];
 
         $response = new Response(null, $data);
@@ -94,7 +94,7 @@ class ResponseTest extends TestCase
         $data = [
             'TransactionKey' => 'TX-MAGIC-001',
             'PaymentKey' => 'PAY-MAGIC-001',
-            'Invoice' => 'INV-MAGIC-001'
+            'Invoice' => 'INV-MAGIC-001',
         ];
 
         $response = new Response(null, $data);
@@ -119,11 +119,11 @@ class ResponseTest extends TestCase
         $data = [
             'Status' => [
                 'Code' => ['Code' => 190],
-                'SubCode' => ['Code' => 'S001']
+                'SubCode' => ['Code' => 'S001'],
             ],
             'Services' => [
-                ['Name' => 'ideal', 'Action' => 'Pay']
-            ]
+                ['Name' => 'ideal', 'Action' => 'Pay'],
+            ],
         ];
 
         $response = new Response(null, $data);
@@ -152,7 +152,7 @@ class ResponseTest extends TestCase
             'BoolTrue' => true,
             'BoolFalse' => false,
             'NullValue' => null,
-            'ArrayValue' => ['item1', 'item2']
+            'ArrayValue' => ['item1', 'item2'],
         ];
 
         $response = new Response(null, $data);
@@ -183,7 +183,7 @@ class ResponseTest extends TestCase
             'status' => 200,
             'headers' => ['Content-Type' => 'application/json'],
             'body' => '{"test": "data"}',
-            'timestamp' => time()
+            'timestamp' => time(),
         ];
 
         $response = new Response($httpResponse, ['Key' => 'TX-666']);

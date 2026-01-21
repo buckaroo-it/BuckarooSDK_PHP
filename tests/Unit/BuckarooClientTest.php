@@ -17,8 +17,18 @@ use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
 use Tests\TestCase;
 
+/**
+ * @runTestsInSeparateProcesses
+ * @preserveGlobalState disabled
+ */
 class BuckarooClientTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->useMock();
+    }
+
     public function test_creates_client_with_string_credentials(): void
     {
         $client = new BuckarooClient('test-key', 'test-secret', 'test');
@@ -101,7 +111,6 @@ class BuckarooClientTest extends TestCase
 
     public function test_passes_client_to_transaction_service(): void
     {
-
         $this->mockBuckaroo->mockTransportRequests([
             BuckarooMockRequest::json(
                 'GET',
@@ -112,7 +121,7 @@ class BuckarooClientTest extends TestCase
                         'Code' => ['Code' => 190],
                     ],
                 ])
-            )
+            ),
         ]);
 
         $client = new BuckarooClient($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
@@ -165,7 +174,6 @@ class BuckarooClientTest extends TestCase
 
     public function test_validates_credentials_successfully(): void
     {
-
         $this->mockBuckaroo->mockTransportRequests([
             BuckarooMockRequest::json(
                 'GET',
@@ -179,7 +187,7 @@ class BuckarooClientTest extends TestCase
                     ],
                 ],
                 200
-            )
+            ),
         ]);
 
         $client = new BuckarooClient($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
@@ -191,7 +199,6 @@ class BuckarooClientTest extends TestCase
 
     public function test_returns_false_for_invalid_credentials(): void
     {
-
         $this->mockBuckaroo->mockTransportRequests([
             BuckarooMockRequest::json(
                 'GET',
@@ -200,7 +207,7 @@ class BuckarooClientTest extends TestCase
                     'error' => 'Invalid credentials',
                 ],
                 401
-            )
+            ),
         ]);
 
         $client = new BuckarooClient('invalid-key', 'invalid-secret');
@@ -215,7 +222,9 @@ class BuckarooClientTest extends TestCase
         $client = new BuckarooClient('test-key', 'test-secret');
 
         $observer = new class implements Observer {
-            public function handle(string $method, string $message, array $context = []): void {}
+            public function handle(string $method, string $message, array $context = []): void
+            {
+            }
         };
 
         $result = $client->attachLogger($observer);
@@ -244,7 +253,6 @@ class BuckarooClientTest extends TestCase
 
     public function test_retrieves_active_subscriptions_list(): void
     {
-
         $xmlResponse = '<?xml version="1.0" encoding="UTF-8"?>
 <ArrayOfServiceCurrencies>
     <ServiceCurrencies>
@@ -281,7 +289,7 @@ class BuckarooClientTest extends TestCase
                         ],
                     ],
                 ]
-            )
+            ),
         ]);
 
         $client = new BuckarooClient($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
@@ -296,7 +304,6 @@ class BuckarooClientTest extends TestCase
 
     public function test_handles_empty_subscriptions_response(): void
     {
-
         $this->mockBuckaroo->mockTransportRequests([
             BuckarooMockRequest::json(
                 'POST',
@@ -304,7 +311,7 @@ class BuckarooClientTest extends TestCase
                 [
                     'ServiceParameters' => [],
                 ]
-            )
+            ),
         ]);
 
         $client = new BuckarooClient($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);

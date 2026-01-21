@@ -10,11 +10,20 @@ use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
 use Tests\TestCase;
 
+/**
+ * @runTestsInSeparateProcesses
+ * @preserveGlobalState disabled
+ */
 class TransactionServiceTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->useMock();
+    }
+
     public function test_status_fetches_transaction_status_successfully(): void
     {
-
         $transactionKey = TestHelpers::generateTransactionKey();
 
         $this->mockBuckaroo->mockTransportRequests([
@@ -41,7 +50,6 @@ class TransactionServiceTest extends TestCase
 
     public function test_status_parses_transaction_response_data(): void
     {
-
         $transactionKey = TestHelpers::generateTransactionKey();
         $paymentKey = TestHelpers::generateTransactionKey();
 
@@ -76,7 +84,6 @@ class TransactionServiceTest extends TestCase
 
     public function test_refund_info_fetches_refund_information_successfully(): void
     {
-
         $transactionKey = TestHelpers::generateTransactionKey();
 
         $this->mockBuckaroo->mockTransportRequests([
@@ -103,7 +110,6 @@ class TransactionServiceTest extends TestCase
 
     public function test_refund_info_returns_response_object(): void
     {
-
         $transactionKey = TestHelpers::generateTransactionKey();
 
         $this->mockBuckaroo->mockTransportRequests([
@@ -131,7 +137,6 @@ class TransactionServiceTest extends TestCase
 
     public function test_cancel_info_fetches_cancel_information_successfully(): void
     {
-
         $transactionKey = TestHelpers::generateTransactionKey();
 
         $this->mockBuckaroo->mockTransportRequests([
@@ -157,7 +162,6 @@ class TransactionServiceTest extends TestCase
 
     public function test_cancel_info_returns_response_object(): void
     {
-
         $transactionKey = TestHelpers::generateTransactionKey();
 
         $this->mockBuckaroo->mockTransportRequests([
@@ -184,7 +188,6 @@ class TransactionServiceTest extends TestCase
 
     public function test_handles_http_404_not_found_error(): void
     {
-
         $transactionKey = TestHelpers::generateTransactionKey();
 
         $this->mockBuckaroo->mockTransportRequests([
@@ -210,7 +213,6 @@ class TransactionServiceTest extends TestCase
 
     public function test_handles_http_401_unauthorized_error(): void
     {
-
         $transactionKey = TestHelpers::generateTransactionKey();
 
         $this->mockBuckaroo->mockTransportRequests([
@@ -238,7 +240,6 @@ class TransactionServiceTest extends TestCase
 
     public function test_handles_http_500_server_error(): void
     {
-
         $transactionKey = TestHelpers::generateTransactionKey();
 
         $this->mockBuckaroo->mockTransportRequests([

@@ -38,15 +38,13 @@ class ClientIPTest extends TestCase
     {
         $originalServer = $_SERVER;
 
-        try
-        {
+        try {
             $_SERVER = [];
             $clientIP = new ClientIP();
 
             $this->assertSame('127.0.0.1', $clientIP->Address);
             $this->assertSame(IPProtocolVersion::IPV4, $clientIP->Type);
-        } finally
-        {
+        } finally {
             $_SERVER = $originalServer;
         }
     }

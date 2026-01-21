@@ -320,8 +320,8 @@ class TransactionRequestTest extends TestCase
             'Name' => 'ideal',
             'Action' => 'Pay',
             'Parameters' => [
-                ['Name' => 'issuer', 'Value' => 'ABNANL2A']
-            ]
+                ['Name' => 'issuer', 'Value' => 'ABNANL2A'],
+            ],
         ]);
 
         $data = $request->data();
@@ -391,7 +391,7 @@ class TransactionRequestTest extends TestCase
             ->setData('ReturnURL', 'https://example.com/return')
             ->setData('Services', [
                 'Name' => 'creditcard',
-                'Action' => 'Pay'
+                'Action' => 'Pay',
             ]);
 
         $array = $request->toArray();

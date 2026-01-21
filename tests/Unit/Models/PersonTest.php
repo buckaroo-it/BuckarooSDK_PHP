@@ -93,8 +93,7 @@ class PersonTest extends TestCase
             'der',
         ];
 
-        foreach ($dutchPrefixes as $prefix)
-        {
+        foreach ($dutchPrefixes as $prefix) {
             $person = new Person([
                 'firstName' => 'Jan',
                 'lastNamePrefix' => $prefix,

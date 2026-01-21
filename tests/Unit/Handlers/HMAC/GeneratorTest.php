@@ -84,7 +84,7 @@ class GeneratorTest extends TestCase
         $data = [
             'amount' => 10.50,
             'url' => 'https://example.com/callback',
-            'description' => 'Test/Payment'
+            'description' => 'Test/Payment',
         ];
 
         $generator = new Generator($config, $data, 'https://example.com/api');
@@ -315,5 +315,4 @@ class GeneratorTest extends TestCase
             $this->assertSame($expectedBase64, $base64Data);
         }
     }
-
 }

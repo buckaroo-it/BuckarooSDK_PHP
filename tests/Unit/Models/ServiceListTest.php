@@ -259,8 +259,7 @@ class ServiceListTest extends TestCase
         $serviceList = new ServiceList('test', 1, 'action');
 
         $largeArray = [];
-        for ($i = 0; $i < 100; $i++)
-        {
+        for ($i = 0; $i < 100; $i++) {
             $largeArray[] = ['Name' => 'param' . $i, 'Value' => 'value' . $i];
         }
 
@@ -308,8 +307,7 @@ class ServiceListTest extends TestCase
     {
         $actions = ['Pay', 'Authorize', 'Refund', 'Cancel', 'Capture'];
 
-        foreach ($actions as $action)
-        {
+        foreach ($actions as $action) {
             $serviceList = new ServiceList('test', 1, $action);
             $this->assertSame($action, $serviceList->action);
         }
@@ -319,8 +317,7 @@ class ServiceListTest extends TestCase
     {
         $versions = [1, 2, 3, 10, 99];
 
-        foreach ($versions as $version)
-        {
+        foreach ($versions as $version) {
             $serviceList = new ServiceList('test', $version, 'Pay');
             $this->assertSame($version, $serviceList->version);
         }

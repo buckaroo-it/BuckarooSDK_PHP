@@ -8,8 +8,18 @@ use Buckaroo\Services\ActiveSubscriptions;
 use Tests\Support\BuckarooMockRequest;
 use Tests\TestCase;
 
+/**
+ * @runTestsInSeparateProcesses
+ * @preserveGlobalState disabled
+ */
 class ActiveSubscriptionsTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->useMock();
+    }
+
     public function test_it_returns_active_subscriptions(): void
     {
         $xmlResponse = '<?xml version="1.0" encoding="UTF-8"?>

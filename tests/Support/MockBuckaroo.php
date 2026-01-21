@@ -99,8 +99,7 @@ final class MockBuckaroo
             ->shouldReceive('createClient')
             ->zeroOrMoreTimes()
             ->andReturnUsing(static function ($config) {
-                return new class() implements HttpClientInterface
-                {
+                return new class() implements HttpClientInterface {
                     public function call(string $url, array $headers, string $method, ?string $data = null)
                     {
                         $mock = MockBuckaroo::getInstance();

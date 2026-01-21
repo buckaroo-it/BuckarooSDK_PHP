@@ -10,8 +10,18 @@ use Buckaroo\Transaction\Request\Request;
 use ReflectionClass;
 use Tests\TestCase;
 
+/**
+ * @runTestsInSeparateProcesses
+ * @preserveGlobalState disabled
+ */
 class BatchRequestTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->useMock();
+    }
+
     public function test_creates_instance(): void
     {
         $batchRequest = new BatchRequest([]);

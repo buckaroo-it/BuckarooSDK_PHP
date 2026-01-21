@@ -13,8 +13,18 @@ use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
 use Tests\TestCase;
 
+/**
+ * @runTestsInSeparateProcesses
+ * @preserveGlobalState disabled
+ */
 class ClientTest extends TestCase
 {
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->useMock();
+    }
+
     public function test_creates_client_with_config(): void
     {
         $config = new DefaultConfig('test-key', 'test-secret', 'test');
@@ -85,7 +95,6 @@ class ClientTest extends TestCase
 
     public function test_sends_get_request_to_endpoint(): void
     {
-
         $transactionKey = TestHelpers::generateTransactionKey();
 
         $this->mockBuckaroo->mockTransportRequests([
@@ -93,7 +102,7 @@ class ClientTest extends TestCase
                 'GET',
                 "*/Transaction/Status/{$transactionKey}",
                 TestHelpers::successResponse(['Key' => $transactionKey])
-            )
+            ),
         ]);
 
         $client = $this->buckaroo->client();
@@ -106,13 +115,12 @@ class ClientTest extends TestCase
 
     public function test_uses_default_transaction_endpoint_for_get(): void
     {
-
         $this->mockBuckaroo->mockTransportRequests([
             BuckarooMockRequest::json(
                 'GET',
                 '*/Transaction/',
                 TestHelpers::successResponse()
-            )
+            ),
         ]);
 
         $client = $this->buckaroo->client();
@@ -123,13 +131,12 @@ class ClientTest extends TestCase
 
     public function test_get_request_returns_custom_response_class(): void
     {
-
         $this->mockBuckaroo->mockTransportRequests([
             BuckarooMockRequest::json(
                 'GET',
                 '*/Transaction/',
                 TestHelpers::successResponse()
-            )
+            ),
         ]);
 
         $client = $this->buckaroo->client();
@@ -140,7 +147,6 @@ class ClientTest extends TestCase
 
     public function test_sends_post_request_with_payload(): void
     {
-
         $transactionKey = TestHelpers::generateTransactionKey();
 
         $this->mockBuckaroo->mockTransportRequests([
@@ -149,9 +155,9 @@ class ClientTest extends TestCase
                 '*/Transaction/',
                 TestHelpers::successResponse([
                     'Key' => $transactionKey,
-                    'Invoice' => 'INV-POST-001'
+                    'Invoice' => 'INV-POST-001',
                 ])
-            )
+            ),
         ]);
 
         $request = new TransactionRequest();
@@ -169,13 +175,12 @@ class ClientTest extends TestCase
 
     public function test_post_request_handles_empty_payload(): void
     {
-
         $this->mockBuckaroo->mockTransportRequests([
             BuckarooMockRequest::json(
                 'POST',
                 '*/Transaction/',
                 TestHelpers::successResponse()
-            )
+            ),
         ]);
 
         $client = $this->buckaroo->client();
@@ -187,7 +192,6 @@ class ClientTest extends TestCase
 
     public function test_sends_batch_transaction_request(): void
     {
-
         $transactionKey = TestHelpers::generateTransactionKey();
 
         $this->mockBuckaroo->mockTransportRequests([
@@ -195,7 +199,7 @@ class ClientTest extends TestCase
                 'POST',
                 '*/batch/Transactions',
                 TestHelpers::successResponse(['Key' => $transactionKey])
-            )
+            ),
         ]);
 
         $request = new TransactionRequest();
@@ -213,13 +217,12 @@ class ClientTest extends TestCase
 
     public function test_sends_batch_data_request(): void
     {
-
         $this->mockBuckaroo->mockTransportRequests([
             BuckarooMockRequest::json(
                 'POST',
                 '*/batch/DataRequests',
                 TestHelpers::successResponse()
-            )
+            ),
         ]);
 
         $request = new TransactionRequest();
@@ -236,7 +239,6 @@ class ClientTest extends TestCase
 
     public function test_fetches_payment_method_specification(): void
     {
-
         $this->mockBuckaroo->mockTransportRequests([
             BuckarooMockRequest::json(
                 'GET',
@@ -246,11 +248,11 @@ class ClientTest extends TestCase
                         [
                             'Name' => 'ideal',
                             'Version' => 2,
-                            'Actions' => ['Pay', 'Refund']
-                        ]
-                    ]
+                            'Actions' => ['Pay', 'Refund'],
+                        ],
+                    ],
                 ]
-            )
+            ),
         ]);
 
         $client = $this->buckaroo->client();
@@ -261,13 +263,12 @@ class ClientTest extends TestCase
 
     public function test_specification_defaults_service_version_to_zero(): void
     {
-
         $this->mockBuckaroo->mockTransportRequests([
             BuckarooMockRequest::json(
                 'GET',
                 '*/Specification/paypal*',
                 ['Services' => []]
-            )
+            ),
         ]);
 
         $client = $this->buckaroo->client();
@@ -278,7 +279,6 @@ class ClientTest extends TestCase
 
     public function test_sends_data_request_to_data_endpoint(): void
     {
-
         $transactionKey = TestHelpers::generateTransactionKey();
 
         $this->mockBuckaroo->mockTransportRequests([
@@ -291,15 +291,15 @@ class ClientTest extends TestCase
                         'Code' => ['Code' => 190],
                         'SubCode' => ['Code' => 'S001'],
                         'DateTime' => date('Y-m-d\TH:i:s'),
-                    ]
+                    ],
                 ])
-            )
+            ),
         ]);
 
         $request = new TransactionRequest();
         $request->setData('Services', [
             'Name' => 'GetActiveSubscriptions',
-            'Action' => 'GetActiveSubscriptions'
+            'Action' => 'GetActiveSubscriptions',
         ]);
 
         $client = $this->buckaroo->client();

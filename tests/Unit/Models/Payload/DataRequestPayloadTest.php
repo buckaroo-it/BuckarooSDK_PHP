@@ -158,8 +158,7 @@ class DataRequestPayloadTest extends TestCase
         $this->assertArrayHasKey('List', $array);
         $this->assertCount(3, $array['List']);
 
-        foreach ($array['List'] as $item)
-        {
+        foreach ($array['List'] as $item) {
             $this->assertArrayHasKey('Name', $item);
             $this->assertArrayHasKey('Value', $item);
         }

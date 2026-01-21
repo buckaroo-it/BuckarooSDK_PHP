@@ -87,12 +87,12 @@ class AdditionalParametersTest extends TestCase
         $dataRequestArray = $dataRequestMode->toArray();
 
         $this->assertTrue(
-            ! isset($defaultArray['AdditionalParameter']) || empty($defaultArray['AdditionalParameter']),
+            !isset($defaultArray['AdditionalParameter']) || empty($defaultArray['AdditionalParameter']),
             'Empty parameters should result in empty or missing AdditionalParameter'
         );
 
         $this->assertTrue(
-            ! isset($dataRequestArray['List']) || empty($dataRequestArray['List']),
+            !isset($dataRequestArray['List']) || empty($dataRequestArray['List']),
             'Empty parameters should result in empty or missing List'
         );
     }
@@ -106,12 +106,12 @@ class AdditionalParametersTest extends TestCase
         $dataRequestArray = $dataRequestMode->toArray();
 
         $this->assertTrue(
-            ! isset($defaultArray['AdditionalParameter']) || empty($defaultArray['AdditionalParameter']),
+            !isset($defaultArray['AdditionalParameter']) || empty($defaultArray['AdditionalParameter']),
             'Null parameters should result in empty or missing AdditionalParameter'
         );
 
         $this->assertTrue(
-            ! isset($dataRequestArray['List']) || empty($dataRequestArray['List']),
+            !isset($dataRequestArray['List']) || empty($dataRequestArray['List']),
             'Null parameters should result in empty or missing List'
         );
     }
@@ -290,8 +290,7 @@ class AdditionalParametersTest extends TestCase
     public function test_handles_large_parameter_sets(): void
     {
         $largeSet = [];
-        for ($i = 0; $i < 100; $i++)
-        {
+        for ($i = 0; $i < 100; $i++) {
             $largeSet['param' . $i] = 'value' . $i;
         }
 
@@ -457,8 +456,7 @@ class AdditionalParametersTest extends TestCase
         $this->assertCount(2, $array['AdditionalParameter']);
         $this->assertEmpty($array['List']);
 
-        foreach ($array['AdditionalParameter'] as $item)
-        {
+        foreach ($array['AdditionalParameter'] as $item) {
             $this->assertArrayHasKey('Name', $item);
             $this->assertArrayHasKey('Value', $item);
             $this->assertCount(2, $item);
@@ -480,8 +478,7 @@ class AdditionalParametersTest extends TestCase
         $this->assertCount(2, $array['List']);
         $this->assertEmpty($array['AdditionalParameter']);
 
-        foreach ($array['List'] as $item)
-        {
+        foreach ($array['List'] as $item) {
             $this->assertArrayHasKey('Name', $item);
             $this->assertArrayHasKey('Value', $item);
             $this->assertCount(2, $item);

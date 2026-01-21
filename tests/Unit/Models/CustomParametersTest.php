@@ -33,7 +33,7 @@ class CustomParametersTest extends TestCase
         $array = $params->toArray();
 
         $this->assertTrue(
-            ! isset($array['List']) || empty($array['List']),
+            !isset($array['List']) || empty($array['List']),
             'Empty parameters should result in empty or missing List'
         );
     }
@@ -45,7 +45,7 @@ class CustomParametersTest extends TestCase
         $array = $params->toArray();
 
         $this->assertTrue(
-            ! isset($array['List']) || empty($array['List']),
+            !isset($array['List']) || empty($array['List']),
             'Null parameters should result in empty or missing List'
         );
     }
@@ -272,8 +272,7 @@ class CustomParametersTest extends TestCase
     public function test_handles_large_parameter_sets(): void
     {
         $largeSet = [];
-        for ($i = 0; $i < 100; $i++)
-        {
+        for ($i = 0; $i < 100; $i++) {
             $largeSet['param' . $i] = 'value' . $i;
         }
 

@@ -83,8 +83,7 @@ class EmailTest extends TestCase
             'double@@at.com',
         ];
 
-        foreach ($invalidEmails as $invalidEmail)
-        {
+        foreach ($invalidEmails as $invalidEmail) {
             $email = new Email($invalidEmail);
 
             $this->assertSame($invalidEmail, $email->email);
@@ -113,8 +112,7 @@ class EmailTest extends TestCase
             'a!#$%&\'*+/=?^_`{|}~@example.com',
         ];
 
-        foreach ($specialEmails as $specialEmail)
-        {
+        foreach ($specialEmails as $specialEmail) {
             $email = new Email($specialEmail);
 
             $this->assertSame($specialEmail, $email->email);
@@ -131,8 +129,7 @@ class EmailTest extends TestCase
             '用户@例子.中国',
         ];
 
-        foreach ($unicodeEmails as $unicodeEmail)
-        {
+        foreach ($unicodeEmails as $unicodeEmail) {
             $email = new Email($unicodeEmail);
 
             $this->assertSame($unicodeEmail, $email->email);
@@ -157,8 +154,7 @@ class EmailTest extends TestCase
             "newline\n@example.com",
         ];
 
-        foreach ($whitespaceEmails as $whitespaceEmail)
-        {
+        foreach ($whitespaceEmails as $whitespaceEmail) {
             $email = new Email($whitespaceEmail);
 
             $this->assertSame($whitespaceEmail, $email->email);

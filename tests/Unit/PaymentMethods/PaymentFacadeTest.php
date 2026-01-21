@@ -17,6 +17,10 @@ use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
 use Tests\TestCase;
 
+/**
+ * @runTestsInSeparateProcesses
+ * @preserveGlobalState disabled
+ */
 class PaymentFacadeTest extends TestCase
 {
     private Client $client;
@@ -24,6 +28,7 @@ class PaymentFacadeTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
+        $this->useMock();
 
         $this->client = $this->buckaroo->client();
     }

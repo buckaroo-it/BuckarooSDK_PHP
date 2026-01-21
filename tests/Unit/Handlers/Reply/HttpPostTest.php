@@ -390,5 +390,4 @@ class HttpPostTest extends TestCase
 
         $this->assertTrue($isValid, 'Field names with multiple underscores should be handled');
     }
-
 }

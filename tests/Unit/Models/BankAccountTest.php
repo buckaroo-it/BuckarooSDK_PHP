@@ -92,8 +92,7 @@ class BankAccountTest extends TestCase
             ['iban' => 'ES9121000418450200051332', 'country' => 'ES'],
         ];
 
-        foreach ($testCases as $testCase)
-        {
+        foreach ($testCases as $testCase) {
             $bankAccount = new BankAccount(['iban' => $testCase['iban']]);
             $this->assertSame($testCase['iban'], $bankAccount->iban);
             $this->assertSame($testCase['iban'], $bankAccount->toArray()['iban']);
