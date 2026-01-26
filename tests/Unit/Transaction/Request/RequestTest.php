@@ -176,4 +176,21 @@ class RequestTest extends TestCase
 
         $this->assertSame('Bearer new-token', $this->request->getHeader('Authorization'));
     }
+
+    /**
+     * Test documents a known bug in Request::getHeaders().
+     *
+     * The array_map callback expects ($value, $key) but only one array
+     * is passed, causing ArgumentCountError when headers exist.
+     * This line (123) cannot be covered until the source bug is fixed.
+     */
+    public function test_get_headers_has_known_bug_when_headers_exist(): void
+    {
+        $this->request->setHeader('Content-Type', 'application/json');
+
+        // The method throws ArgumentCountError due to incorrect array_map usage
+        $this->expectException(\ArgumentCountError::class);
+
+        $this->request->getHeaders();
+    }
 }
