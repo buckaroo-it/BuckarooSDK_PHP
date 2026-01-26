@@ -9,8 +9,6 @@ use Buckaroo\Models\Email;
 use Buckaroo\Models\Person;
 use Buckaroo\Models\Phone;
 use Buckaroo\PaymentMethods\Subscriptions\Models\Configuration;
-use Buckaroo\PaymentMethods\Subscriptions\Models\RatePlan;
-use Buckaroo\PaymentMethods\Subscriptions\Models\RatePlanCharge;
 use Buckaroo\PaymentMethods\Subscriptions\Models\Subscription;
 use Buckaroo\PaymentMethods\Subscriptions\Service\ParameterKeys\AddressAdapter;
 use Buckaroo\PaymentMethods\Subscriptions\Service\ParameterKeys\BankAccountAdapter;

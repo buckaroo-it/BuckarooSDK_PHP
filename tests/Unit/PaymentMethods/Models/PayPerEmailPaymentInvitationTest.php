@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Unit\PaymentMethods\Models;
 
-use Buckaroo\PaymentMethods\PayPerEmail\Models\Attachment;
 use Buckaroo\PaymentMethods\PayPerEmail\Models\PaymentInvitation;
 use Buckaroo\PaymentMethods\PayPerEmail\Service\ParameterKeys\AttachmentAdapter;
 use Buckaroo\PaymentMethods\PayPerEmail\Service\ParameterKeys\CustomerAdapter;

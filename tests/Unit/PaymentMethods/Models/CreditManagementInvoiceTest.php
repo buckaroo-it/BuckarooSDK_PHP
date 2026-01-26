@@ -10,7 +10,6 @@ use Buckaroo\Models\Debtor;
 use Buckaroo\Models\Email;
 use Buckaroo\Models\Person;
 use Buckaroo\Models\Phone;
-use Buckaroo\PaymentMethods\CreditManagement\Models\Article;
 use Buckaroo\PaymentMethods\CreditManagement\Models\Invoice;
 use Buckaroo\PaymentMethods\CreditManagement\Service\ParameterKeys\ArticleAdapter;
 use Tests\TestCase;

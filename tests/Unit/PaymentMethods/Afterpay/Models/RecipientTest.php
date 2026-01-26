@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\PaymentMethods\Afterpay\Models;
 
-use Buckaroo\Models\Company;
 use Buckaroo\Models\Email;
-use Buckaroo\PaymentMethods\Afterpay\Models\Person;
 use Buckaroo\PaymentMethods\Afterpay\Models\Recipient;
 use Buckaroo\PaymentMethods\Afterpay\Service\ParameterKeys\AddressAdapter;
 use Buckaroo\PaymentMethods\Afterpay\Service\ParameterKeys\PhoneAdapter;

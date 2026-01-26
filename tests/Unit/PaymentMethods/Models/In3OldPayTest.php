@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Tests\Unit\PaymentMethods\Models;
 
+use Buckaroo\Models\Email;
+use Buckaroo\Models\Person;
 use Buckaroo\PaymentMethods\In3Old\Models\Pay;
 use Buckaroo\PaymentMethods\In3Old\Models\Subtotal;
 use Buckaroo\PaymentMethods\In3Old\Service\ParameterKeys\AddressAdapter;
 use Buckaroo\PaymentMethods\In3Old\Service\ParameterKeys\ArticleAdapter;
 use Buckaroo\PaymentMethods\In3Old\Service\ParameterKeys\CompanyAdapter;
 use Buckaroo\PaymentMethods\In3Old\Service\ParameterKeys\PhoneAdapter;
-use Buckaroo\Models\Person;
-use Buckaroo\Models\Email;
 use Tests\TestCase;
 
 class In3OldPayTest extends TestCase
