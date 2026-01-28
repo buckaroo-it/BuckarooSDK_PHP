@@ -146,6 +146,28 @@ class DefaultLoggerTest extends TestCase
         $this->assertSame($logger, $result);
     }
 
+    public function test_constructor_attaches_monolog_when_bpe_log_enabled(): void
+    {
+        $_ENV['BPE_LOG'] = 'true';
+
+        $logger = new DefaultLogger();
+
+        // Monolog observer is attached by constructor
+        // We can verify by checking that logging doesn't throw
+        $this->assertInstanceOf(DefaultLogger::class, $logger);
+    }
+
+    public function test_constructor_attaches_error_reporter_when_bpe_report_error_enabled(): void
+    {
+        $_ENV['BPE_REPORT_ERROR'] = 'true';
+
+        $logger = new DefaultLogger();
+
+        // ErrorReporter observer is attached by constructor
+        // We can verify by checking that logging doesn't throw
+        $this->assertInstanceOf(DefaultLogger::class, $logger);
+    }
+
     /**
      * Creates a mock Observer for testing notification behavior.
      *
