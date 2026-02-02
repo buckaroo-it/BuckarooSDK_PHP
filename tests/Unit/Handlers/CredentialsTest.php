@@ -9,8 +9,6 @@ use Tests\Support\BuckarooMockRequest;
 use Tests\TestCase;
 
 /**
- * @runTestsInSeparateProcesses
- * @preserveGlobalState disabled
  */
 class CredentialsTest extends TestCase
 {
@@ -55,6 +53,27 @@ class CredentialsTest extends TestCase
                 ['error' => 'Unauthorized'],
                 401
             ),
+        ]);
+
+        $credentials = new Credentials(
+            $this->buckaroo->client(),
+            $this->buckaroo->client()->config()
+        );
+
+        $result = $credentials->confirm();
+
+        $this->assertFalse($result);
+    }
+
+    /** @test */
+    public function it_returns_false_when_exception_is_thrown(): void
+    {
+        $this->mockBuckaroo->mockTransportRequests([
+            BuckarooMockRequest::json(
+                'GET',
+                '*/Specification/ideal*',
+                []
+            )->withException(new \Buckaroo\Exceptions\BuckarooException(null, 'Connection error')),
         ]);
 
         $credentials = new Credentials(

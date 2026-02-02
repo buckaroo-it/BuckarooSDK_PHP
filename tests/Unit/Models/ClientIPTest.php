@@ -176,4 +176,35 @@ class ClientIPTest extends TestCase
         $this->assertSame(IPProtocolVersion::IPV4, $clientIP->Type);
         $this->assertNull($clientIP->nonExistentProperty);
     }
+
+    public function test_auto_detection_uses_x_forwarded_for_key_from_server(): void
+    {
+        $originalServer = $_SERVER;
+        $_SERVER = [];
+        $_SERVER['X-Forwarded-For'] = '203.0.113.50';
+        $_SERVER['REMOTE_ADDR'] = '10.0.0.1';
+
+        $clientIP = new ClientIP();
+
+        $this->assertSame('203.0.113.50', $clientIP->Address);
+        $this->assertSame(IPProtocolVersion::IPV4, $clientIP->Type);
+
+        $_SERVER = $originalServer;
+    }
+
+    public function test_auto_detection_skips_invalid_x_forwarded_for_key(): void
+    {
+        $originalServer = $_SERVER;
+        $_SERVER = [];
+        $_SERVER['X-Forwarded-For'] = 'not-valid-ip';
+        $_SERVER['HTTP_X_FORWARDED_FOR'] = '192.0.2.100';
+        $_SERVER['REMOTE_ADDR'] = '10.0.0.1';
+
+        $clientIP = new ClientIP();
+
+        $this->assertSame('192.0.2.100', $clientIP->Address);
+        $this->assertSame(IPProtocolVersion::IPV4, $clientIP->Type);
+
+        $_SERVER = $originalServer;
+    }
 }

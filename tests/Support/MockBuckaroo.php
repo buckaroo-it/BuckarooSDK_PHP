@@ -65,6 +65,10 @@ final class MockBuckaroo
 
         $this->index++;
 
+        if ($req->shouldThrow()) {
+            throw $req->getException();
+        }
+
         [$status, $respHeaders, $body, $isJson] = $req->responseSpec();
         if ($isJson) {
             $respHeaders = ['Content-Type' => 'application/json'] + $respHeaders;

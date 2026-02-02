@@ -25,10 +25,6 @@ use Buckaroo\PaymentMethods\Trustly\Trustly;
 use Buckaroo\Transaction\Client;
 use Tests\TestCase;
 
-/**
- * @runTestsInSeparateProcesses
- * @preserveGlobalState disabled
- */
 class PaymentMethodFactoryTest extends TestCase
 {
     private Client $client;

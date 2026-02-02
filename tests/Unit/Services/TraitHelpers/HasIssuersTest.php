@@ -7,10 +7,6 @@ namespace Tests\Unit\Services\TraitHelpers;
 use Tests\Support\BuckarooMockRequest;
 use Tests\TestCase;
 
-/**
- * @runTestsInSeparateProcesses
- * @preserveGlobalState disabled
- */
 class HasIssuersTest extends TestCase
 {
     protected function setUp(): void
@@ -117,6 +113,23 @@ class HasIssuersTest extends TestCase
                     ],
                 ]
             ),
+        ]);
+
+        $issuers = $this->buckaroo->method('ideal')->issuers();
+
+        $this->assertIsArray($issuers);
+        $this->assertEmpty($issuers);
+    }
+
+    /** @test */
+    public function it_returns_empty_array_when_buckaroo_exception_thrown(): void
+    {
+        $this->mockBuckaroo->mockTransportRequests([
+            BuckarooMockRequest::json(
+                'GET',
+                '*/Specification/ideal*',
+                []
+            )->withException(new \Buckaroo\Exceptions\BuckarooException(null, 'API Error')),
         ]);
 
         $issuers = $this->buckaroo->method('ideal')->issuers();

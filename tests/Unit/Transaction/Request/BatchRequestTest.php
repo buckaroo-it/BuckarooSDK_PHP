@@ -10,10 +10,6 @@ use Buckaroo\Transaction\Request\Request;
 use ReflectionClass;
 use Tests\TestCase;
 
-/**
- * @runTestsInSeparateProcesses
- * @preserveGlobalState disabled
- */
 class BatchRequestTest extends TestCase
 {
     protected function setUp(): void
