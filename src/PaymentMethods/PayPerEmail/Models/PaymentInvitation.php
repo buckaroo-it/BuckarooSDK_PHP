@@ -74,8 +74,7 @@ class PaymentInvitation extends ServiceParameter
      */
     public function customer($customer = null)
     {
-        if (is_array($customer))
-        {
+        if (is_array($customer)) {
             $this->customer = new CustomerAdapter(new Person($customer));
         }
 
@@ -88,8 +87,7 @@ class PaymentInvitation extends ServiceParameter
      */
     public function email($email = null)
     {
-        if (is_string($email))
-        {
+        if (is_string($email)) {
             $this->email = new EmailAdapter(new Email($email));
         }
 
@@ -102,10 +100,8 @@ class PaymentInvitation extends ServiceParameter
      */
     public function attachments(?array $attachments = null)
     {
-        if (is_array($attachments))
-        {
-            foreach ($attachments as $attachment)
-            {
+        if (is_array($attachments)) {
+            foreach ($attachments as $attachment) {
                 $this->attachments[] = new AttachmentAdapter(new Attachment($attachment));
             }
         }

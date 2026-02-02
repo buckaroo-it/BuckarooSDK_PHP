@@ -37,13 +37,11 @@ class DefaultLogger implements Subject, LoggerInterface
      */
     public function __construct()
     {
-        if (($_ENV['BPE_LOG'] ?? false) === 'true')
-        {
+        if (($_ENV['BPE_LOG'] ?? false) === 'true') {
             $this->attach(new Monolog());
         }
 
-        if (($_ENV['BPE_REPORT_ERROR'] ?? false) === 'true')
-        {
+        if (($_ENV['BPE_REPORT_ERROR'] ?? false) === 'true') {
             $this->attach(new ErrorReporter());
         }
     }
@@ -54,18 +52,15 @@ class DefaultLogger implements Subject, LoggerInterface
      */
     public function attach($observer)
     {
-        if (is_array($observer))
-        {
-            foreach ($observer as $singleObserver)
-            {
+        if (is_array($observer)) {
+            foreach ($observer as $singleObserver) {
                 $this->attach($singleObserver);
             }
 
             return $this;
         }
 
-        if ($observer instanceof Observer)
-        {
+        if ($observer instanceof Observer) {
             $this->observers[] = $observer;
         }
 
@@ -162,8 +157,7 @@ class DefaultLogger implements Subject, LoggerInterface
      */
     public function debug($message, array $context = []): void
     {
-        if ($_ENV['BPE_DEBUG'] ?? false)
-        {
+        if ($_ENV['BPE_DEBUG'] ?? false) {
             $this->notify('debug', $message, $context);
         }
     }
@@ -187,8 +181,7 @@ class DefaultLogger implements Subject, LoggerInterface
      */
     public function notify(string $method, string $message, array $context = [])
     {
-        foreach ($this->observers as $observer)
-        {
+        foreach ($this->observers as $observer) {
             $observer->handle($method, $message, $context);
         }
 

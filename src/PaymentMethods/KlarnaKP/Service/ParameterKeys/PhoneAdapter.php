@@ -25,6 +25,6 @@ namespace Buckaroo\PaymentMethods\KlarnaKP\Service\ParameterKeys;
 class PhoneAdapter extends RecipientAdapter
 {
     protected array $keys = [
-        'mobile' => 'CellPhoneNumber'
+        'mobile' => 'CellPhoneNumber',
     ];
 }

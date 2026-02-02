@@ -3,9 +3,9 @@
 namespace Buckaroo\Transaction\Request\HttpClient;
 
 use Buckaroo\Config\Config;
+use function defined;
 use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
-use function defined;
 
 class HttpClientFactory
 {

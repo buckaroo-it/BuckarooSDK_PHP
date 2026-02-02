@@ -38,7 +38,6 @@ $reply_handler->validate();
 $reply_handler->isValid(); // Return either true or false
 //END HTTP POST PUSH
 
-
 //START JSON PUSH
 $auth_header = 'IBjihN7Fhp:0YvyjYAzDQ28W+hQi80f2nhe0Z1QFJLbz7IH//6LsAU=:cad1832100784f57a6e6de835d9f3638:1658227572';
 $post_data = '{"Transaction":{"Key":"5340604668D74435AA344E1428ED1292","Invoice":"62d68b6c8ab0c","ServiceCode":"ideal",

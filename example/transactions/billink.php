@@ -78,7 +78,6 @@ $response = $buckaroo->method('billink')->pay([
     ],
 ]);
 
-
 //Refund
 $response = $buckaroo->method('billink')->refund([
     'amountCredit' => 10,

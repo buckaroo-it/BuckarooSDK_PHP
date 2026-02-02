@@ -26,7 +26,6 @@ use Buckaroo\PaymentMethods\PaymentMethod;
 use Buckaroo\PaymentMethods\Subscriptions\Models\CombinedPayload;
 use Buckaroo\PaymentMethods\Subscriptions\Models\ResumeSubscription;
 use Buckaroo\PaymentMethods\Subscriptions\Models\Subscription;
-use function Ramsey\Uuid\v1;
 
 class Subscriptions extends PaymentMethod implements Combinable
 {

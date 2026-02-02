@@ -28,8 +28,8 @@ class BankAccountAdapter extends ServiceParametersKeysAdapter
      * @var array|string[]
      */
     protected array $keys = [
-        'iban'          => 'CustomerIBAN',
-        'accountName'   => 'CustomerAccountName',
-        'bic'           => 'CustomerBIC'
+        'iban' => 'CustomerIBAN',
+        'accountName' => 'CustomerAccountName',
+        'bic' => 'CustomerBIC',
     ];
 }

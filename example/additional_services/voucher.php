@@ -6,7 +6,6 @@ use Buckaroo\BuckarooClient;
 
 $buckaroo = new BuckarooClient($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
-
 //Create voucher
 $response = $buckaroo->method('buckaroovoucher')->create(
     [
@@ -26,7 +25,6 @@ $response = $buckaroo->method('buckaroovoucher')->pay(
     ]
 );
 
-
 //Pay
 $response = $buckaroo->method('buckaroovoucher')->payRemainder(
     [
@@ -36,7 +34,6 @@ $response = $buckaroo->method('buckaroovoucher')->payRemainder(
         'originalTransactionKey' => '4E8BD922192746C3918BF4077CXXXXXX',
     ]
 );
-
 
 //Refund
 $response = $buckaroo->method('buckaroovoucher')->refund(

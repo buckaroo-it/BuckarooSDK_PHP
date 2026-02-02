@@ -105,10 +105,8 @@ class TransactionResponse extends Response
      */
     public function data(?string $key = null)
     {
-        if ($key)
-        {
-            if (isset($this->data[$key]))
-            {
+        if ($key) {
+            if (isset($this->data[$key])) {
                 return $this->data[$key];
             }
 
@@ -123,7 +121,7 @@ class TransactionResponse extends Response
      */
     public function hasRedirect(): bool
     {
-        return ! empty($this->data['RequiredAction']['RedirectURL'])
+        return !empty($this->data['RequiredAction']['RedirectURL'])
             && $this->data['RequiredAction']['Name'] == 'Redirect';
     }
 
@@ -132,8 +130,7 @@ class TransactionResponse extends Response
      */
     public function getRedirectUrl(): string
     {
-        if ($this->hasRedirect())
-        {
+        if ($this->hasRedirect()) {
             return $this->data['RequiredAction']['RedirectURL'];
         }
 
@@ -163,14 +160,12 @@ class TransactionResponse extends Response
      */
     public function getServiceParameters()
     {
-        if (! empty($this->data['Services'][0]['Parameters']))
-        {
+        if (!empty($this->data['Services'][0]['Parameters'])) {
             $parameters = $this->data['Services'][0]['Parameters'];
 
             $params = [];
 
-            foreach ($parameters as $key => $parameter)
-            {
+            foreach ($parameters as $key => $parameter) {
                 // key to lowercase to be consistent with PaymentResult version of getServiceParameters
                 $params[strtolower($parameter['Name'])] = $parameter['Value'];
             }
@@ -186,14 +181,12 @@ class TransactionResponse extends Response
      */
     public function getCustomParameters(): array
     {
-        if (! empty($this->data['CustomParameters']['List']))
-        {
+        if (!empty($this->data['CustomParameters']['List'])) {
             $parameters = $this->data['CustomParameters']['List'];
 
             $params = [];
 
-            foreach ($parameters as $key => $parameter)
-            {
+            foreach ($parameters as $key => $parameter) {
                 $params[$parameter['Name']] = $parameter['Value'];
             }
 
@@ -208,14 +201,12 @@ class TransactionResponse extends Response
      */
     public function getAdditionalParameters(): array
     {
-        if (! empty($this->data['AdditionalParameters']['AdditionalParameter']))
-        {
+        if (!empty($this->data['AdditionalParameters']['AdditionalParameter'])) {
             $parameters = $this->data['AdditionalParameters']['AdditionalParameter'];
 
             $params = [];
 
-            foreach ($parameters as $key => $parameter)
-            {
+            foreach ($parameters as $key => $parameter) {
                 $params[$parameter['Name']] = $parameter['Value'];
             }
 
@@ -290,8 +281,7 @@ class TransactionResponse extends Response
      */
     public function getStatusCode(): ?int
     {
-        if (! empty($this->data['Status']['Code']['Code']))
-        {
+        if (!empty($this->data['Status']['Code']['Code'])) {
             return $this->data['Status']['Code']['Code'];
         }
 
@@ -303,8 +293,7 @@ class TransactionResponse extends Response
      */
     public function getSubStatusCode(): ?string
     {
-        if (! empty($this->data['Status']['SubCode']['Code']))
-        {
+        if (!empty($this->data['Status']['SubCode']['Code'])) {
             return $this->data['Status']['SubCode']['Code'];
         }
 
@@ -318,7 +307,7 @@ class TransactionResponse extends Response
     {
         $getError = $this->getSomeError();
 
-        return ! empty($getError);
+        return !empty($getError);
     }
 
     /**
@@ -326,25 +315,21 @@ class TransactionResponse extends Response
      */
     public function getSomeError(): string
     {
-        if ($this->hasError())
-        {
+        if ($this->hasError()) {
             $error = $this->getFirstError();
 
             return $error['ErrorMessage'];
         }
 
-        if ($this->hasConsumerMessage())
-        {
+        if ($this->hasConsumerMessage()) {
             return $this->getConsumerMessage();
         }
 
-        if ($this->hasMessage())
-        {
+        if ($this->hasMessage()) {
             return $this->getMessage();
         }
 
-        if ($this->hasSubCodeMessage())
-        {
+        if ($this->hasSubCodeMessage()) {
             return $this->getSubCodeMessage();
         }
 
@@ -356,12 +341,12 @@ class TransactionResponse extends Response
      */
     public function hasError(): bool
     {
-        return ! empty($this->data['RequestErrors']) && (
-            ! empty($this->data['RequestErrors']['ChannelErrors']) ||
-            ! empty($this->data['RequestErrors']['ServiceErrors']) ||
-            ! empty($this->data['RequestErrors']['ActionErrors']) ||
-            ! empty($this->data['RequestErrors']['ParameterErrors']) ||
-            ! empty($this->data['RequestErrors']['CustomParameterErrors'])
+        return !empty($this->data['RequestErrors']) && (
+            !empty($this->data['RequestErrors']['ChannelErrors']) ||
+            !empty($this->data['RequestErrors']['ServiceErrors']) ||
+            !empty($this->data['RequestErrors']['ActionErrors']) ||
+            !empty($this->data['RequestErrors']['ParameterErrors']) ||
+            !empty($this->data['RequestErrors']['CustomParameterErrors'])
         );
     }
 
@@ -372,12 +357,9 @@ class TransactionResponse extends Response
     {
         $errorTypes = ['ChannelErrors', 'ServiceErrors', 'ActionErrors', 'ParameterErrors', 'CustomParameterErrors'];
 
-        if ($this->hasError())
-        {
-            foreach ($errorTypes as $errorType)
-            {
-                if (! empty($this->data['RequestErrors'][$errorType]))
-                {
+        if ($this->hasError()) {
+            foreach ($errorTypes as $errorType) {
+                if (!empty($this->data['RequestErrors'][$errorType])) {
                     return $this->data['RequestErrors'][$errorType][0];
                 }
             }
@@ -391,7 +373,7 @@ class TransactionResponse extends Response
      */
     public function hasMessage(): bool
     {
-        return ! empty($this->data['Message']);
+        return !empty($this->data['Message']);
     }
 
     /**
@@ -407,7 +389,7 @@ class TransactionResponse extends Response
      */
     public function hasConsumerMessage(): bool
     {
-        return ! empty($this->data['ConsumerMessage']['HtmlText']);
+        return !empty($this->data['ConsumerMessage']['HtmlText']);
     }
 
     /**
@@ -415,8 +397,7 @@ class TransactionResponse extends Response
      */
     public function getConsumerMessage(): string
     {
-        if ($this->hasConsumerMessage())
-        {
+        if ($this->hasConsumerMessage()) {
             return $this->data['ConsumerMessage']['HtmlText'];
         }
 
@@ -428,7 +409,7 @@ class TransactionResponse extends Response
      */
     public function hasSubCodeMessage(): bool
     {
-        return ! empty($this->data['Status']['SubCode']['Description']);
+        return !empty($this->data['Status']['SubCode']['Description']);
     }
 
     /**
@@ -436,8 +417,7 @@ class TransactionResponse extends Response
      */
     public function getSubCodeMessage(): string
     {
-        if ($this->hasSubCodeMessage())
-        {
+        if ($this->hasSubCodeMessage()) {
             return $this->data['Status']['SubCode']['Description'];
         }
 

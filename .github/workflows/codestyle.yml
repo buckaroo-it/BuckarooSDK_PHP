@@ -2,9 +2,6 @@ name: Code Style
 
 on:
   pull_request:
-    branches:
-      - master
-      - develop
 jobs:
   php-cs-fixer:
     runs-on: ubuntu-latest

@@ -23,9 +23,9 @@ declare(strict_types=1);
 namespace Buckaroo\PaymentMethods\KnakenPay;
 
 use Buckaroo\Models\Model;
+use Buckaroo\Models\ServiceParameter;
 use Buckaroo\PaymentMethods\PayablePaymentMethod;
 use Buckaroo\Transaction\Response\TransactionResponse;
-use Buckaroo\Models\ServiceParameter;
 
 class KnakenPay extends PayablePaymentMethod
 {

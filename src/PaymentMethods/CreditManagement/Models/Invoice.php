@@ -158,8 +158,7 @@ class Invoice extends ServiceParameter
      */
     public function address($address = null)
     {
-        if (is_array($address))
-        {
+        if (is_array($address)) {
             $this->address = new Address($address);
         }
 
@@ -172,8 +171,7 @@ class Invoice extends ServiceParameter
      */
     public function company($company = null)
     {
-        if (is_array($company))
-        {
+        if (is_array($company)) {
             $this->company = new Company($company);
         }
 
@@ -186,8 +184,7 @@ class Invoice extends ServiceParameter
      */
     public function person($person = null)
     {
-        if (is_array($person))
-        {
+        if (is_array($person)) {
             $this->person = new Person($person);
         }
 
@@ -200,8 +197,7 @@ class Invoice extends ServiceParameter
      */
     public function debtor($debtor = null)
     {
-        if (is_array($debtor))
-        {
+        if (is_array($debtor)) {
             $this->debtor = new Debtor($debtor);
         }
 
@@ -214,8 +210,7 @@ class Invoice extends ServiceParameter
      */
     public function email($email = null)
     {
-        if (is_string($email))
-        {
+        if (is_string($email)) {
             $this->email = new Email($email);
         }
 
@@ -228,8 +223,7 @@ class Invoice extends ServiceParameter
      */
     public function phone($phone = null)
     {
-        if (is_array($phone))
-        {
+        if (is_array($phone)) {
             $this->phone = new Phone($phone);
         }
 
@@ -242,10 +236,8 @@ class Invoice extends ServiceParameter
      */
     public function articles(?array $articles = null)
     {
-        if (is_array($articles))
-        {
-            foreach ($articles as $article)
-            {
+        if (is_array($articles)) {
+            foreach ($articles as $article) {
                 $this->articles[] = new ArticleAdapter(new Article($article));
             }
         }

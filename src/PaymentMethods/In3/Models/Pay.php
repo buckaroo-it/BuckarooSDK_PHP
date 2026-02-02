@@ -22,7 +22,6 @@ namespace Buckaroo\PaymentMethods\In3\Models;
 
 use Buckaroo\Models\ServiceParameter;
 use Buckaroo\PaymentMethods\In3\Service\ParameterKeys\ArticleAdapter;
-use Buckaroo\PaymentMethods\In3\Service\ParameterKeys\CompanyAdapter;
 use Buckaroo\PaymentMethods\Traits\CountableGroupKey;
 
 class Pay extends ServiceParameter
@@ -93,8 +92,7 @@ class Pay extends ServiceParameter
      */
     public function billing($billing = null)
     {
-        if (is_array($billing))
-        {
+        if (is_array($billing)) {
             $this->billingRecipient = new Recipient('Billing', $billing);
             $this->shippingRecipient = new Recipient('Shipping', $billing);
         }
@@ -108,8 +106,7 @@ class Pay extends ServiceParameter
      */
     public function shipping($shipping = null)
     {
-        if (is_array($shipping))
-        {
+        if (is_array($shipping)) {
             $this->shippingRecipient = new Recipient('Shipping', $shipping);
         }
 
@@ -122,10 +119,8 @@ class Pay extends ServiceParameter
      */
     public function articles(?array $articles = null)
     {
-        if (is_array($articles))
-        {
-            foreach ($articles as $article)
-            {
+        if (is_array($articles)) {
+            foreach ($articles as $article) {
                 $this->articles[] = new ArticleAdapter(new Article($article));
             }
         }

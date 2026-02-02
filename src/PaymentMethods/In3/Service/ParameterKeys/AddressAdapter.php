@@ -28,6 +28,6 @@ class AddressAdapter extends ServiceParametersKeysAdapter
         'houseNumber' => 'StreetNumber',
         'houseNumberAdditional' => 'StreetNumberSuffix',
         'zipcode' => 'PostalCode',
-        'country' => 'CountryCode'
+        'country' => 'CountryCode',
     ];
 }

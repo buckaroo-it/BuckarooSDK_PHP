@@ -64,8 +64,7 @@ class ServiceList extends ServiceParameter
      */
     public function marketplace($marketplace = null)
     {
-        if (is_array($marketplace))
-        {
+        if (is_array($marketplace)) {
             $this->marketplace = new Marketplace($marketplace);
         }
 
@@ -78,10 +77,8 @@ class ServiceList extends ServiceParameter
      */
     public function sellers($sellers = null)
     {
-        if (is_array($sellers))
-        {
-            foreach ($sellers as $seller)
-            {
+        if (is_array($sellers)) {
+            foreach ($sellers as $seller) {
                 $this->sellers[] = new Seller($seller);
             }
         }

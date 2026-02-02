@@ -35,7 +35,6 @@ $response = $buckaroo->method('bancontactmrcash')->payRecurrent([
     'originalTransactionKey' => '91D08EC01F414926A4CA29C059XXXXXX',
 ]);
 
-
 //Refund
 $response = $buckaroo->method('bancontactmrcash')->refund([
     'invoice' => '', //Set invoice number of the transaction to refund

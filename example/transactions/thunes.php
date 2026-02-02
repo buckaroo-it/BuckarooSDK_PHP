@@ -3,7 +3,6 @@
 require_once '../bootstrap.php';
 
 use Buckaroo\BuckarooClient;
-use Buckaroo\Resources\Constants\RecipientCategory;
 
 $buckaroo = new BuckarooClient($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 

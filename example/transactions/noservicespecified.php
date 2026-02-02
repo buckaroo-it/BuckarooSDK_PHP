@@ -18,7 +18,6 @@ $response = $buckaroo->method(null)->pay([
     'continueOnIncomplete' => '1',
 ]);
 
-
 //Refund
 $response = $buckaroo->method(null)->refund([
     'invoice' => '', //Set invoice number of the transaction to refund
