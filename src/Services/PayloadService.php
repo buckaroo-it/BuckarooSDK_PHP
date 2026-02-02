@@ -45,20 +45,17 @@ class PayloadService implements Arrayable
      */
     protected function setPayload($payload)
     {
-        if (is_array($payload))
-        {
+        if (is_array($payload)) {
             $this->payload = $payload;
 
             return $this;
         }
 
-        if (is_string($payload))
-        {
+        if (is_string($payload)) {
             $this->payload = json_decode($payload, true);
         }
 
-        if ($this->payload == null)
-        {
+        if ($this->payload == null) {
             throw new \Exception("Invalid or empty payload. Array or json format required.");
         }
 

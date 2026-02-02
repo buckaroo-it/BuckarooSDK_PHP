@@ -63,7 +63,7 @@ class Response implements ArrayAccess, Arrayable
     }
 
     /** Implement ArrayAccess */
-    public function offsetGet($offset): mixed
+    public function offsetGet($offset)
     {
         return isset($this->data[$offset]) ? $this->data[$offset] : null;
     }
@@ -83,8 +83,7 @@ class Response implements ArrayAccess, Arrayable
         $param = substr($method, 3);
         // $arg    = isset($args[0]) ? $args[0] : null;
 
-        if ($prefix === 'get')
-        {
+        if ($prefix === 'get') {
             return $this->offsetGet($param);
         }
 

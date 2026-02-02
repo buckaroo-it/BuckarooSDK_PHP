@@ -53,8 +53,7 @@ class GuzzleHttpClientV5 extends HttpClientAbstract
             'body' => $data,
         ]);
 
-        try
-        {
+        try {
             $response = $this->httpClient->send($request);
 
             $result = (string) $response->getBody();

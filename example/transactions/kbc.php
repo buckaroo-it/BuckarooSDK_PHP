@@ -13,7 +13,6 @@ $response = $buckaroo->method('kbcpaymentbutton')->pay([
     'amountDebit' => 10.10,
 ]);
 
-
 //Refund
 $response = $buckaroo->method('kbcpaymentbutton')->refund([
     'invoice' => '', //Set invoice number of the transaction to refund

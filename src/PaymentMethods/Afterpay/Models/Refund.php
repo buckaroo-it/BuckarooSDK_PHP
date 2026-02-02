@@ -45,10 +45,8 @@ class Refund extends ServiceParameter
      */
     public function articles(?array $articles = null)
     {
-        if (is_array($articles))
-        {
-            foreach ($articles as $article)
-            {
+        if (is_array($articles)) {
+            foreach ($articles as $article) {
                 $this->articles[] = new ArticleAdapter(new Article($article));
             }
         }

@@ -18,7 +18,6 @@ $response = $buckaroo->method('giftcard')->payRedirect([
     'continueOnIncomplete' => '1',
 ]);
 
-
 //Refund
 $response = $buckaroo->method('giftcard')->refund([
     'amountCredit' => 10,

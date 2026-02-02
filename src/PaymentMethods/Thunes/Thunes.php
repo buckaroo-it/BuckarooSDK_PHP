@@ -51,8 +51,7 @@ class Thunes extends PayablePaymentMethod
      */
     public function paymentName(): string
     {
-        if (isset($this->payload['name']))
-        {
+        if (isset($this->payload['name'])) {
             return $this->payload['name'];
         }
 

@@ -2,7 +2,7 @@
 $finder = Symfony\Component\Finder\Finder::create()
     ->in([
         __DIR__ . '/src',
-        __DIR__ . '/example'
+        __DIR__ . '/example',
     ])
     ->name('*.php')
     ->notPath('bootstrap/*')
@@ -17,7 +17,7 @@ return (new PhpCsFixer\Config())
         'array_syntax' => ['syntax' => 'short'],
         'ordered_imports' => ['sort_algorithm' => 'alpha'],
         'no_unused_imports' => true,
-        'not_operator_with_successor_space' => true,
+        'not_operator_with_successor_space' => false,
         'trailing_comma_in_multiline' => true,
         'phpdoc_scalar' => true,
         'unary_operator_spaces' => true,
@@ -25,15 +25,22 @@ return (new PhpCsFixer\Config())
         'blank_line_before_statement' => [
             'statements' => ['break', 'continue', 'declare', 'return', 'throw', 'try'],
         ],
+        'no_extra_blank_lines' => [
+            'tokens' => [
+                'extra',
+                'throw',
+                'use',
+            ],
+        ],
         'braces' => [
-            'allow_single_line_closure' => false,
+            'allow_single_line_closure' => true,
             'position_after_functions_and_oop_constructs' => 'next',
-            'position_after_anonymous_constructs' => 'next',
-            'position_after_control_structures' => 'next',
+            'position_after_anonymous_constructs' => 'same',
+            'position_after_control_structures' => 'same',
         ],
         'curly_braces_position' => [
             'classes_opening_brace' => 'next_line_unless_newline_at_signature_end',
-            'control_structures_opening_brace'  => 'next_line_unless_newline_at_signature_end'
+            'control_structures_opening_brace' => 'same_line',
         ],
         'phpdoc_single_line_var_spacing' => true,
         'phpdoc_var_without_name' => true,

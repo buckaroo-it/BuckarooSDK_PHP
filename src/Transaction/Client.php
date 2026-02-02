@@ -26,8 +26,8 @@ use Buckaroo\Config\Config;
 use Buckaroo\Exceptions\BuckarooException;
 use Buckaroo\Handlers\Logging\Subject;
 use Buckaroo\Resources\Constants\Endpoints;
-use Buckaroo\Services\TransactionHeaders\CultureHeader;
 use Buckaroo\Services\TransactionHeaders\ChannelHeader;
+use Buckaroo\Services\TransactionHeaders\CultureHeader;
 use Buckaroo\Services\TransactionHeaders\DefaultHeader;
 use Buckaroo\Services\TransactionHeaders\HmacHeader;
 use Buckaroo\Services\TransactionHeaders\SoftwareHeader;
@@ -202,8 +202,7 @@ class Client
         $this->config->getLogger()->info($method . ' ' . $endPoint);
         $this->config->getLogger()->info('HEADERS: ' . json_encode($headers));
 
-        if ($data)
-        {
+        if ($data) {
             $this->config->getLogger()->info(
                 'PAYLOAD: ' . $data->toJson()
             );
@@ -228,13 +227,11 @@ class Client
      */
     public function config(?Config $config = null)
     {
-        if ($config)
-        {
+        if ($config) {
             $this->config = $config;
         }
 
-        if (! $this->config)
-        {
+        if (!$this->config) {
             throw new BuckarooException(
                 $this->logger,
                 "No config has been configured.
