@@ -376,4 +376,50 @@ class iDealTest extends FeatureTestCase
             ['ABNANL2A'],
         ];
     }
+
+    /** @test */
+    public function it_creates_an_ideal_payment_without_issuer(): void
+    {
+        $transactionKey = TestHelpers::generateTransactionKey();
+        $redirectUrl = 'https://ideal.checkout.nl/select-bank?trx=' . $transactionKey;
+
+        $this->mockBuckaroo->mockTransportRequests([
+            BuckarooMockRequest::json('POST', '*/json/Transaction*', [
+                'Key' => $transactionKey,
+                'Status' => [
+                    'Code' => ['Code' => 791, 'Description' => 'Pending processing'],
+                    'SubCode' => ['Code' => 'S001', 'Description' => 'Redirecting to bank selection'],
+                    'DateTime' => date('Y-m-d\TH:i:s'),
+                ],
+                'RequiredAction' => [
+                    'Name' => 'Redirect',
+                    'RedirectURL' => $redirectUrl,
+                ],
+                'Services' => [
+                    [
+                        'Name' => 'ideal',
+                        'Action' => 'Pay',
+                        'Parameters' => [],
+                    ],
+                ],
+                'Invoice' => 'INV-IDEAL-NO-ISSUER',
+                'Currency' => 'EUR',
+                'AmountDebit' => 30.00,
+                'IsTest' => true,
+            ]),
+        ]);
+
+        $response = $this->buckaroo->method('ideal')->pay([
+            'amountDebit' => 30.00,
+            'invoice' => 'INV-IDEAL-NO-ISSUER',
+        ]);
+
+        $this->assertTrue($response->isPendingProcessing());
+        $this->assertTrue($response->hasRedirect());
+        $this->assertEquals($redirectUrl, $response->getRedirectUrl());
+        $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertEquals('INV-IDEAL-NO-ISSUER', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(30.00, $response->getAmountDebit());
+    }
 }
