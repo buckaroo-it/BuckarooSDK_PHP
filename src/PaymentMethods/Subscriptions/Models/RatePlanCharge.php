@@ -27,6 +27,11 @@ class RatePlanCharge extends ServiceParameter
     /**
      * @var string
      */
+    protected string $ratePlanChargeGuid;
+    
+    /**
+     * @var string
+     */
     protected string $ratePlanChargeCode;
 
     /**
