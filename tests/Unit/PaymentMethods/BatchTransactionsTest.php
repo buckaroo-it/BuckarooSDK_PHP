@@ -8,12 +8,10 @@ use Buckaroo\PaymentMethods\BatchTransactions;
 use Buckaroo\PaymentMethods\iDeal\iDeal;
 use Buckaroo\Transaction\Request\BatchRequest;
 use ReflectionClass;
+use Tests\Support\BuckarooMockRequest;
+use Tests\Support\TestHelpers;
 use Tests\TestCase;
 
-/**
- * @runTestsInSeparateProcesses
- * @preserveGlobalState disabled
- */
 class BatchTransactionsTest extends TestCase
 {
     protected function setUp(): void
@@ -93,6 +91,25 @@ class BatchTransactionsTest extends TestCase
         $payment->pay();
 
         return $payment;
+    }
+
+    public function test_execute_sends_batch_request(): void
+    {
+        $this->mockBuckaroo->mockTransportRequests([
+            BuckarooMockRequest::json(
+                'POST',
+                '*/batch/DataRequests',
+                TestHelpers::successResponse(['Key' => 'BATCH-001'])
+            ),
+        ]);
+
+        $client = $this->buckaroo->client();
+        $batch = new BatchTransactions($client, []);
+
+        $response = $batch->execute();
+
+        $this->assertNotNull($response);
+        $this->assertTrue($response->isSuccess());
     }
 
     private function getProperty(object $object, string $property)

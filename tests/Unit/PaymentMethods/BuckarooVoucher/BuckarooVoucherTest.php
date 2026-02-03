@@ -9,8 +9,6 @@ use Tests\Support\TestHelpers;
 use Tests\TestCase;
 
 /**
- * @runTestsInSeparateProcesses
- * @preserveGlobalState disabled
  */
 class BuckarooVoucherTest extends TestCase
 {

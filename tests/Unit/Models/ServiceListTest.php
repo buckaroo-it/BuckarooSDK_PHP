@@ -7,6 +7,9 @@ namespace Tests\Unit\Models;
 use Buckaroo\Models\Address;
 use Buckaroo\Models\Person;
 use Buckaroo\Models\ServiceList;
+use Buckaroo\PaymentMethods\Afterpay\Models\Pay as AfterpayPay;
+use Buckaroo\PaymentMethods\Afterpay\Models\Recipient as AfterpayRecipient;
+use Buckaroo\Resources\Constants\RecipientCategory;
 use Tests\TestCase;
 
 class ServiceListTest extends TestCase
@@ -368,5 +371,78 @@ class ServiceListTest extends TestCase
         $this->assertSame('paypal', $serviceList->name);
         $this->assertSame(5, $serviceList->version);
         $this->assertSame('Capture', $serviceList->action);
+    }
+
+    public function test_decorateParameters_with_service_parameter_containing_nested_models(): void
+    {
+        $recipient = new AfterpayRecipient('Billing', [
+            'recipient' => [
+                'category' => RecipientCategory::PERSON,
+                'firstName' => 'John',
+                'lastName' => 'Doe',
+            ],
+            'address' => [
+                'street' => 'Main Street',
+                'houseNumber' => '123',
+                'zipcode' => '1234AB',
+                'city' => 'Amsterdam',
+                'country' => 'NL',
+            ],
+            'phone' => [
+                'mobile' => '0612345678',
+            ],
+            'email' => 'john@example.com',
+        ]);
+
+        $serviceList = new ServiceList('afterpay', 1, 'Pay', $recipient);
+
+        $params = $serviceList->parameters();
+
+        $this->assertNotEmpty($params);
+        $paramValues = array_column($params, 'Value');
+        $this->assertContains('John', $paramValues);
+        $this->assertContains('Doe', $paramValues);
+        $this->assertContains('Main Street', $paramValues);
+        $this->assertContains('Amsterdam', $paramValues);
+    }
+
+    public function test_iterateThroughObject_with_service_parameter_and_model_value(): void
+    {
+        $pay = new AfterpayPay([
+            'billing' => [
+                'recipient' => [
+                    'category' => RecipientCategory::PERSON,
+                    'firstName' => 'Jane',
+                    'lastName' => 'Smith',
+                ],
+                'address' => [
+                    'street' => 'High Street',
+                    'houseNumber' => '456',
+                    'zipcode' => '5678CD',
+                    'city' => 'Rotterdam',
+                    'country' => 'NL',
+                ],
+                'email' => 'jane@example.com',
+            ],
+            'articles' => [
+                [
+                    'identifier' => 'ART001',
+                    'description' => 'Test Product',
+                    'quantity' => 1,
+                    'price' => 10.00,
+                ],
+            ],
+        ]);
+
+        $serviceList = new ServiceList('afterpay', 1, 'Pay', $pay);
+
+        $params = $serviceList->parameters();
+
+        $this->assertNotEmpty($params);
+        $paramValues = array_column($params, 'Value');
+        $this->assertContains('Jane', $paramValues);
+        $this->assertContains('Smith', $paramValues);
+        $this->assertContains('High Street', $paramValues);
+        $this->assertContains('Rotterdam', $paramValues);
     }
 }

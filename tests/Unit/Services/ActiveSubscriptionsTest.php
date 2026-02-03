@@ -8,10 +8,6 @@ use Buckaroo\Services\ActiveSubscriptions;
 use Tests\Support\BuckarooMockRequest;
 use Tests\TestCase;
 
-/**
- * @runTestsInSeparateProcesses
- * @preserveGlobalState disabled
- */
 class ActiveSubscriptionsTest extends TestCase
 {
     protected function setUp(): void
@@ -255,6 +251,98 @@ class ActiveSubscriptionsTest extends TestCase
                 'POST',
                 '*/DataRequest*',
                 []
+            ),
+        ]);
+
+        $service = new ActiveSubscriptions($this->buckaroo->client());
+
+        $subscriptions = $service->get();
+
+        $this->assertIsArray($subscriptions);
+        $this->assertEmpty($subscriptions);
+    }
+
+    public function test_it_returns_empty_array_when_activesubscriptions_parameter_is_not_string(): void
+    {
+        $this->mockBuckaroo->mockTransportRequests([
+            BuckarooMockRequest::json(
+                'POST',
+                '*/DataRequest*',
+                [
+                    'Key' => 'DATARESPONSE-006',
+                    'Status' => [
+                        'Code' => ['Code' => 190],
+                    ],
+                    'Services' => [
+                        [
+                            'Name' => 'GetActiveSubscriptions',
+                            'Action' => 'GetActiveSubscriptions',
+                            'Parameters' => [
+                                [
+                                    'Name' => 'activesubscriptions',
+                                    'Value' => ['not' => 'a string'],
+                                ],
+                            ],
+                        ],
+                    ],
+                ]
+            ),
+        ]);
+
+        $service = new ActiveSubscriptions($this->buckaroo->client());
+
+        $subscriptions = $service->get();
+
+        $this->assertIsArray($subscriptions);
+        $this->assertEmpty($subscriptions);
+    }
+
+    public function test_it_returns_empty_array_when_api_throws_exception(): void
+    {
+        $this->mockBuckaroo->mockTransportRequests([
+            BuckarooMockRequest::json(
+                'POST',
+                '*/DataRequest*',
+                []
+            )->withException(new \Buckaroo\Exceptions\BuckarooException(null, 'API Error')),
+        ]);
+
+        $service = new ActiveSubscriptions($this->buckaroo->client());
+
+        $subscriptions = $service->get();
+
+        $this->assertIsArray($subscriptions);
+        $this->assertEmpty($subscriptions);
+    }
+
+    public function test_it_returns_empty_array_when_xml_has_no_service_currencies(): void
+    {
+        $xmlResponse = '<?xml version="1.0" encoding="UTF-8"?>
+<ArrayOfServiceCurrencies>
+</ArrayOfServiceCurrencies>';
+
+        $this->mockBuckaroo->mockTransportRequests([
+            BuckarooMockRequest::json(
+                'POST',
+                '*/DataRequest*',
+                [
+                    'Key' => 'DATARESPONSE-007',
+                    'Status' => [
+                        'Code' => ['Code' => 190],
+                    ],
+                    'Services' => [
+                        [
+                            'Name' => 'GetActiveSubscriptions',
+                            'Action' => 'GetActiveSubscriptions',
+                            'Parameters' => [
+                                [
+                                    'Name' => 'activesubscriptions',
+                                    'Value' => $xmlResponse,
+                                ],
+                            ],
+                        ],
+                    ],
+                ]
             ),
         ]);
 

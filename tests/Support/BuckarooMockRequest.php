@@ -21,6 +21,8 @@ final class BuckarooMockRequest
 
     private bool $isJson = true;
 
+    private ?\Throwable $exception = null;
+
     private function __construct(string $method, string $url)
     {
         $this->method = strtoupper($method);
@@ -72,5 +74,22 @@ final class BuckarooMockRequest
     public function responseSpec(): array
     {
         return [$this->status, $this->responseHeaders, $this->responseBody, $this->isJson];
+    }
+
+    public function withException(\Throwable $exception): self
+    {
+        $this->exception = $exception;
+
+        return $this;
+    }
+
+    public function shouldThrow(): bool
+    {
+        return $this->exception !== null;
+    }
+
+    public function getException(): ?\Throwable
+    {
+        return $this->exception;
     }
 }

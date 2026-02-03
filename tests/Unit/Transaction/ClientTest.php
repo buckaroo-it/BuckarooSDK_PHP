@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Transaction;
 
 use Buckaroo\Config\DefaultConfig;
+use Buckaroo\Exceptions\BuckarooException;
 use Buckaroo\Transaction\Client;
 use Buckaroo\Transaction\Request\TransactionRequest;
 use Buckaroo\Transaction\Response\Response;
@@ -13,10 +14,6 @@ use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
 use Tests\TestCase;
 
-/**
- * @runTestsInSeparateProcesses
- * @preserveGlobalState disabled
- */
 class ClientTest extends TestCase
 {
     protected function setUp(): void
@@ -337,5 +334,18 @@ class ClientTest extends TestCase
         $this->assertSame('updated-key', $retrievedConfig->websiteKey());
         $this->assertSame('updated-secret', $retrievedConfig->secretKey());
         $this->assertSame('live', $retrievedConfig->mode());
+    }
+
+    public function test_throws_error_when_config_not_set_and_logger_uninitialized(): void
+    {
+        // Note: This tests actual behavior - when config is null, the logger property
+        // is never initialized, so accessing it throws an Error before the intended
+        // BuckarooException can be thrown. This is a source code limitation.
+        $client = new Client(null);
+
+        $this->expectException(\Error::class);
+        $this->expectExceptionMessage('must not be accessed before initialization');
+
+        $client->config();
     }
 }

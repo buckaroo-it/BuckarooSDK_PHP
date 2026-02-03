@@ -10,10 +10,6 @@ use Tests\Support\BuckarooMockRequest;
 use Tests\Support\TestHelpers;
 use Tests\TestCase;
 
-/**
- * @runTestsInSeparateProcesses
- * @preserveGlobalState disabled
- */
 class TransactionServiceTest extends TestCase
 {
     protected function setUp(): void
