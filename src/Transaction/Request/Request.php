@@ -24,7 +24,6 @@ namespace Buckaroo\Transaction\Request;
 
 use ArrayAccess;
 use Buckaroo\Resources\Arrayable;
-use Exception;
 use JsonSerializable;
 
 class Request implements JsonSerializable, ArrayAccess, Arrayable
@@ -45,11 +44,9 @@ class Request implements JsonSerializable, ArrayAccess, Arrayable
      */
     public function offsetSet($offset, $value): void
     {
-        if (is_null($offset))
-        {
+        if (is_null($offset)) {
             $this->data[] = $value;
-        } else
-        {
+        } else {
             $this->data[$offset] = $value;
         }
     }
@@ -67,13 +64,13 @@ class Request implements JsonSerializable, ArrayAccess, Arrayable
     }
 
     /** Implement ArrayAccess */
-    public function offsetGet($offset): mixed
+    public function offsetGet($offset)
     {
         return isset($this->data[$offset]) ? $this->data[$offset] : null;
     }
 
     /** Implement JsonSerializable */
-    public function jsonSerialize(): mixed
+    public function jsonSerialize()
     {
         return $this->data;
     }
@@ -107,8 +104,7 @@ class Request implements JsonSerializable, ArrayAccess, Arrayable
      */
     public function getHeader($name)
     {
-        if (isset($this->headers[strtolower($name)]))
-        {
+        if (isset($this->headers[strtolower($name)])) {
             return $this->headers[strtolower($name)];
         }
 

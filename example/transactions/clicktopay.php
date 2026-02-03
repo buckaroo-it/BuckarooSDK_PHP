@@ -14,7 +14,7 @@ $response = $buckaroo->method('clicktopay')->pay([
     'description' => "test ClickToPay",
     "clientIP" => [
         "type" => 0,
-        "address" => "0.0.0.0"
+        "address" => "0.0.0.0",
     ],
     'continueOnIncomplete' => "1",
 ]);

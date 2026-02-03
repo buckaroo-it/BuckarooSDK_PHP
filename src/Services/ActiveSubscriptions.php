@@ -20,15 +20,14 @@
 
 namespace Buckaroo\Services;
 
-use Exception;
-use SimpleXMLElement;
 use Buckaroo\Models\ServiceList;
 use Buckaroo\Transaction\Client;
 use Buckaroo\Transaction\Request\TransactionRequest;
+use Exception;
+use SimpleXMLElement;
 
 class ActiveSubscriptions
 {
-
     private const SERVICE_CODE_AND_ACTION = 'GetActiveSubscriptions';
 
     private const VERSION_ZERO = 0;
@@ -76,12 +75,13 @@ class ActiveSubscriptions
                     self::SERVICE_CODE_AND_ACTION
                 )
             );
+
         return $transaction;
     }
 
     private function format($data): array
     {
-        $decoded =  json_decode(json_encode($data), true);
+        $decoded = json_decode(json_encode($data), true);
         if (!is_array($decoded)) {
             return [];
         }
@@ -95,6 +95,7 @@ class ActiveSubscriptions
             }
             $formated[] = $formatedSubscription;
         }
+
         return $formated;
     }
 

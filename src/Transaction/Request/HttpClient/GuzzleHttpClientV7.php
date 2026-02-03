@@ -52,8 +52,7 @@ class GuzzleHttpClientV7 extends HttpClientAbstract
 
         $request = new Request($method, $url, $headers, $data);
 
-        try
-        {
+        try {
             $response = $this->httpClient->send($request, ['http_errors' => false]);
 
             $result = (string) $response->getBody();

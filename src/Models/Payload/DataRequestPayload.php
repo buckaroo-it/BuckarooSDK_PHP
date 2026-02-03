@@ -33,8 +33,7 @@ class DataRequestPayload extends Payload
      */
     public function setProperties(?array $data)
     {
-        if (isset($data['additionalParameters']))
-        {
+        if (isset($data['additionalParameters'])) {
             $this->additionalParameters = new AdditionalParameters($data['additionalParameters'], true);
 
             unset($data['additionalParameters']);

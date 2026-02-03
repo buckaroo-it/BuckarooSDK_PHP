@@ -56,8 +56,7 @@ class ExtraInfo extends ServiceParameter
      */
     public function address($address = null)
     {
-        if (is_array($address))
-        {
+        if (is_array($address)) {
             $this->address = new AddressAdapter(new Address($address));
         }
 
@@ -70,8 +69,7 @@ class ExtraInfo extends ServiceParameter
      */
     public function customer($customer = null)
     {
-        if (is_array($customer))
-        {
+        if (is_array($customer)) {
             $this->customer = new Person($customer);
         }
 
@@ -84,8 +82,7 @@ class ExtraInfo extends ServiceParameter
      */
     public function phone($phone = null)
     {
-        if (is_array($phone))
-        {
+        if (is_array($phone)) {
             $this->phone = new PhoneAdapter(new Phone($phone));
         }
 
