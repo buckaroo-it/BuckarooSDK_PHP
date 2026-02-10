@@ -64,12 +64,14 @@ class Request implements JsonSerializable, ArrayAccess, Arrayable
     }
 
     /** Implement ArrayAccess */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return isset($this->data[$offset]) ? $this->data[$offset] : null;
     }
 
     /** Implement JsonSerializable */
+    #[\ReturnTypeWillChange]
     public function jsonSerialize()
     {
         return $this->data;
