@@ -22,7 +22,6 @@ namespace Buckaroo\PaymentMethods\Klarna\Models;
 
 use Buckaroo\Models\ServiceParameter;
 use Buckaroo\PaymentMethods\Klarna\Service\ParameterKeys\ArticleAdapter;
-use Buckaroo\PaymentMethods\Klarna\Service\ParameterKeys\ShippingInfoAdapter;
 use Buckaroo\PaymentMethods\Traits\CountableGroupKey;
 
 class Payload extends ServiceParameter

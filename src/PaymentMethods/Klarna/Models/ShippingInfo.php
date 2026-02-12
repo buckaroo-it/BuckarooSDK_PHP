@@ -44,5 +44,4 @@ class ShippingInfo extends \Buckaroo\Models\ShippingInfo
 
         return $this->shippingInfo;
     }
-
 }
