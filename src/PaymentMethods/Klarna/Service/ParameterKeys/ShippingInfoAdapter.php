@@ -18,15 +18,13 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\KlarnaPay\Service\ParameterKeys;
+namespace Buckaroo\PaymentMethods\Klarna\Service\ParameterKeys;
 
-use Buckaroo\Models\Adapters\ServiceParametersKeysAdapter;
-
-class AddressAdapter extends ServiceParametersKeysAdapter
+class ShippingInfoAdapter extends RecipientAdapter
 {
     protected array $keys = [
-        'houseNumber' => 'StreetNumber',
-        'houseNumberAdditional' => 'StreetNumberAdditional',
-        'zipcode' => 'PostalCode',
+        'company' => 'Company',
+        'trackingNumber' => 'TrackingNumber',
+        'shippingMethod' => 'ShippingMethod',
     ];
 }
