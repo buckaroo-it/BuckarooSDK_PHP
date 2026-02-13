@@ -18,13 +18,20 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\KlarnaPay\Service\ParameterKeys;
+namespace Buckaroo\PaymentMethods\Klarna\Service\ParameterKeys;
 
 use Buckaroo\Models\Adapters\ServiceParametersKeysAdapter;
 
 class ArticleAdapter extends ServiceParametersKeysAdapter
 {
     protected array $keys = [
-        'price' => 'GrossUnitPrice',
+        'type' => 'ArticleType',
+        'description' => 'ArticleTitle',
+        'identifier' => 'ArticleNumber',
+        'price' => 'ArticlePrice',
+        'quantity' => 'ArticleQuantity',
+        'vatPercentage' => 'ArticleVat',
+        'imageUrl' => 'ArticleImageUrl',
+        'productUrl' => 'ArticleProductUrl',
     ];
 }

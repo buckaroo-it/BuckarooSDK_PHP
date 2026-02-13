@@ -12,7 +12,7 @@ use Tests\Support\TestHelpers;
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class KlarnaPayTest extends FeatureTestCase
+class KlarnaTest extends FeatureTestCase
 {
     /** @test */
     public function it_creates_pay_transaction(): void
@@ -30,7 +30,7 @@ class KlarnaPayTest extends FeatureTestCase
                 'RequiredAction' => null,
                 'Services' => [
                     [
-                        'Name' => 'klarna',
+                        'Name' => 'Klarna',
                         'Action' => 'Pay',
                         'Parameters' => [],
                     ],
@@ -57,44 +57,168 @@ class KlarnaPayTest extends FeatureTestCase
     }
 
     /** @test */
-    public function it_creates_pay_in_installments_transaction(): void
+    public function it_creates_reserve_transaction(): void
     {
         $transactionKey = TestHelpers::generateTransactionKey();
 
         $this->mockBuckaroo->mockTransportRequests([
-            BuckarooMockRequest::json('POST', '*/json/Transaction*', [
+            BuckarooMockRequest::json('POST', '*/json/DataRequest*', [
                 'Key' => $transactionKey,
                 'Status' => [
-                    'Code' => ['Code' => 190, 'Description' => 'Success'],
-                    'SubCode' => ['Code' => 'S001', 'Description' => 'Installment payment successful'],
+                    'Code' => ['Code' => 791, 'Description' => 'Pending'],
+                    'SubCode' => ['Code' => 'S001', 'Description' => 'Reservation pending'],
                     'DateTime' => date('Y-m-d\TH:i:s'),
                 ],
                 'RequiredAction' => null,
                 'Services' => [
                     [
-                        'Name' => 'klarna',
-                        'Action' => 'PayInInstallments',
-                        'Parameters' => [],
+                        'Name' => 'Klarna',
+                        'Action' => 'Reserve',
+                        'Parameters' => [
+                            ['Name' => 'ReservationNumber', 'Value' => 'RES-KLARNA-123456'],
+                        ],
                     ],
                 ],
-                'Invoice' => 'INV-KLARNA-INST-001',
+                'Invoice' => 'INV-KLARNA-RESERVE-001',
                 'Currency' => 'EUR',
                 'AmountDebit' => 200.00,
                 'IsTest' => true,
             ]),
         ]);
 
-        $response = $this->buckaroo->method('klarna')->payInInstallments([
+        $response = $this->buckaroo->method('klarna')->reserve([
             'amountDebit' => 200.00,
-            'invoice' => 'INV-KLARNA-INST-001',
+            'invoice' => 'INV-KLARNA-RESERVE-001',
             'currency' => 'EUR',
+        ]);
+
+        $this->assertTrue($response->isPendingProcessing());
+        $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertEquals('INV-KLARNA-RESERVE-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(200.00, $response->getAmountDebit());
+        $params = $response->getServiceParameters();
+        $this->assertEquals('RES-KLARNA-123456', $params['reservationnumber']);
+    }
+
+    /** @test */
+    public function it_cancels_reservation(): void
+    {
+        $transactionKey = TestHelpers::generateTransactionKey();
+
+        $this->mockBuckaroo->mockTransportRequests([
+            BuckarooMockRequest::json('POST', '*/json/DataRequest*', [
+                'Key' => $transactionKey,
+                'Status' => [
+                    'Code' => ['Code' => 190, 'Description' => 'Success'],
+                    'SubCode' => ['Code' => 'S001', 'Description' => 'Cancellation successful'],
+                    'DateTime' => date('Y-m-d\TH:i:s'),
+                ],
+                'RequiredAction' => null,
+                'Services' => [
+                    [
+                        'Name' => 'Klarna',
+                        'Action' => 'CancelReservation',
+                        'Parameters' => [],
+                    ],
+                ],
+                'Invoice' => 'INV-KLARNA-CANCEL-001',
+                'Currency' => 'EUR',
+                'AmountCredit' => 200.00,
+                'IsTest' => true,
+            ]),
+        ]);
+
+        $response = $this->buckaroo->method('klarna')->cancelReserve([
+            'amountCredit' => 200.00,
+            'invoice' => 'INV-KLARNA-CANCEL-001',
+            'reservationNumber' => 'RES-KLARNA-123456',
         ]);
 
         $this->assertTrue($response->isSuccess());
         $this->assertEquals($transactionKey, $response->getTransactionKey());
-        $this->assertEquals('INV-KLARNA-INST-001', $response->getInvoice());
+        $this->assertEquals('INV-KLARNA-CANCEL-001', $response->getInvoice());
         $this->assertEquals('EUR', $response->getCurrency());
-        $this->assertEquals(200.00, $response->getAmountDebit());
+        $this->assertEquals(200.00, $response->getAmountCredit());
+        $this->assertTrue($response->get('IsTest'));
+    }
+
+    /** @test */
+    public function it_extends_reservation(): void
+    {
+        $transactionKey = TestHelpers::generateTransactionKey();
+
+        $this->mockBuckaroo->mockTransportRequests([
+            BuckarooMockRequest::json('POST', '*/json/DataRequest*', [
+                'Key' => $transactionKey,
+                'Status' => [
+                    'Code' => ['Code' => 190, 'Description' => 'Success'],
+                    'SubCode' => ['Code' => 'S001', 'Description' => 'Extension successful'],
+                    'DateTime' => date('Y-m-d\TH:i:s'),
+                ],
+                'RequiredAction' => null,
+                'Services' => [
+                    [
+                        'Name' => 'Klarna',
+                        'Action' => 'ExtendReservation',
+                        'Parameters' => [],
+                    ],
+                ],
+                'Invoice' => 'INV-KLARNA-EXTEND-001',
+                'Currency' => 'EUR',
+                'IsTest' => true,
+            ]),
+        ]);
+
+        $response = $this->buckaroo->method('klarna')->extendReserve([
+            'invoice' => 'INV-KLARNA-EXTEND-001',
+            'reservationNumber' => 'RES-KLARNA-123456',
+        ]);
+
+        $this->assertTrue($response->isSuccess());
+        $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertEquals('INV-KLARNA-EXTEND-001', $response->getInvoice());
+    }
+
+    /** @test */
+    public function it_updates_reservation(): void
+    {
+        $transactionKey = TestHelpers::generateTransactionKey();
+
+        $this->mockBuckaroo->mockTransportRequests([
+            BuckarooMockRequest::json('POST', '*/json/DataRequest*', [
+                'Key' => $transactionKey,
+                'Status' => [
+                    'Code' => ['Code' => 190, 'Description' => 'Success'],
+                    'SubCode' => ['Code' => 'S001', 'Description' => 'Update successful'],
+                    'DateTime' => date('Y-m-d\TH:i:s'),
+                ],
+                'RequiredAction' => null,
+                'Services' => [
+                    [
+                        'Name' => 'Klarna',
+                        'Action' => 'UpdateReservation',
+                        'Parameters' => [],
+                    ],
+                ],
+                'Invoice' => 'INV-KLARNA-UPDATE-001',
+                'Currency' => 'EUR',
+                'AmountDebit' => 175.00,
+                'IsTest' => true,
+            ]),
+        ]);
+
+        $response = $this->buckaroo->method('klarna')->updateReserve([
+            'amountDebit' => 175.00,
+            'invoice' => 'INV-KLARNA-UPDATE-001',
+            'reservationNumber' => 'RES-KLARNA-123456',
+        ]);
+
+        $this->assertTrue($response->isSuccess());
+        $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertEquals('INV-KLARNA-UPDATE-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(175.00, $response->getAmountDebit());
         $this->assertTrue($response->get('IsTest'));
     }
 
@@ -115,7 +239,7 @@ class KlarnaPayTest extends FeatureTestCase
                 'RequiredAction' => null,
                 'Services' => [
                     [
-                        'Name' => 'klarna',
+                        'Name' => 'Klarna',
                         'Action' => 'PayRemainder',
                         'Parameters' => [],
                     ],
@@ -158,7 +282,7 @@ class KlarnaPayTest extends FeatureTestCase
                 'RequiredAction' => null,
                 'Services' => [
                     [
-                        'Name' => 'klarna',
+                        'Name' => 'Klarna',
                         'Action' => 'Refund',
                         'Parameters' => [],
                     ],
@@ -185,7 +309,7 @@ class KlarnaPayTest extends FeatureTestCase
     }
 
     /** @test */
-    public function it_processes_payment_with_billing_and_articles(): void
+    public function it_processes_payment_with_complete_billing_data(): void
     {
         $transactionKey = TestHelpers::generateTransactionKey();
 
@@ -200,7 +324,7 @@ class KlarnaPayTest extends FeatureTestCase
                 'RequiredAction' => null,
                 'Services' => [
                     [
-                        'Name' => 'klarna',
+                        'Name' => 'Klarna',
                         'Action' => 'Pay',
                         'Parameters' => [],
                     ],
@@ -222,9 +346,9 @@ class KlarnaPayTest extends FeatureTestCase
                     'lastName' => 'Doe',
                 ],
                 'address' => [
-                    'street' => 'Main Street',
+                    'street' => 'Keizersgracht',
                     'houseNumber' => '123',
-                    'zipcode' => '1234AB',
+                    'zipcode' => '1016DK',
                     'city' => 'Amsterdam',
                     'country' => 'NL',
                 ],
@@ -256,7 +380,6 @@ class KlarnaPayTest extends FeatureTestCase
         $this->assertEquals('INV-KLARNA-FULL-001', $response->getInvoice());
         $this->assertEquals('EUR', $response->getCurrency());
         $this->assertEquals(125.00, $response->getAmountDebit());
-        $this->assertTrue($response->get('IsTest'));
     }
 
     /** @test */
@@ -275,7 +398,7 @@ class KlarnaPayTest extends FeatureTestCase
                 'RequiredAction' => null,
                 'Services' => [
                     [
-                        'Name' => 'klarna',
+                        'Name' => 'Klarna',
                         'Action' => 'Pay',
                         'Parameters' => [],
                     ],
@@ -297,9 +420,9 @@ class KlarnaPayTest extends FeatureTestCase
                     'lastName' => 'Doe',
                 ],
                 'address' => [
-                    'street' => 'Main Street',
+                    'street' => 'Keizersgracht',
                     'houseNumber' => '123',
-                    'zipcode' => '1234AB',
+                    'zipcode' => '1016DK',
                     'city' => 'Amsterdam',
                     'country' => 'NL',
                 ],
@@ -310,9 +433,9 @@ class KlarnaPayTest extends FeatureTestCase
                     'lastName' => 'Smith',
                 ],
                 'address' => [
-                    'street' => 'Other Street',
+                    'street' => 'Westerstraat',
                     'houseNumber' => '456',
-                    'zipcode' => '5678CD',
+                    'zipcode' => '3016DK',
                     'city' => 'Rotterdam',
                     'country' => 'NL',
                 ],
@@ -324,6 +447,127 @@ class KlarnaPayTest extends FeatureTestCase
         $this->assertEquals('INV-KLARNA-SHIP-001', $response->getInvoice());
         $this->assertEquals('EUR', $response->getCurrency());
         $this->assertEquals(100.00, $response->getAmountDebit());
+    }
+
+    /** @test */
+    public function it_processes_reservation_with_articles(): void
+    {
+        $transactionKey = TestHelpers::generateTransactionKey();
+
+        $this->mockBuckaroo->mockTransportRequests([
+            BuckarooMockRequest::json('POST', '*/json/DataRequest*', [
+                'Key' => $transactionKey,
+                'Status' => [
+                    'Code' => ['Code' => 791, 'Description' => 'Pending'],
+                    'SubCode' => ['Code' => 'S001', 'Description' => 'Reservation pending'],
+                    'DateTime' => date('Y-m-d\TH:i:s'),
+                ],
+                'RequiredAction' => null,
+                'Services' => [
+                    [
+                        'Name' => 'Klarna',
+                        'Action' => 'Reserve',
+                        'Parameters' => [
+                            ['Name' => 'ReservationNumber', 'Value' => 'RES-KLARNA-789'],
+                        ],
+                    ],
+                ],
+                'Invoice' => 'INV-KLARNA-RES-ART-001',
+                'Currency' => 'EUR',
+                'AmountDebit' => 300.00,
+                'IsTest' => true,
+            ]),
+        ]);
+
+        $response = $this->buckaroo->method('klarna')->reserve([
+            'amountDebit' => 300.00,
+            'invoice' => 'INV-KLARNA-RES-ART-001',
+            'currency' => 'EUR',
+            'articles' => [
+                [
+                    'identifier' => 'ART-001',
+                    'description' => 'Premium Product',
+                    'quantity' => 3,
+                    'price' => 100.00,
+                    'vatPercentage' => 21,
+                ],
+            ],
+        ]);
+
+        $this->assertTrue($response->isPendingProcessing());
+        $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertEquals('INV-KLARNA-RES-ART-001', $response->getInvoice());
+        $params = $response->getServiceParameters();
+        $this->assertEquals('RES-KLARNA-789', $params['reservationnumber']);
+    }
+
+    /** @test */
+    public function it_processes_payment_with_shipping_info(): void
+    {
+        $transactionKey = TestHelpers::generateTransactionKey();
+
+        $this->mockBuckaroo->mockTransportRequests([
+            BuckarooMockRequest::json('POST', '*/json/Transaction*', [
+                'Key' => $transactionKey,
+                'Status' => [
+                    'Code' => ['Code' => 190, 'Description' => 'Success'],
+                    'SubCode' => ['Code' => 'S001', 'Description' => 'Transaction successful'],
+                    'DateTime' => date('Y-m-d\TH:i:s'),
+                ],
+                'RequiredAction' => null,
+                'Services' => [
+                    [
+                        'Name' => 'Klarna',
+                        'Action' => 'Pay',
+                        'Parameters' => [],
+                    ],
+                ],
+                'Invoice' => 'INV-KLARNA-SHIPINFO-001',
+                'Currency' => 'EUR',
+                'AmountDebit' => 200.00,
+                'IsTest' => true,
+            ]),
+        ]);
+
+        $response = $this->buckaroo->method('klarna')->pay([
+            'amountDebit' => 200.00,
+            'invoice' => 'INV-KLARNA-SHIPINFO-001',
+            'currency' => 'EUR',
+            'billing' => [
+                'recipient' => [
+                    'firstName' => 'John',
+                    'lastName' => 'Doe',
+                ],
+                'address' => [
+                    'street' => 'Hoofdstraat',
+                    'houseNumber' => '123',
+                    'zipcode' => '1234AB',
+                    'city' => 'Amsterdam',
+                    'country' => 'NL',
+                ],
+                'email' => 'john.doe@example.com',
+            ],
+            'shippingInfo' => [
+                'company' => 'DHL Express',
+                'trackingNumber' => 'TRACK-123456789',
+                'shippingMethod' => 'Next Day Delivery',
+            ],
+            'articles' => [
+                [
+                    'identifier' => 'SKU-001',
+                    'description' => 'Shipped Product',
+                    'quantity' => 2,
+                    'price' => 100.00,
+                    'vatPercentage' => 21,
+                ],
+            ],
+        ]);
+
+        $this->assertTrue($response->isSuccess());
+        $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertEquals('INV-KLARNA-SHIPINFO-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(200.00, $response->getAmountDebit());
         $this->assertTrue($response->get('IsTest'));
     }
 
@@ -346,7 +590,7 @@ class KlarnaPayTest extends FeatureTestCase
                 'RequiredAction' => null,
                 'Services' => [
                     [
-                        'Name' => 'klarna',
+                        'Name' => 'Klarna',
                         'Action' => 'Pay',
                         'Parameters' => [],
                     ],

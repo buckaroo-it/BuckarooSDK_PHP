@@ -18,49 +18,40 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\KlarnaPay\Models;
+namespace Buckaroo\PaymentMethods\Klarna\Models;
 
-use Buckaroo\Models\Article;
 use Buckaroo\Models\ServiceParameter;
-use Buckaroo\PaymentMethods\KlarnaPay\Service\ParameterKeys\ArticleAdapter;
+use Buckaroo\PaymentMethods\Klarna\Service\ParameterKeys\ArticleAdapter;
 use Buckaroo\PaymentMethods\Traits\CountableGroupKey;
 
-class Pay extends ServiceParameter
+class Payload extends ServiceParameter
 {
     use CountableGroupKey;
 
-    /**
-     * @var array|string[]
-     */
     private array $countableProperties = ['articles'];
 
-    /**
-     * @var Recipient
-     */
-    protected Recipient $billingRecipient;
-    /**
-     * @var Recipient
-     */
-    protected Recipient $shippingRecipient;
-
-    /**
-     * @var array
-     */
     protected array $articles = [];
 
-    /**
-     * @var array|\string[][]
-     */
+    protected Recipient $billingRecipient;
+    protected Recipient $shippingRecipient;
+
+    protected ?ShippingInfo $shippingInfo;
+
+    protected int $gender;
+    protected string $operatingCountry;
+    protected string $pno;
+    protected string $dataRequestKey;
+    protected bool $shippingSameAsBilling = true;
+
     protected array $groupData = [
         'articles' => [
             'groupType' => 'Article',
         ],
+        'shippingInfo' => [
+            'groupType' => 'ShippingInfo',
+        ],
     ];
 
-    /**
-     * @param $billing
-     * @return Recipient
-     */
     public function billing($billing = null)
     {
         if (is_array($billing)) {
@@ -71,23 +62,17 @@ class Pay extends ServiceParameter
         return $this->billingRecipient;
     }
 
-    /**
-     * @param $shipping
-     * @return Recipient
-     */
     public function shipping($shipping = null)
     {
         if (is_array($shipping)) {
+            $this->shippingSameAsBilling = false;
+
             $this->shippingRecipient = new Recipient('Shipping', $shipping);
         }
 
         return $this->shippingRecipient;
     }
 
-    /**
-     * @param array|null $articles
-     * @return array
-     */
     public function articles(?array $articles = null)
     {
         if (is_array($articles)) {
@@ -97,5 +82,14 @@ class Pay extends ServiceParameter
         }
 
         return $this->articles;
+    }
+
+    public function shippingInfo($shippingInfo = null)
+    {
+        if (is_array($shippingInfo)) {
+            $this->shippingInfo = new ShippingInfo('ShippingInfo', $shippingInfo);
+        }
+
+        return $this->shippingInfo;
     }
 }
