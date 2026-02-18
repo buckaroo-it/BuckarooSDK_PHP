@@ -18,11 +18,10 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\KlarnaPay\Models;
+namespace Buckaroo\PaymentMethods\Klarna\Models;
 
-class PayPayload extends \Buckaroo\Models\Payload\PayPayload
+class Article extends \Buckaroo\Models\Article
 {
-    protected string $servicesSelectableByClient;
-    protected string $servicesExcludedForClient;
-    protected string $originalTransactionReference;
+    protected ?string $imageUrl;
+    protected ?string $productUrl;
 }

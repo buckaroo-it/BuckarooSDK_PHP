@@ -18,13 +18,11 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-namespace Buckaroo\PaymentMethods\KlarnaPay\Service\ParameterKeys;
+namespace Buckaroo\Models;
 
-use Buckaroo\Models\Adapters\ServiceParametersKeysAdapter;
-
-class PhoneAdapter extends ServiceParametersKeysAdapter
+class ShippingInfo extends Model
 {
-    protected array $keys = [
-        'mobile' => 'Phone',
-    ];
+    protected ?string $company;
+    protected ?string $trackingNumber;
+    protected ?string $shippingMethod;
 }
