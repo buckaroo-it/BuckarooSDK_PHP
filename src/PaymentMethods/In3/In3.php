@@ -40,4 +40,32 @@ class In3 extends PayablePaymentMethod
     {
         return parent::pay($model ?? new Pay($this->payload));
     }
+
+    /**
+     * @return TransactionResponse
+     */
+    public function authorize(): TransactionResponse
+    {
+        $pay = new Pay($this->payload);
+
+        $this->setPayPayload();
+
+        $this->setServiceList('Authorize', $pay);
+
+        return $this->postRequest();
+    }
+
+    /**
+     * @return TransactionResponse
+     */
+    public function capture(): TransactionResponse
+    {
+        $pay = new Pay($this->payload);
+
+        $this->setPayPayload();
+
+        $this->setServiceList('Capture', $pay);
+
+        return $this->postRequest();
+    }
 }
