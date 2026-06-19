@@ -91,6 +91,14 @@ $payload = [
 //Pay - Using In3 with Route parameter for ABN AMRO Achteraf Betalen
 $response = $buckaroo->method('in3')->pay($payload);
 
+//Authorize - ABN AMRO "Zakelijk op rekening" requires the separate Authorize/Capture flow
+$response = $buckaroo->method('in3')->authorize($payload);
+
+//Capture - capture a previously authorized ABN AMRO "Zakelijk op rekening" transaction
+$response = $buckaroo->method('in3')->capture($payload + [
+    'originalTransactionKey' => '9AA4C81A08A84FA7B68E6A6A6291XXXX',
+]);
+
 //Refund
 $response = $buckaroo->method('in3')->refund([
     'amountCredit' => 10,

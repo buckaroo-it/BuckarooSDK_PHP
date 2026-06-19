@@ -290,6 +290,94 @@ class In3Test extends FeatureTestCase
     }
 
     /** @test */
+    public function it_creates_authorize_transaction(): void
+    {
+        $transactionKey = TestHelpers::generateTransactionKey();
+
+        $this->mockBuckaroo->mockTransportRequests([
+            BuckarooMockRequest::json('POST', '*/json/Transaction*', [
+                'Key' => $transactionKey,
+                'Status' => [
+                    'Code' => ['Code' => 190, 'Description' => 'Success'],
+                    'SubCode' => ['Code' => 'S001', 'Description' => 'Authorization successful'],
+                    'DateTime' => date('Y-m-d\TH:i:s'),
+                ],
+                'RequiredAction' => null,
+                'Services' => [
+                    [
+                        'Name' => 'in3',
+                        'Action' => 'Authorize',
+                        'Parameters' => [],
+                    ],
+                ],
+                'Invoice' => 'INV-IN3-AUTH-001',
+                'Currency' => 'EUR',
+                'AmountDebit' => 250.00,
+                'IsTest' => true,
+            ]),
+        ]);
+
+        $response = $this->buckaroo->method('in3')->authorize([
+            'amountDebit' => 250.00,
+            'invoice' => 'INV-IN3-AUTH-001',
+            'currency' => 'EUR',
+            'route' => 'abn_b2b',
+        ]);
+
+        $this->assertTrue($response->isSuccess());
+        $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertEquals('INV-IN3-AUTH-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(250.00, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
+    }
+
+    /** @test */
+    public function it_captures_authorized_payment(): void
+    {
+        $transactionKey = TestHelpers::generateTransactionKey();
+        $originalTxKey = 'ORIG_IN3_AUTH_TX_KEY';
+
+        $this->mockBuckaroo->mockTransportRequests([
+            BuckarooMockRequest::json('POST', '*/json/Transaction*', [
+                'Key' => $transactionKey,
+                'Status' => [
+                    'Code' => ['Code' => 190, 'Description' => 'Success'],
+                    'SubCode' => ['Code' => 'S001', 'Description' => 'Capture successful'],
+                    'DateTime' => date('Y-m-d\TH:i:s'),
+                ],
+                'RequiredAction' => null,
+                'Services' => [
+                    [
+                        'Name' => 'in3',
+                        'Action' => 'Capture',
+                        'Parameters' => [],
+                    ],
+                ],
+                'Invoice' => 'INV-IN3-CAPTURE-001',
+                'Currency' => 'EUR',
+                'AmountDebit' => 250.00,
+                'IsTest' => true,
+            ]),
+        ]);
+
+        $response = $this->buckaroo->method('in3')->capture([
+            'amountDebit' => 250.00,
+            'invoice' => 'INV-IN3-CAPTURE-001',
+            'currency' => 'EUR',
+            'route' => 'abn_b2b',
+            'originalTransactionKey' => $originalTxKey,
+        ]);
+
+        $this->assertTrue($response->isSuccess());
+        $this->assertEquals($transactionKey, $response->getTransactionKey());
+        $this->assertEquals('INV-IN3-CAPTURE-001', $response->getInvoice());
+        $this->assertEquals('EUR', $response->getCurrency());
+        $this->assertEquals(250.00, $response->getAmountDebit());
+        $this->assertTrue($response->get('IsTest'));
+    }
+
+    /** @test */
     public function it_refunds_payment(): void
     {
         $transactionKey = TestHelpers::generateTransactionKey();
