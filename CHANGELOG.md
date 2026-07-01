@@ -6,6 +6,87 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
+## [1.24.2]
+- Add ClickToPay service parameters (Identifier, TransientToken) to the Pay action so Click to Pay transactions can be completed.
+
+## [1.24.1]
+- BTI-1075 Add In3 authorize/capture flow for ABN-AMRO.
+
+## [1.24.0]
+- BTI-719 Add Banking payment method.
+
+## [1.23.2]
+- BTI-713 Add optional parameters for B2B transactions.
+
+## [1.23.1]
+- BTI-622 Add payRemainder support for Google Pay.
+
+## [1.23.0]
+- BTI-536 Add Klarna (MOR).
+- Remove old Klarna (PPRO).
+
+## [1.22.1]
+- Add ReturnTypeWillChange attribute for PHP 8.4 compatibility.
+
+## [1.22.0]
+- BA-1126 Add unit testing infrastructure with HTTP mocking.
+- Make iDEAL issuer optional.
+- Remove Billink authorize/capture flow.
+
+## [1.21.1]
+- Add missing parameter to subscription.
+
+## [1.21.0]
+- Add Google Pay payment method.
+- Add token payment method property.
+- Add update rate plan charge property.
+
+## [1.20.0]
+- Add Wero payment method.
+- Add Bizum payment method.
+- Add Swish payment method.
+- Add Twint payment method.
+- Add route parameter to In3.
+
+## [1.19.2]
+- BA-870 Add payRemainderWithToken action for Hosted Fields.
+
+## [1.19.1]
+- Refactor HttpClientFactory to use the Guzzle version constant for client instantiation.
+
+## [1.19.0]
+- BA-780 Rename Website key to Store key.
+- Add support for nullable types in method signatures for PHP 8.4 compatibility.
+
+## [1.18.0]
+- BA-722 Add Click to Pay.
+- BA-720 Add Hosted Fields.
+- BA-751 Support DataRequest in ReplyHandler; add defaults to AdditionalParameters.
+- BP-4270 Fix missing ConsumerEmail parameter when using Trustly.
+- Add adapter to the bank account.
+- Add configurable timeout for the HTTP client.
+- Return null in transaction response and allow getting the calculated hash.
+
+## [1.17.1]
+- Add JSON_PRESERVE_ZERO_FRACTION to json_encode options.
+
+## [1.17.0]
+- Allow the chamberOfCommerce property to be nullable.
+- Fix UTF-8 encoding issue in the base64Data function.
+
+## [1.16.0]
+- Add ArticleProductUrl and ArticleImageUrl to the KlarnaKP reserve payload.
+- Add shippingCost to iDEAL.
+- Remove Sofort.
+
+## [1.15.0]
+- Remove Giropay.
+- Remove support for PHP 7.4 and 8.0.
+- Klarna KP: set the full payload on cancel reserve.
+
+## [1.14.1]
+- Fix HouseNumberAdditional not being mapped correctly to HouseNumberSuffix in the CreateSubscription request payload.
+
 ## [1.14.0]
 - BA-333 Add Belgium banks for the payment method PayByBank.
 - BA-350 Push URL is set as a required parameter, but it should not be required when you want to follow the plaza Push settings.
