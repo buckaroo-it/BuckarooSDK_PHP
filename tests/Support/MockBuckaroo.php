@@ -25,6 +25,9 @@ final class MockBuckaroo
 
     private int $index = 0;
 
+    /** @var array<int, array{method:string,url:string,headers:array,body:?string}> */
+    private array $recorded = [];
+
     public function mockTransportRequests(array $requests): void
     {
         foreach ($requests as $r) {
@@ -48,11 +51,32 @@ final class MockBuckaroo
     {
         $this->queue = [];
         $this->index = 0;
+        $this->recorded = [];
+    }
+
+    /** @return array<int, array{method:string,url:string,headers:array,body:?string}> */
+    public function getRecordedRequests(): array
+    {
+        return $this->recorded;
+    }
+
+    public function getLastRequestBody(): ?string
+    {
+        $last = end($this->recorded);
+
+        return $last === false ? null : $last['body'];
     }
 
     /** internal dispatch called by the fake client */
     public function dispatch(string $method, string $url, array $headers, ?string $raw): array
     {
+        $this->recorded[] = [
+            'method'  => $method,
+            'url'     => $url,
+            'headers' => $headers,
+            'body'    => $raw,
+        ];
+
         if ($this->index >= count($this->queue)) {
             throw new LogicException("Unexpected Buckaroo call with no mocks left: {$method} {$url}");
         }
