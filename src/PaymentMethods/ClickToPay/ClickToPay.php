@@ -42,7 +42,7 @@ class ClickToPay extends PayablePaymentMethod implements Combinable
     public function pay(?Model $model = null)
     {
         $clickToPayData = new ClickToPayData([
-            'identifier'     => $this->payload['identifier'] ?? null,
+            'identifier' => $this->payload['identifier'] ?? null,
             'transientToken' => $this->payload['transientToken'] ?? null,
         ]);
 
