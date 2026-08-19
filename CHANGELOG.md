@@ -6,6 +6,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
+## [1.24.3]
+- BTI-1295 Update README.md with revised installation, usage and payment method documentation.
+
 ## [1.24.2]
 - Add ClickToPay service parameters (Identifier, TransientToken) to the Pay action so Click to Pay transactions can be completed.
 
