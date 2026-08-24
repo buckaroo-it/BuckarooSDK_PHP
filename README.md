@@ -89,7 +89,7 @@ $response = $buckaroo->method('creditcard')
     ]);
 ```
 
-Swap `creditcard` for any other service code to use a different payment method. Service codes and their parameters are listed in the [API reference](https://docs.buckaroo.io/reference).
+Use another service code supported by this SDK to select a different payment method. See the [API reference](https://docs.buckaroo.io/reference) for that service's parameters.
 
 ### Retrieving transaction information
 
