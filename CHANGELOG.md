@@ -109,7 +109,6 @@ All notable changes to this project will be documented in this file.
 ## [1.11.0]
 - BA-134 Add default Stdout Logger
 - BP-3287 Add more debtor information for Buckaroo Subscriptions
-- New payment method: Knaken Settle
 - Bugfix: In3 update phone adapter key
 
 ## [1.10.0]

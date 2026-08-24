@@ -111,8 +111,8 @@ This document provides a **comprehensive, deep analysis** of all payment method 
 9. ❌ **Przelewy24** - ~4 public methods (Polish payment method)
 10. ❌ **Trustly** - ~4 public methods (Nordic bank payment)
 
-**Medium Priority - Regional/Specialized (25):**
-- BankTransfer, Belfius, Billink, Bizum, Blik, EPS, GiftCard, In3, In3Old, KBC, KnakenPay, MBWay, Multibanco, Payconiq, PaymentInitiation, PointOfSale, Swish, Twint, WeChatPay, Wero, iDealProcessing, iDealQR, iDin, and others
+**Medium Priority - Regional/Specialized (24):**
+- BankTransfer, Belfius, Billink, Bizum, Blik, EPS, GiftCard, In3, In3Old, KBC, MBWay, Multibanco, Payconiq, PaymentInitiation, PointOfSale, Swish, Twint, WeChatPay, Wero, iDealProcessing, iDealQR, iDin, and others
 
 **Low Priority - Complex/Specialized (8):**
 - BuckarooVoucher, BuckarooWallet, ClickToPay, CreditManagement (10+ methods), Emandates, ExternalPayment, Marketplaces, NoServiceSpecifiedPayment, PayPerEmail, Subscriptions (10+ methods), Surepay, Thunes
@@ -494,11 +494,11 @@ They will serve as templates for all new payment method tests.
     - Methods: pay, refund, payRedirect, payRemainder, paymentName (~5 methods)
     - Estimated: 6-8 tests, ~280 lines
 
-#### **Task Group 2: Medium Priority Regional/Specialized (15 files)**
+#### **Task Group 2: Medium Priority Regional/Specialized (14 files)**
 
 **Estimated Effort:** 3,500-4,500 lines, 80-100 test methods, 2-3 weeks
 
-11-25. **BankTransferTest.php, BelfiusTest.php, BillinkTest.php, BizumTest.php, BlikTest.php, EPSTest.php, In3Test.php, In3OldTest.php, KBCTest.php, KlarnaPayTest.php, KnakenPayTest.php, MBWayTest.php, MultibancoTest.php, PayconiqTest.php, PaymentInitiationTest.php**
+11-24. **BankTransferTest.php, BelfiusTest.php, BillinkTest.php, BizumTest.php, BlikTest.php, EPSTest.php, In3Test.php, In3OldTest.php, KBCTest.php, KlarnaPayTest.php, MBWayTest.php, MultibancoTest.php, PayconiqTest.php, PaymentInitiationTest.php**
 
 - Each: 4-8 tests depending on complexity
 - Estimated per file: ~200-350 lines
@@ -577,7 +577,7 @@ They will serve as templates for all new payment method tests.
 ### **Phase 2: Regional & Specialized (Weeks 3-4)**
 **Goal:** Geographic coverage
 
-11-25. AfterpayDigiAccept, In3, In3Old, KlarnaPay, PaymentInitiation, BankTransfer, Billink, iDealProcessing, Belfius, KBC, EPS, Bizum, Blik, MBWay, Multibanco, Payconiq, Swish, Twint, Wero, WeChatPay, KnakenPay, iDealQR, iDin
+11-25. AfterpayDigiAccept, In3, In3Old, KlarnaPay, PaymentInitiation, BankTransfer, Billink, iDealProcessing, Belfius, KBC, EPS, Bizum, Blik, MBWay, Multibanco, Payconiq, Swish, Twint, Wero, WeChatPay, iDealQR, iDin
 
 **Output:** 15 files, ~3,500-4,500 lines, 80-100 tests
 
