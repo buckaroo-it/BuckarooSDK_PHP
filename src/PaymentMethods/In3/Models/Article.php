@@ -24,4 +24,5 @@ class Article extends \Buckaroo\Models\Article
 {
     protected string $url;
     protected string $category;
+    protected float $vatAmount;
 }
