@@ -6,6 +6,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
+## [1.24.4]
+- BTI-1528 Fix: In3 (route ABN "Zakelijk op rekening") omits vatAmount from request, sends null.
+
 ## [1.24.3]
 - BTI-1295 Update README.md with revised installation, usage and payment method documentation.
 
