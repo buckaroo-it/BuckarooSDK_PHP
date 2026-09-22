@@ -69,12 +69,17 @@ class Validator extends Hmac
     public function validate(string $header, string $uri, string $method, $data)
     {
         $header = explode(':', $header);
+        $this->hash = '';
+
+        if (count($header) !== 4 || in_array('', array_map('trim', $header), true) || !trim($uri)) {
+            return false;
+        }
 
         $providedHash = $header[1];
 
         $this->uri($uri);
-        $this->nonce($header[2]);
-        $this->time($header[3]);
+        $this->nonce = $header[2];
+        $this->time = $header[3];
 
         $this->base64Data($data);
 
@@ -82,7 +87,7 @@ class Validator extends Hmac
 
         $this->hash = base64_encode(hash_hmac('sha256', $hmac, $this->config->secretKey(), true));
 
-        return $providedHash == $this->hash;
+        return hash_equals($this->hash, $providedHash);
     }
 
     /**

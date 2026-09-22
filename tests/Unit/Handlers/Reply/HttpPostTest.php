@@ -11,6 +11,9 @@ use Tests\TestCase;
 
 class HttpPostTest extends TestCase
 {
+    /** Dummy secret for the hand-rolled signature-security vectors below; not a real key. */
+    private const SECRET = 'test-only-secret';
+
     public function test_validates_correct_brq_signature(): void
     {
         $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
@@ -389,5 +392,165 @@ class HttpPostTest extends TestCase
         $isValid = $handler->validate();
 
         $this->assertTrue($isValid, 'Field names with multiple underscores should be handled');
+    }
+
+    /**
+     * Regression vectors modelled on real Buckaroo push traffic (synthetic values).
+     *
+     * @return array<string, array{0: string, 1: string}>
+     */
+    public function gatewayPushShapeProvider(): array
+    {
+        $paypal = 'ADD_initiated_by_magento=1&ADD_service_action_from_magento=pay'
+            . '&brq_amount=26.62&brq_currency=EUR&brq_customer_name=Test+Person&brq_description=Order+100000001'
+            . '&brq_invoicenumber=100000001&brq_mutationtype=Processing&brq_ordernumber=100000001'
+            . '&brq_payment=00000000000000000000000000000001'
+            . '&brq_SERVICE_paypal_address_line_1=Example+Street+1&brq_SERVICE_paypal_admin_area_2=Example+City'
+            . '&brq_SERVICE_paypal_CustomerName=Test+Person&brq_SERVICE_paypal_orderId=EXAMPLEPPORDER1'
+            . '&brq_SERVICE_paypal_payerCountry=NL&brq_SERVICE_paypal_payerEmail=payer%40example.com'
+            . '&brq_SERVICE_paypal_payerFirstname=Test&brq_SERVICE_paypal_payerLastname=Person'
+            . '&brq_SERVICE_paypal_paypalCaptureId=EXAMPLECAPTURE1&brq_SERVICE_paypal_paypalTransactionID=EXAMPLEPPORDER1'
+            . '&brq_SERVICE_paypal_postal_code=1234AB&brq_SERVICE_paypal_ProtectionEligibility=Eligible'
+            . '&brq_SERVICE_paypal_ProtectionEligibilityType=ItemNotReceivedEligible%2cUnauthorizedPaymentEligible'
+            . '&brq_SERVICE_paypal_VersionAsProperty=2&brq_statuscode=190&brq_statuscode_detail=S990'
+            . '&brq_statusmessage=The+request+was+successful.&brq_test=true&brq_timestamp=2026-01-01+00%3a00%3a00'
+            . '&brq_transaction_method=paypal&brq_transaction_type=V010'
+            . '&brq_transactions=00000000000000000000000000000002&brq_websitekey=EXAMPLEKEY01';
+
+        $ideal = 'ADD_initiated_by_magento=1&ADD_service_action_from_magento=payremainder'
+            . '&brq_amount=11.62&brq_currency=EUR&brq_customer_name=T%c3%a8st+Person&brq_description=Order+100000002'
+            . '&brq_invoicenumber=100000002&brq_mutationtype=Collecting&brq_ordernumber=100000002'
+            . '&brq_payer_hash=00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
+            . '&brq_payment=00000000000000000000000000000003'
+            . '&brq_relatedtransaction_partialpayment=00000000000000000000000000000004'
+            . '&brq_SERVICE_ideal_consumerBIC=BANKNL2A&brq_SERVICE_ideal_consumerIBAN=NL00BANK0123456789'
+            . '&brq_SERVICE_ideal_consumerIssuer=Test+Bank&brq_SERVICE_ideal_consumerName=T%c3%a8st+Person'
+            . '&brq_SERVICE_ideal_transactionId=0000000000000001&brq_statuscode=190&brq_statuscode_detail=S990'
+            . '&brq_statusmessage=The+request+was+successful.&brq_test=true&brq_timestamp=2026-01-01+00%3a00%3a00'
+            . '&brq_transaction_method=ideal&brq_transaction_type=C021'
+            . '&brq_transactions=00000000000000000000000000000005&brq_websitekey=EXAMPLEKEY01'
+            . '&CUST_CustomerBillingCity=Example+City&CUST_CustomerBillingCountry=Netherlands'
+            . '&CUST_CustomerBillingEmail=payer%40example.com&CUST_CustomerBillingFirstName=Test'
+            . '&CUST_CustomerBillingHouseNumber=41&CUST_CustomerBillingLastName=Person'
+            . '&CUST_CustomerBillingPostcode=1234+AB&CUST_CustomerBillingStreet=Example+Street'
+            . '&CUST_CustomerBillingTelephone=0600000000&CUST_CustomerShippingCity=Example+City'
+            . '&CUST_CustomerShippingCountry=Netherlands&CUST_CustomerShippingEmail=payer%40example.com'
+            . '&CUST_CustomerShippingFirstName=Test&CUST_CustomerShippingHouseNumber=41'
+            . '&CUST_CustomerShippingLastName=Person&CUST_CustomerShippingPostcode=1234+AB'
+            . '&CUST_CustomerShippingStreet=Example+Street&CUST_CustomerShippingTelephone=0600000000';
+
+        return [
+            'PayPal (native snake_case service fields, ADD_ prefix)' => [$paypal, '576c06ad5797eeb2e212b07f759c05a13df5424a'],
+            'iDEAL pay-remainder (full CUST_ block, UTF-8)' => [$ideal, '2a69597bdfaf67e0ba6cec1c7fc8ec84b4d0656b'],
+        ];
+    }
+
+    /**
+     * @dataProvider gatewayPushShapeProvider
+     */
+    public function test_validates_gateway_push_shape(string $body, string $signature): void
+    {
+        $config = new DefaultConfig('test-website', 'golden-secret-not-a-real-key');
+        $data = $this->parseFormBody($body);
+        $data['brq_signature'] = $signature;
+
+        $handler = new HttpPost($config, $data);
+
+        $this->assertTrue($handler->validate(), 'A push in this gateway shape must validate against the pinned signature');
+    }
+
+    /**
+     * @dataProvider gatewayPushShapeProvider
+     */
+    public function test_tampering_a_gateway_push_shape_fails(string $body, string $signature): void
+    {
+        $config = new DefaultConfig('test-website', 'golden-secret-not-a-real-key');
+        $data = $this->parseFormBody($body);
+        $data['brq_amount'] = '9999.00'; // tamper
+        $data['brq_signature'] = $signature;
+
+        $handler = new HttpPost($config, $data);
+
+        $this->assertFalse($handler->validate(), 'Tampering any signed field must break validation');
+    }
+
+    /**
+     * Parse an application/x-www-form-urlencoded body the way the platform delivers it to
+     * the SDK: values url-decoded, original key names preserved.
+     *
+     * @return array<string, string>
+     */
+    private function parseFormBody(string $body): array
+    {
+        $data = [];
+        foreach (explode('&', $body) as $pair) {
+            [$key, $value] = array_pad(explode('=', $pair, 2), 2, '');
+            $data[urldecode($key)] = urldecode($value);
+        }
+
+        return $data;
+    }
+
+    /* ---------------------------------------------------------------------
+     * Signature-security invariants (mixed-case prefixes / collisions)
+     * ------------------------------------------------------------------ */
+
+    public function test_all_prefix_case_variants_are_signed_with_original_names(): void
+    {
+        foreach (['brq', 'add', 'cust'] as $prefix) {
+            for ($mask = 0; $mask < (1 << strlen($prefix)); $mask++) {
+                $variant = $prefix;
+                for ($index = 0; $index < strlen($prefix); $index++) {
+                    if ($mask & (1 << $index)) {
+                        $variant[$index] = strtoupper($variant[$index]);
+                    }
+                }
+                $key = $variant . '_reference';
+                $payload = [$key => 'original', 'brq_signature' => sha1($key . '=original' . self::SECRET)];
+                $this->assertTrue($this->validateSecurityPayload($payload), $key);
+                $payload[$key] = 'changed';
+                $this->assertFalse($this->validateSecurityPayload($payload), $key);
+            }
+        }
+    }
+
+    public function test_collisions_fail_even_when_both_values_are_signed(): void
+    {
+        foreach (['brq', 'add', 'cust'] as $prefix) {
+            foreach ([false, true] as $reverse) {
+                $keys = [$prefix . '_reference', ucfirst($prefix) . '_reference'];
+                if ($reverse) {
+                    $keys = array_reverse($keys);
+                }
+                $payload = [$keys[0] => 'original', $keys[1] => 'override'];
+                $payload['brq_signature'] = sha1($keys[0] . '=original' . $keys[1] . '=override' . self::SECRET);
+                $this->assertFalse($this->validateSecurityPayload($payload), implode(', ', $keys));
+            }
+        }
+    }
+
+    public function test_duplicate_signatures_and_unknown_key_collisions_are_rejected(): void
+    {
+        $payload = ['brq_statuscode' => '190', 'brq_signature' => sha1('brq_statuscode=190' . self::SECRET)];
+        foreach ([['BRQ_SIGNATURE' => $payload['brq_signature']], ['other' => 'a', 'OTHER' => 'b']] as $extra) {
+            $this->assertFalse($this->validateSecurityPayload($payload + $extra));
+            $this->assertFalse($this->validateSecurityPayload(array_reverse($payload + $extra, true)));
+        }
+    }
+
+    public function test_unsigned_mixed_case_override_is_rejected(): void
+    {
+        $payload = [
+            'brq_statuscode' => '690',
+            'brq_signature' => sha1('brq_statuscode=690' . self::SECRET),
+            'Brq_statuscode' => '190',
+        ];
+        $this->assertFalse($this->validateSecurityPayload($payload));
+        $this->assertFalse($this->validateSecurityPayload(array_reverse($payload, true)));
+    }
+
+    private function validateSecurityPayload(array $payload): bool
+    {
+        return (new HttpPost(new DefaultConfig('test', self::SECRET), $payload))->validate();
     }
 }
