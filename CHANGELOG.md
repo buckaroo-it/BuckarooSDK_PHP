@@ -6,6 +6,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
+## [1.24.5]
+- BTI-1580 Push signature | Security improvements.
+
 ## [1.24.4]
 - BTI-1528 Fix: In3 (route ABN "Zakelijk op rekening") omits vatAmount from request, sends null.
 
