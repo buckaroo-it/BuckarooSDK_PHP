@@ -41,8 +41,6 @@ class HttpPost implements ReplyStrategy
     {
         $this->config = $config;
         $this->data = $data;
-
-        ksort($this->data, SORT_FLAG_CASE | SORT_STRING);
     }
 
     /**
@@ -50,14 +48,28 @@ class HttpPost implements ReplyStrategy
      */
     public function validate(): bool
     {
-        //Remove brq_signature from the equation
-        $data = array_filter($this->data, function ($key) {
-            $acceptable_top_level = ['brq', 'add', 'cust', 'BRQ', 'ADD', 'CUST'];
+        // Consumers ignore key casing. Reject ambiguous names before authenticating them.
+        $normalized = array_change_key_case($this->data, CASE_LOWER);
+        if (count($normalized) !== count($this->data)) {
+            return false;
+        }
 
-            return (
-                $key != 'brq_signature' && $key != 'BRQ_SIGNATURE') &&
-                in_array(explode('_', $key)[0], $acceptable_top_level);
+        $signature = $normalized['brq_signature'] ?? null;
+        if (!is_string($signature) || trim($signature) === '') {
+            return false;
+        }
+
+        // Preserve original key names in the signed string, including mixed-case prefixes.
+        $data = array_filter($this->data, function ($key) {
+            $key = strtolower((string) $key);
+
+            return $key !== 'brq_signature'
+                && in_array(explode('_', $key)[0], ['brq', 'add', 'cust'], true);
         }, ARRAY_FILTER_USE_KEY);
+
+        uksort($data, static function ($a, $b): int {
+            return strcmp(strtolower((string) $a), strtolower((string) $b));
+        });
 
         //Combine the array keys with value
         $data = array_map(function ($value, $key) {
@@ -68,7 +80,7 @@ class HttpPost implements ReplyStrategy
 
         return hash_equals(
             sha1($dataString),
-            trim($this->data['brq_signature'] ?? $this->data['BRQ_SIGNATURE'] ?? null)
+            trim($signature)
         );
     }
 }

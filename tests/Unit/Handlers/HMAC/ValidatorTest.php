@@ -161,6 +161,28 @@ class ValidatorTest extends TestCase
         $this->assertFalse($isValid);
     }
 
+    public function test_rejects_missing_or_malformed_authentication_without_php_errors(): void
+    {
+        $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
+        $validator = new Validator($config);
+        $headers = [
+            '', ' ', 'invalid', 'key:hash', 'key:hash:nonce', 'key:hash:nonce:time:extra',
+            'key:hash: :time', 'key:hash:0:1234567890', 'key:hash:nonce:0',
+        ];
+        foreach ($headers as $header) {
+            $this->assertFalse($validator->validate($header, 'https://example.com/push', 'POST', []), $header);
+        }
+    }
+
+    public function test_rejects_missing_uri(): void
+    {
+        $config = new DefaultConfig($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
+        $validator = new Validator($config);
+        foreach (['', ' '] as $uri) {
+            $this->assertFalse($validator->validate('key:hash:nonce:time', $uri, 'POST', []));
+        }
+    }
+
     /** @test */
     public function test_rejects_signature_with_wrong_website_key(): void
     {
