@@ -21,6 +21,7 @@
 namespace Buckaroo\Handlers\Reply;
 
 use Buckaroo\Config\Config;
+use Buckaroo\Exceptions\BuckarooException;
 
 class ReplyHandler
 {
@@ -72,6 +73,7 @@ class ReplyHandler
      */
     public function validate()
     {
+        $this->isValid = false;
         $this->setStrategy();
 
         $this->isValid = $this->strategy->validate();
@@ -91,37 +93,39 @@ class ReplyHandler
             $data = json_decode($data, true);
         }
 
-        if (($this->contains('Transaction', $data) || $this->contains('DataRequest', $data)) &&
-            $this->auth_header &&
-            $this->uri
-        ) {
-            $this->strategy = new Json($this->config, $data, $this->auth_header, $this->uri);
+        if (!is_array($data)) {
+            throw new BuckarooException($this->config->getLogger(), "Reply data must be an array or a JSON object.");
+        }
+
+        if ($this->contains('Transaction', $data, true) || $this->contains('DataRequest', $data, true)) {
+            $this->strategy = new Json($this->config, $data, $this->auth_header ?? '', $this->uri ?? '');
 
             return $this;
         }
 
-        if ($this->contains('brq_', $data) || $this->contains('BRQ_', $data)) {
+        if ($this->contains('brq_', $data)) {
             $this->strategy = new HttpPost($this->config, $data);
 
             return $this;
         }
 
-        throw new \Exception("No reply handler strategy applied.");
+        throw new BuckarooException($this->config->getLogger(), "No reply handler strategy applied.");
     }
 
     /**
      * @param string $needle
      * @param array $data
+     * @param bool $strict
      * @return bool
      */
     private function contains(string $needle, array $data, bool $strict = false): bool
     {
         foreach (array_keys($data) as $key) {
-            if ($strict && $key == $needle) {
+            if ($strict && $key === $needle) {
                 return true;
             }
 
-            if (!$strict && strpos($key, $needle) !== false) {
+            if (!$strict && stripos((string) $key, $needle) === 0) {
                 return true;
             }
         }
