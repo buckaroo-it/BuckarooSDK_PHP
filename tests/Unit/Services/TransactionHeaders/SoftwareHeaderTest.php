@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Services\TransactionHeaders;
 
+use Buckaroo\Config\Config;
 use Buckaroo\Config\DefaultConfig;
 use Buckaroo\Services\TransactionHeaders\DefaultHeader;
 use Buckaroo\Services\TransactionHeaders\SoftwareHeader;
@@ -93,11 +94,11 @@ class SoftwareHeaderTest extends TestCase
         $softwareJson = str_replace('Software: ', '', $headers[0]);
         $softwareData = json_decode($softwareJson, true);
 
-        $this->assertSame('Empty Platform Name', $softwareData['PlatformName']);
-        $this->assertSame('1.0.0', $softwareData['PlatformVersion']);
-        $this->assertSame('Empty Module Supplier', $softwareData['ModuleSupplier']);
-        $this->assertSame('Empty Module name', $softwareData['ModuleName']);
-        $this->assertSame('1.0.0', $softwareData['ModuleVersion']);
+        $this->assertSame('PHP SDK', $softwareData['PlatformName']);
+        $this->assertSame(Config::SDK_VERSION, $softwareData['PlatformVersion']);
+        $this->assertSame('Buckaroo', $softwareData['ModuleSupplier']);
+        $this->assertSame('BuckarooPayments', $softwareData['ModuleName']);
+        $this->assertSame('1.0', $softwareData['ModuleVersion']);
     }
 
     public function test_software_header_produces_valid_json(): void

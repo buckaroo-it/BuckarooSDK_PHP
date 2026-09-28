@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Config;
 
+use Buckaroo\Config\Config;
 use Buckaroo\Config\DefaultConfig;
 use Buckaroo\Handlers\Logging\DefaultLogger;
 use Buckaroo\Handlers\Logging\Observer;
@@ -12,6 +13,13 @@ use Tests\TestCase;
 
 class ConfigTest extends TestCase
 {
+    public function test_sdk_version_matches_composer_version(): void
+    {
+        $composer = json_decode(file_get_contents(__DIR__ . '/../../../composer.json'), true);
+
+        $this->assertSame($composer['version'], Config::SDK_VERSION);
+    }
+
     public function test_creates_config_with_required_parameters(): void
     {
         $config = new DefaultConfig('websiteKey', 'secretKey');
