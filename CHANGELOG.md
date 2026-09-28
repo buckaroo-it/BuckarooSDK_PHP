@@ -6,6 +6,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
+## [1.24.6]
+- BTI-1616 Send the PHP SDK name and version in the Software header by default.
+
 ## [1.24.5]
 - BTI-1580 Push signature | Security improvements.
 

@@ -36,6 +36,10 @@ abstract class Config implements Loggable
      *
      */
     const TEST_MODE = 'test';
+    /**
+     * Keep in sync with the "version" in composer.json.
+     */
+    const SDK_VERSION = '1.24.6';
 
     /**
      * @var string
@@ -154,11 +158,11 @@ abstract class Config implements Loggable
         $this->returnURL = $_ENV['BPE_RETURN_URL'] ?? $returnURL ?? '';
         $this->returnURLCancel = $_ENV['BPE_RETURN_URL_CANCEL'] ?? $returnURLCancel ?? '';
         $this->pushURL = $_ENV['BPE_PUSH_URL'] ?? $pushURL ?? '';
-        $this->platformName = $_ENV['PlatformName'] ?? $platformName ?? 'Empty Platform Name';
-        $this->platformVersion = $_ENV['PlatformVersion'] ?? $platformVersion ?? '1.0.0';
-        $this->moduleSupplier = $_ENV['ModuleSupplier'] ?? $moduleSupplier ?? 'Empty Module Supplier';
-        $this->moduleName = $_ENV['ModuleName'] ?? $moduleName ?? 'Empty Module name';
-        $this->moduleVersion = $_ENV['ModuleVersion'] ?? $moduleVersion ?? '1.0.0';
+        $this->platformName = $_ENV['PlatformName'] ?? $platformName ?? 'PHP SDK';
+        $this->platformVersion = $_ENV['PlatformVersion'] ?? $platformVersion ?? self::SDK_VERSION;
+        $this->moduleSupplier = $_ENV['ModuleSupplier'] ?? $moduleSupplier ?? 'Buckaroo';
+        $this->moduleName = $_ENV['ModuleName'] ?? $moduleName ?? 'BuckarooPayments';
+        $this->moduleVersion = $_ENV['ModuleVersion'] ?? $moduleVersion ?? '1.0';
         $this->culture = $_ENV['Culture'] ?? $culture ?? '';
         $this->channel = $_ENV['Channel'] ?? $channel ?? '';
         $this->timeout = $_ENV['BPE_HTTP_TIMEOUT'] ?? $timeout ?? null;
