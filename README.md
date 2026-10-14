@@ -70,7 +70,7 @@ You can find your Store key and Secret key under [API credentials in Buckaroo Pl
 ```php
 require __DIR__ . '/vendor/autoload.php';
 
-$buckaroo = new \BuckarooClient('STORE_KEY', 'SECRET_KEY', 'test');
+$buckaroo = new \Buckaroo\BuckarooClient('STORE_KEY', 'SECRET_KEY', 'test');
 ```
 
 > [!TIP]
