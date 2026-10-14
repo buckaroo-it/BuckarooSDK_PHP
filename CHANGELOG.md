@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
-## [1.24.7]
+## [1.25.0]
 - BTI-1349 Remove GoSettle/KnakenPay as a payment method.
 
 ## [1.24.6]
