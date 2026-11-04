@@ -20,6 +20,7 @@
 
 namespace Buckaroo\PaymentMethods\Afterpay\Models;
 
+use Buckaroo\Exceptions\ParameterValidationException;
 use Buckaroo\Models\Address;
 use Buckaroo\Models\Company;
 use Buckaroo\Models\Email;
@@ -133,7 +134,7 @@ class Recipient extends ServiceParameter
                 return new RecipientAdapter(new Person($recipient));
         }
 
-        throw new \Exception('No recipient category found.');
+        throw ParameterValidationException::forParameter('category', 'No recipient category found.');
     }
 
     /**

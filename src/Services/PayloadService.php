@@ -20,6 +20,7 @@
 
 namespace Buckaroo\Services;
 
+use Buckaroo\Exceptions\ParameterValidationException;
 use Buckaroo\Resources\Arrayable;
 
 class PayloadService implements Arrayable
@@ -51,13 +52,13 @@ class PayloadService implements Arrayable
             return $this;
         }
 
-        if (is_string($payload)) {
-            $this->payload = json_decode($payload, true);
+        $decoded = is_string($payload) ? json_decode($payload, true) : null;
+
+        if (!is_array($decoded) || $decoded === []) {
+            throw new ParameterValidationException("Invalid or empty payload. Array or json format required.");
         }
 
-        if ($this->payload == null) {
-            throw new \Exception("Invalid or empty payload. Array or json format required.");
-        }
+        $this->payload = $decoded;
 
         return $this;
     }

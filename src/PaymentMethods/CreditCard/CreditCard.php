@@ -20,6 +20,7 @@
 
 namespace Buckaroo\PaymentMethods\CreditCard;
 
+use Buckaroo\Exceptions\ParameterValidationException;
 use Buckaroo\PaymentMethods\CreditCard\Models\CardData;
 use Buckaroo\PaymentMethods\CreditCard\Models\SecurityCode;
 use Buckaroo\PaymentMethods\CreditCard\Models\SessionData;
@@ -199,6 +200,6 @@ class CreditCard extends PayablePaymentMethod implements Combinable
             return $this->payload['name'];
         }
 
-        throw new \Exception('Missing creditcard name');
+        throw ParameterValidationException::forParameter('name', 'Missing creditcard name');
     }
 }

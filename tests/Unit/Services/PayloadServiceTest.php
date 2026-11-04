@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Services;
 
+use Buckaroo\Exceptions\ParameterValidationException;
 use Buckaroo\Resources\Arrayable;
 use Buckaroo\Services\PayloadService;
 use Exception;
@@ -101,36 +102,27 @@ class PayloadServiceTest extends TestCase
         $this->assertSame([], $service->toArray());
     }
 
-    public function test_it_throws_error_for_invalid_json(): void
+    /**
+     * @dataProvider invalidPayloadProvider
+     */
+    public function test_it_throws_parameter_validation_exception_for_invalid_payload($payload): void
     {
-        // Invalid JSON causes TypeError when trying to assign null to typed array property
-        $this->expectException(\TypeError::class);
+        $this->expectException(ParameterValidationException::class);
+        $this->expectExceptionMessage('Invalid or empty payload. Array or json format required.');
 
-        new PayloadService('invalid json string');
+        new PayloadService($payload);
     }
 
-    public function test_it_throws_error_for_null_payload(): void
+    public function invalidPayloadProvider(): array
     {
-        // Null payload causes Error when checking uninitialized typed property
-        $this->expectException(\Error::class);
-
-        new PayloadService(null);
-    }
-
-    public function test_it_throws_error_for_empty_string(): void
-    {
-        // Empty string causes TypeError when trying to assign null to typed array property
-        $this->expectException(\TypeError::class);
-
-        new PayloadService('');
-    }
-
-    public function test_it_throws_error_for_json_null(): void
-    {
-        // JSON null causes TypeError when trying to assign null to typed array property
-        $this->expectException(\TypeError::class);
-
-        new PayloadService('null');
+        return [
+            'invalid json' => ['invalid json string'],
+            'null' => [null],
+            'empty string' => [''],
+            'json null' => ['null'],
+            'json scalar' => ['42'],
+            'integer' => [42],
+        ];
     }
 
     public function test_it_handles_json_with_special_characters(): void

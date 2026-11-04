@@ -22,6 +22,7 @@ namespace Buckaroo;
 
 use Buckaroo\Config\Config;
 use Buckaroo\Config\DefaultConfig;
+use Buckaroo\Exceptions\AuthenticationException;
 use Buckaroo\Exceptions\BuckarooException;
 use Buckaroo\Handlers\Credentials;
 use Buckaroo\Handlers\Logging\Observer as LoggingObserver;
@@ -149,6 +150,6 @@ class BuckarooClient
             return new DefaultConfig($websiteKey, $secretKey, $mode);
         }
 
-        throw new BuckarooException(null, "Config is missing.");
+        throw new AuthenticationException('Config is missing.');
     }
 }

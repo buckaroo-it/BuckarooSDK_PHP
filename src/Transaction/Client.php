@@ -23,6 +23,7 @@ declare(strict_types=1);
 namespace Buckaroo\Transaction;
 
 use Buckaroo\Config\Config;
+use Buckaroo\Exceptions\AuthenticationException;
 use Buckaroo\Exceptions\BuckarooException;
 use Buckaroo\Handlers\Logging\Subject;
 use Buckaroo\Resources\Constants\Endpoints;
@@ -223,7 +224,7 @@ class Client
     /**
      * @param Config|null $config
      * @return Config|null
-     * @throws BuckarooException
+     * @throws AuthenticationException when no config (credentials) has been set
      */
     public function config(?Config $config = null)
     {
@@ -232,11 +233,12 @@ class Client
         }
 
         if (!$this->config) {
-            throw new BuckarooException(
-                $this->logger,
-                "No config has been configured.
-                 Please pass your credentials to the constructor or set up a Config object."
+            $exception = new AuthenticationException(
+                'No config has been configured. Pass your credentials to the constructor or set up a Config object.'
             );
+            $this->logger->error($exception->getMessage());
+
+            throw $exception;
         }
 
         return $this->config;

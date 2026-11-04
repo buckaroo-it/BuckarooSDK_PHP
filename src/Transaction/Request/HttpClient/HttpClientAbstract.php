@@ -22,7 +22,8 @@ declare(strict_types=1);
 
 namespace Buckaroo\Transaction\Request\HttpClient;
 
-use Buckaroo\Exceptions\BuckarooException;
+use Buckaroo\Exceptions\AuthenticationException;
+use Buckaroo\Exceptions\BuckarooApiException;
 use Buckaroo\Handlers\Logging\Subject;
 
 abstract class HttpClientAbstract implements HttpClientInterface
@@ -59,9 +60,13 @@ abstract class HttpClientAbstract implements HttpClientInterface
     abstract public function call(string $url, array $headers, string $method, ?string $data = null);
 
     /**
+     * Decodes Buckaroo's JSON response. A JSON body is returned whatever the HTTP status,
+     * so the caller can read Buckaroo's status and error details from it.
+     *
      * @param $result
      * @return array
-     * @throws BuckarooException
+     * @throws AuthenticationException when the body is not JSON and access was denied
+     * @throws BuckarooApiException when the body is not JSON
      */
     protected function getDecodedResult($response, $result): array
     {
@@ -71,13 +76,26 @@ abstract class HttpClientAbstract implements HttpClientInterface
             return $decoded_result;
         }
 
-        throw new BuckarooException(
-            $this->logger,
-            'Status code: ' .
-            $response->getStatusCode() .
-            ' Message: ' .
-            $result
-        );
+        $status = (int) $response->getStatusCode();
+        $message = 'Status code: ' . $status . ' Message: ' . $result;
+
+        $exception = $this->isAuthenticationFailure($status, (string) $result)
+            ? new AuthenticationException($message)
+            : new BuckarooApiException($message);
+        $exception->withHttpResponse($status, (string) $result, $response->getHeaders());
+
+        $this->logger->error($exception->getMessage());
+
+        throw $exception;
+    }
+
+    /**
+     * Buckaroo answers invalid credentials with HTTP 400 and a plain-text body,
+     * so the status code alone is not enough.
+     */
+    private function isAuthenticationFailure(int $status, string $body): bool
+    {
+        return in_array($status, [401, 403], true) || stripos($body, 'access is denied') !== false;
     }
 
     /**

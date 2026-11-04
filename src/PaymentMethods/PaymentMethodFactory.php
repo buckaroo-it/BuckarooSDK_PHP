@@ -21,6 +21,7 @@
 namespace Buckaroo\PaymentMethods;
 
 use Buckaroo\Exceptions\BuckarooException;
+use Buckaroo\Exceptions\ParameterValidationException;
 use Buckaroo\PaymentMethods\Afterpay\Afterpay;
 use Buckaroo\PaymentMethods\AfterpayDigiAccept\AfterpayDigiAccept;
 use Buckaroo\PaymentMethods\Alipay\Alipay;
@@ -180,10 +181,13 @@ class PaymentMethodFactory
                 }
             }
 
-            throw new BuckarooException(
-                $this->client->config()->getLogger(),
-                "Wrong payment method code has been given"
+            $exception = ParameterValidationException::forParameter(
+                'method',
+                "Wrong payment method code has been given: " . $this->paymentMethod
             );
+            $this->client->config()->getLogger()->error($exception->getMessage());
+
+            throw $exception;
         }
 
         return new NoServiceSpecifiedPayment($this->client, $this->paymentMethod);
