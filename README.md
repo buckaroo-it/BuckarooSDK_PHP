@@ -30,7 +30,7 @@
 
 Buckaroo is a Dutch Payment Service Provider. More than 54,000 organisations rely on the Buckaroo platform to process their payments, subscriptions and unpaid invoices.
 
-This is Buckaroo's official PHP SDK: a modern, open source library that connects a PHP application to the Buckaroo API. It handles authentication, request signing and response parsing, so you can start a payment in a few lines. You can use it to start payments, verify return and push requests, and refund or look up transactions for more than 40 payment methods.
+This is Buckaroo's official PHP SDK: a modern, open source library that connects a PHP application to the Buckaroo API. It handles authentication, request signing and response parsing, so you can start payments, verify return and push requests, and refund or look up transactions for more than 40 payment methods.
 
 If you run a shop on an e-commerce platform, use the ready-made plugin for [Magento 2](https://github.com/buckaroo-it/Magento2), [Shopware 6](https://github.com/buckaroo-it/Shopware6), [WooCommerce](https://github.com/buckaroo-it/WooCommerce), [PrestaShop](https://github.com/buckaroo-it/PrestaShop) or [Odoo](https://github.com/buckaroo-it/Odoo) instead. For Laravel applications there is a dedicated [Laravel wrapper](https://github.com/buckaroo-it/BuckarooWrapper_Laravel) built on this SDK.
 
