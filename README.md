@@ -18,10 +18,8 @@
   <a href="#requirements">Requirements</a> &middot;
   <a href="#installation">Installation</a> &middot;
   <a href="#getting-started">Getting started</a> &middot;
-  <a href="#end-to-end-example-ideal-checkout">End-to-end example</a> &middot;
-  <a href="#common-tasks">Common tasks</a> &middot;
-  <a href="#payment-methods">Payment methods</a> &middot;
-  <a href="#testing">Testing</a> &middot;
+  <a href="#documentation">Documentation</a> &middot;
+  <a href="#running-the-sdk-tests">Tests</a> &middot;
   <a href="#support">Support</a> &middot;
   <a href="#contribute">Contribute</a>
 </p>
@@ -60,7 +58,7 @@ Install the SDK with [Composer](https://getcomposer.org/doc/00-intro.md):
 composer require buckaroo/sdk
 ```
 
-Composer pulls in the SDK's own dependencies (Guzzle, Monolog, ramsey/uuid and composer/ca-bundle), so there is nothing else to set up. 
+Composer pulls in the SDK's own dependencies (Guzzle, Monolog, ramsey/uuid and composer/ca-bundle), so there is nothing else to set up.
 
 ---
 
@@ -68,7 +66,7 @@ Composer pulls in the SDK's own dependencies (Guzzle, Monolog, ramsey/uuid and c
 
 ### Configuring the client
 
-You can find your Store key and Secret key under [API credentials in Buckaroo Plaza](https://plaza.buckaroo.nl/Configuration/Merchant/ApiKeys). The third argument is the mode: `test` while developing, `live` in production. It defaults to `test`. In test mode, no real money is moved.
+You can find your Store key and Secret key under [API credentials in Buckaroo Plaza](https://plaza.buckaroo.nl/Configuration/Merchant/ApiKeys). The third argument is the mode: `test` while developing, `live` in production. It defaults to `test`.
 
 ```php
 require __DIR__ . '/vendor/autoload.php';
@@ -79,173 +77,42 @@ $buckaroo = new \Buckaroo\BuckarooClient('STORE_KEY', 'SECRET_KEY', 'test');
 > [!TIP]
 > Keep your Secret key out of version control. Load both keys from environment variables instead — the repository ships an [`.env.example`](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/.env.example) to start from.
 
-Use `confirmCredential()` to check that the keys are valid, for example in a health check or an admin "test connection" button:
+### Starting a payment
+
+Start an iDEAL payment and send the customer to the payment page:
 
 ```php
-if (! $buckaroo->confirmCredential()) {
-    throw new RuntimeException('Invalid Buckaroo credentials');
-}
-```
-
-<details>
-<summary><strong>Advanced configuration and environment variables</strong></summary>
-
-<br>
-
-To set defaults such as currency, culture or HTTP timeouts, pass a `Config` object instead of the keys:
-
-```php
-use Buckaroo\BuckarooClient;
-use Buckaroo\Config\DefaultConfig;
-
-$config = new DefaultConfig(
-    'STORE_KEY',
-    'SECRET_KEY',
-    'test',                                   // mode: 'test' or 'live'
-    'EUR',                                    // currency
-    'https://example.com/buckaroo/return',    // returnURL
-    'https://example.com/buckaroo/cancel',    // returnURLCancel
-    'https://example.com/buckaroo/push',      // pushURL
-    'My Shop',                                // platformName
-    '1.0.0',                                  // platformVersion
-    'My Company',                             // moduleSupplier
-    'my-shop-buckaroo',                       // moduleName
-    '1.0.0',                                  // moduleVersion
-    'nl-NL',                                  // culture (language of the payment pages)
-    'Web',                                    // channel
-    null,                                     // logger (see "Logging")
-    30,                                       // timeout in seconds
-    10                                        // connect timeout in seconds
-);
-
-$buckaroo = new BuckarooClient($config);
-```
-
-If any of these variables are set in `$_ENV`, the SDK uses them. **They take precedence over the values passed to the constructor.**
-
-| Variable | Purpose | Default |
-|---|---|---|
-| `BPE_MODE` | `test` or `live` | `test` |
-| `BPE_CURRENCY_CODE` | Default currency | `EUR` |
-| `BPE_RETURN_URL` | Default return URL | — |
-| `BPE_RETURN_URL_CANCEL` | Default cancel URL | — |
-| `BPE_PUSH_URL` | Default push URL | — |
-| `BPE_HTTP_TIMEOUT` | Request timeout (seconds) | — |
-| `BPE_HTTP_CONNECT_TIMEOUT` | Connect timeout (seconds) | — |
-
-</details>
-
-### How a payment works
-
-Most online payment methods follow the same flow:
-
-1. **Start the payment.** Your server calls `pay()`. Buckaroo responds with a transaction key and, for most methods, a redirect URL.
-2. **Redirect the customer** to that URL so they can complete the payment with their bank or card provider.
-3. **The customer comes back** to your `returnURL`. Use this to show a "thank you" or "payment failed" page.
-4. **Buckaroo sends a push** (server-to-server notification) to your `pushURL`. **Use the push to update the order status in your database.** The customer may close the browser before step 3, but the push is always sent.
-
-Always verify the signature of the return and push requests with the SDK before you trust their contents, as the [end-to-end example](#end-to-end-example-ideal-checkout) shows.
-
----
-
-## End-to-end example: iDEAL checkout
-
-This example is a complete, minimal integration. It has three files: one that starts the payment, one for the return page and one for the push endpoint. Copy the files, fill in your URLs, and you have a working test integration.
-
-Each file assumes Composer's autoloader is loaded and `$buckaroo` is the client from [Configuring the client](#configuring-the-client).
-
-**`checkout.php`**: starts the payment and redirects the customer
-
-The SDK throws a `BuckarooException` for configuration problems, unknown payment methods or actions, and failed HTTP requests. A request that Buckaroo receives but rejects (for example a validation error) does **not** throw an exception, so also check the response:
-
-```php
-<?php
-
-use Buckaroo\Exceptions\BuckarooException;
-
-$orderId = 'ORDER-' . time(); // use your own order ID
-
-try {
-    $response = $buckaroo->method('ideal')->pay([
-        'invoice'         => $orderId,
-        'order'           => $orderId,
-        'amountDebit'     => 24.95,
-        'currency'        => 'EUR',
-        'description'     => 'Order ' . $orderId,
-        'returnURL'       => 'https://example.com/return.php',
-        'returnURLCancel' => 'https://example.com/return.php',
-        'pushURL'         => 'https://example.com/push.php',
-    ]);
-} catch (BuckarooException $e) {
-    http_response_code(500);
-    exit('Could not start the payment: ' . $e->getMessage());
-}
-
-// Store the transaction key with your order so you can match the push later
-// saveTransactionKey($orderId, $response->getTransactionKey());
+$response = $buckaroo->method('ideal')->pay([
+    'invoice'     => 'INV-1001',  // must be unique per payment
+    'amountDebit' => 10.00,
+    'description' => 'Order #1001',
+    'returnURL'   => 'https://example.com/buckaroo/return',
+    'pushURL'     => 'https://example.com/buckaroo/push',
+]);
 
 if ($response->hasRedirect()) {
     header('Location: ' . $response->getRedirectUrl());
     exit;
 }
-
-// No redirect: the request was rejected or failed validation
-http_response_code(400);
-echo 'Payment could not be started: ' . $response->getSomeError();
 ```
 
-**`return.php`**: where the customer lands after paying
+Swap `ideal` for any other service code to use a different payment method. See [Payment methods](docs/payment-methods.md).
 
-Buckaroo sends the customer back with a form `POST` that contains the transaction result (`brq_*` fields).
+### Handling the push
+
+When the payment is completed, Buckaroo sends a push (server-to-server notification) to your `pushURL`. Verify it with the SDK, then update the order:
 
 ```php
-<?php
-
 use Buckaroo\Handlers\Reply\ReplyHandler;
 use Buckaroo\Resources\Constants\ResponseStatus;
 
-$reply = new ReplyHandler($buckaroo->client()->config(), $_POST);
-$reply->validate();
-
-if (! $reply->isValid()) {
-    http_response_code(400);
-    exit('Invalid signature');
-}
-
-switch ($reply->data('brq_statuscode')) {
-    case ResponseStatus::BUCKAROO_STATUSCODE_SUCCESS:
-        echo 'Thank you, your payment was received.';
-        break;
-    case ResponseStatus::BUCKAROO_STATUSCODE_CANCELLED_BY_USER:
-        echo 'You cancelled the payment.';
-        break;
-    case ResponseStatus::BUCKAROO_STATUSCODE_PENDING_PROCESSING:
-    case ResponseStatus::BUCKAROO_STATUSCODE_WAITING_ON_CONSUMER:
-        echo 'Your payment is being processed.';
-        break;
-    default:
-        echo 'Your payment failed. Please try again.';
-}
-```
-
-> [!IMPORTANT]
-> Show the result to the customer here, but **don't update the order in your database here**. Do that in the push handler.
-
-**`push.php`**: server-to-server notification from Buckaroo
-
-This example handles the JSON push format. Buckaroo signs it with the `Authorization` header, which the SDK checks together with the request body and your push URL:
-
-```php
-<?php
-
-use Buckaroo\Handlers\Reply\ReplyHandler;
-use Buckaroo\Resources\Constants\ResponseStatus;
-
-$body       = file_get_contents('php://input');
-$authHeader = $_SERVER['HTTP_AUTHORIZATION'] ?? '';
-$pushUrl    = 'https://example.com/push.php'; // must exactly match the pushURL you sent
-
-$reply = new ReplyHandler($buckaroo->client()->config(), $body, $authHeader, $pushUrl);
+$body  = file_get_contents('php://input');
+$reply = new ReplyHandler(
+    $buckaroo->client()->config(),
+    $body,
+    $_SERVER['HTTP_AUTHORIZATION'] ?? '',
+    'https://example.com/buckaroo/push' // must exactly match the pushURL you sent
+);
 $reply->validate();
 
 if (! $reply->isValid()) {
@@ -255,202 +122,33 @@ if (! $reply->isValid()) {
 
 $transaction = json_decode($body, true)['Transaction'];
 
-$invoice    = $transaction['Invoice'];
-$txKey      = $transaction['Key'];
-$statusCode = (string) $transaction['Status']['Code']['Code'];
-
-if ($statusCode === ResponseStatus::BUCKAROO_STATUSCODE_SUCCESS) {
-    // markOrderAsPaid($invoice, $txKey);
-} elseif (in_array($statusCode, [
-    ResponseStatus::BUCKAROO_STATUSCODE_FAILED,
-    ResponseStatus::BUCKAROO_STATUSCODE_REJECTED,
-    ResponseStatus::BUCKAROO_STATUSCODE_CANCELLED_BY_USER,
-    ResponseStatus::BUCKAROO_STATUSCODE_CANCELLED_BY_MERCHANT,
-], true)) {
-    // markOrderAsFailed($invoice, $txKey);
-}
-
-http_response_code(200); // Buckaroo retries the push if it does not get a 200
-```
-
-> [!NOTE]
-> If your website is set to the HTTP POST push format in Plaza, validate with `new ReplyHandler($buckaroo->client()->config(), $_POST)` instead, and read the fields with `$reply->data('brq_statuscode')`, `$reply->data('brq_invoicenumber')` and `$reply->data('brq_transactions')`.
-
----
-
-## Common tasks
-
-### Start a payment
-
-Every payment method uses the same pattern: `$buckaroo->method('<service code>')-><action>([...])`. The fields below are shared by all methods. Each method can add its own fields (see [Payment methods](#payment-methods)).
-
-| Field | Required | Description |
-|---|---|---|
-| `invoice` | yes | Your unique invoice number |
-| `amountDebit` | yes | Amount to charge |
-| `currency` | no | ISO currency code, defaults to the config value (`EUR`) |
-| `order` | no | Your order number |
-| `description` | no | Shown to the customer and in Plaza |
-| `returnURL` | yes* | Where the customer is sent after paying |
-| `returnURLCancel` / `returnURLError` / `returnURLReject` | no | Alternative return pages |
-| `pushURL` | no | Where Buckaroo sends the push; falls back to the Plaza setting |
-| `clientIP` | depends | Customer's IP address. Required by some methods, such as the Buy Now Pay Later methods |
-| `customParameters` / `additionalParameters` | no | Your own key/value data. It is returned in the push |
-
-\* Required for all methods that redirect the customer.
-
-Credit card example:
-
-```php
-$response = $buckaroo->method('creditcard')->pay([
-    'name'        => 'visa',      // card brand: visa, mastercard, amex, maestro, ...
-    'invoice'     => 'INV-1002',
-    'amountDebit' => 10.00,
-    'returnURL'   => 'https://example.com/buckaroo/return',
-]);
-```
-
-You can also pass the payload as a JSON string instead of an array.
-
-### Read the response
-
-`pay()`, `refund()`, `authorize()` and most other actions return a `TransactionResponse`:
-
-```php
-$response->isSuccess();            // status 190
-$response->isPendingProcessing();  // status 791
-$response->isAwaitingConsumer();   // status 792
-$response->isWaitingOnUserInput(); // status 790
-$response->isFailed();             // status 490
-$response->isRejected();           // status 690
-$response->isCanceled();           // status 890 / 891
-$response->isValidationFailure();  // status 491
-
-$response->hasRedirect();          // does the customer need to be redirected?
-$response->getRedirectUrl();
-
-$response->getTransactionKey();    // store this: you need it for refunds and lookups
-$response->getStatusCode();
-$response->getSomeError();         // human-readable error message, if any
-$response->toArray();              // the full raw response
-```
-
-### Refund a payment
-
-```php
-$response = $buckaroo->method('ideal')->refund([
-    'invoice'                => 'INV-1001',           // invoice of the original payment
-    'originalTransactionKey' => 'ORIGINAL_TX_KEY',    // from $response->getTransactionKey()
-    'amountCredit'           => 10.00,                // full or partial amount
-]);
-
-if ($response->isSuccess()) {
-    // refund processed
+if ((string) $transaction['Status']['Code']['Code'] === ResponseStatus::BUCKAROO_STATUSCODE_SUCCESS) {
+    // markOrderAsPaid($transaction['Invoice'], $transaction['Key']);
 }
 ```
 
-Use the same payment method as the original payment (for example `creditcard` with the same card `name`).
+> [!IMPORTANT]
+> Update the order in your database from the push, not from the return page. The customer may close the browser before returning, but the push is always sent.
 
-### Retrieve transaction information
-
-Once a transaction exists you can query it on demand:
-
-```php
-$transaction = $buckaroo->transaction('YOUR-TRANSACTION-KEY');
-
-$transaction->status();     // transaction status (a TransactionResponse, e.g. ->isSuccess())
-$transaction->refundInfo(); // refund info
-$transaction->cancelInfo(); // cancellation info
-```
-
-### Authorize and capture
-
-Some methods support reserving the amount first and capturing it later (for example credit cards, Bancontact, Riverty and In3). Klarna uses `reserve()` instead, followed by `pay()` to capture the reserved amount (see the [Klarna reserve example](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/transactions/klarnakp.php)).
-
-```php
-$auth = $buckaroo->method('creditcard')->authorize([
-    'name'        => 'visa',
-    'invoice'     => 'INV-1003',
-    'amountDebit' => 50.00,
-    'returnURL'   => 'https://example.com/buckaroo/return',
-]);
-
-// Later, e.g. when the order ships
-$capture = $buckaroo->method('creditcard')->capture([
-    'name'                   => 'visa',
-    'invoice'                => 'INV-1003',
-    'originalTransactionKey' => $auth->getTransactionKey(),
-    'amountDebit'            => 50.00,
-]);
-```
-
-### Logging
-
-Attach a logger to see the requests and responses. The SDK includes a Monolog observer that writes to `stdout`:
-
-```php
-$buckaroo->attachLogger(new \Buckaroo\Handlers\Logging\Observers\Monolog());
-```
-
-To send the logs to your own logger, implement `Buckaroo\Handlers\Logging\Observer` and pass it to `attachLogger()`.
+The [full checkout example](docs/checkout-example.md) adds error handling, the return page and the HTTP POST push format.
 
 ---
 
-## Payment methods
+## Documentation
 
-Pass one of these service codes to `$buckaroo->method('...')`. Each method has its own payload fields. The [`example/`](https://github.com/buckaroo-it/BuckarooSDK_PHP/tree/master/example) folder has a runnable sample for each method, and the [API reference](https://docs.buckaroo.io/reference) describes all parameters.
+| Guide | What it covers |
+|---|---|
+| [Configuration](docs/configuration.md) | Credentials check, advanced configuration, environment variables, logging |
+| [Checkout example](docs/checkout-example.md) | How a payment works, and a complete iDEAL integration: checkout, return page and push |
+| [Usage](docs/usage.md) | Payment fields, reading the response, refunds, transaction lookups, authorize and capture |
+| [Payment methods](docs/payment-methods.md) | All service codes with a runnable example for each, and how to run the examples |
+| [Going live](docs/going-live.md) | Checklist for switching to production |
 
-| Method | Service code | Example |
-|---|---|---|
-| iDEAL | `ideal` | [ideal.php](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/transactions/ideal.php) |
-| iDEAL QR | `ideal_qr` | [ideal_qr.php](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/transactions/ideal_qr.php) |
-| Credit & debit cards | `creditcard` (or the brand: `visa`, `mastercard`, `amex`, …) | [creditcard.php](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/transactions/creditcard.php) |
-| PayPal | `paypal` | [paypal.php](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/transactions/paypal.php) |
-| Bancontact | `bancontact` | [bancontact.php](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/transactions/bancontact.php) |
-| Apple Pay | `applepay` | [applepay.php](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/transactions/applepay.php) |
-| Google Pay | `googlepay` | [googlepay.php](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/transactions/googlepay.php) |
-| Click to Pay | `clicktopay` | [clicktopay.php](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/transactions/clicktopay.php) |
-| PayByBank | `paybybank` | [payment_initiation.php](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/transactions/payment_initiation.php) |
-| SEPA Direct Debit | `sepadirectdebit` | [sepa.php](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/transactions/sepa.php) |
-| Bank transfer | `transfer` | [transfer.php](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/transactions/transfer.php) |
-| Klarna | `klarna` / `klarnakp` | [klarna.php](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/transactions/klarna.php) / [klarnakp.php](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/transactions/klarnakp.php) |
-| Riverty | `afterpay` | [afterpay.php](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/transactions/afterpay.php) |
-| In3 | `in3` | [in3.php](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/transactions/in3.php) |
-| Billink | `billink` | [billink.php](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/transactions/billink.php) |
-| Gift cards | `giftcard` | [giftcards.php](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/transactions/giftcards.php) |
-| EPS | `eps` | [eps.php](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/transactions/eps.php) |
-| Przelewy24 | `przelewy24` | [przelewy24.php](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/transactions/przelewy24.php) |
-| Blik | `blik` | [blik.php](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/transactions/blik.php) |
-| Trustly | `trustly` | [trustly.php](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/transactions/trustly.php) |
-| Twint | `twint` | [twint.php](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/transactions/twint.php) |
-| Swish | `swish` | [swish.php](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/transactions/swish.php) |
-| MB WAY | `mbway` | [mbway.php](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/transactions/mbway.php) |
-| Multibanco | `multibanco` | [multibanco.php](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/transactions/multibanco.php) |
-| Bizum | `bizum` | [bizum.php](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/transactions/bizum.php) |
-| Wero | `wero` | [wero.php](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/transactions/wero.php) |
-| Payconiq | `payconiq` | [payconiq.php](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/transactions/payconiq.php) |
-| KBC | `kbc` | [kbc.php](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/transactions/kbc.php) |
-| Belfius | `belfius` | [belfius.php](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/transactions/belfius.php) |
-| Alipay | `alipay` | [alipay.php](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/transactions/alipay.php) |
-| WeChat Pay | `wechatpay` | [wechat.php](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/transactions/wechat.php) |
-| Point of Sale | `pospayment` | [pos.php](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/transactions/pos.php) |
-
-**Additional services:** [Subscriptions](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/additional_services/subscriptions.php) · [Credit Management](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/additional_services/credit_management.php) · [Pay per Email](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/additional_services/pay_per_email.php) · [Marketplaces](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/additional_services/marketplaces.php) · [iDIN](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/additional_services/idin.php) · [Buckaroo Wallet](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/additional_services/wallets.php) · [Buckaroo Voucher](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/additional_services/voucher.php) · [SurePay](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/additional_services/surepay.php)
-
-### Going live
-
-1. Test your full flow in `test` mode, including the return page, the push handler and refunds.
-2. Make sure your `pushURL` is publicly reachable over HTTPS and returns HTTP `200`.
-3. Activate the payment methods you need for your website in Plaza.
-4. Switch the mode to `live`:
-
-```php
-$buckaroo = new \Buckaroo\BuckarooClient('STORE_KEY', 'SECRET_KEY', 'live');
-```
+For all API parameters, see the [API reference on docs.buckaroo.io](https://docs.buckaroo.io/reference).
 
 ---
 
-## Testing
+## Running the SDK tests
 
 The repository defines Composer scripts for the test suites and code style:
 
