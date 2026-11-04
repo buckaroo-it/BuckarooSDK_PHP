@@ -21,7 +21,7 @@ Each file assumes Composer's autoloader is loaded and `$buckaroo` is the client 
 
 ### `checkout.php`: starts the payment and redirects the customer
 
-The SDK throws a `BuckarooException` for configuration problems, unknown payment methods or actions, and failed HTTP requests. A request that Buckaroo receives but rejects (for example a validation error) does **not** throw an exception, so also check the response:
+The SDK throws a `BuckarooException` when the request does not complete, for example because of invalid input, rejected keys or a connection failure. A payment that Buckaroo receives but declines does **not** throw an exception, so also check the response. See [Handle errors](usage.md#handle-errors) to handle each cause separately.
 
 ```php
 <?php
@@ -66,11 +66,19 @@ Buckaroo sends the customer back with a form `POST` that contains the transactio
 ```php
 <?php
 
+use Buckaroo\Exceptions\ReplyValidationException;
 use Buckaroo\Handlers\Reply\ReplyHandler;
 use Buckaroo\Resources\Constants\ResponseStatus;
 
 $reply = new ReplyHandler($buckaroo->client()->config(), $_POST);
-$reply->validate();
+
+try {
+    $reply->validate();
+} catch (ReplyValidationException $e) {
+    // Not a Buckaroo return, for example the customer refreshed the page
+    http_response_code(400);
+    exit('No payment result found.');
+}
 
 if (! $reply->isValid()) {
     http_response_code(400);
@@ -103,6 +111,7 @@ This example handles the JSON push format. Buckaroo signs it with the `Authoriza
 ```php
 <?php
 
+use Buckaroo\Exceptions\ReplyValidationException;
 use Buckaroo\Handlers\Reply\ReplyHandler;
 use Buckaroo\Resources\Constants\ResponseStatus;
 
@@ -111,7 +120,14 @@ $authHeader = $_SERVER['HTTP_AUTHORIZATION'] ?? '';
 $pushUrl    = 'https://example.com/push.php'; // must exactly match the pushURL you sent
 
 $reply = new ReplyHandler($buckaroo->client()->config(), $body, $authHeader, $pushUrl);
-$reply->validate();
+
+try {
+    $reply->validate();
+} catch (ReplyValidationException $e) {
+    // Not a Buckaroo push, for example an empty request
+    http_response_code(400);
+    exit;
+}
 
 if (! $reply->isValid()) {
     http_response_code(400);

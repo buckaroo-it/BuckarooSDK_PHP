@@ -140,7 +140,7 @@ The [full checkout example](docs/checkout-example.md) adds error handling, the r
 |---|---|
 | [Configuration](docs/configuration.md) | Credentials check, advanced configuration, environment variables, logging |
 | [Checkout example](docs/checkout-example.md) | How a payment works, and a complete iDEAL integration: checkout, return page and push |
-| [Usage](docs/usage.md) | Payment fields, reading the response, refunds, transaction lookups, authorize and capture |
+| [Usage](docs/usage.md) | Payment fields, reading the response, error handling, refunds, transaction lookups, authorize and capture |
 | [Payment methods](docs/payment-methods.md) | All service codes with a runnable example for each, and how to run the examples |
 | [Going live](docs/going-live.md) | Checklist for switching to production |
 

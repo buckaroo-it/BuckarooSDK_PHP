@@ -1,6 +1,6 @@
 # Usage
 
-This guide covers the payment fields, reading the response, refunds, transaction lookups, and authorize and capture.
+This guide covers the payment fields, reading the response, error handling, refunds, transaction lookups, and authorize and capture.
 
 ## Start a payment
 
@@ -59,6 +59,53 @@ $response->getStatusCode();
 $response->getSomeError();         // human-readable error message, if any
 $response->toArray();              // the full raw response
 ```
+
+## Handle errors
+
+A failed payment and a failed request are handled differently:
+
+- **Buckaroo declined the payment.** The request completed, and you get a normal response. Check it with `isSuccess()`, `isFailed()` and the other status methods above.
+- **The request did not complete.** The SDK throws an exception, and you don't get a response.
+
+Every exception extends `Buckaroo\Exceptions\BuckarooException`. Catch a subclass to handle a specific cause:
+
+| Exception | Thrown when | Useful methods |
+|---|---|---|
+| `ParameterValidationException` | The input is invalid, for example an unknown payment method or action, or a card payment without `name`. Nothing was sent. | `getParameterName()` |
+| `AuthenticationException` | The keys are missing, or Buckaroo rejected them. Check the Store key, Secret key and mode. | `getHttpStatus()` |
+| `TransferException` | Buckaroo could not be reached: a connection failure or timeout. Buckaroo may still have processed the payment, so wait for the push before you retry. | `getPrevious()` |
+| `BuckarooApiException` | Buckaroo returned a response that is not JSON. Also the parent of `TransferException`. | `getHttpStatus()`, `getHttpBody()` |
+| `ReplyValidationException` | `ReplyHandler` received data that is not a Buckaroo return or push, for example an empty request. | |
+
+```php
+use Buckaroo\Exceptions\AuthenticationException;
+use Buckaroo\Exceptions\BuckarooException;
+use Buckaroo\Exceptions\ParameterValidationException;
+use Buckaroo\Exceptions\TransferException;
+
+try {
+    $response = $buckaroo->method('ideal')->pay([
+        'invoice'     => 'INV-1001',
+        'amountDebit' => 10.00,
+        'returnURL'   => 'https://example.com/buckaroo/return',
+    ]);
+} catch (ParameterValidationException $e) {
+    exit('Invalid input (' . $e->getParameterName() . '): ' . $e->getMessage());
+} catch (AuthenticationException $e) {
+    exit('Check your Buckaroo keys and mode.');
+} catch (TransferException $e) {
+    exit('Buckaroo could not be reached. Please try again later.');
+} catch (BuckarooException $e) {
+    exit('Payment could not be started: ' . $e->getMessage());
+}
+
+if (! $response->isSuccess() && ! $response->hasRedirect()) {
+    // Buckaroo declined the payment
+    exit('Payment failed: ' . $response->getSomeError());
+}
+```
+
+Catch `TransferException` before `BuckarooApiException`, because it is a subclass. To handle every SDK error the same way, catch only `BuckarooException`. See [error_handling.php](../example/transactions/error_handling.php) for a runnable example.
 
 ## Refund a payment
 
