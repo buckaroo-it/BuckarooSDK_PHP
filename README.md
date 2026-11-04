@@ -365,7 +365,7 @@ $transaction->cancelInfo(); // cancellation info
 
 ### Authorize and capture
 
-Some methods support reserving the amount first and capturing it later (for example credit cards, Klarna, Riverty and In3):
+Some methods support reserving the amount first and capturing it later (for example credit cards, Bancontact, Riverty and In3). Klarna uses `reserve()` instead, followed by `pay()` to capture the reserved amount (see the [Klarna reserve example](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/transactions/klarnakp.php)).
 
 ```php
 $auth = $buckaroo->method('creditcard')->authorize([
