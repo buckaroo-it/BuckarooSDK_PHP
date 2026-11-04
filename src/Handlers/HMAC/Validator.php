@@ -22,6 +22,7 @@ namespace Buckaroo\Handlers\HMAC;
 
 use Buckaroo\Config\Config;
 use Buckaroo\Exceptions\BuckarooException;
+use Buckaroo\Exceptions\ReplyValidationException;
 
 class Validator extends Hmac
 {
@@ -104,7 +105,10 @@ class Validator extends Hmac
             return true;
         }
 
-        throw new BuckarooException($this->config->getLogger(), "HMAC validation failed.");
+        $exception = new ReplyValidationException("HMAC validation failed.");
+        $this->config->getLogger()->error($exception->getMessage());
+
+        throw $exception;
     }
 
     /**
