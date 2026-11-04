@@ -185,7 +185,7 @@ Still stuck? Contact us and include your PHP version, SDK version, the service a
 
 ## Contribute
 
-We really appreciate it when developers help improve the Buckaroo SDKs. Please read our [Contribution Guidelines](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/CONTRIBUTING.md) before opening a pull request, and target the `master` branch.
+We really appreciate it when developers help improve the Buckaroo SDKs. Please read our [Contribution Guidelines](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/CONTRIBUTING.md) before opening a pull request, and target the `develop` branch.
 
 Found a security issue? Please report it privately to [support@buckaroo.nl](mailto:support@buckaroo.nl) instead of opening a public issue.
 
