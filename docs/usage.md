@@ -6,6 +6,9 @@ This guide covers the payment fields, reading the response, refunds, transaction
 
 Every payment method uses the same pattern: `$buckaroo->method('<service code>')-><action>([...])`. The fields below are shared by all methods. Each method can add its own fields (see [Payment methods](payment-methods.md)).
 
+> [!IMPORTANT]
+> Write field names in **camelCase**, as in the table below (`amountCredit`, `originalTransactionKey`). The [API reference](https://docs.buckaroo.io/reference) uses PascalCase (`AmountCredit`, `OriginalTransactionKey`) because it describes the raw JSON request, which the SDK builds for you. The SDK **silently ignores** keys it doesn't recognise, including PascalCase ones, so a request with `'AmountCredit' => 4.00` is sent without an amount.
+
 | Field | Required | Description |
 |---|---|---|
 | `invoice` | yes | Your unique invoice number |

@@ -144,7 +144,7 @@ The [full checkout example](docs/checkout-example.md) adds error handling, the r
 | [Payment methods](docs/payment-methods.md) | All service codes with a runnable example for each, and how to run the examples |
 | [Going live](docs/going-live.md) | Checklist for switching to production |
 
-For all API parameters, see the [API reference on docs.buckaroo.io](https://docs.buckaroo.io/reference).
+For all API parameters, see the [API reference on docs.buckaroo.io](https://docs.buckaroo.io/reference). With the SDK, use camelCase (`amountDebit`). See [Usage](docs/usage.md#start-a-payment) for details.
 
 ---
 
