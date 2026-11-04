@@ -66,38 +66,9 @@ Composer pulls in the SDK's own dependencies (Guzzle, Monolog, ramsey/uuid and c
 
 ## Getting started
 
-### Quick start
-
-You can find your Store key and Secret key under [API credentials in Buckaroo Plaza](https://plaza.buckaroo.nl/Configuration/Merchant/ApiKeys). 
-
-This starts a test iDEAL payment and sends the customer to the payment page:
-
-```php
-<?php
-
-require __DIR__ . '/vendor/autoload.php';
-
-use Buckaroo\BuckarooClient;
-
-$buckaroo = new BuckarooClient('STORE_KEY', 'SECRET_KEY', 'test');
-
-$response = $buckaroo->method('ideal')->pay([
-    'invoice'     => 'INV-1001',              // must be unique per payment
-    'amountDebit' => 10.00,                   // amount in EUR (the default currency)
-    'description' => 'Order #1001',
-    'returnURL'   => 'https://example.com/buckaroo/return',
-    'pushURL'     => 'https://example.com/buckaroo/push',
-]);
-
-if ($response->hasRedirect()) {
-    header('Location: ' . $response->getRedirectUrl());
-    exit;
-}
-```
-
 ### Configuring the client
 
-The third argument is the mode: `test` while developing, `live` in production. It defaults to `test`. In test mode, no real money is moved.
+You can find your Store key and Secret key under [API credentials in Buckaroo Plaza](https://plaza.buckaroo.nl/Configuration/Merchant/ApiKeys). The third argument is the mode: `test` while developing, `live` in production. It defaults to `test`. In test mode, no real money is moved.
 
 ```php
 require __DIR__ . '/vendor/autoload.php';
@@ -116,7 +87,10 @@ if (! $buckaroo->confirmCredential()) {
 }
 ```
 
-#### Advanced configuration
+<details>
+<summary><strong>Advanced configuration and environment variables</strong></summary>
+
+<br>
 
 To set defaults such as currency, culture or HTTP timeouts, pass a `Config` object instead of the keys:
 
@@ -147,8 +121,6 @@ $config = new DefaultConfig(
 $buckaroo = new BuckarooClient($config);
 ```
 
-#### Environment variables
-
 If any of these variables are set in `$_ENV`, the SDK uses them. **They take precedence over the values passed to the constructor.**
 
 | Variable | Purpose | Default |
@@ -161,6 +133,8 @@ If any of these variables are set in `$_ENV`, the SDK uses them. **They take pre
 | `BPE_HTTP_TIMEOUT` | Request timeout (seconds) | — |
 | `BPE_HTTP_CONNECT_TIMEOUT` | Connect timeout (seconds) | — |
 
+</details>
+
 ### How a payment works
 
 Most online payment methods follow the same flow:
@@ -170,7 +144,7 @@ Most online payment methods follow the same flow:
 3. **The customer comes back** to your `returnURL`. Use this to show a "thank you" or "payment failed" page.
 4. **Buckaroo sends a push** (server-to-server notification) to your `pushURL`. **Use the push to update the order status in your database.** The customer may close the browser before step 3, but the push is always sent.
 
-Always verify the signature of the return and push requests with the SDK before you trust their contents (see [Handle the return and push](#handle-the-return-and-push)).
+Always verify the signature of the return and push requests with the SDK before you trust their contents, as the [end-to-end example](#end-to-end-example-ideal-checkout) shows.
 
 ---
 
@@ -181,6 +155,8 @@ This example is a complete, minimal integration. It has three files: one that st
 Each file assumes Composer's autoloader is loaded and `$buckaroo` is the client from [Configuring the client](#configuring-the-client).
 
 **`checkout.php`**: starts the payment and redirects the customer
+
+The SDK throws a `BuckarooException` for configuration problems, unknown payment methods or actions, and failed HTTP requests. A request that Buckaroo receives but rejects (for example a validation error) does **not** throw an exception, so also check the response:
 
 ```php
 <?php
@@ -359,30 +335,6 @@ $response->getSomeError();         // human-readable error message, if any
 $response->toArray();              // the full raw response
 ```
 
-### Handle the return and push
-
-Use `ReplyHandler` to verify that a return or push request really came from Buckaroo:
-
-```php
-use Buckaroo\Handlers\Reply\ReplyHandler;
-
-// HTTP POST (form) return or push
-$reply = new ReplyHandler($buckaroo->client()->config(), $_POST);
-
-// JSON push
-$reply = new ReplyHandler(
-    $buckaroo->client()->config(),
-    file_get_contents('php://input'),
-    $_SERVER['HTTP_AUTHORIZATION'],
-    'https://example.com/buckaroo/push' // the full push URL
-);
-
-$reply->validate();
-$reply->isValid(); // true if the signature is valid
-```
-
-The [end-to-end example](#end-to-end-example-ideal-checkout) shows a complete handler.
-
 ### Refund a payment
 
 ```php
@@ -432,50 +384,15 @@ $capture = $buckaroo->method('creditcard')->capture([
 ]);
 ```
 
-### Error handling
-
-The SDK throws `Buckaroo\Exceptions\BuckarooException` for configuration problems, unknown payment methods or actions, and failed HTTP requests. A request that Buckaroo receives but rejects (for example a validation error) does **not** throw an exception. Check the response instead:
-
-```php
-use Buckaroo\Exceptions\BuckarooException;
-
-try {
-    $response = $buckaroo->method('ideal')->pay($payload);
-
-    if ($response->isValidationFailure() || $response->isFailed() || $response->isRejected()) {
-        error_log('Buckaroo error: ' . $response->getSomeError());
-    }
-} catch (BuckarooException $e) {
-    error_log('Buckaroo request failed: ' . $e->getMessage());
-}
-```
-
 ### Logging
 
 Attach a logger to see the requests and responses. The SDK includes a Monolog observer that writes to `stdout`:
 
 ```php
-use Buckaroo\Handlers\Logging\Observers\Monolog;
-
-$buckaroo->attachLogger(new Monolog());
+$buckaroo->attachLogger(new \Buckaroo\Handlers\Logging\Observers\Monolog());
 ```
 
-To send the logs somewhere else, implement `Buckaroo\Handlers\Logging\Observer`:
-
-```php
-use Buckaroo\Handlers\Logging\Observer;
-
-class MyLogger implements Observer
-{
-    public function handle(string $method, string $message, array $context = [])
-    {
-        // $method is a PSR-3 level: 'info', 'error', 'debug', ...
-        MyAppLog::$method($message, $context);
-    }
-}
-
-$buckaroo->attachLogger(new MyLogger());
-```
+To send the logs to your own logger, implement `Buckaroo\Handlers\Logging\Observer` and pass it to `attachLogger()`.
 
 ---
 
