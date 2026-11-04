@@ -60,11 +60,7 @@ Install the SDK with [Composer](https://getcomposer.org/doc/00-intro.md):
 composer require buckaroo/sdk
 ```
 
-Composer pulls in the SDK's own dependencies (Guzzle, Monolog, ramsey/uuid and composer/ca-bundle), so there is nothing else to set up. Load Composer's autoloader in your application:
-
-```php
-require __DIR__ . '/vendor/autoload.php';
-```
+Composer pulls in the SDK's own dependencies (Guzzle, Monolog, ramsey/uuid and composer/ca-bundle), so there is nothing else to set up. 
 
 ---
 
@@ -72,7 +68,9 @@ require __DIR__ . '/vendor/autoload.php';
 
 ### Quick start
 
-You can find your Store key and Secret key under [API credentials in Buckaroo Plaza](https://plaza.buckaroo.nl/Configuration/Merchant/ApiKeys). This starts a test iDEAL payment and sends the customer to the payment page:
+You can find your Store key and Secret key under [API credentials in Buckaroo Plaza](https://plaza.buckaroo.nl/Configuration/Merchant/ApiKeys). 
+
+This starts a test iDEAL payment and sends the customer to the payment page:
 
 ```php
 <?php
@@ -102,11 +100,9 @@ if ($response->hasRedirect()) {
 The third argument is the mode: `test` while developing, `live` in production. It defaults to `test`. In test mode, no real money is moved.
 
 ```php
-$buckaroo = new \Buckaroo\BuckarooClient(
-    getenv('BPE_WEBSITE_KEY'),
-    getenv('BPE_SECRET_KEY'),
-    'test'
-);
+require __DIR__ . '/vendor/autoload.php';
+
+$buckaroo = new \Buckaroo\BuckarooClient('STORE_KEY', 'SECRET_KEY', 'test');
 ```
 
 > [!TIP]
@@ -151,9 +147,6 @@ $config = new DefaultConfig(
 $buckaroo = new BuckarooClient($config);
 ```
 
-> [!NOTE]
-> Only some payment methods (for example iDEAL and PayByBank) use the `returnURL`, `returnURLCancel` and `pushURL` defaults from the config automatically. To be safe, pass `returnURL` and `pushURL` with each `pay()` request, as the examples in this README do. If you leave out `pushURL`, Buckaroo uses the push URL configured in Plaza.
-
 #### Environment variables
 
 If any of these variables are set in `$_ENV`, the SDK uses them. **They take precedence over the values passed to the constructor.**
@@ -183,30 +176,14 @@ Always verify the signature of the return and push requests with the SDK before 
 
 ## End-to-end example: iDEAL checkout
 
-This example is a complete, minimal integration. It has three files: one that starts the payment, one for the return page and one for the push endpoint. Copy the files, fill in your keys and URLs, and you have a working test integration.
+This example is a complete, minimal integration. It has three files: one that starts the payment, one for the return page and one for the push endpoint. Copy the files, fill in your URLs, and you have a working test integration.
 
-**`bootstrap.php`**: shared setup
-
-```php
-<?php
-
-require __DIR__ . '/vendor/autoload.php';
-
-use Buckaroo\BuckarooClient;
-
-$buckaroo = new BuckarooClient(
-    getenv('BPE_WEBSITE_KEY'),
-    getenv('BPE_SECRET_KEY'),
-    getenv('BPE_MODE') ?: 'test'
-);
-```
+Each file assumes Composer's autoloader is loaded and `$buckaroo` is the client from [Configuring the client](#configuring-the-client).
 
 **`checkout.php`**: starts the payment and redirects the customer
 
 ```php
 <?php
-
-require __DIR__ . '/bootstrap.php';
 
 use Buckaroo\Exceptions\BuckarooException;
 
@@ -248,8 +225,6 @@ Buckaroo sends the customer back with a form `POST` that contains the transactio
 ```php
 <?php
 
-require __DIR__ . '/bootstrap.php';
-
 use Buckaroo\Handlers\Reply\ReplyHandler;
 use Buckaroo\Resources\Constants\ResponseStatus;
 
@@ -282,43 +257,31 @@ switch ($reply->data('brq_statuscode')) {
 
 **`push.php`**: server-to-server notification from Buckaroo
 
-You choose the push format (HTTP POST or JSON) in Plaza. This example handles both:
+This example handles the JSON push format. Buckaroo signs it with the `Authorization` header, which the SDK checks together with the request body and your push URL:
 
 ```php
 <?php
 
-require __DIR__ . '/bootstrap.php';
-
 use Buckaroo\Handlers\Reply\ReplyHandler;
 use Buckaroo\Resources\Constants\ResponseStatus;
 
-$config = $buckaroo->client()->config();
+$body       = file_get_contents('php://input');
+$authHeader = $_SERVER['HTTP_AUTHORIZATION'] ?? '';
+$pushUrl    = 'https://example.com/push.php'; // must exactly match the pushURL you sent
 
-if (! empty($_POST)) {
-    // HTTP POST push (form fields prefixed with brq_)
-    $reply = (new ReplyHandler($config, $_POST))->validate();
-
-    $invoice    = $reply->data('brq_invoicenumber');
-    $statusCode = $reply->data('brq_statuscode');
-    $txKey      = $reply->data('brq_transactions');
-} else {
-    // JSON push: validated with the Authorization header and the full push URL
-    $body       = file_get_contents('php://input');
-    $authHeader = $_SERVER['HTTP_AUTHORIZATION'] ?? '';
-    $pushUrl    = 'https://example.com/push.php'; // must exactly match the pushURL you sent
-
-    $reply = (new ReplyHandler($config, $body, $authHeader, $pushUrl))->validate();
-
-    $payload    = json_decode($body, true);
-    $invoice    = $payload['Transaction']['Invoice'] ?? null;
-    $statusCode = (string) ($payload['Transaction']['Status']['Code']['Code'] ?? '');
-    $txKey      = $payload['Transaction']['Key'] ?? null;
-}
+$reply = new ReplyHandler($buckaroo->client()->config(), $body, $authHeader, $pushUrl);
+$reply->validate();
 
 if (! $reply->isValid()) {
     http_response_code(400);
     exit;
 }
+
+$transaction = json_decode($body, true)['Transaction'];
+
+$invoice    = $transaction['Invoice'];
+$txKey      = $transaction['Key'];
+$statusCode = (string) $transaction['Status']['Code']['Code'];
 
 if ($statusCode === ResponseStatus::BUCKAROO_STATUSCODE_SUCCESS) {
     // markOrderAsPaid($invoice, $txKey);
@@ -334,8 +297,8 @@ if ($statusCode === ResponseStatus::BUCKAROO_STATUSCODE_SUCCESS) {
 http_response_code(200); // Buckaroo retries the push if it does not get a 200
 ```
 
-> [!IMPORTANT]
-> Buckaroo can send the same push more than once. Make your push handler **idempotent**: processing the same push twice must have the same result as processing it once.
+> [!NOTE]
+> If your website is set to the HTTP POST push format in Plaza, validate with `new ReplyHandler($buckaroo->client()->config(), $_POST)` instead, and read the fields with `$reply->data('brq_statuscode')`, `$reply->data('brq_invoicenumber')` and `$reply->data('brq_transactions')`.
 
 ---
 
@@ -556,17 +519,6 @@ Pass one of these service codes to `$buckaroo->method('...')`. Each method has i
 | Point of Sale | `pospayment` | [pos.php](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/transactions/pos.php) |
 
 **Additional services:** [Subscriptions](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/additional_services/subscriptions.php) · [Credit Management](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/additional_services/credit_management.php) · [Pay per Email](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/additional_services/pay_per_email.php) · [Marketplaces](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/additional_services/marketplaces.php) · [iDIN](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/additional_services/idin.php) · [Buckaroo Wallet](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/additional_services/wallets.php) · [Buckaroo Voucher](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/additional_services/voucher.php) · [SurePay](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/example/additional_services/surepay.php)
-
-### Running the examples
-
-The scripts in `example/` read your credentials from a `.env` file:
-
-```bash
-cp .env.example .env    # then fill in BPE_WEBSITE_KEY and BPE_SECRET_KEY
-composer install
-cd example/transactions
-php ideal.php
-```
 
 ### Going live
 
