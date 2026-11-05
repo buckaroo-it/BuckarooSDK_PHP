@@ -61,7 +61,10 @@ class GuzzleHttpClientV5 extends HttpClientAbstract
             $this->logger->info('RESPONSE HEADERS: ' . json_encode($response->getHeaders()));
             $this->logger->info('RESPONSE BODY: ' . $response->getBody());
         } catch (RequestException $e) {
-            throw new TransferException($this->logger, "Transfer failed", 0, $e);
+            $exception = new TransferException('Transfer failed: ' . $e->getMessage(), 0, $e);
+            $this->logger->error($exception->getMessage());
+
+            throw $exception;
         }
 
         $result = $this->getDecodedResult($response, $result);

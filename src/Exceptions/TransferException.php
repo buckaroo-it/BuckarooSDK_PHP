@@ -22,12 +22,12 @@ declare(strict_types=1);
 
 namespace Buckaroo\Exceptions;
 
-class TransferException extends BuckarooException
+/**
+ * No response from Buckaroo: a connection failure or timeout. HTTP error statuses do not
+ * throw this exception. getPrevious() holds the underlying Guzzle exception.
+ */
+class TransferException extends BuckarooApiException
 {
-    /**
-     * @param string $message
-     * @return string
-     */
     protected function message(string $message): string
     {
         return 'Buckaroo TransferException ' . $message;

@@ -21,7 +21,7 @@
 namespace Buckaroo\Handlers\Reply;
 
 use Buckaroo\Config\Config;
-use Buckaroo\Exceptions\BuckarooException;
+use Buckaroo\Exceptions\ReplyValidationException;
 
 class ReplyHandler
 {
@@ -94,7 +94,10 @@ class ReplyHandler
         }
 
         if (!is_array($data)) {
-            throw new BuckarooException($this->config->getLogger(), "Reply data must be an array or a JSON object.");
+            $exception = new ReplyValidationException("Reply data must be an array or a JSON object.");
+            $this->config->getLogger()->error($exception->getMessage());
+
+            throw $exception;
         }
 
         if ($this->contains('Transaction', $data, true) || $this->contains('DataRequest', $data, true)) {
@@ -109,7 +112,10 @@ class ReplyHandler
             return $this;
         }
 
-        throw new BuckarooException($this->config->getLogger(), "No reply handler strategy applied.");
+        $exception = new ReplyValidationException("No reply handler strategy applied.");
+        $this->config->getLogger()->error($exception->getMessage());
+
+        throw $exception;
     }
 
     /**

@@ -21,6 +21,7 @@
 namespace Buckaroo\PaymentMethods;
 
 use Buckaroo\Exceptions\BuckarooException;
+use Buckaroo\Exceptions\ParameterValidationException;
 use Buckaroo\PaymentMethods\Interfaces\Combinable;
 use Buckaroo\Services\PayloadService;
 use Buckaroo\Transaction\Client;
@@ -179,11 +180,13 @@ class PaymentFacade
             return $this->paymentMethod->$name();
         }
 
-        throw new BuckarooException(
-            $this->client->config()->getLogger(),
+        $exception = new ParameterValidationException(
             "Payment method " .
             $name . " on payment " .
             $this->paymentMethod->paymentName() . " you requested does not exist."
         );
+        $this->client->config()->getLogger()->error($exception->getMessage());
+
+        throw $exception;
     }
 }

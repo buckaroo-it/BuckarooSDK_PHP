@@ -29,7 +29,7 @@ $response = $buckaroo->method('bancontactmrcash')->payEncrypted([
 ]);
 
 //Recurrent payment
-$response = $buckaroo->method('bancontactmrcash')->payRecurrent([
+$response = $buckaroo->method('bancontactmrcash')->payRecurring([
     'invoice' => 'testinvoice 123',
     'amountDebit' => 10.50,
     'originalTransactionKey' => '91D08EC01F414926A4CA29C059XXXXXX',

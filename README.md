@@ -18,7 +18,8 @@
   <a href="#requirements">Requirements</a> &middot;
   <a href="#installation">Installation</a> &middot;
   <a href="#getting-started">Getting started</a> &middot;
-  <a href="#testing">Testing</a> &middot;
+  <a href="#documentation">Documentation</a> &middot;
+  <a href="#running-the-sdk-tests">Tests</a> &middot;
   <a href="#support">Support</a> &middot;
   <a href="#contribute">Contribute</a>
 </p>
@@ -29,7 +30,7 @@
 
 Buckaroo is a Dutch Payment Service Provider. More than 54,000 organisations rely on the Buckaroo platform to process their payments, subscriptions and unpaid invoices.
 
-This is Buckaroo's official PHP SDK: a modern, open source library that connects a PHP application to the Buckaroo API. It handles authentication, request signing and response parsing, so you can start a payment in a few lines.
+This is Buckaroo's official PHP SDK: a modern, open source library that connects a PHP application to the Buckaroo API. It handles authentication, request signing and response parsing, so you can start payments, verify return and push requests, and refund or look up transactions for more than 40 payment methods.
 
 If you run a shop on an e-commerce platform, use the ready-made plugin for [Magento 2](https://github.com/buckaroo-it/Magento2), [Shopware 6](https://github.com/buckaroo-it/Shopware6), [WooCommerce](https://github.com/buckaroo-it/WooCommerce), [PrestaShop](https://github.com/buckaroo-it/PrestaShop) or [Odoo](https://github.com/buckaroo-it/Odoo) instead. For Laravel applications there is a dedicated [Laravel wrapper](https://github.com/buckaroo-it/BuckarooWrapper_Laravel) built on this SDK.
 
@@ -76,38 +77,78 @@ $buckaroo = new \Buckaroo\BuckarooClient('STORE_KEY', 'SECRET_KEY', 'test');
 > [!TIP]
 > Keep your Secret key out of version control. Load both keys from environment variables instead — the repository ships an [`.env.example`](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/.env.example) to start from.
 
-### Creating a payment
+### Starting a payment
 
-Every payment method takes a slightly different payload. This example charges a Visa card:
-
-```php
-$response = $buckaroo->method('creditcard')
-    ->pay([
-        'name'        => 'visa',              // request to pay with Visa
-        'amountDebit' => 10,                  // the amount to charge
-        'invoice'     => 'UNIQUE-INVOICE-NO', // must be unique per payment
-    ]);
-```
-
-Swap `creditcard` for any other service code to use a different payment method. Service codes and their parameters are listed in the [API reference](https://docs.buckaroo.io/reference).
-
-### Retrieving transaction information
-
-Once a transaction exists you can query it on demand:
+Start an iDEAL payment and send the customer to the payment page:
 
 ```php
-$transaction = $buckaroo->transaction('YOUR-TRANSACTION-KEY');
+$response = $buckaroo->method('ideal')->pay([
+    'invoice'     => 'INV-1001',  // must be unique per payment
+    'amountDebit' => 10.00,
+    'description' => 'Order #1001',
+    'returnURL'   => 'https://example.com/buckaroo/return',
+    'pushURL'     => 'https://example.com/buckaroo/push',
+]);
 
-$transaction->status();     // transaction status
-$transaction->refundInfo(); // refund info
-$transaction->cancelInfo(); // cancellation info
+if ($response->hasRedirect()) {
+    header('Location: ' . $response->getRedirectUrl());
+    exit;
+}
 ```
 
-More runnable examples are in [`example/`](https://github.com/buckaroo-it/BuckarooSDK_PHP/tree/master/example).
+Swap `ideal` for any other service code to use a different payment method. See [Payment methods](docs/payment-methods.md).
+
+### Handling the push
+
+When the payment is completed, Buckaroo sends a push (server-to-server notification) to your `pushURL`. Verify it with the SDK, then update the order:
+
+```php
+use Buckaroo\Handlers\Reply\ReplyHandler;
+use Buckaroo\Resources\Constants\ResponseStatus;
+
+$body  = file_get_contents('php://input');
+$reply = new ReplyHandler(
+    $buckaroo->client()->config(),
+    $body,
+    $_SERVER['HTTP_AUTHORIZATION'] ?? '',
+    'https://example.com/buckaroo/push' // must exactly match the pushURL you sent
+);
+$reply->validate();
+
+if (! $reply->isValid()) {
+    http_response_code(400);
+    exit;
+}
+
+$transaction = json_decode($body, true)['Transaction'];
+
+if ((string) $transaction['Status']['Code']['Code'] === ResponseStatus::BUCKAROO_STATUSCODE_SUCCESS) {
+    // markOrderAsPaid($transaction['Invoice'], $transaction['Key']);
+}
+```
+
+> [!IMPORTANT]
+> Update the order in your database from the push, not from the return page. The customer may close the browser before returning, but the push is always sent.
+
+The [full checkout example](docs/checkout-example.md) adds error handling, the return page and the HTTP POST push format.
 
 ---
 
-## Testing
+## Documentation
+
+| Guide | What it covers |
+|---|---|
+| [Configuration](docs/configuration.md) | Credentials check, advanced configuration, environment variables, logging |
+| [Checkout example](docs/checkout-example.md) | How a payment works, and a complete iDEAL integration: checkout, return page and push |
+| [Usage](docs/usage.md) | Payment fields, reading the response, error handling, refunds, transaction lookups, authorize and capture |
+| [Payment methods](docs/payment-methods.md) | All service codes with a runnable example for each, and how to run the examples |
+| [Going live](docs/going-live.md) | Checklist for switching to production |
+
+For all API parameters, see the [API reference on docs.buckaroo.io](https://docs.buckaroo.io/reference). With the SDK, use camelCase (`amountDebit`). See [Usage](docs/usage.md#start-a-payment) for details.
+
+---
+
+## Running the SDK tests
 
 The repository defines Composer scripts for the test suites and code style:
 
@@ -144,7 +185,7 @@ Still stuck? Contact us and include your PHP version, SDK version, the service a
 
 ## Contribute
 
-We really appreciate it when developers help improve the Buckaroo SDKs. Please read our [Contribution Guidelines](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/CONTRIBUTING.md) before opening a pull request, and target the `master` branch.
+We really appreciate it when developers help improve the Buckaroo SDKs. Please read our [Contribution Guidelines](https://github.com/buckaroo-it/BuckarooSDK_PHP/blob/master/CONTRIBUTING.md) before opening a pull request, and target the `develop` branch.
 
 Found a security issue? Please report it privately to [support@buckaroo.nl](mailto:support@buckaroo.nl) instead of opening a public issue.
 

@@ -20,6 +20,7 @@
 
 namespace Buckaroo\PaymentMethods\Billink\Models;
 
+use Buckaroo\Exceptions\ParameterValidationException;
 use Buckaroo\Models\Address;
 use Buckaroo\Models\Company;
 use Buckaroo\Models\Email;
@@ -134,7 +135,7 @@ class Recipient extends ServiceParameter
             }
         }
 
-        throw new \Exception('No recipient category found.');
+        throw ParameterValidationException::forParameter('category', 'No recipient category found.');
     }
 
     /**
