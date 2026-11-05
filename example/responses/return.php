@@ -3,6 +3,7 @@
 require_once '../bootstrap.php';
 
 use Buckaroo\BuckarooClient;
+use Buckaroo\Handlers\Reply\ReplyHandler;
 
 $returnReponse = [
     "brq_amount" => "10.10",
@@ -31,7 +32,7 @@ $returnReponse = [
 
 $buckaroo = new BuckarooClient($_ENV['BPE_WEBSITE_KEY'], $_ENV['BPE_SECRET_KEY']);
 
-$replyHandler = $buckaroo->payment($returnReponse['brq_payment_method'])->handleReply($returnReponse);
+$replyHandler = new ReplyHandler($buckaroo->client()->config(), $returnReponse);
 $replyHandler->validate();
 
 $replyHandler->isValid();
