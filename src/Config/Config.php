@@ -39,7 +39,7 @@ abstract class Config implements Loggable
     /**
      * Keep in sync with the "version" in composer.json.
      */
-    const SDK_VERSION = '1.24.6';
+    const SDK_VERSION = '1.25.0';
 
     /**
      * @var string
