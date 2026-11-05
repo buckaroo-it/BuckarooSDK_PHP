@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
+## [1.25.1]
+- BTI-1783 Improve error handling and document exceptions.
+- BTI-1969 Add getActiveSubscriptionsOrFail() so request errors are not swallowed.
+
 ## [1.25.0]
 - BTI-1349 Remove GoSettle/KnakenPay as a payment method.
 
