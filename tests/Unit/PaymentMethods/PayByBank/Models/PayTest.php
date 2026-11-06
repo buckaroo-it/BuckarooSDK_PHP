@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\PaymentMethods\PaymentInitiation\Models;
+namespace Tests\Unit\PaymentMethods\PayByBank\Models;
 
-use Buckaroo\PaymentMethods\PaymentInitiation\Models\Pay;
+use Buckaroo\PaymentMethods\PayByBank\Models\Pay;
 use Tests\TestCase;
 
 class PayTest extends TestCase

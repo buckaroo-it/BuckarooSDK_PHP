@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [Unreleased]
+- BTI-1950 Pay by Bank is now available as its own class (PayByBank). PaymentInitiation remains available but is deprecated.
+
 ## [Released]
 
 ## [1.25.1]
