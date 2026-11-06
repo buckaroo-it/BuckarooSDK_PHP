@@ -2,11 +2,11 @@
 
 namespace Buckaroo\PaymentMethods\PaymentInitiation\Models;
 
-use Buckaroo\Models\ServiceParameter;
+use Buckaroo\PaymentMethods\PayByBank\Models\Pay as PayByBankPay;
 
-class Pay extends ServiceParameter
+/**
+ * @deprecated Use \Buckaroo\PaymentMethods\PayByBank\Models\Pay instead.
+ */
+class Pay extends PayByBankPay
 {
-    protected string $issuer;
-
-    protected string $countryCode;
 }

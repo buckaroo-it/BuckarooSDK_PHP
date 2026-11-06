@@ -56,6 +56,7 @@ use Buckaroo\PaymentMethods\Marketplaces\Marketplaces;
 use Buckaroo\PaymentMethods\MBWay\MBWay;
 use Buckaroo\PaymentMethods\Multibanco\Multibanco;
 use Buckaroo\PaymentMethods\NoServiceSpecifiedPayment\NoServiceSpecifiedPayment;
+use Buckaroo\PaymentMethods\PayByBank\PayByBank;
 use Buckaroo\PaymentMethods\Payconiq\Payconiq;
 use Buckaroo\PaymentMethods\PaymentInitiation\PaymentInitiation;
 use Buckaroo\PaymentMethods\Paypal\Paypal;
@@ -118,7 +119,10 @@ class PaymentMethodFactory
         KBC::class => ['kbc', 'kbcpaymentbutton'],
         Paypal::class => ['paypal'],
         PayPerEmail::class => ['payperemail'],
-        PaymentInitiation::class => ['paymentinitiation','paybybank'],
+        PayByBank::class => ['paybybank'],
+        // Deprecated alias: still returns PaymentInitiation (a PayByBank subclass) so
+        // existing instanceof checks keep working.
+        PaymentInitiation::class => ['paymentinitiation'],
         EPS::class => ['eps'],
         ExternalPayment::class => ['externalpayment'],
         Emandates::class => ['emandates'],

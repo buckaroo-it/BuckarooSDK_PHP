@@ -12,7 +12,7 @@ Pass one of these service codes to `$buckaroo->method('...')`. Each method has i
 | Apple Pay | `applepay` | [applepay.php](../example/transactions/applepay.php) |
 | Google Pay | `googlepay` | [googlepay.php](../example/transactions/googlepay.php) |
 | Click to Pay | `clicktopay` | [clicktopay.php](../example/transactions/clicktopay.php) |
-| PayByBank | `paybybank` | [payment_initiation.php](../example/transactions/payment_initiation.php) |
+| Pay by Bank | `paybybank` | [pay_by_bank.php](../example/transactions/pay_by_bank.php) |
 | SEPA Direct Debit | `sepadirectdebit` | [sepa.php](../example/transactions/sepa.php) |
 | Bank transfer | `transfer` | [transfer.php](../example/transactions/transfer.php) |
 | Klarna | `klarna` / `klarnakp` | [klarna.php](../example/transactions/klarna.php) / [klarnakp.php](../example/transactions/klarnakp.php) |

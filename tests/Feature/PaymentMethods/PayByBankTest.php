@@ -12,10 +12,10 @@ use Tests\Support\TestHelpers;
  * @runTestsInSeparateProcesses
  * @preserveGlobalState disabled
  */
-class PaymentInitiationTest extends FeatureTestCase
+class PayByBankTest extends FeatureTestCase
 {
     /** @test */
-    public function it_creates_a_payment_initiation_with_redirect(): void
+    public function it_creates_a_pay_by_bank_payment_with_redirect(): void
     {
         $transactionKey = TestHelpers::generateTransactionKey();
         $redirectUrl = 'https://bank.example.com/auth?trx=' . $transactionKey;
