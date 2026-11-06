@@ -20,6 +20,7 @@
 
 namespace Buckaroo\Services;
 
+use Buckaroo\Exceptions\BuckarooException;
 use Buckaroo\Models\ServiceList;
 use Buckaroo\Transaction\Client;
 use Buckaroo\Transaction\Request\TransactionRequest;
@@ -44,22 +45,32 @@ class ActiveSubscriptions
     public function get(): array
     {
         try {
-            $xmlString = $this->client
-                ->dataRequest($this->buildTransaction())
-                ->getServiceParameters()[self::SERVICE_PARAM_KEY] ?? null;
-
-            if (!is_string($xmlString)) {
-                return [];
-            }
-
-            $xml = new SimpleXMLElement($xmlString, LIBXML_NOCDATA);
-
-            return $this->format(
-                $xml->xpath('/ArrayOfServiceCurrencies/ServiceCurrencies')
-            );
+            return $this->getOrFail();
         } catch (Exception $e) {
             return [];
         }
+    }
+
+    /**
+     * @return array
+     * @throws BuckarooException
+     * @throws Exception
+     */
+    public function getOrFail(): array
+    {
+        $xmlString = $this->client
+            ->dataRequest($this->buildTransaction())
+            ->getServiceParameters()[self::SERVICE_PARAM_KEY] ?? null;
+
+        if (!is_string($xmlString)) {
+            return [];
+        }
+
+        $xml = new SimpleXMLElement($xmlString, LIBXML_NOCDATA);
+
+        return $this->format(
+            $xml->xpath('/ArrayOfServiceCurrencies/ServiceCurrencies')
+        );
     }
 
     private function buildTransaction(): TransactionRequest
