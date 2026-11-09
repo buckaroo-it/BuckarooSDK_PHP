@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Services;
 
+use Buckaroo\Exceptions\BuckarooException;
 use Buckaroo\Services\ActiveSubscriptions;
 use Tests\Support\BuckarooMockRequest;
 use Tests\TestCase;
@@ -313,6 +314,71 @@ class ActiveSubscriptionsTest extends TestCase
 
         $this->assertIsArray($subscriptions);
         $this->assertEmpty($subscriptions);
+    }
+
+    public function test_get_or_fail_returns_active_subscriptions(): void
+    {
+        $xmlResponse = '<?xml version="1.0" encoding="UTF-8"?>
+<ArrayOfServiceCurrencies>
+    <ServiceCurrencies>
+        <ServiceCode>ideal</ServiceCode>
+        <Currencies>
+            <string>EUR</string>
+        </Currencies>
+    </ServiceCurrencies>
+</ArrayOfServiceCurrencies>';
+
+        $this->mockBuckaroo->mockTransportRequests([
+            BuckarooMockRequest::json(
+                'POST',
+                '*/DataRequest*',
+                [
+                    'Key' => 'DATARESPONSE-008',
+                    'Status' => [
+                        'Code' => ['Code' => 190],
+                    ],
+                    'Services' => [
+                        [
+                            'Name' => 'GetActiveSubscriptions',
+                            'Action' => 'GetActiveSubscriptions',
+                            'Parameters' => [
+                                [
+                                    'Name' => 'activesubscriptions',
+                                    'Value' => $xmlResponse,
+                                ],
+                            ],
+                        ],
+                    ],
+                ]
+            ),
+        ]);
+
+        $service = new ActiveSubscriptions($this->buckaroo->client());
+
+        $subscriptions = $service->getOrFail();
+
+        $this->assertCount(1, $subscriptions);
+        $this->assertSame('ideal', $subscriptions[0]['serviceCode']);
+        $this->assertSame(['EUR'], $subscriptions[0]['currencies']);
+    }
+
+    public function test_get_active_subscriptions_or_fail_throws_when_api_throws_exception(): void
+    {
+        $this->mockBuckaroo->mockTransportRequests([
+            BuckarooMockRequest::json(
+                'POST',
+                '*/DataRequest*',
+                []
+            )->withException(new BuckarooException(
+                null,
+                'Status code: 400 Message: application access is denied, Authorization header value is invalid'
+            )),
+        ]);
+
+        $this->expectException(BuckarooException::class);
+        $this->expectExceptionMessage('Authorization header value is invalid');
+
+        $this->buckaroo->getActiveSubscriptionsOrFail();
     }
 
     public function test_it_returns_empty_array_when_xml_has_no_service_currencies(): void

@@ -80,6 +80,15 @@ class BuckarooClient
     }
 
     /**
+     * @return array
+     * @throws BuckarooException
+     */
+    public function getActiveSubscriptionsOrFail(): array
+    {
+        return (new ActiveSubscriptions($this->client))->getOrFail();
+    }
+
+    /**
      * @param array $transactions
      * @return BatchTransactions
      */
