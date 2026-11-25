@@ -6,6 +6,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Released]
 
+## [1.27.0]
+- BTI-2205 Send article lines in Klarna KP and Klarna (MoR) refund requests.
+
 ## [1.26.0]
 - BTI-1969 Add getActiveSubscriptionsOrFail() so request errors are not swallowed.
 - BTI-1950 Make Pay by Bank easier to find: it now has its own PayByBank class. PaymentInitiation still works but is deprecated and will be removed in 2.0.
