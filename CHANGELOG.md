@@ -4,15 +4,17 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [Unreleased]
-- BTI-1950 Pay by Bank is now available as its own class (PayByBank). PaymentInitiation remains available but is deprecated.
-- BTI-2205 Klarna KP (klarnakp) and Klarna (klarna) refunds now send the `articles` from the payload as Article groups (ArticleNumber, ArticleQuantity), so Klarna registers which order lines were refunded. Refunds without articles are unchanged.
-
 ## [Released]
+
+## [1.27.0]
+- BTI-2205 Send article lines in Klarna KP and Klarna (MoR) refund requests.
+
+## [1.26.0]
+- BTI-1969 Add getActiveSubscriptionsOrFail() so request errors are not swallowed.
+- BTI-1950 Make Pay by Bank easier to find: it now has its own PayByBank class. PaymentInitiation still works but is deprecated and will be removed in 2.0.
 
 ## [1.25.1]
 - BTI-1783 Improve error handling and document exceptions.
-- BTI-1969 Add getActiveSubscriptionsOrFail() so request errors are not swallowed.
 
 ## [1.25.0]
 - BTI-1349 Remove GoSettle/KnakenPay as a payment method.
