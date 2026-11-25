@@ -75,3 +75,17 @@ $response = $buckaroo->method('klarna')->refund([
     'originalTransactionKey' => '', //Set transaction key of the transaction to refund
     'amountCredit' => 10.10,
 ]);
+
+//Partial refund per order line
+//The identifiers must match the article numbers sent in the original Reserve/Pay
+$response = $buckaroo->method('klarna')->refund([
+    'invoice' => '', //Set invoice number of the transaction to refund
+    'originalTransactionKey' => '', //Set transaction key of the transaction to refund
+    'amountCredit' => 10.10,
+    'articles' => [
+        [
+            'identifier' => 'Articlenumber1',
+            'quantity' => 1,
+        ],
+    ],
+]);

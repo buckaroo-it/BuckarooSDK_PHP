@@ -23,6 +23,7 @@ namespace Buckaroo\PaymentMethods\KlarnaKP;
 use Buckaroo\Models\Model;
 use Buckaroo\Models\Payload\DataRequestPayload;
 use Buckaroo\PaymentMethods\KlarnaKP\Models\Payload;
+use Buckaroo\PaymentMethods\KlarnaKP\Models\Refund;
 use Buckaroo\PaymentMethods\PayablePaymentMethod;
 use Buckaroo\Transaction\Response\TransactionResponse;
 
@@ -40,6 +41,15 @@ class KlarnaKP extends PayablePaymentMethod
     public function pay(?Model $model = null): TransactionResponse
     {
         return parent::pay($model ?? new Payload($this->payload));
+    }
+
+    /**
+     * @param Model|null $model
+     * @return TransactionResponse
+     */
+    public function refund(?Model $model = null): TransactionResponse
+    {
+        return parent::refund($model ?? new Refund($this->payload));
     }
 
     /**
