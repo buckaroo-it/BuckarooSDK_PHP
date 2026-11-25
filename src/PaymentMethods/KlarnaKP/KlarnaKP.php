@@ -45,9 +45,9 @@ class KlarnaKP extends PayablePaymentMethod
 
     /**
      * @param Model|null $model
-     * @return TransactionResponse
+     * @return TransactionResponse|$this
      */
-    public function refund(?Model $model = null): TransactionResponse
+    public function refund(?Model $model = null)
     {
         return parent::refund($model ?? new Refund($this->payload));
     }

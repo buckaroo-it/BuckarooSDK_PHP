@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\PaymentMethods\KlarnaKP;
 
+use Buckaroo\PaymentMethods\KlarnaKP\KlarnaKP;
 use Buckaroo\PaymentMethods\KlarnaKP\Models\Refund;
 use Buckaroo\PaymentMethods\PaymentMethodFactory;
 use Tests\Support\BuckarooMockRequest;
@@ -125,6 +126,29 @@ class KlarnaKPRefundTest extends TestCase
             array_filter($parameters, fn ($p) => $p['Name'] === 'ArticleNumber'),
             'Value'
         )));
+    }
+
+    /** @test */
+    public function it_returns_the_payment_method_in_manual_mode(): void
+    {
+        $this->mockBuckaroo->resetQueue();
+
+        $result = $this->buckaroo->method(self::METHOD)->manually()->refund([
+            'amountCredit' => 10.00,
+            'invoice' => 'INV-REFUND-MANUAL',
+            'originalTransactionKey' => 'ORIGINAL-TX-KEY',
+            'articles' => [['identifier' => 'SKU-001', 'quantity' => 1]],
+        ]);
+
+        $this->assertInstanceOf(KlarnaKP::class, $result);
+
+        $service = $result->request()->toArray()['Services']['ServiceList'][0] ?? null;
+        $this->assertNotNull($service);
+        $this->assertSame('Refund', $service['action']);
+        $this->assertEqualsCanonicalizing(
+            ['ArticleNumber', 'ArticleQuantity'],
+            array_column($service['parameters'], 'Name')
+        );
     }
 
     private function lastRequestBody(): array
