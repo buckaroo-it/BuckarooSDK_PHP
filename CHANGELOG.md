@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 - BTI-1950 Pay by Bank is now available as its own class (PayByBank). PaymentInitiation remains available but is deprecated.
+- BTI-2205 Klarna KP (klarnakp) and Klarna (klarna) refunds now send the `articles` from the payload as Article groups (ArticleNumber, ArticleQuantity), so Klarna registers which order lines were refunded. Refunds without articles are unchanged.
 
 ## [Released]
 
