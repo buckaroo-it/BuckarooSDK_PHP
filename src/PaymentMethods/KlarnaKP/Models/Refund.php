@@ -18,7 +18,6 @@
  * @license   https://tldrlegal.com/license/mit-license
  */
 
-
 namespace Buckaroo\PaymentMethods\KlarnaKP\Models;
 
 use Buckaroo\Models\ServiceParameter;
